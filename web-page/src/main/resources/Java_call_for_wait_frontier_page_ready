@@ -1,0 +1,1 @@
+String readinessResult = (String) executeAsyncScript(WAIT_SCREEN_READY_SCRIPT, awaitTimeout);

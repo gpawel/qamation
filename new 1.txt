@@ -1,0 +1,4 @@
+git remote add origin https://git@github.com:gpawel/qamation.git
+
+
+git remote add origin https://github.com/gpawel/qamation.git
