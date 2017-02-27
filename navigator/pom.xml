@@ -5,30 +5,27 @@
     <parent>
         <artifactId>qamation</artifactId>
         <groupId>org.qamation</groupId>
-        <version>3</version>
+        <version>3.0.0</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
     <artifactId>navigator</artifactId>
+    <version>${navigator.version}</version>
     <dependencies>
         <dependency>
             <groupId>org.qamation</groupId>
             <artifactId>utils</artifactId>
-            <version>3</version>
         </dependency>
         <dependency>
             <groupId>org.qamation</groupId>
             <artifactId>web-page</artifactId>
-            <version>3</version>
         </dependency>
         <dependency>
             <groupId>org.qamation</groupId>
             <artifactId>webdriver-utils</artifactId>
-            <version>3</version>
         </dependency>
         <dependency>
             <groupId>org.qamation</groupId>
             <artifactId>keyboard</artifactId>
-            <version>3</version>
         </dependency>
     </dependencies>
 

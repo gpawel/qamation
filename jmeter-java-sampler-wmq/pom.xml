@@ -5,21 +5,20 @@
     <parent>
         <artifactId>qamation</artifactId>
         <groupId>org.qamation</groupId>
-        <version>3</version>
+        <version>3.0.0</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
     <groupId>org.qamation.jmeter</groupId>
     <artifactId>jmeter-java-sampler-wmq</artifactId>
+    <version>${jmeter-java-sampler-wmq.version}</version>
     <dependencies>
         <dependency>
             <groupId>org.qamation.jmeter</groupId>
             <artifactId>jmeter-java-sampler-abstracts</artifactId>
-            <version>3</version>
         </dependency>
         <dependency>
             <groupId>org.qamation</groupId>
             <artifactId>wmq-wrapper</artifactId>
-            <version>3</version>
         </dependency>
     </dependencies>
 

@@ -5,21 +5,21 @@
     <parent>
         <artifactId>qamation</artifactId>
         <groupId>org.qamation</groupId>
-        <version>3</version>
+        <version>3.0.0</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
+
     <artifactId>web-page</artifactId>
-    <name>web-page</name>
+    <version>${web-page.version}</version>
+
     <dependencies>
         <dependency>
             <groupId>org.qamation</groupId>
             <artifactId>utils</artifactId>
-            <version>3</version>
         </dependency>
         <dependency>
             <groupId>org.qamation</groupId>
             <artifactId>webdriver-utils</artifactId>
-            <version>3</version>
         </dependency>
     </dependencies>
 </project>
