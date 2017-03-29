@@ -12,8 +12,6 @@ public abstract class AbstractExcelDataProvider extends AbstractExtention {
     protected String dataProviderName;
     protected String hasNextVarName;
 
-    protected ExcelUtils excelUtils;
-
 
     public Arguments getDefaultParameters() {
         Arguments defaultParameters = super.getDefaultParameters();
@@ -31,7 +29,5 @@ public abstract class AbstractExcelDataProvider extends AbstractExtention {
         if (hasNextVarName.isEmpty()) throw new RuntimeException("HAS_NEXT VARIABLE NAME CANNOT BE EMPTY");
 
     }
-    protected String[] getFieldNames() {
-        return excelUtils.getFieldNames();
-    }
+
 }

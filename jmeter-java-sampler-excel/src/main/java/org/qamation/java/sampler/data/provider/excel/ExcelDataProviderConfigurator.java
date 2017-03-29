@@ -1,7 +1,6 @@
 package org.qamation.java.sampler.data.provider.excel;
 
 
-import org.apache.jmeter.testelement.TestStateListener;
 import org.apache.jorphan.logging.LoggingManager;
 import org.apache.log.Logger;
 import org.qamation.excel.utils.ExcelUtils;
@@ -9,15 +8,11 @@ import org.qamation.java.sampler.abstracts.AbstractExcelDataProvider;
 import org.apache.jmeter.config.Arguments;
 import org.apache.jmeter.samplers.SampleResult;
 import org.qamation.utils.FileUtils;
-import org.sikuli.guide.Run;
 
-import java.io.File;
-import java.nio.file.Files;
 import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.security.SecureRandom;
 
-public class ExcelDataProviderConfigurator  extends AbstractExcelDataProvider implements TestStateListener  {
+public class ExcelDataProviderConfigurator  extends AbstractExcelDataProvider  {
     private static final Logger log = LoggingManager.getLoggerForClass();
     private static final String EXCEL_FILE = "ENTER EXCEL FILE NAME";
     private static final String ACTIVE_WORKSHEET = "ENTER ACTIVE WORK SHEET. EMPTY IF FIRST SHEET";
@@ -25,6 +20,7 @@ public class ExcelDataProviderConfigurator  extends AbstractExcelDataProvider im
 
     protected String exceFileName;
     protected int workSheetIndex;
+    protected ExcelUtils excelUtils;
 
     public Arguments getDefaultParameters() {
         Arguments defaultParameters = super.getDefaultParameters();
@@ -41,7 +37,7 @@ public class ExcelDataProviderConfigurator  extends AbstractExcelDataProvider im
     }
     protected void toDo() {
         try {
-            exceFileName = createWorkingFile(exceFileName);
+            exceFileName = createTempFile(exceFileName);
             excelUtils = ExcelUtils.getExcelWithHeaderLine(exceFileName, workSheetIndex);
             setObjectIntoVariables(dataProviderName, excelUtils.iterator());
             setStringIntoVariables(hasNextVarName,String.valueOf(excelUtils.iterator().hasNext()));
@@ -75,11 +71,15 @@ public class ExcelDataProviderConfigurator  extends AbstractExcelDataProvider im
         return fileName;
     }
 
-    private String createWorkingFile(String exceFileName) {
+    private String createTempFile(String exceFileName) {
+        log.info("creating working file.");
         String suffix = FileUtils.getFileNameExtention(exceFileName);
         String prefix = generateFileNamePrefix();
         String tempFileName = prefix+suffix;
-        return tempFileName;
+        log.info("working file name: "+tempFileName);
+        Path p = FileUtils.copyFileToSameFolder(exceFileName,tempFileName);
+        log.info("working file is created.");
+        return p.toString();
     }
 
     private String generateFileNamePrefix() {
@@ -88,23 +88,5 @@ public class ExcelDataProviderConfigurator  extends AbstractExcelDataProvider im
         return String.valueOf(l);
     }
 
-    @Override
-    public void testStarted() {
 
-    }
-
-    @Override
-    public void testStarted(String s) {
-        testStarted();
-    }
-
-    @Override
-    public void testEnded() {
-        new File(exceFileName).delete();
-    }
-
-    @Override
-    public void testEnded(String s) {
-        testEnded();
-    }
 }

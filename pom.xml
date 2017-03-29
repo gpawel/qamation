@@ -4,12 +4,12 @@
 	<groupId>org.qamation</groupId>
     <artifactId>qamation</artifactId>
 	<packaging>pom</packaging>
-	<version>3.0.0</version>
+	<version>3.1.0</version>
 
     <url>http://maven.apache.org</url>
 
     <properties>
-        <qamation.version>3.0.0</qamation.version>
+        <qamation.version>3.1.0</qamation.version>
         <maven.jar.plugin.version>2.6</maven.jar.plugin.version>
         <httpcomponents.version>4.5.2</httpcomponents.version>
         <junit.version>4.12</junit.version>

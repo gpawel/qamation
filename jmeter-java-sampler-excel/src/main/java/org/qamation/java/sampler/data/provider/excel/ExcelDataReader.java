@@ -1,5 +1,9 @@
 package org.qamation.java.sampler.data.provider.excel;
 
+import net.didion.jwnl.data.Exc;
+import org.apache.jmeter.testelement.TestStateListener;
+import org.apache.jorphan.logging.LoggingManager;
+import org.apache.log.Logger;
 import org.qamation.excel.utils.ExcelUtils;
 import org.qamation.java.sampler.abstracts.AbstractExcelDataProvider;
 import org.qamation.utils.StringUtils;
@@ -9,12 +13,14 @@ import org.apache.jmeter.samplers.SampleResult;
 
 import java.util.Iterator;
 
-public class ExcelDataReader extends AbstractExcelDataProvider {
+public class ExcelDataReader extends AbstractExcelDataProvider  {
+    private static final Logger log = LoggingManager.getLoggerForClass();
+
     private final static String DATA_PROVIDER_NAME = "DATA PROVIDER NAME";
     private StringBuffer currentLine;
     private Iterator<String[]> it;
     private String[] fieldNames;
-
+    protected ExcelUtils excelUtils;
 
     public Arguments getDefaultParameters() {
         Arguments defaultParameters = super.getDefaultParameters();
@@ -55,4 +61,6 @@ public class ExcelDataReader extends AbstractExcelDataProvider {
         SampleResult result = setFailure(null,"Unable to read from data source.", StringUtils.getStackTrace(e));
         return result;
     }
+
+
 }
