@@ -11,6 +11,7 @@ import org.apache.jmeter.testelement.TestStateListener;
  * Created by Pavel.Gouchtchine on 03/10/2017.
  */
 public class ExcelDataProvider extends ConfigTestElement implements TestBean, LoopIterationListener, TestStateListener {
+    private String fileName;
     @Override
     public void iterationStart(LoopIterationEvent loopIterationEvent) {
 
@@ -34,5 +35,13 @@ public class ExcelDataProvider extends ConfigTestElement implements TestBean, Lo
     @Override
     public void testEnded(String s) {
 
+    }
+
+    public String getFileName() {
+        return fileName;
+    }
+
+    public void setFileName(String fileName) {
+        this.fileName = fileName;
     }
 }
