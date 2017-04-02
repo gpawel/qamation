@@ -6,20 +6,23 @@ import org.apache.jmeter.engine.event.LoopIterationEvent;
 import org.apache.jmeter.engine.event.LoopIterationListener;
 import org.apache.jmeter.testbeans.TestBean;
 import org.apache.jmeter.testelement.TestStateListener;
+import org.apache.jorphan.logging.LoggingManager;
+import org.apache.log.Logger;
 
 /**
  * Created by Pavel.Gouchtchine on 03/10/2017.
  */
 public class ExcelDataProvider extends ConfigTestElement implements TestBean, LoopIterationListener, TestStateListener {
-    private String fileName;
+    private static final Logger log = LoggingManager.getLoggerForClass();
+    private transient String fileName;
     @Override
     public void iterationStart(LoopIterationEvent loopIterationEvent) {
-
+        log.info("iteration started");
     }
 
     @Override
     public void testStarted() {
-
+        log.info("test started");
     }
 
     @Override
@@ -29,7 +32,7 @@ public class ExcelDataProvider extends ConfigTestElement implements TestBean, Lo
 
     @Override
     public void testEnded() {
-
+        log.info("test ended");
     }
 
     @Override
