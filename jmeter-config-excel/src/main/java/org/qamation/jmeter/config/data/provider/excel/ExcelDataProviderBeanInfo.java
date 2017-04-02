@@ -14,7 +14,7 @@ public class ExcelDataProviderBeanInfo extends BeanInfoSupport {
 
     private static final Logger log = LoggingManager.getLoggerForClass();
 
-    private static final String FILENAME = "fileName";
+    private static final String FILENAME = "filename";
 
     protected ExcelDataProviderBeanInfo() {
         super(ExcelDataProvider.class);

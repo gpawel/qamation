@@ -14,7 +14,7 @@ import org.apache.log.Logger;
  */
 public class ExcelDataProvider extends ConfigTestElement implements TestBean, LoopIterationListener, TestStateListener {
     private static final Logger log = LoggingManager.getLoggerForClass();
-    private transient String fileName;
+    private String filename;
     @Override
     public void iterationStart(LoopIterationEvent loopIterationEvent) {
         log.info("iteration started");
@@ -40,11 +40,11 @@ public class ExcelDataProvider extends ConfigTestElement implements TestBean, Lo
 
     }
 
-    public String getFileName() {
-        return fileName;
+    public String getFilename() {
+        return filename;
     }
 
-    public void setFileName(String fileName) {
-        this.fileName = fileName;
+    public void setFilename(String filename) {
+        this.filename = filename;
     }
 }
