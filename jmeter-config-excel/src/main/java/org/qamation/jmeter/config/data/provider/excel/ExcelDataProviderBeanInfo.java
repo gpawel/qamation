@@ -14,18 +14,26 @@ public class ExcelDataProviderBeanInfo extends BeanInfoSupport {
     private static final Logger log = LoggingManager.getLoggerForClass();
 
     private static final String FILENAME = "filename";
+    private static final String LASTNAME = "lastname";
 
-    protected ExcelDataProviderBeanInfo() {
+    public ExcelDataProviderBeanInfo() {
         super(ExcelDataProvider.class);
 
         log.info("Bean Info super is done.");
         log.info("creating group");
-        createPropertyGroup("file_properties", new String[] {FILENAME});
+        createPropertyGroup("file_properties", new String[] {FILENAME, LASTNAME});
 
         PropertyDescriptor p = property(FILENAME);
-        p.setValue(NOT_UNDEFINED, Boolean.TRUE);
+        p.setValue(NOT_UNDEFINED,Boolean.TRUE);
         p.setValue(DEFAULT, "<ENTER FILE NAME HERE>");
         p.setValue(NOT_EXPRESSION,Boolean.TRUE);
+        p.setValue(RESOURCE_BUNDLE, getBeanDescriptor().getValue(RESOURCE_BUNDLE));
+
+        p = property(LASTNAME);
+        p.setValue(NOT_UNDEFINED, Boolean.TRUE);
+        p.setValue(DEFAULT, "<LAST NAME HERE>");
+        p.setValue(NOT_EXPRESSION,Boolean.TRUE);
+        //p.setValue(RESOURCE_BUNDLE, getBeanDescriptor().getValue(RESOURCE_BUNDLE));
 
     }
 
