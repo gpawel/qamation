@@ -9,8 +9,8 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
     <groupId>org.qamation.jmeter</groupId>
-    <artifactId>jmeter-config-excel</artifactId>
-    <version>${jmeter-config-excel.version}</version>
+    <artifactId>jmeter-config-data-provider</artifactId>
+    <version>${jmeter-config-data-provider.version}</version>
     <build>
         <resources>
             <resource>

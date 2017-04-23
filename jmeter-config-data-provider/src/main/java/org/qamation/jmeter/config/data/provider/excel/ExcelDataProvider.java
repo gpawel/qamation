@@ -19,9 +19,7 @@ import java.beans.IntrospectionException;
 import java.beans.Introspector;
 import java.util.ResourceBundle;
 
-/**
- * Created by Pavel.Gouchtchine on 03/10/2017.
- */
+
 public class ExcelDataProvider extends ConfigTestElement implements TestBean, LoopIterationListener, NoConfigMerge, TestStateListener {
     private static final Logger log = LoggingManager.getLoggerForClass();
     private String filename;

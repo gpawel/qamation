@@ -6,9 +6,6 @@ import org.apache.log.Logger;
 
 import java.beans.PropertyDescriptor;
 
-/**
- * Created by Pavel.Gouchtchine on 03/10/2017.
- */
 public class ExcelDataProviderBeanInfo extends BeanInfoSupport {
 
     private static final Logger log = LoggingManager.getLoggerForClass();
