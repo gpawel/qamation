@@ -20,13 +20,22 @@ public class ConfigDataProvider extends ConfigTestElement
         TestStateListener,
         DataProvider {
     private static final Logger log = LoggingManager.getLoggerForClass();
-    private String filename;
-    private String lastname;
+    protected String filename;
+    protected String dataProviderImplClassName;
+    protected DataProvider dataProvider = null;
+
+    private Iterator<String[]> dataIterator;
+    private String[] fieldNames;
+
 
 
     @Override
     public void iterationStart(LoopIterationEvent loopIterationEvent) {
-        log.info("iteration started");
+        if (dataProvider == null) {
+            dataProvider = DataProviderFactory.createDataProviderInstance(dataProviderImplClassName,filename);
+
+        }
+
     }
 
     @Override
@@ -46,23 +55,7 @@ public class ConfigDataProvider extends ConfigTestElement
 
     @Override
     public void testEnded(String s) {
-
-    }
-
-    public String getFilename() {
-        return filename;
-    }
-
-    public void setFilename(String filename) {
-        this.filename = filename;
-    }
-
-    public String getLastname() {
-        return lastname;
-    }
-
-    public void setLastname(String lastname) {
-        this.lastname = lastname;
+        testEnded();
     }
 
     @Override
@@ -78,5 +71,21 @@ public class ConfigDataProvider extends ConfigTestElement
     @Override
     public Iterator<String> getIterator() {
         return null;
+    }
+
+    public String getFilename() {
+        return filename;
+    }
+
+    public void setFilename(String filename) {
+        this.filename = filename;
+    }
+
+    public String getDataProviderImplClassName() {
+        return dataProviderImplClassName;
+    }
+
+    public void setDataProviderImplClassName(String dataProviderImplClassName) {
+        this.dataProviderImplClassName = dataProviderImplClassName;
     }
 }

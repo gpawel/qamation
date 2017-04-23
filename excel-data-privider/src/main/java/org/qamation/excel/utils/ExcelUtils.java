@@ -9,7 +9,7 @@ import org.apache.poi.ss.usermodel.Row.MissingCellPolicy;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.qamation.utils.StringUtils;
 
-
+@Deprecated
 public class ExcelUtils {
     private Workbook workBook;
     private int activeSheetIndex;
@@ -141,6 +141,7 @@ public class ExcelUtils {
     private int getHeaderLineSize() {
         return sheet.getRow(0).getPhysicalNumberOfCells();
     }
+
     private String[] convertRowToStringArray(Row row) {
         String[] vals = new String[this.rowSize];
         for (int i=0; i<this.rowSize; i++) {
@@ -149,6 +150,7 @@ public class ExcelUtils {
         }
         return vals;
     }
+
     private String getStringValueFromCell(Cell c) {
 
         switch (c.getCellType()) {

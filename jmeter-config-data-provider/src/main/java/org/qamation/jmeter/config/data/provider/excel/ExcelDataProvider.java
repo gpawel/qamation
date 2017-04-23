@@ -1,69 +1,77 @@
 package org.qamation.jmeter.config.data.provider.excel;
 
 
-import org.apache.jmeter.config.ConfigTestElement;
-import org.apache.jmeter.engine.event.LoopIterationEvent;
-import org.apache.jmeter.engine.event.LoopIterationListener;
-import org.apache.jmeter.engine.util.NoConfigMerge;
-import org.apache.jmeter.testbeans.TestBean;
-import org.apache.jmeter.testbeans.gui.GenericTestBeanCustomizer;
+
 import org.apache.jmeter.testelement.TestStateListener;
-import org.apache.jmeter.testelement.property.JMeterProperty;
-import org.apache.jmeter.testelement.property.StringProperty;
 import org.apache.jorphan.logging.LoggingManager;
 import org.apache.log.Logger;
-import org.sikuli.guide.Run;
+import org.qamation.jmeter.config.data.provider.DataProvider;
 
-import java.beans.BeanInfo;
-import java.beans.IntrospectionException;
-import java.beans.Introspector;
-import java.util.ResourceBundle;
+import java.io.IOException;
+import java.util.Iterator;
+import org.qamation.excel.utils.ExcelReader;
 
 
-public class ExcelDataProvider extends ConfigTestElement implements TestBean, LoopIterationListener, NoConfigMerge, TestStateListener {
+public class ExcelDataProvider implements DataProvider, TestStateListener {
     private static final Logger log = LoggingManager.getLoggerForClass();
-    private String filename;
-    private String lastname;
+    private ExcelReader excelReader;
 
+
+    public ExcelDataProvider (String fileName) {
+        excelReader = ExcelReader.createExcelReader(fileName,0);
+    }
+
+    public ExcelDataProvider(String fileName, int sheetIndex) {
+        excelReader = ExcelReader.createExcelReader(fileName,sheetIndex);
+    }
 
     @Override
-    public void iterationStart(LoopIterationEvent loopIterationEvent) {
-        log.info("iteration started");
+    public String[] getFieldNames() {
+        return excelReader.getFieldNames();
     }
+
+    @Override
+    public int getLinesNumber() {
+        return excelReader.getNmberOfLinesInActiveWorkSheet();
+    }
+
+    @Override
+    public Iterator<String> getIterator() {
+        return excelReader.iterator();
+    }
+
+    public String getFilename() {
+        return excelReader.getFileName();
+    }
+
+    public int getSheetIndex() {
+        return excelReader.getActiveSheetIndex();
+    }
+
 
     @Override
     public void testStarted() {
-        log.info("test started");
+
     }
 
     @Override
-    public void testStarted(String s) {
+    public void testStarted(String host) {
 
     }
 
     @Override
     public void testEnded() {
-        log.info("test ended");
+        try {
+            excelReader.closeWorkBook();
+        } catch (IOException e) {
+            String m = "Unable to close Excel workbook";
+            log.error(m);
+            throw new RuntimeException(m,e);
+        }
     }
 
     @Override
-    public void testEnded(String s) {
-
-    }
-
-    public String getFilename() {
-        return filename;
-    }
-
-    public void setFilename(String filename) {
-        this.filename = filename;
-    }
-
-    public String getLastname() {
-        return lastname;
-    }
-
-    public void setLastname(String lastname) {
-        this.lastname = lastname;
+    public void testEnded(String host) {
+        testEnded();
     }
 }

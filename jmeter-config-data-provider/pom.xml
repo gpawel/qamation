@@ -21,6 +21,12 @@
             </resource>
         </resources>
     </build>
+    <dependencies>
+        <dependency>
+            <groupId>org.qamation</groupId>
+            <artifactId>excel-data-privider</artifactId>
+        </dependency>
+    </dependencies>
 
 </project>
 
