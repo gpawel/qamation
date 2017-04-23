@@ -40,6 +40,7 @@
         <jmeter-java-sampler-keyboard.version>3.0.0</jmeter-java-sampler-keyboard.version>
         <jmeter-java-sampler-wmq.version>3.0.0</jmeter-java-sampler-wmq.version>
         <jmeter-java-sampler-excel.version>3.0.1</jmeter-java-sampler-excel.version>
+        <jmeter-config-data-provider.version>1.0.0</jmeter-config-data-provider.version>
     </properties>
 
     <dependencyManagement>
@@ -169,6 +170,11 @@
                 <artifactId>jmeter-java-sampler-excel</artifactId>
                 <version>${jmeter-java-sampler-excel.version}</version>
             </dependency>
+            <dependency>
+                <groupId>org.qamation.jmeter</groupId>
+                <artifactId>jmeter-config-data-provider</artifactId>
+                <version>${jmeter-config-data-provider.version}</version>
+            </dependency>
         </dependencies>
     </dependencyManagement>
 
@@ -241,6 +247,7 @@
         <module>jmeter-java-sampler-keyboard</module>
         <module>jmeter-java-sampler-wmq</module>
         <module>jmeter-java-sampler-excel</module>
+        <module>jmeter-config-data-provider</module>
         <!--
 
         -->
