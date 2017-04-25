@@ -24,8 +24,7 @@ public class ConfigDataProvider extends ConfigTestElement
     protected String dataProviderImplClassName;
     protected DataProvider dataProvider = null;
 
-    private Iterator<String[]> dataIterator;
-    private String[] fieldNames;
+
 
 
 
@@ -33,7 +32,6 @@ public class ConfigDataProvider extends ConfigTestElement
     public void iterationStart(LoopIterationEvent loopIterationEvent) {
         if (dataProvider == null) {
             dataProvider = DataProviderFactory.createDataProviderInstance(dataProviderImplClassName,filename);
-
         }
 
     }

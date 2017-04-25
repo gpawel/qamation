@@ -22,6 +22,7 @@ public class ExcelDataProvider implements DataProvider, TestStateListener {
     }
 
     public ExcelDataProvider(String fileName, int sheetIndex) {
+        // copy file
         excelReader = ExcelReader.createExcelReader(fileName,sheetIndex);
     }
 
