@@ -10,30 +10,6 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>org.qamation.jmeter</groupId>
-    <artifactId>jmeter-config-data-provider</artifactId>
-    <version>${jmeter-config-data-provider.version}</version>
-    <build>
-        <resources>
-            <resource>
-                <directory>src/main/java</directory>
-                <includes>
-                    <include>**/*.properties</include>
-                </includes>
-            </resource>
-        </resources>
-    </build>
-    <artifactId>jmeter-config-data-provider</artifactId>
-    <version>${jmeter-config-data-provider.version}</version>
-    <build>
-        <resources>
-            <resource>
-                <directory>src/main/java</directory>
-                <includes>
-                    <include>**/*.properties</include>
-                </includes>
-            </resource>
-        </resources>
-    </build>
     <artifactId>jmeter-java-sampler-abstracts</artifactId>
     <version>${jmeter-java-sampler-abstracts.version}</version>
     <dependencies>
@@ -49,8 +25,6 @@
             <artifactId>utils</artifactId>
         </dependency>
     </dependencies>
+
+
 </project>
-
-<!--
-
--->
