@@ -6,5 +6,5 @@ import java.util.Iterator;
 public interface DataProvider {
     public String[] getFieldNames();
     public int getLinesNumber();
-    public Iterator<String> getIterator();
+    public Iterator<String[]> getIterator();
 }

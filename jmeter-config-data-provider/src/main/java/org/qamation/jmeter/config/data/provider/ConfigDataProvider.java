@@ -6,6 +6,8 @@ import org.apache.jmeter.engine.event.LoopIterationListener;
 import org.apache.jmeter.engine.util.NoConfigMerge;
 import org.apache.jmeter.testbeans.TestBean;
 import org.apache.jmeter.testelement.TestStateListener;
+import org.apache.jmeter.threads.JMeterContext;
+import org.apache.jmeter.threads.JMeterVariables;
 import org.apache.jorphan.logging.LoggingManager;
 import org.apache.log.Logger;
 
@@ -23,6 +25,7 @@ public class ConfigDataProvider extends ConfigTestElement
     protected String filename;
     protected String dataProviderImplClassName;
     protected DataProvider dataProvider = null;
+    protected Iterator<String[]> dataIterator=null;
 
 
 
@@ -30,9 +33,16 @@ public class ConfigDataProvider extends ConfigTestElement
 
     @Override
     public void iterationStart(LoopIterationEvent loopIterationEvent) {
+        final JMeterContext context = getThreadContext();
         if (dataProvider == null) {
             dataProvider = DataProviderFactory.createDataProviderInstance(dataProviderImplClassName,filename);
+            dataIterator = dataProvider.getIterator();
         }
+        if (!dataIterator.hasNext()) {
+            dataIterator = dataProvider.getIterator();
+        }
+        String[] dataLine = dataIterator.next();
+        JMeterVariables threadVars = context.getVariables();
 
     }
 
@@ -67,7 +77,7 @@ public class ConfigDataProvider extends ConfigTestElement
     }
 
     @Override
-    public Iterator<String> getIterator() {
+    public Iterator<String[]> getIterator() {
         return null;
     }
 

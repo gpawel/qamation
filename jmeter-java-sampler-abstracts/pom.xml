@@ -12,13 +12,7 @@
     <groupId>org.qamation.jmeter</groupId>
     <artifactId>jmeter-java-sampler-abstracts</artifactId>
     <version>${jmeter-java-sampler-abstracts.version}</version>
-    <dependencies>
-        <dependency>
-            <groupId>org.qamation</groupId>
-            <artifactId>excel-data-privider</artifactId>
-        </dependency>
-    </dependencies>
-
+    
     <dependencies>
         <dependency>
             <groupId>org.qamation</groupId>

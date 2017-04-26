@@ -9,6 +9,7 @@ import org.apache.jmeter.config.Arguments;
 import org.apache.jmeter.samplers.SampleResult;
 import org.qamation.utils.FileUtils;
 
+import java.io.File;
 import java.nio.file.Path;
 import java.security.SecureRandom;
 
@@ -73,20 +74,12 @@ public class ExcelDataProviderConfigurator  extends AbstractExcelDataProvider  {
 
     private String createTempFile(String exceFileName) {
         log.info("creating working file.");
-        String suffix = FileUtils.getFileNameExtention(exceFileName);
-        String prefix = generateFileNamePrefix();
-        String tempFileName = prefix+suffix;
-        log.info("working file name: "+tempFileName);
-        Path p = FileUtils.copyFileToSameFolder(exceFileName,tempFileName);
+        String tempFileName = FileUtils.createTempFile(exceFileName);
         log.info("working file is created.");
-        return p.toString();
+        return tempFileName;
     }
 
-    private String generateFileNamePrefix() {
-        SecureRandom sr = new SecureRandom();
-        long l = sr.nextLong();
-        return String.valueOf(l);
-    }
+
 
 
 }

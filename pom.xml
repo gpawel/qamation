@@ -4,7 +4,7 @@
 	<groupId>org.qamation</groupId>
     <artifactId>qamation</artifactId>
 	<packaging>pom</packaging>
-	<version>3.1.0</version>
+	<version>3.1.1</version>
 
     <url>http://maven.apache.org</url>
 
@@ -28,7 +28,7 @@
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
         <mq.jms>8.0.0.4</mq.jms>
-        <utils.version>3.1.0</utils.version>
+        <utils.version>3.1.1</utils.version>
         <webdriver-utils.version>3.0.0</webdriver-utils.version>
         <web-page.version>3.0.0</web-page.version>
         <wmq-wrapper.version>3.0.0</wmq-wrapper.version>

@@ -2,6 +2,8 @@ package org.qamation.utils;
 
 import java.io.File;
 import java.nio.file.*;
+import java.security.SecureRandom;
+
 import static java.nio.file.StandardCopyOption.*;
 
 /**
@@ -38,6 +40,24 @@ public class FileUtils {
     public static String getFileNameExtention(String fileName) {
         String ext = fileName.substring(fileName.lastIndexOf("."));
         return ext;
+    }
+
+    public static String createTempFile(String origFileName) {
+        String prefix = generateFileNamePrefix();
+        return createTempFile(origFileName,prefix);
+    }
+
+    public static String createTempFile(String origFileName, String tempFileNamePrefix) {
+        String suffix = FileUtils.getFileNameExtention(origFileName);
+        String tempFileName = tempFileNamePrefix+suffix;
+        Path p = FileUtils.copyFileToSameFolder(origFileName,tempFileName);
+        return p.toString();
+    }
+
+    private static String generateFileNamePrefix() {
+        SecureRandom sr = new SecureRandom();
+        long l = sr.nextLong();
+        return String.valueOf(l);
     }
 
 }
