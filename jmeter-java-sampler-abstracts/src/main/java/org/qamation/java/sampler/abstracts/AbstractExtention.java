@@ -21,6 +21,7 @@ public abstract class AbstractExtention extends AbstractJavaSamplerClient {
 
 	protected JavaSamplerContext ctx;
 	protected boolean shouldStop;
+	protected SampleResult result;
 
 
 	abstract protected void toDo();
@@ -43,14 +44,18 @@ public abstract class AbstractExtention extends AbstractJavaSamplerClient {
 	}
 
 	public SampleResult implementTest() {
+		result = new SampleResult();
+		result.sampleStart();
 		try {	
 			readSamplerParameters();
 			toDo();
-			SampleResult result = assembleTestResult();
+			assembleTestResult();
+			result.sampleEnd();
 			return result;
 			
 		} catch (Exception e) {
-			SampleResult result = assembleTestFailure(e);
+			assembleTestFailure(e);
+			result.sampleEnd();
 			return result;
 		}
 	}
@@ -120,7 +125,7 @@ public abstract class AbstractExtention extends AbstractJavaSamplerClient {
 	
 	@Deprecated
 	protected SampleResult setFailure(String message, Exception e) {		
-		SampleResult result = setFailure(message);		
+		setFailure(message);
 		result.setResponseMessage(message + "\n\n" + e.toString());
 		result.setResponseData((StringUtils.getStackTrace(e)).getBytes());
 		result.setStopThread(shouldStop);
@@ -129,7 +134,6 @@ public abstract class AbstractExtention extends AbstractJavaSamplerClient {
 	
 	@Deprecated
 	protected SampleResult setFailure(String message) {
-		SampleResult result = new SampleResult();
 		result.setSuccessful(false);
 		result.setResponseCode("FAILED");
 		result.setResponseMessage(message);
@@ -138,7 +142,6 @@ public abstract class AbstractExtention extends AbstractJavaSamplerClient {
 	
 	@Deprecated
 	protected SampleResult setSuccess(String message, byte[] data) {
-		SampleResult result = new SampleResult();
 		result.setResponseCodeOK();
 		result.setResponseMessage(message);
 		result.setResponseData(data);
@@ -147,14 +150,14 @@ public abstract class AbstractExtention extends AbstractJavaSamplerClient {
 	}
 
 	protected SampleResult setSuccess(String label, String responseMessage, String responseData) {
-		SampleResult result = getNewSampleResult(label, responseMessage, responseData);
+		getNewSampleResult(label, responseMessage, responseData);
 		result.setSuccessful(true);
 		result.setResponseCode("OK");
 		return result;
 	}
 	
 	protected SampleResult setFailure(String label, String responseMessage, String responseData) {
-		SampleResult result = getNewSampleResult(label, responseMessage, responseData);
+		getNewSampleResult(label, responseMessage, responseData);
 		result.setSuccessful(false);
 		result.setResponseCode("FAILED");
 		result.setStopTest(shouldStop);
@@ -162,7 +165,6 @@ public abstract class AbstractExtention extends AbstractJavaSamplerClient {
 	}
 	
 	protected SampleResult getNewSampleResult(String label, String responseMessage, String responseData) {
-		SampleResult result = new SampleResult();
 		if (label != null) result.setSampleLabel(label);
 		if (responseMessage != null) result.setResponseMessage(responseMessage);
 		if (responseData != null) result.setResponseData(responseData.getBytes());
