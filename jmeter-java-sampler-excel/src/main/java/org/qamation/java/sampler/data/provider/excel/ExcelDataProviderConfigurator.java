@@ -45,19 +45,24 @@ public class ExcelDataProviderConfigurator  extends AbstractExcelDataProvider  {
             setObjectIntoVariables("EXCELUTILS",excelUtils);
         }
         catch (Exception e) {
-            assembleTestFailure(e);
+            log.error("Unable to create Excel Data provider.",e);
+            throw new RuntimeException(e);
         }
     }
 
 
-
+    @Override
     protected SampleResult assembleTestResult() {
         return setSuccess(null
                 ,"Data provider based on file "+exceFileName+" is created.\n It can be accessed through ${"+dataProviderName+"} variable"
                 ,null);
     }
+
+    @Override
     protected SampleResult assembleTestFailure(Exception e) {
-        SampleResult result = setFailure(null,"Unable to create a data provider from",e.toString());
+        result = setFailure(null,"Unable to create a data provider from\n"+e.toString(),e.toString());
+        result.setStopTestNow(true);
+        result.setStopThread(true);
         return result;
     }
     private int readActiveWorkSheet() {

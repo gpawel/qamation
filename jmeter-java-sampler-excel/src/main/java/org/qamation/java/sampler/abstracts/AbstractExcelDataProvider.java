@@ -28,6 +28,7 @@ public abstract class AbstractExcelDataProvider extends AbstractExtention {
         hasNextVarName = getSamplerParameterValue(HAS_NEXT);
         if (hasNextVarName.isEmpty()) throw new RuntimeException("HAS_NEXT VARIABLE NAME CANNOT BE EMPTY");
 
+
     }
 
 }

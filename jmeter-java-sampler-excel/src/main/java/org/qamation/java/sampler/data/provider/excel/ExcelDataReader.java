@@ -30,6 +30,10 @@ public class ExcelDataReader extends AbstractExcelDataProvider  {
         super.readSamplerParameters();
         it = (Iterator<String[]>) getObjectFromVariables(dataProviderName);
         excelUtils = (ExcelUtils) getObjectFromVariables("EXCELUTILS");
+        if (excelUtils == null){
+            log.error("Data Provider is null");
+            throw new NullPointerException("Data Provider is null");
+        }
         fieldNames = excelUtils.getFieldNames();
     }
 
@@ -58,7 +62,12 @@ public class ExcelDataReader extends AbstractExcelDataProvider  {
     }
     @Override
     protected SampleResult assembleTestFailure(Exception e) {
-        SampleResult result = setFailure(null,"Unable to read from data source.", StringUtils.getStackTrace(e));
+        SampleResult result = setFailure(null,"Unable to read from data source."+e.toString(), StringUtils.getStackTrace(e));
+        if (e instanceof NullPointerException) {
+            result.setStopThread(true);
+            result.setStopTestNow(true);
+            result.setResponseMessage("Data Provider is null");
+        }
         return result;
     }
 
