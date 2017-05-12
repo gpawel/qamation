@@ -1,6 +1,4 @@
-package org.qamation.jmeter.config.data.provider;
-
-import org.openqa.selenium.WebDriver;
+package org.qamation.data.provider;
 
 import java.lang.reflect.Constructor;
 
@@ -8,15 +6,25 @@ import java.lang.reflect.Constructor;
  * Created by Pavel on 2017-04-23.
  */
 public class DataProviderFactory {
-    public static Object createInstance(String className, String fileName) {
+    protected static Class<?> getClassForName(String className) {
         try {
             Class<?> pageClass = Class.forName(className);
+            return pageClass;
+        }
+        catch(Exception e) {
+            throw new RuntimeException("Unable to get Class for "+className,e);
+        }
+    }
+
+    protected static Object createInstance(String className, String fileName) {
+        try {
+            Class<?> pageClass = getClassForName(className);
             Constructor<?> cons = pageClass.getConstructor(String.class);
             Object obj = cons.newInstance(fileName);
             return obj;
         }
         catch (Exception e) {
-            throw new RuntimeException("Cannot create DataProvider for class "+className,e);
+            throw new RuntimeException("Cannot create Instance for class "+className,e);
         }
     }
 

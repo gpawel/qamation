@@ -10,8 +10,12 @@ import org.apache.jmeter.threads.JMeterContext;
 import org.apache.jmeter.threads.JMeterVariables;
 import org.apache.jorphan.logging.LoggingManager;
 import org.apache.log.Logger;
+import org.qamation.data.provider.DataProvider;
+import org.qamation.data.provider.DataProviderFactory;
+import org.qamation.jmeter.config.data.provider.excel.ExcelDataProvider;
 
 import java.util.Iterator;
+
 
 
 public class ConfigDataProvider extends ConfigTestElement
@@ -24,7 +28,7 @@ public class ConfigDataProvider extends ConfigTestElement
     private static final Logger log = LoggingManager.getLoggerForClass();
     protected String filename;
     protected String dataProviderImplClassName;
-    protected DataProvider dataProvider = null;
+    protected ExcelDataProvider dataProvider = null;
     protected Iterator<String[]> dataIterator=null;
 
 
@@ -66,20 +70,7 @@ public class ConfigDataProvider extends ConfigTestElement
         testEnded();
     }
 
-    @Override
-    public String[] getFieldNames() {
-        return new String[0];
-    }
 
-    @Override
-    public int getLinesNumber() {
-        return 0;
-    }
-
-    @Override
-    public Iterator<String[]> getIterator() {
-        return null;
-    }
 
     public String getFilename() {
         return filename;
@@ -95,5 +86,10 @@ public class ConfigDataProvider extends ConfigTestElement
 
     public void setDataProviderImplClassName(String dataProviderImplClassName) {
         this.dataProviderImplClassName = dataProviderImplClassName;
+    }
+
+    @Override
+    public Object[][] getData() {
+        return new Object[0][];
     }
 }

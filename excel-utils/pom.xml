@@ -8,21 +8,15 @@
         <version>3.1.1</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
-    <groupId>org.qamation.jmeter</groupId>
-    <artifactId>jmeter-java-sampler-excel</artifactId>
-    <version>${jmeter-java-sampler-excel.version}</version>
+    <artifactId>excel-utils</artifactId>
+    <version>${excel-utils.version}</version>
+    <name>excel-utils</name>
     <dependencies>
-        <dependency>
-            <groupId>org.qamation.jmeter</groupId>
-            <artifactId>jmeter-java-sampler-abstracts</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.qamation</groupId>
-            <artifactId>excel-utils</artifactId>
-        </dependency>
         <dependency>
             <groupId>org.qamation</groupId>
             <artifactId>utils</artifactId>
         </dependency>
     </dependencies>
+
+
 </project>

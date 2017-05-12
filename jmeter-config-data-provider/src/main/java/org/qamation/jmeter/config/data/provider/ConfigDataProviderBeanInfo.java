@@ -3,7 +3,6 @@ package org.qamation.jmeter.config.data.provider;
 import org.apache.jmeter.testbeans.BeanInfoSupport;
 import org.apache.jorphan.logging.LoggingManager;
 import org.apache.log.Logger;
-import org.qamation.jmeter.config.data.provider.excel.ExcelDataProvider;
 
 import java.beans.PropertyDescriptor;
 

@@ -26,7 +26,7 @@
         <stringProp name="ThreadGroup.delay"></stringProp>
       </ThreadGroup>
       <hashTree>
-        <org.qamation.jmeter.config.data.provider.excel.ExcelDataProvider guiclass="TestBeanGUI" testclass="org.qamation.jmeter.config.data.provider.excel.ExcelDataProvider" testname="ExcelDataProvider" enabled="true"/>
+        <org.qamation.jmeter.config.data.provider.excel.ExcelData guiclass="TestBeanGUI" testclass="org.qamation.jmeter.config.data.provider.excel.ExcelData" testname="ExcelDataProvider" enabled="true"/>
         <hashTree/>
       </hashTree>
     </hashTree>

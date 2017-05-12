@@ -9,7 +9,7 @@
     <url>http://maven.apache.org</url>
 
     <properties>
-        <qamation.version>3.1.0</qamation.version>
+        <qamation.version>3.1.1</qamation.version>
         <maven.jar.plugin.version>2.6</maven.jar.plugin.version>
         <httpcomponents.version>4.5.2</httpcomponents.version>
         <junit.version>4.12</junit.version>
@@ -29,10 +29,11 @@
         <maven.compiler.target>1.8</maven.compiler.target>
         <mq.jms>8.0.0.4</mq.jms>
         <utils.version>3.1.1</utils.version>
+        <data-provider.version>1.0.0</data-provider.version>
         <webdriver-utils.version>3.0.0</webdriver-utils.version>
         <web-page.version>3.0.0</web-page.version>
         <wmq-wrapper.version>3.0.0</wmq-wrapper.version>
-        <excel-data-privider.version>3.0.0</excel-data-privider.version>
+        <excel-utils.version>3.0.0</excel-utils.version>
         <keyboard.version>3.0.0</keyboard.version>
         <navigator.version>3.0.0</navigator.version>
         <jmeter-java-sampler-abstracts.version>3.0.0</jmeter-java-sampler-abstracts.version>
@@ -132,8 +133,8 @@
             </dependency>
             <dependency>
                 <groupId>org.qamation</groupId>
-                <artifactId>excel-data-privider</artifactId>
-                <version>${excel-data-privider.version}</version>
+                <artifactId>excel-utils</artifactId>
+                <version>${excel-utils.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.qamation</groupId>
@@ -144,6 +145,11 @@
                 <groupId>org.qamation</groupId>
                 <artifactId>navigator</artifactId>
                 <version>${navigator.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.qamation</groupId>
+                <artifactId>data-provider</artifactId>
+                <version>${data-provider.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.qamation.jmeter</groupId>
@@ -239,15 +245,17 @@
         <module>webdriver-utils</module>
         <module>web-page</module>
         <module>wmq-wrapper</module>
-        <module>excel-data-privider</module>
+        <module>excel-utils</module>
         <module>keyboard</module>
         <module>navigator</module>
+        <module>data-provider</module>
         <module>jmeter-java-sampler-abstracts</module>
         <module>jmeter-java-sampler-web-extension</module>
         <module>jmeter-java-sampler-keyboard</module>
         <module>jmeter-java-sampler-wmq</module>
         <module>jmeter-java-sampler-excel</module>
         <module>jmeter-config-data-provider</module>
+
         <!--
 
         -->
