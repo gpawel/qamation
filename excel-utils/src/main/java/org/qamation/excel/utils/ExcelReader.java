@@ -40,6 +40,15 @@ public class ExcelReader {
         };
     }
 
+    public String[][] getData() {
+        int lines = getNmberOfLinesInActiveWorkSheet();
+        String[][] data = new String[lines][];
+        for (int i = 0; i < lines; i++ ) {
+            data[i] = readValuesFromLine(i);
+        }
+        return data;
+    }
+
     public int getNmberOfLinesInActiveWorkSheet() {
         return sheet.getLastRowNum();
     }

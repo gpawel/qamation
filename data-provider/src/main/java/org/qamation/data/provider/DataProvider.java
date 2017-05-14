@@ -5,4 +5,5 @@ package org.qamation.data.provider;
  */
 public interface DataProvider {
     Object[][] getData();
+    public void close();
 }
