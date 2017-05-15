@@ -19,8 +19,8 @@ public class DataProviderFactory {
     protected static Object createInstance(String className, String fileName) {
         try {
             Class<?> pageClass = getClassForName(className);
-            Constructor<?> cons = pageClass.getConstructor(String.class);
-            Object obj = cons.newInstance(fileName);
+            Constructor<?> cons = pageClass.getConstructor(String.class,String.class);
+            Object obj = cons.newInstance(className,fileName);
             return obj;
         }
         catch (Exception e) {
