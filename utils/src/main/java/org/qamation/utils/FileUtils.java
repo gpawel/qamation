@@ -3,8 +3,7 @@ package org.qamation.utils;
 import java.io.File;
 import java.nio.file.*;
 import java.security.SecureRandom;
-
-import static java.nio.file.StandardCopyOption.*;
+import java.util.ArrayList;
 
 /**
  * Created by Pavel on 2017-03-25.
@@ -54,10 +53,40 @@ public class FileUtils {
         return p.toString();
     }
 
+    public static String[] listFilesInFolder(String root) {
+        File file = new File(root);
+        root = file.getPath(); // to convert c:/tmp/mq into c:\tmp\mq if needed.
+        ArrayList<String> list = new ArrayList<String>();
+        if (file.exists()) {
+                processFile(root, file, list);
+        }
+        else {
+            throw new RuntimeException("There is no file of dirrectory at: "+root);
+        }
+        return list.toArray(new String[]{});
+    }
+
+    private static void processFile(String startPath, File file, ArrayList<String> list) {
+        if (file.isDirectory()) {
+            for (String fileName : file.list()) {
+                String path = startPath + FILE_SEPARATOR + fileName;
+                processFile(path, new File(path), list);
+            }
+        }
+        else {
+            list.add(file.getPath());
+        }
+
+
+    }
+
+
     private static String generateFileNamePrefix() {
         SecureRandom sr = new SecureRandom();
         long l = sr.nextLong();
         return String.valueOf(l);
     }
+
+
 
 }

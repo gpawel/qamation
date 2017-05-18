@@ -5,7 +5,10 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.nio.file.Path;
 
 /**
@@ -58,4 +61,20 @@ public class FileUtilsTests {
         Assert.assertEquals(tempFolder+FileUtils.FILE_SEPARATOR +"copy_file.def",r.toString());
     }
 
+    @Test
+    public void listOfFiles() throws IOException {
+        //C:/Repository/AutoTest_Frontier/frontier_autotests/all-tests-parent/serenity-bdd-tests/src/test/resources/stories
+        //String rootPath="c:/tmp/mq";
+        String rootPath = "C:/Repository/AutoTest_Frontier/frontier_autotests/all-tests-parent/serenity-bdd-tests/src/test/resources/stories";
+        String[] list = FileUtils.listFilesInFolder(rootPath);
+        FileWriter fw = new FileWriter(rootPath+FileUtils.FILE_SEPARATOR+String.valueOf(System.currentTimeMillis()),true);
+        BufferedWriter out = new BufferedWriter(fw);
+        for (String s : list) {
+            System.out.println(s);
+            out.write(s);
+            out.write("\r\n");
+        }
+        out.flush();
+        out.close();
+    }
 }
