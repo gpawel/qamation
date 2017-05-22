@@ -1,5 +1,7 @@
 package org.qamation.jmeter.config.data.provider;
 
+import org.apache.jorphan.logging.LoggingManager;
+import org.apache.log.Logger;
 import org.qamation.data.provider.DataProvider;
 import org.qamation.excel.utils.ExcelReader;
 
@@ -9,7 +11,7 @@ import java.io.IOException;
  * Created by Pavel on 2017-05-14.
  */
 public class ExcelToDataProviderAdapter implements DataProvider {
-
+    private static final Logger log = LoggingManager.getLoggerForClass();
     protected ExcelReader reader;
     protected Object[][] data;
     protected String fileName;

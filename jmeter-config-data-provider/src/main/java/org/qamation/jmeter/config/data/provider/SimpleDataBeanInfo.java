@@ -18,20 +18,6 @@ public class SimpleDataBeanInfo extends BeanInfoSupport {
     private static final String CLASSNAME = "dataProviderImplClassName";
     private static final String RESET = "resetAtEOF";
     private static final String SOURCENAME = "dataLabel";
-    private static final String SHAREMODE = "shareMode";
-
-    // Access needed from CSVDataSet
-    static final String[] SHARE_TAGS = new String[3];
-    static final int SHARE_ALL    = 0;
-    static final int SHARE_GROUP  = 1;
-    static final int SHARE_THREAD = 2;
-
-    // Store the resource keys
-    static {
-        SHARE_TAGS[SHARE_ALL]    = "shareMode.all"; //$NON-NLS-1$
-        SHARE_TAGS[SHARE_GROUP]  = "shareMode.group"; //$NON-NLS-1$
-        SHARE_TAGS[SHARE_THREAD] = "shareMode.thread"; //$NON-NLS-1$
-    }
 
 
     public SimpleDataBeanInfo() {
@@ -40,7 +26,7 @@ public class SimpleDataBeanInfo extends BeanInfoSupport {
         log.info("Bean Info super is done.");
         log.info("creating group");
 
-        createPropertyGroup("dataprovider_properties", new String[] {FILENAME,CLASSNAME,RESET,SOURCENAME,SHAREMODE});
+        createPropertyGroup("dataprovider_properties", new String[] {FILENAME,CLASSNAME,RESET,SOURCENAME});
 
         PropertyDescriptor p = property(FILENAME);
         p.setValue(NOT_UNDEFINED,Boolean.TRUE);

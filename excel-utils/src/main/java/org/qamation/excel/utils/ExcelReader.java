@@ -34,8 +34,7 @@ public class ExcelReader {
             }
             @Override
             public String[] next() {
-                cursor ++;
-                return readValuesFromLine(cursor-1);
+                return readValuesFromLine(cursor++);
             }
         };
     }
@@ -50,7 +49,7 @@ public class ExcelReader {
     }
 
     public int getNmberOfLinesInActiveWorkSheet() {
-        return sheet.getLastRowNum();
+        return sheet.getLastRowNum()+1;
     }
 
     public String[] readValuesFromLine(int index) {

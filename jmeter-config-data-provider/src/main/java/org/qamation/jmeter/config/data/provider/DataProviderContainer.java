@@ -19,39 +19,44 @@ public class DataProviderContainer {
         return getDataProviderContainer(fileName,dataProviderImplClassName,"");
     }
 
-    public static DataProviderContainer getDataProviderContainer(String fileName, String dataProviderImplClassName, String suffix) {
+    synchronized public static DataProviderContainer getDataProviderContainer(String fileName, String dataProviderImplClassName, String suffix) {
+        log.info("\nGetting container for: "+fileName);
         String storageId=fileName+suffix;
         DataProviderContainer container;
         if (storedge.containsKey(storageId)) {
             container = storedge.get(storageId);
             return container;
         }
+        log.info("\nCreating new container for: "+fileName);
         container = new DataProviderContainer(dataProviderImplClassName, fileName);
+        log.info("Container size: "+container.getDataSize());
         storedge.put(storageId,container);
         return container;
     }
 
-    private int cursor=0;
-    private Object[][] data=null;
+    private int cursor;
     private DataProvider dataProvider;
     private String fileName;
+    private String dataProviderImplClassName;
+    private String suffix;
 
     private DataProviderContainer(String dataProviderImplClassName, String fileName) {
         this.dataProvider = DataProviderFactory.createDataProviderInstance(dataProviderImplClassName, fileName);
-        this.data = dataProvider.getData();
         this.fileName = fileName;
+        this.dataProviderImplClassName=dataProviderImplClassName;
+        this.cursor = 0;
     }
 
     public int getDataSize() {
-        return data.length;
+        return dataProvider.getData().length;
     }
 
     public void resetData() {
-        cursor = 0;
+        this.cursor = 0;
     }
 
     public Object[] getNextDataLine(boolean shouldReset) {
-        if (cursor > data.length) {
+        if (cursor > dataProvider.getData().length-1) {
             if (shouldReset) {
                 resetData();
             }
@@ -59,7 +64,7 @@ public class DataProviderContainer {
                 throw new JMeterStopThreadException("End of "+fileName+" is reached");
             }
         }
-        return data[cursor++];
+        return dataProvider.getData()[cursor++];
     }
 
     public DataProvider getDataProvider() { return dataProvider; }
@@ -68,6 +73,6 @@ public class DataProviderContainer {
 
     public String getFileName() { return fileName; }
 
-    public Object[][] getData() { return data; }
+    public Object[][] getData() { return dataProvider.getData(); }
 
 }

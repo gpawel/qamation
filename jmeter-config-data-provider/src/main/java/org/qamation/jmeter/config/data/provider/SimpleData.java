@@ -15,6 +15,7 @@ import org.apache.jmeter.threads.JMeterVariables;
 import org.apache.jorphan.logging.LoggingManager;
 import org.apache.jorphan.util.JMeterStopThreadException;
 import org.apache.log.Logger;
+import org.qamation.data.provider.DataProvider;
 
 import java.beans.BeanInfo;
 import java.beans.IntrospectionException;
@@ -46,10 +47,11 @@ public class SimpleData extends ConfigTestElement
     public void iterationStart(LoopIterationEvent loopIterationEvent) {
 
         final JMeterContext context = getThreadContext();
+        log.info("Thread Name: "+context.getThread().getThreadName());
+        log.info("Thread Group: "+context.getThreadGroup().getName());
         JMeterVariables threadVars = context.getVariables();
         container = DataProviderContainer.getDataProviderContainer(filename,dataProviderImplClassName);
-        int cursor = container.getCursor();
-        int dataSize = container.getDataSize();
+        log.info("Cursor: "+container.getCursor());
         Object[] dataLine = container.getNextDataLine(resetAtEOF);
         threadVars.putObject(dataLabel,dataLine);
 
@@ -70,15 +72,14 @@ public class SimpleData extends ConfigTestElement
     @Override
     public void testEnded() {
         log.info("Test ended");
-        //dataProvider.close();
+        container = DataProviderContainer.getDataProviderContainer(filename,dataProviderImplClassName);
+        container.getDataProvider().close();
     }
 
     @Override
     public void testEnded(String s) {
         testEnded();
     }
-
-
 
     public String getFilename() {
         return filename;
