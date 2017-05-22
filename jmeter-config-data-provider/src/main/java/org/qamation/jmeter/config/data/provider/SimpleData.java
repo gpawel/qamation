@@ -1,18 +1,26 @@
 package org.qamation.jmeter.config.data.provider;
 
+import org.apache.jmeter.config.CSVDataSetBeanInfo;
 import org.apache.jmeter.config.ConfigTestElement;
 import org.apache.jmeter.engine.event.LoopIterationEvent;
 import org.apache.jmeter.engine.event.LoopIterationListener;
 import org.apache.jmeter.engine.util.NoConfigMerge;
 import org.apache.jmeter.testbeans.TestBean;
+import org.apache.jmeter.testbeans.gui.GenericTestBeanCustomizer;
 import org.apache.jmeter.testelement.TestStateListener;
+import org.apache.jmeter.testelement.property.JMeterProperty;
+import org.apache.jmeter.testelement.property.StringProperty;
 import org.apache.jmeter.threads.JMeterContext;
 import org.apache.jmeter.threads.JMeterVariables;
 import org.apache.jorphan.logging.LoggingManager;
 import org.apache.jorphan.util.JMeterStopThreadException;
 import org.apache.log.Logger;
-import org.qamation.data.provider.DataProvider;
-import org.qamation.data.provider.DataProviderFactory;
+
+import java.beans.BeanInfo;
+import java.beans.IntrospectionException;
+import java.beans.Introspector;
+import java.beans.SimpleBeanInfo;
+import java.util.ResourceBundle;
 
 
 public class SimpleData extends ConfigTestElement
@@ -25,39 +33,33 @@ public class SimpleData extends ConfigTestElement
 
     protected String filename;
     protected String dataProviderImplClassName;
-    protected String dataSourceName;
+    protected String dataLabel;
     protected boolean resetAtEOF;
 
 
-    protected DataProvider dataProvider = null;
-    protected Object[][] data = null;
+    private DataProviderContainer container;
 
-    private int cursor;
-    private int dataSize;
+
+
 
     @Override
     public void iterationStart(LoopIterationEvent loopIterationEvent) {
-        if (cursor > dataSize) {
-            if (resetAtEOF) {
-                resetCursor();
-            }
-            else {
-                throw new JMeterStopThreadException("End of data from "+filename+" is reached.");
-            }
-        }
+
         final JMeterContext context = getThreadContext();
         JMeterVariables threadVars = context.getVariables();
-        threadVars.putObject(dataSourceName,data[cursor]);
-        cursor++;
+        container = DataProviderContainer.getDataProviderContainer(filename,dataProviderImplClassName);
+        int cursor = container.getCursor();
+        int dataSize = container.getDataSize();
+        Object[] dataLine = container.getNextDataLine(resetAtEOF);
+        threadVars.putObject(dataLabel,dataLine);
+
     }
+
+
 
     @Override
     public void testStarted() {
-        log.info("test started");
-        if (dataProvider == null) {
-            setDataProvider();
-            resetCursor();
-        }
+
     }
 
     @Override
@@ -67,8 +69,8 @@ public class SimpleData extends ConfigTestElement
 
     @Override
     public void testEnded() {
-        log.info("test ended");
-        dataProvider.close();
+        log.info("Test ended");
+        //dataProvider.close();
     }
 
     @Override
@@ -102,21 +104,13 @@ public class SimpleData extends ConfigTestElement
         this.resetAtEOF = resetAtEOF;
     }
 
-    public String getDataSourceName() {
-        return dataSourceName;
+    public String getDataLabel() {
+        return dataLabel;
     }
 
-    public void setDataSourceName(String dataSourceName) {
-        this.dataSourceName = dataSourceName;
+    public void setDataLabel(String dataLabel) {
+        this.dataLabel = dataLabel;
     }
 
-    protected void setDataProvider() {
-        dataProvider = DataProviderFactory.createDataProviderInstance(dataProviderImplClassName,filename);
-        data = dataProvider.getData();
-        dataSize=data.length;
-    }
 
-    protected void resetCursor() {
-        cursor = 0;
-    }
 }

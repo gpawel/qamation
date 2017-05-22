@@ -96,7 +96,7 @@ public class ExcelReader {
         String[] headers = new String[headerLength];
         for (int i=0; i<headerLength; i++) {
             Cell c = sheet.getRow(0).getCell(i, Row.MissingCellPolicy.CREATE_NULL_AS_BLANK);
-            headers[i] = c.getStringCellValue();
+            headers[i] = getStringValueFromCell(c);
         }
         return headers;
     }

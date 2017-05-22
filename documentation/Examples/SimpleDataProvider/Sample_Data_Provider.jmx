@@ -27,9 +27,9 @@
       </ThreadGroup>
       <hashTree>
         <org.qamation.jmeter.config.data.provider.SimpleData guiclass="TestBeanGUI" testclass="org.qamation.jmeter.config.data.provider.SimpleData" testname="Simple Data Provider" enabled="true">
-          <stringProp name="dataProviderImplClassName">org.qamation.jmeter.config.data.provider.ExcelSimpleDataAdapter</stringProp>
-          <stringProp name="dataSourceName">DATA</stringProp>
-          <stringProp name="filename">Simple_Excel_Data.xlsx</stringProp>
+          <stringProp name="dataProviderImplClassName">org.qamation.jmeter.config.data.provider.ExcelToDataProviderAdapter</stringProp>
+          <stringProp name="dataLabel">DATA</stringProp>
+          <stringProp name="filename">D:/QAMATION/documentation/Examples/SimpleDataProvider/Simple_Excel_Data.xlsx</stringProp>
           <boolProp name="resetAtEOF">false</boolProp>
         </org.qamation.jmeter.config.data.provider.SimpleData>
         <hashTree/>
@@ -43,6 +43,42 @@ for (int i=0; i &lt; line.length; i++) {
           <stringProp name="BeanShellSampler.parameters"></stringProp>
           <boolProp name="BeanShellSampler.resetInterpreter">false</boolProp>
         </BeanShellSampler>
+        <hashTree/>
+        <ResultCollector guiclass="ViewResultsFullVisualizer" testclass="ResultCollector" testname="View Results Tree" enabled="true">
+          <boolProp name="ResultCollector.error_logging">false</boolProp>
+          <objProp>
+            <name>saveConfig</name>
+            <value class="SampleSaveConfiguration">
+              <time>true</time>
+              <latency>true</latency>
+              <timestamp>true</timestamp>
+              <success>true</success>
+              <label>true</label>
+              <code>true</code>
+              <message>true</message>
+              <threadName>true</threadName>
+              <dataType>true</dataType>
+              <encoding>false</encoding>
+              <assertions>true</assertions>
+              <subresults>true</subresults>
+              <responseData>false</responseData>
+              <samplerData>false</samplerData>
+              <xml>false</xml>
+              <fieldNames>true</fieldNames>
+              <responseHeaders>false</responseHeaders>
+              <requestHeaders>false</requestHeaders>
+              <responseDataOnError>false</responseDataOnError>
+              <saveAssertionResultsFailureMessage>true</saveAssertionResultsFailureMessage>
+              <assertionsResultsToSave>0</assertionsResultsToSave>
+              <bytes>true</bytes>
+              <sentBytes>true</sentBytes>
+              <threadCounts>true</threadCounts>
+              <idleTime>true</idleTime>
+              <connectTime>true</connectTime>
+            </value>
+          </objProp>
+          <stringProp name="filename"></stringProp>
+        </ResultCollector>
         <hashTree/>
       </hashTree>
     </hashTree>

@@ -8,22 +8,22 @@ import java.io.IOException;
 /**
  * Created by Pavel on 2017-05-14.
  */
-public class ExcelSimpleDataAdapter implements DataProvider {
+public class ExcelToDataProviderAdapter implements DataProvider {
 
     protected ExcelReader reader;
     protected Object[][] data;
     protected String fileName;
 
-    public ExcelSimpleDataAdapter (String className, String fileName) {
 
-        new ExcelSimpleDataAdapter(className,fileName,0);
+    public ExcelToDataProviderAdapter(String className, String fileName) {
+        this(className,fileName,0);
     }
 
-    public ExcelSimpleDataAdapter(String className, String fileName, int sheetIndex) {
+    public ExcelToDataProviderAdapter(String className, String fileName, int sheetIndex) {
         //TODO COPY ORIGINAL FILE INTO A WORKING FILE
         this.fileName = fileName;
-        data = reader.getData();
-        reader = ExcelReader.createExcelReader(fileName,sheetIndex);
+        this.reader = ExcelReader.createExcelReader(fileName,sheetIndex);
+        this.data = reader.getData();
     }
 
     @Override

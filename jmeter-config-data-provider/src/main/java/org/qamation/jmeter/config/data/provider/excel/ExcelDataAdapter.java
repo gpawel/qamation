@@ -3,13 +3,12 @@ package org.qamation.jmeter.config.data.provider.excel;
 import org.apache.jorphan.logging.LoggingManager;
 import org.apache.log.Logger;
 
-import java.io.IOException;
 import java.util.Iterator;
-import org.qamation.excel.utils.ExcelReader;
-import org.qamation.jmeter.config.data.provider.ExcelSimpleDataAdapter;
+
+import org.qamation.jmeter.config.data.provider.ExcelToDataProviderAdapter;
 
 
-public class ExcelDataAdapter extends ExcelSimpleDataAdapter implements ExcelDataProvider {
+public class ExcelDataAdapter extends ExcelToDataProviderAdapter implements ExcelDataProvider {
     private static final Logger log = LoggingManager.getLoggerForClass();
     private int sheetIndex;
 
