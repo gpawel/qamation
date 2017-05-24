@@ -7,6 +7,7 @@ import org.qamation.data.provider.DataProvider;
 import org.qamation.data.provider.DataProviderFactory;
 
 import java.util.HashMap;
+import java.util.Set;
 
 /**
  * Created by Pavel on 2017-05-19.
@@ -21,7 +22,7 @@ public class DataProviderContainer {
 
     synchronized public static DataProviderContainer getDataProviderContainer(String fileName, String dataProviderImplClassName, String suffix) {
         log.info("\nGetting container for: "+fileName);
-        String storageId=fileName+suffix;
+        String storageId=fileName+"_"+suffix;
         DataProviderContainer container;
         if (storedge.containsKey(storageId)) {
             container = storedge.get(storageId);
@@ -33,6 +34,17 @@ public class DataProviderContainer {
         storedge.put(storageId,container);
         return container;
     }
+
+    synchronized public static void resetAtStart() {
+        Set<String> keys = storedge.keySet();
+        if (keys.size()>0) {
+            for (String key : keys) {
+                DataProviderContainer con = storedge.get(key);
+                con.resetData();
+            }
+        }
+    }
+
 
     private int cursor;
     private DataProvider dataProvider;

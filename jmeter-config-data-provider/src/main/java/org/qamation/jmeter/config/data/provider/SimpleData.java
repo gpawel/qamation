@@ -36,6 +36,7 @@ public class SimpleData extends ConfigTestElement
     protected String dataProviderImplClassName;
     protected String dataLabel;
     protected boolean resetAtEOF;
+    protected String shareMode;
 
 
     private DataProviderContainer container;
@@ -50,18 +51,38 @@ public class SimpleData extends ConfigTestElement
         log.info("Thread Name: "+context.getThread().getThreadName());
         log.info("Thread Group: "+context.getThreadGroup().getName());
         JMeterVariables threadVars = context.getVariables();
-        container = DataProviderContainer.getDataProviderContainer(filename,dataProviderImplClassName);
+        String suffix = getSuffix(context);
+        container = DataProviderContainer.getDataProviderContainer(filename,dataProviderImplClassName,suffix);
         log.info("Cursor: "+container.getCursor());
         Object[] dataLine = container.getNextDataLine(resetAtEOF);
         threadVars.putObject(dataLabel,dataLine);
 
     }
 
+    private String getSuffix(JMeterContext context) {
+        int modeInt = SimpleDataBeanInfo.getShareModeAsInt(shareMode);
+        String suffix;
+        switch(modeInt){
+            case SimpleDataBeanInfo.SHARE_ALL:
+                suffix = "";
+                break;
+            case SimpleDataBeanInfo.SHARE_GROUP:
+                suffix = context.getThreadGroup().getName();
+                break;
+            case SimpleDataBeanInfo.SHARE_THREAD:
+                suffix = context.getThread().getThreadName();
+                break;
+            default:
+                suffix = "";
+                break;
+        }
+        return suffix;
+    }
 
 
     @Override
     public void testStarted() {
-
+        DataProviderContainer.resetAtStart();
     }
 
     @Override
@@ -113,5 +134,11 @@ public class SimpleData extends ConfigTestElement
         this.dataLabel = dataLabel;
     }
 
+    public String getShareMode() {
+        return shareMode;
+    }
 
+    public void setShareMode(String shareMode) {
+        this.shareMode = shareMode;
+    }
 }

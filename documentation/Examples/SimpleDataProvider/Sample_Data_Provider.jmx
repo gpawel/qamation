@@ -17,7 +17,7 @@
           <boolProp name="LoopController.continue_forever">false</boolProp>
           <stringProp name="LoopController.loops">1</stringProp>
         </elementProp>
-        <stringProp name="ThreadGroup.num_threads">1</stringProp>
+        <stringProp name="ThreadGroup.num_threads">3</stringProp>
         <stringProp name="ThreadGroup.ramp_time">1</stringProp>
         <longProp name="ThreadGroup.start_time">1494802590000</longProp>
         <longProp name="ThreadGroup.end_time">1494802590000</longProp>
@@ -31,11 +31,12 @@
           <stringProp name="dataLabel">DATA</stringProp>
           <stringProp name="filename">D:/QAMATION/documentation/Examples/SimpleDataProvider/Simple_Excel_Data.xlsx</stringProp>
           <boolProp name="resetAtEOF">true</boolProp>
+          <stringProp name="shareMode">shareMode.group</stringProp>
         </org.qamation.jmeter.config.data.provider.SimpleData>
         <hashTree/>
         <LoopController guiclass="LoopControlPanel" testclass="LoopController" testname="Loop Controller" enabled="true">
           <boolProp name="LoopController.continue_forever">true</boolProp>
-          <stringProp name="LoopController.loops">6</stringProp>
+          <stringProp name="LoopController.loops">3</stringProp>
         </LoopController>
         <hashTree>
           <org.qamation.jmeter.config.data.provider.SimpleData guiclass="TestBeanGUI" testclass="org.qamation.jmeter.config.data.provider.SimpleData" testname="Simple Data Provider" enabled="true">
@@ -43,12 +44,13 @@
             <stringProp name="dataLabel">DATA1</stringProp>
             <stringProp name="filename">D:/QAMATION/documentation/Examples/SimpleDataProvider/Simple_Excel_Data.xlsx</stringProp>
             <boolProp name="resetAtEOF">true</boolProp>
+            <stringProp name="shareMode">shareMode.thread</stringProp>
           </org.qamation.jmeter.config.data.provider.SimpleData>
           <hashTree/>
           <BeanShellSampler guiclass="BeanShellSamplerGui" testclass="BeanShellSampler" testname="BeanShell Sampler" enabled="true">
             <stringProp name="BeanShellSampler.query">String[] line = vars.getObject(&quot;DATA&quot;);
 for (int i=0; i &lt; line.length; i++) {
-	log.info(&quot;Data[&quot;+i+&quot;]: &quot;+line[i]);
+	log.info(&quot;Data0[&quot;+i+&quot;]: &quot;+line[i]);
 }
 </stringProp>
             <stringProp name="BeanShellSampler.filename"></stringProp>
