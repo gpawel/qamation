@@ -31,7 +31,7 @@
           <stringProp name="dataLabel">DATA</stringProp>
           <stringProp name="filename">D:/QAMATION/documentation/Examples/SimpleDataProvider/Simple_Excel_Data.xlsx</stringProp>
           <boolProp name="resetAtEOF">true</boolProp>
-          <stringProp name="shareMode">shareMode.group</stringProp>
+          <stringProp name="shareMode">shareMode.all</stringProp>
         </org.qamation.jmeter.config.data.provider.SimpleData>
         <hashTree/>
         <LoopController guiclass="LoopControlPanel" testclass="LoopController" testname="Loop Controller" enabled="true">

@@ -59,6 +59,7 @@ public class SimpleDataBeanInfo extends BeanInfoSupport {
         p.setValue(DEFAULT,Boolean.FALSE);
 
         p = property(SHAREMODE);
+        p.setValue(RESOURCE_BUNDLE, getBeanDescriptor().getValue(RESOURCE_BUNDLE));
         p.setValue(NOT_UNDEFINED,Boolean.TRUE);
         p.setValue(DEFAULT, SHARE_TAGS[SHARE_ALL]);
         p.setValue(NOT_OTHER, Boolean.FALSE);
