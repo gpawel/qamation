@@ -34,13 +34,8 @@ public class ExcelToDataProviderAdapter implements DataProvider {
     }
 
     @Override
-    public void close() {
+    public void finalize() {
         data = null;
-        try {
-            reader.closeWorkBook();
-        }
-        catch (IOException e) {
-            throw new RuntimeException("Unable to close Excel Workbook from "+fileName);
-        }
+        reader = null;
     }
 }

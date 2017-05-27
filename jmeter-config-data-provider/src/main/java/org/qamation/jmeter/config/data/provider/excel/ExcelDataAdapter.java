@@ -40,14 +40,10 @@ public class ExcelDataAdapter extends ExcelToDataProviderAdapter implements Exce
         return reader.getActiveSheetIndex();
     }
 
-
     @Override
     public Object[][] getData() {
-        return new Object[0][];
+        return data;
     }
 
-    @Override
-    public void close() {
 
-    }
 }

@@ -157,4 +157,14 @@ public class ExcelReader {
         return "";
     }
 
+    @Override
+    public void finalize() {
+        try {
+            closeWorkBook();
+        }
+        catch (IOException e) {
+            throw new RuntimeException("Unable to close Excel Workbook from "+fileName);
+        }
+    }
+
 }

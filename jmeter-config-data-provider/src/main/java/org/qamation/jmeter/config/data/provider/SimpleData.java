@@ -1,27 +1,18 @@
 package org.qamation.jmeter.config.data.provider;
 
-import org.apache.jmeter.config.CSVDataSetBeanInfo;
+
 import org.apache.jmeter.config.ConfigTestElement;
 import org.apache.jmeter.engine.event.LoopIterationEvent;
 import org.apache.jmeter.engine.event.LoopIterationListener;
 import org.apache.jmeter.engine.util.NoConfigMerge;
 import org.apache.jmeter.testbeans.TestBean;
-import org.apache.jmeter.testbeans.gui.GenericTestBeanCustomizer;
+
 import org.apache.jmeter.testelement.TestStateListener;
-import org.apache.jmeter.testelement.property.JMeterProperty;
-import org.apache.jmeter.testelement.property.StringProperty;
 import org.apache.jmeter.threads.JMeterContext;
 import org.apache.jmeter.threads.JMeterVariables;
 import org.apache.jorphan.logging.LoggingManager;
-import org.apache.jorphan.util.JMeterStopThreadException;
 import org.apache.log.Logger;
-import org.qamation.data.provider.DataProvider;
 
-import java.beans.BeanInfo;
-import java.beans.IntrospectionException;
-import java.beans.Introspector;
-import java.beans.SimpleBeanInfo;
-import java.util.ResourceBundle;
 
 
 public class SimpleData extends ConfigTestElement
@@ -48,8 +39,6 @@ public class SimpleData extends ConfigTestElement
     public void iterationStart(LoopIterationEvent loopIterationEvent) {
 
         final JMeterContext context = getThreadContext();
-        log.info("Thread Name: "+context.getThread().getThreadName());
-        log.info("Thread Group: "+context.getThreadGroup().getName());
         JMeterVariables threadVars = context.getVariables();
         String suffix = getSuffix(context);
         container = DataProviderContainer.getDataProviderContainer(filename,dataProviderImplClassName,suffix);
@@ -93,8 +82,6 @@ public class SimpleData extends ConfigTestElement
     @Override
     public void testEnded() {
         log.info("Test ended");
-        container = DataProviderContainer.getDataProviderContainer(filename,dataProviderImplClassName);
-        container.getDataProvider().close();
     }
 
     @Override
