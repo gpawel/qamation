@@ -8,7 +8,6 @@ import org.qamation.utils.StringUtils;
 import org.qamation.web.page.WebPageFactory;
 import org.openqa.selenium.WebDriver;
 
-
 public class WebPageNavigator {
 	private final String SUBTOKENS_DELIMETER = " ";	
 	private final String SPECIAL_KEY_ENDS_WITH = "}";
@@ -43,7 +42,6 @@ public class WebPageNavigator {
 			String lastSubToken = subTokens[subTokens.length-1];
 			pressEnterIfLastSubTokenIsNotSpecialKey(lastSubToken);
 		}
-
 	}
 	
 	private void pressEnterIfLastSubTokenIsNotSpecialKey(String lastSubToken) {
