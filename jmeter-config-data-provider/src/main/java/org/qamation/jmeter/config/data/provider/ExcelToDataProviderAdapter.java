@@ -4,6 +4,7 @@ import org.apache.jorphan.logging.LoggingManager;
 import org.apache.log.Logger;
 import org.qamation.data.provider.DataProvider;
 import org.qamation.excel.utils.ExcelReader;
+import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 
@@ -11,7 +12,7 @@ import java.io.IOException;
  * Created by Pavel on 2017-05-14.
  */
 public class ExcelToDataProviderAdapter implements DataProvider {
-    private static final Logger log = LoggingManager.getLoggerForClass();
+    private static final org.slf4j.Logger log = LoggerFactory.getLogger(ExcelToDataProviderAdapter.class);
     protected ExcelReader reader;
     protected Object[][] data;
     protected String fileName;

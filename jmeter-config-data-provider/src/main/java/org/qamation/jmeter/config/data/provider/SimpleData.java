@@ -1,6 +1,7 @@
 package org.qamation.jmeter.config.data.provider;
 
 
+import org.apache.jmeter.config.CSVDataSet;
 import org.apache.jmeter.config.ConfigTestElement;
 import org.apache.jmeter.engine.event.LoopIterationEvent;
 import org.apache.jmeter.engine.event.LoopIterationListener;
@@ -12,7 +13,7 @@ import org.apache.jmeter.threads.JMeterContext;
 import org.apache.jmeter.threads.JMeterVariables;
 import org.apache.jorphan.logging.LoggingManager;
 import org.apache.log.Logger;
-
+import org.slf4j.LoggerFactory;
 
 
 public class SimpleData extends ConfigTestElement
@@ -21,7 +22,7 @@ public class SimpleData extends ConfigTestElement
         LoopIterationListener,
         NoConfigMerge,
         TestStateListener   {
-    private static final Logger log = LoggingManager.getLoggerForClass();
+    private static final org.slf4j.Logger log = LoggerFactory.getLogger(SimpleData.class);
 
     protected String filename;
     protected String dataProviderImplClassName;
