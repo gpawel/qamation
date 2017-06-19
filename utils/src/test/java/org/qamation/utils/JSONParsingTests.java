@@ -13,7 +13,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 
 public class JSONParsingTests {
-	String input = "{"
+	final private String input = "{"
 			 +" \"paging\" : {"
 			 +"     \"offset\" : 0,"
 			 +"     \"limit\" : 10"
@@ -45,9 +45,9 @@ public class JSONParsingTests {
 			 +" \"fcpoStatusEffDateCorp\" : \"09/09/12\","
 			 +" \"date\" : \"2016-01-21\""
 			 +"}";
-	JsonNode root;
-	Map<String,String> jsonMap;
-	JSONUtils jsonUtils;
+	private JsonNode root;
+	private Map<String,String> jsonMap;
+	private JSONUtils jsonUtils;
 	@Before
 	public void setUp() {
 		byte[] jsonData = input.getBytes();

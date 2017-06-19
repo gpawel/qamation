@@ -2,8 +2,8 @@ package org.qamation.jmeter.config.data.provider;
 
 import org.apache.jmeter.testbeans.BeanInfoSupport;
 import org.apache.jmeter.testbeans.gui.TypeEditor;
-import org.apache.jorphan.logging.LoggingManager;
-import org.apache.log.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.beans.PropertyDescriptor;
 
@@ -12,7 +12,7 @@ import java.beans.PropertyDescriptor;
  */
 public class SimpleDataBeanInfo extends BeanInfoSupport {
 
-    private static final Logger log = LoggingManager.getLoggerForClass();
+    private static final Logger log = LoggerFactory.getLogger(SimpleDataBeanInfo.class);
 
     private static final String FILENAME = "filename";
     private static final String CLASSNAME = "dataProviderImplClassName";

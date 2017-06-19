@@ -1,19 +1,23 @@
 package org.qamation.jmeter.apache.junit;
 
-import static org.junit.Assert.fail;
+import org.apache.jmeter.engine.util.CompoundVariable;
+import org.apache.jmeter.functions.AbstractFunction;
+import org.apache.jmeter.functions.InvalidVariableException;
+import org.apache.jmeter.util.JMeterUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.File;
+import java.net.URL;
 import java.nio.charset.Charset;
 import java.util.Collection;
 import java.util.LinkedList;
 import java.util.Locale;
 import java.util.MissingResourceException;
-import org.apache.jmeter.engine.util.CompoundVariable;
-import org.apache.jmeter.functions.AbstractFunction;
-import org.apache.jmeter.functions.InvalidVariableException;
-import org.apache.jmeter.util.JMeterUtils;
-import org.apache.jorphan.logging.LoggingManager;
-import org.apache.log.Logger;
+
+import static org.junit.Assert.fail;
+
+
 
 /**
  * Created by Pavel on 2017-06-05.
@@ -35,6 +39,9 @@ public class JMeterTestCase {
     static {
         if (JMeterUtils.getJMeterProperties() == null) {
             String file = "jmeter.properties";
+            ClassLoader classLoader = ClassLoader.getSystemClassLoader();
+            URL url = classLoader.getSystemResource(file);
+            file = url.getPath();
             File f = new File(file);
             if (!f.canRead()) {
                 System.out.println("Can't find " + file + " - trying bin directory");
@@ -102,7 +109,7 @@ public class JMeterTestCase {
         return file;
     }
 
-    protected static final Logger testLog = LoggingManager.getLoggerForClass();
+    protected static final org.slf4j.Logger testLog = org.slf4j.LoggerFactory. getLogger(JMeterTestCase.class);
 
     protected void checkInvalidParameterCounts(AbstractFunction func, int minimum)
             throws Exception {

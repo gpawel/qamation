@@ -10,7 +10,7 @@
 
     <properties>
         <qamation.version>3.1.1</qamation.version>
-        <maven.jar.plugin.version>2.6</maven.jar.plugin.version>
+        <maven.jar.plugin.version>3.0.0</maven.jar.plugin.version>
         <httpcomponents.version>4.5.2</httpcomponents.version>
         <junit.version>4.12</junit.version>
         <selenium.version>2.53.0</selenium.version>
@@ -23,8 +23,7 @@
         <log4j.version>1.2.17</log4j.version>
         <poi.version>3.14</poi.version>
         <poi.ooxml>3.14</poi.ooxml>
-        <logback.version>1.1.3</logback.version>
-        <slf4j.version>1.7.13</slf4j.version>
+        <!--logback.version>1.1.3</logback.version-->
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
         <mq.jms>8.0.0.4</mq.jms>
@@ -43,6 +42,7 @@
         <jmeter-java-sampler-excel.version>3.0.1</jmeter-java-sampler-excel.version>
         <jmeter-config-data-provider.version>1.0.0</jmeter-config-data-provider.version>
         <jmeter-test.version>1.0.0</jmeter-test.version>
+        <slf4j.version>1.7.25</slf4j.version>
     </properties>
 
     <dependencyManagement>
@@ -76,6 +76,16 @@
                 <groupId>org.apache.jmeter</groupId>
                 <artifactId>ApacheJMeter_java</artifactId>
                 <version>${apache.jmeter.java.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.slf4j</groupId>
+                <artifactId>slf4j-api</artifactId>
+                <version>${slf4j.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>log4j</groupId>
+                <artifactId>log4j</artifactId>
+                <version>${log4j.version}</version>
             </dependency>
             <dependency>
                 <groupId>com.sikulix</groupId>
@@ -112,18 +122,6 @@
                 <artifactId>com.ibm.mq.allclient</artifactId>
                 <version>${mq.jms}</version>
             </dependency>
-            <!--dependency>
-                <groupId>org.slf4j</groupId>
-                <artifactId>slf4j-api</artifactId>
-                <version>1.7.25</version>
-            </dependency-->
-            <!-- https://mvnrepository.com/artifact/org.apache.logging.log4j/log4j-slf4j-impl -->
-            <dependency>
-                <groupId>org.apache.logging.log4j</groupId>
-                <artifactId>log4j-slf4j-impl</artifactId>
-                <version>2.8.1</version>
-            </dependency>
-
             <dependency>
                 <groupId>org.qamation</groupId>
                 <artifactId>utils</artifactId>
@@ -229,6 +227,14 @@
             <artifactId>ApacheJMeter_java</artifactId>
         </dependency>
         <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>log4j</groupId>
+            <artifactId>log4j</artifactId>
+        </dependency>
+        <dependency>
             <groupId>com.sikulix</groupId>
             <artifactId>sikulixapi</artifactId>
         </dependency>
@@ -255,6 +261,21 @@
         <dependency>
             <groupId>com.ibm</groupId>
             <artifactId>com.ibm.mq.allclient</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+            <version>1.7.16</version>
+        </dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+            <version>1.7.16</version>
+        </dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+            <version>1.7.16</version>
         </dependency>
     </dependencies>
 

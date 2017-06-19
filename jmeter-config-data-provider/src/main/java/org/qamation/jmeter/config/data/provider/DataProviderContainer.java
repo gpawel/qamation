@@ -1,19 +1,20 @@
 package org.qamation.jmeter.config.data.provider;
 
-import org.apache.jorphan.logging.LoggingManager;
 import org.apache.jorphan.util.JMeterStopThreadException;
-import org.apache.log.Logger;
 import org.qamation.data.provider.DataProvider;
 import org.qamation.data.provider.DataProviderFactory;
 
 import java.util.HashMap;
 import java.util.Set;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 /**
  * Created by Pavel on 2017-05-19.
  */
 public class DataProviderContainer {
-    private static final Logger log = LoggingManager.getLoggerForClass();
+    private static final Logger log = LoggerFactory.getLogger(DataProviderContainer.class);
     private static HashMap<String,DataProviderContainer> storedge = new HashMap<String,DataProviderContainer>();
 
     public static DataProviderContainer getDataProviderContainer(String fileName, String dataProviderImplClassName) {

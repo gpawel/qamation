@@ -1,7 +1,5 @@
 package org.qamation.jmeter.config.data.provider;
 
-import org.apache.jorphan.logging.LoggingManager;
-import org.apache.log.Logger;
 import org.qamation.data.provider.DataProvider;
 import org.qamation.excel.utils.ExcelReader;
 import org.slf4j.LoggerFactory;

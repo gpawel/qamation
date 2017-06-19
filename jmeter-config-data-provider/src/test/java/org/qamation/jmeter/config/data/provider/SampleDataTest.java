@@ -24,6 +24,7 @@ public class SampleDataTest extends JMeterTestCase {
     private static final Logger log = LoggerFactory.getLogger(SampleDataTest.class);
     @Before
     public void setUp() {
+
         JMeterContext jmcx = JMeterContextService.getContext();
         jmcx.setVariables(new JMeterVariables());
         threadVars = jmcx.getVariables();

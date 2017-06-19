@@ -8,8 +8,7 @@ import java.lang.reflect.Constructor;
 public class DataProviderFactory {
     protected static Class<?> getClassForName(String className) {
         try {
-            Class<?> pageClass = Class.forName(className);
-            return pageClass;
+            return Class.forName(className);
         }
         catch(Exception e) {
             throw new RuntimeException("Unable to get Class for "+className,e);
