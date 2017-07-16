@@ -22,6 +22,10 @@ public class SimpleData extends ConfigTestElement
         TestStateListener   {
     private static final org.slf4j.Logger log = LoggerFactory.getLogger(SimpleData.class);
 
+    public static final String SHARE_MODE_ALL = "All threads";
+    public static final String SHARE_MODE_GROUP = "Current thread group";
+    public static final String SHARE_MODE_THREAD = "Current thread";
+
     protected String filename;
     protected String dataProviderImplClassName;
     protected String dataLabel;
@@ -36,18 +40,16 @@ public class SimpleData extends ConfigTestElement
 
     @Override
     public void iterationStart(LoopIterationEvent loopIterationEvent) {
-
         final JMeterContext context = getThreadContext();
         JMeterVariables threadVars = context.getVariables();
-        String suffix = getSuffix(context);
+        String suffix = getSuffix(context, this.shareMode);
         container = DataProviderContainer.getDataProviderContainer(filename,dataProviderImplClassName,suffix);
         log.info("Cursor: "+container.getCursor());
         Object[] dataLine = container.getNextDataLine(resetAtEOF);
         threadVars.putObject(dataLabel,dataLine);
-
     }
 
-    private String getSuffix(JMeterContext context) {
+    private String getSuffix(JMeterContext context, String shareMode) {
         int modeInt = SimpleDataBeanInfo.getShareModeAsInt(shareMode);
         String suffix;
         switch(modeInt){
