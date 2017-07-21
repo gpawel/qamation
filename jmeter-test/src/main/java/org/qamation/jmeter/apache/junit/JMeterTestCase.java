@@ -17,8 +17,6 @@ import java.util.MissingResourceException;
 
 import static org.junit.Assert.fail;
 
-
-
 /**
  * Created by Pavel on 2017-06-05.
  * This is copy of org.apache.jmeter.junit.JMeterTestCase;

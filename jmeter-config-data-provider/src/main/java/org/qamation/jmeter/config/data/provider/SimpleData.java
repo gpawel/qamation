@@ -22,9 +22,9 @@ public class SimpleData extends ConfigTestElement
         TestStateListener   {
     private static final org.slf4j.Logger log = LoggerFactory.getLogger(SimpleData.class);
 
-    public static final String SHARE_MODE_ALL = "All threads";
-    public static final String SHARE_MODE_GROUP = "Current thread group";
-    public static final String SHARE_MODE_THREAD = "Current thread";
+    public static final String SHARE_MODE_ALL = "shareMode.all";
+    public static final String SHARE_MODE_GROUP = "shareMode.group";
+    public static final String SHARE_MODE_THREAD = "shareMode.thread";
 
     protected String filename;
     protected String dataProviderImplClassName;
@@ -49,7 +49,7 @@ public class SimpleData extends ConfigTestElement
         threadVars.putObject(dataLabel,dataLine);
     }
 
-    private String getSuffix(JMeterContext context, String shareMode) {
+    protected String getSuffix(JMeterContext context, String shareMode) {
         int modeInt = SimpleDataBeanInfo.getShareModeAsInt(shareMode);
         String suffix;
         switch(modeInt){

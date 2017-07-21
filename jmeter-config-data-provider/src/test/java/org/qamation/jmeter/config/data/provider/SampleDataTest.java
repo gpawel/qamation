@@ -2,7 +2,7 @@ package org.qamation.jmeter.config.data.provider;
 
 
 
-import org.apache.jmeter.engine.StandardJMeterEngine;
+
 import org.apache.jmeter.threads.*;
 import org.junit.After;
 import org.junit.Assert;
@@ -20,7 +20,7 @@ public class SampleDataTest extends JMeterTestCase {
 
     private JMeterVariables threadVars;
     private String fileName = "D:/QAMATION/documentation/Examples/SimpleDataProvider/Simple_Excel_Data.xlsx";
-    private String dataProviderImplClassName = "org.qamation.jmeter.config.data.provider.ExcelToDataProviderAdapter";
+    private String dataProviderImplClassName = "org.qamation.data.provider.DataProviderAdapter";
 
 
 
@@ -54,7 +54,7 @@ public class SampleDataTest extends JMeterTestCase {
         Assert.assertEquals(SimpleData.SHARE_MODE_ALL,data.getShareMode());
     }
 
-    @Test
+
     public void setDifferentShareMode() {
         SimpleData forAll = createSimpleData(dataProviderImplClassName,fileName, "forAll",true,SimpleData.SHARE_MODE_ALL);
         SimpleData forThread = createSimpleData(dataProviderImplClassName,fileName, "forThread",true,SimpleData.SHARE_MODE_THREAD);

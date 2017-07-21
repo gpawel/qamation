@@ -11,6 +11,12 @@
 
     <artifactId>data-provider</artifactId>
     <version>1.0.0</version>
+    <dependencies>
+        <dependency>
+            <groupId>org.qamation</groupId>
+            <artifactId>excel-utils</artifactId>
+        </dependency>
+    </dependencies>
 
 
 </project>

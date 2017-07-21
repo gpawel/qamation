@@ -27,7 +27,7 @@
       </ThreadGroup>
       <hashTree>
         <org.qamation.jmeter.config.data.provider.SimpleData guiclass="TestBeanGUI" testclass="org.qamation.jmeter.config.data.provider.SimpleData" testname="Simple Data Provider" enabled="true">
-          <stringProp name="dataProviderImplClassName">org.qamation.jmeter.config.data.provider.ExcelToDataProviderAdapter</stringProp>
+          <stringProp name="dataProviderImplClassName">org.qamation.data.provider.DataProviderAdapter</stringProp>
           <stringProp name="dataLabel">DATA</stringProp>
           <stringProp name="filename">D:/QAMATION/documentation/Examples/SimpleDataProvider/Simple_Excel_Data.xlsx</stringProp>
           <boolProp name="resetAtEOF">true</boolProp>
@@ -58,7 +58,7 @@ for (int i=0; i &lt; line.length; i++) {
         </LoopController>
         <hashTree>
           <org.qamation.jmeter.config.data.provider.SimpleData guiclass="TestBeanGUI" testclass="org.qamation.jmeter.config.data.provider.SimpleData" testname="Simple Data Provider" enabled="true">
-            <stringProp name="dataProviderImplClassName">org.qamation.jmeter.config.data.provider.ExcelToDataProviderAdapter</stringProp>
+            <stringProp name="dataProviderImplClassName">org.qamation.data.provider.DataProviderAdapter</stringProp>
             <stringProp name="dataLabel">DATA_1</stringProp>
             <stringProp name="filename">D:/QAMATION/documentation/Examples/SimpleDataProvider/Simple_Excel_Data_2.xlsx</stringProp>
             <boolProp name="resetAtEOF">true</boolProp>

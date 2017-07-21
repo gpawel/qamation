@@ -1,6 +1,6 @@
-package org.qamation.jmeter.config.data.provider.excel;
+package org.qamation.data.provider.excel;
 
-import org.qamation.data.provider.DataProvider;
+
 import org.qamation.data.provider.DataProviderFactory;
 
 import java.lang.reflect.Constructor;

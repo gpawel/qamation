@@ -24,18 +24,12 @@
     <dependencies>
         <dependency>
             <groupId>org.qamation</groupId>
-            <artifactId>excel-utils</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.qamation</groupId>
             <artifactId>data-provider</artifactId>
         </dependency>
         <dependency>
             <groupId>org.qamation.jmeter</groupId>
             <artifactId>jmeter-test</artifactId>
         </dependency>
-
-
     </dependencies>
 
 </project>

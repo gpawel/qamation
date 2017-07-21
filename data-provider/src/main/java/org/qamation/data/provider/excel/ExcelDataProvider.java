@@ -1,4 +1,4 @@
-package org.qamation.jmeter.config.data.provider.excel;
+package org.qamation.data.provider.excel;
 
 import java.util.Iterator;
 import org.qamation.data.provider.DataProvider;

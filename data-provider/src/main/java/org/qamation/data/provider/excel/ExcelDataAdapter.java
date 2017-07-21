@@ -1,48 +1,50 @@
-package org.qamation.jmeter.config.data.provider.excel;
+package org.qamation.data.provider.excel;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.Iterator;
 
-import org.qamation.jmeter.config.data.provider.ExcelToDataProviderAdapter;
 
-
-public class ExcelDataAdapter extends ExcelToDataProviderAdapter implements ExcelDataProvider {
+public class ExcelDataAdapter  implements ExcelDataProvider {
     private static final Logger log = LoggerFactory.getLogger(ExcelDataAdapter.class);
     private int sheetIndex;
 
-    public ExcelDataAdapter(String className, String fileName, int sheetIncex) {
-        super(className,fileName,sheetIncex);
-    }
+    protected ExcelDataProvider provider;
+    protected String fileName;
 
+    public ExcelDataAdapter(String className, String fileName, int sheetIncex) {
+        this.sheetIndex = sheetIncex;
+        this.fileName = fileName;
+        provider = ExcelDataProviderFactory.createExcelDataProviderInstance(className,fileName,sheetIncex);
+    }
 
     @Override
     public String[] getFieldNames() {
-        return reader.getFieldNames();
+        return provider.getFieldNames();
     }
 
     @Override
     public int getLinesNumber() {
-        return reader.getNmberOfLinesInActiveWorkSheet();
+        return provider.getLinesNumber();
     }
 
     @Override
     public Iterator<String[]> getIterator() {
-        return reader.iterator();
+        return provider.getIterator();
     }
 
     public String getFilename() {
-        return reader.getFileName();
+        return fileName;
     }
 
     public int getSheetIndex() {
-        return reader.getActiveSheetIndex();
+        return sheetIndex;
     }
 
     @Override
     public Object[][] getData() {
-        return data;
+        return provider.getData();
     }
 
 
