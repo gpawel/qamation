@@ -2,6 +2,7 @@ package org.qamation.data.provider;
 
 
 import org.qamation.excel.utils.ExcelReader;
+import org.qamation.utils.FileUtils;
 
 /**
  * Created by Pavel on 2017-05-14.
@@ -11,17 +12,45 @@ public class DataProviderAdapter implements DataProvider {
     protected ExcelReader provider;
     protected Object[][] data;
     protected String fileName;
+    protected int currentIndex;
 
-    public DataProviderAdapter(String className, String fileName) {
+    public DataProviderAdapter(String fileName) {
         //TODO COPY ORIGINAL FILE INTO A WORKING FILE
         this.fileName = fileName;
-        this.provider = ExcelReader.createExcelReader(fileName,0);
+        this.provider = new ExcelReader(fileName,0);
         this.data = provider.getData();
+        this.currentIndex = 0;
     }
 
     @Override
     public Object[][] getData() {
         return data;
+    }
+
+    @Override
+    public int getCurrentLineIndex() {
+        return currentIndex;
+    }
+
+    @Override
+    public Object[] getLine(int i) {
+        return data[i];
+    }
+
+    @Override
+    public Object[] getNextLine() {
+        if (currentIndex == data.length) reset();
+        return data[currentIndex++];
+    }
+
+    @Override
+    public void reset() {
+        currentIndex = 0;
+    }
+
+    @Override
+    public int getSize() {
+        return data.length;
     }
 
     @Override

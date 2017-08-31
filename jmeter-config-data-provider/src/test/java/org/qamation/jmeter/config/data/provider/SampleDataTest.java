@@ -8,7 +8,10 @@ import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+import org.qamation.data.provider.DataProvider;
+import org.qamation.data.provider.DataProviderFactory;
 import org.qamation.jmeter.apache.junit.JMeterTestCase;
+import org.qamation.jmeter.config.Storage;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -40,9 +43,22 @@ public class SampleDataTest extends JMeterTestCase {
 
     @Test
     public void createDataContainer() {
-        DataProviderContainer container = DataProviderContainer.getDataProviderContainer(fileName,dataProviderImplClassName);
-        Object [][] data =  container.getData();
+        Storage storage = Storage.getStorage();
+                //Storage.getStorage(fileName,dataProviderImplClassName);
+
+        DataProvider dp;
+        Object[][] data;
+        if (storage.hasKey(fileName)) {
+            dp = storage.get(fileName);
+            data = dp.getData();
+        }
+        else {
+            dp = DataProviderFactory.createDataProviderInstance(dataProviderImplClassName, fileName);
+            storage.put(fileName,dp);
+            data = storage.get(fileName).getData();
+        }
         Assert.assertNotNull(data);
+        Assert.assertTrue(data.length>0);
     }
 
     @Test
@@ -54,7 +70,7 @@ public class SampleDataTest extends JMeterTestCase {
         Assert.assertEquals(SimpleData.SHARE_MODE_ALL,data.getShareMode());
     }
 
-
+    // @Test will not work without starting up gui less Jmeter. need to learn how.
     public void setDifferentShareMode() {
         SimpleData forAll = createSimpleData(dataProviderImplClassName,fileName, "forAll",true,SimpleData.SHARE_MODE_ALL);
         SimpleData forThread = createSimpleData(dataProviderImplClassName,fileName, "forThread",true,SimpleData.SHARE_MODE_THREAD);

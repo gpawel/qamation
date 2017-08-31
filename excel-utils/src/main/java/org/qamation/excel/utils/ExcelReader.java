@@ -1,6 +1,7 @@
 package org.qamation.excel.utils;
 
 import org.apache.poi.ss.usermodel.*;
+import org.qamation.utils.FileUtils;
 import org.qamation.utils.StringUtils;
 
 import java.io.File;
@@ -18,8 +19,30 @@ public class ExcelReader {
     private String[] fieldNames;
     private int rowSize;
 
+    /*
     public static ExcelReader createExcelReader(String fileName, int sheetIndex) {
         return new ExcelReader(fileName,sheetIndex);
+    }
+    */
+    public ExcelReader(String fileName, int index) {
+        try {
+            String tempFileName = FileUtils.createTempFile(fileName);
+            this.fileName = tempFileName;
+            workBook = WorkbookFactory.create(new File(this.fileName));
+            if (index < 0 || index > workBook.getNumberOfSheets())
+                throw new RuntimeException("Sheet index cannot be less than 0 or hight than available sheets.");
+            this.activeSheetIndex = index;
+            this.sheet = workBook.getSheetAt(activeSheetIndex);
+            fieldNames = readFirstLine();
+            rowSize = getHeaderLineSize();
+            evaluator = workBook.getCreationHelper().createFormulaEvaluator();
+        } catch (Exception ex) {
+            throw new RuntimeException("Unable to create a workbook from " + fileName+"\n"+ StringUtils.getStackTrace(ex));
+        }
+    }
+
+    public ExcelReader(String fileName) {
+        this(fileName,0);
     }
 
     public Iterator iterator() {
@@ -74,21 +97,6 @@ public class ExcelReader {
 
     public String[] getFieldNames () {return fieldNames;}
 
-    private ExcelReader(String fileName, int index) {
-        try {
-            this.fileName = fileName;
-            workBook = WorkbookFactory.create(new File(fileName));
-            if (index < 0 || index > workBook.getNumberOfSheets())
-                throw new RuntimeException("Sheet index cannot be less than 0 or hight than available sheets.");
-            this.activeSheetIndex = index;
-            this.sheet = workBook.getSheetAt(activeSheetIndex);
-            fieldNames = readFirstLine();
-            rowSize = getHeaderLineSize();
-            evaluator = workBook.getCreationHelper().createFormulaEvaluator();
-        } catch (Exception ex) {
-            throw new RuntimeException("Unable to create a workbook from " + fileName+"\n"+ StringUtils.getStackTrace(ex));
-        }
-    }
 
     private String[] readFirstLine() {
         int headerLength = getHeaderLineSize();

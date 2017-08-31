@@ -5,6 +5,6 @@ import org.qamation.data.provider.DataProvider;
 
 public interface ExcelDataProvider extends DataProvider{
     public String[] getFieldNames();
-    public int getLinesNumber();
+    public int getDataSize();
     public Iterator<String[]> getIterator();
 }

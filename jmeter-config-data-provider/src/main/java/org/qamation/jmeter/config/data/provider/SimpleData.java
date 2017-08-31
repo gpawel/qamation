@@ -1,7 +1,6 @@
 package org.qamation.jmeter.config.data.provider;
 
 
-import org.apache.jmeter.config.CSVDataSet;
 import org.apache.jmeter.config.ConfigTestElement;
 import org.apache.jmeter.engine.event.LoopIterationEvent;
 import org.apache.jmeter.engine.event.LoopIterationListener;
@@ -10,7 +9,12 @@ import org.apache.jmeter.testbeans.TestBean;
 
 import org.apache.jmeter.testelement.TestStateListener;
 import org.apache.jmeter.threads.JMeterContext;
+import org.apache.jmeter.threads.JMeterContextService;
 import org.apache.jmeter.threads.JMeterVariables;
+import org.apache.jorphan.util.JMeterStopThreadException;
+import org.qamation.data.provider.DataProvider;
+import org.qamation.data.provider.DataProviderFactory;
+import org.qamation.jmeter.config.Storage;
 import org.slf4j.LoggerFactory;
 
 
@@ -32,24 +36,57 @@ public class SimpleData extends ConfigTestElement
     protected boolean resetAtEOF;
     protected String shareMode;
 
-
-    private DataProviderContainer container;
-
-
-
+    private Storage container;
 
     @Override
     public void iterationStart(LoopIterationEvent loopIterationEvent) {
         final JMeterContext context = getThreadContext();
         JMeterVariables threadVars = context.getVariables();
-        String suffix = getSuffix(context, this.shareMode);
-        container = DataProviderContainer.getDataProviderContainer(filename,dataProviderImplClassName,suffix);
-        log.info("Cursor: "+container.getCursor());
-        Object[] dataLine = container.getNextDataLine(resetAtEOF);
+        String key = getKey();
+        Storage storage = Storage.getStorage();
+        DataProvider dataProvider = getDataProvider(storage,key);
+
+        if (isEndReached(dataProvider)) {
+            if (!isResetAtEOF()) {
+                //context.getThread().stop();
+                throw new JMeterStopThreadException("End of data.");
+            }
+        }
+        Object[] dataLine = dataProvider.getNextLine();
         threadVars.putObject(dataLabel,dataLine);
     }
 
-    protected String getSuffix(JMeterContext context, String shareMode) {
+
+
+    private boolean isEndReached(DataProvider dataProvider) {
+        int size = dataProvider.getSize();
+        int currentIndex = dataProvider.getCurrentLineIndex();
+        if (currentIndex == size) return true;
+        return false;
+    }
+
+
+    protected DataProvider getDataProvider(Storage storage, String key) {
+        DataProvider dataProvider;
+        if (storage.hasKey(key)) {
+            dataProvider = storage.get(key);
+        }
+        else {
+            dataProvider = DataProviderFactory.createDataProviderInstance(getDataProviderImplClassName(),getFilename());
+            storage.put(key,dataProvider);
+        }
+        return dataProvider;
+    }
+
+    protected String getKey() {
+        String suffix = getSuffix();
+        String key = getFilename() + suffix;
+        return key;
+    }
+
+    private String getSuffix() {
+        final JMeterContext context = getThreadContext();
+        String shareMode = getShareMode();
         int modeInt = SimpleDataBeanInfo.getShareModeAsInt(shareMode);
         String suffix;
         switch(modeInt){
@@ -72,7 +109,7 @@ public class SimpleData extends ConfigTestElement
 
     @Override
     public void testStarted() {
-        DataProviderContainer.resetAtStart();
+        Storage.resetAtStart();
     }
 
     @Override

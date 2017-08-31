@@ -24,7 +24,7 @@ public class ExcelReaderTests {
 
     @Test
     public void readAllLines() {
-        ExcelReader reader = ExcelReader.createExcelReader(bookXURL.getFile(),0);
+        ExcelReader reader = new ExcelReader(bookXURL.getFile(),0);
         Object[][] data = reader.getData();
         for (int i=0; i<data.length; i++) {
             System.out.println("============================");
