@@ -93,6 +93,8 @@ public class ExcelReader {
             workBook.close();
             workBook = null;
         }
+        File f = new File(fileName);
+        if (f.exists()) f.delete();
     }
 
     public String[] getFieldNames () {return fieldNames;}
@@ -165,14 +167,6 @@ public class ExcelReader {
         return "";
     }
 
-    @Override
-    public void finalize() {
-        try {
-            closeWorkBook();
-        }
-        catch (IOException e) {
-            throw new RuntimeException("Unable to close Excel Workbook from "+fileName);
-        }
-    }
+
 
 }

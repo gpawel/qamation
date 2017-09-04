@@ -28,34 +28,59 @@ public class Storage<T extends DataProvider>{
         storage.reset();
     }
 
-
-
-
     private  HashMap<String,Object> container = null;
 
     private Storage() {
         container = new HashMap<String, Object>();
     }
 
-    public boolean hasKey(String key) {
+    public synchronized boolean hasKey(String key) {
         return container.containsKey(key);
     }
 
-    public void put (String key, T t) {
+    public synchronized void put (String key, T t) {
         container.put(key, t);
     }
 
-    public T get (String key) {
+    public synchronized T get (String key) {
         return (T)container.get(key);
     }
 
-    public void reset() {
+    public synchronized void reset() {
         Set<String> keys = container.keySet();
         if (keys.size()>0) {
             for (String key : keys) {
                 T provider = (T) container.get(key);
                 provider.reset();
             }
+        }
+    }
+
+    public synchronized void remove(String key) {
+        if (container.containsKey(key)) {
+            container.remove(key);
+        }
+    }
+
+    public synchronized Set<String> getKeys() {
+        return container.keySet();
+    }
+
+    public synchronized void closeAll() {
+        Set<String> keys = container.keySet();
+        for (String key : keys) {
+            if (container.containsKey(key)) {
+                T provider = (T) container.get(key);
+                provider.close();
+            }
+        }
+    }
+
+    public synchronized void removeAll() {
+        Set<String> keys = container.keySet();
+        keys = container.keySet();
+        for (String key: keys) {
+            container.remove(key);
         }
     }
 

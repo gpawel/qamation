@@ -4,6 +4,8 @@ package org.qamation.data.provider;
 import org.qamation.excel.utils.ExcelReader;
 import org.qamation.utils.FileUtils;
 
+import java.io.IOException;
+
 /**
  * Created by Pavel on 2017-05-14.
  */
@@ -54,8 +56,14 @@ public class DataProviderAdapter implements DataProvider {
     }
 
     @Override
-    public void finalize() {
-        data = null;
-        provider = null;
+    public void close() {
+        try {
+            this.provider.closeWorkBook();
+            this.data = null;
+            this.provider = null;
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }

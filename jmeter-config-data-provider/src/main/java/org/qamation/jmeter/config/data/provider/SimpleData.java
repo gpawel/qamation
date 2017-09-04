@@ -17,13 +17,15 @@ import org.qamation.data.provider.DataProviderFactory;
 import org.qamation.jmeter.config.Storage;
 import org.slf4j.LoggerFactory;
 
+import java.util.Set;
+
 
 public class SimpleData extends ConfigTestElement
         implements
         TestBean,
         LoopIterationListener,
         NoConfigMerge,
-        TestStateListener   {
+        TestStateListener {
     private static final org.slf4j.Logger log = LoggerFactory.getLogger(SimpleData.class);
 
     public static final String SHARE_MODE_ALL = "shareMode.all";
@@ -40,11 +42,8 @@ public class SimpleData extends ConfigTestElement
 
     @Override
     public void iterationStart(LoopIterationEvent loopIterationEvent) {
-        final JMeterContext context = getThreadContext();
-        JMeterVariables threadVars = context.getVariables();
-        String key = getKey();
-        Storage storage = Storage.getStorage();
-        DataProvider dataProvider = getDataProvider(storage,key);
+
+        DataProvider dataProvider = getDataProvider();
 
         if (isEndReached(dataProvider)) {
             if (!isResetAtEOF()) {
@@ -53,10 +52,10 @@ public class SimpleData extends ConfigTestElement
             }
         }
         Object[] dataLine = dataProvider.getNextLine();
-        threadVars.putObject(dataLabel,dataLine);
+        final JMeterContext context = getThreadContext();
+        JMeterVariables threadVars = context.getVariables();
+        threadVars.putObject(dataLabel, dataLine);
     }
-
-
 
     private boolean isEndReached(DataProvider dataProvider) {
         int size = dataProvider.getSize();
@@ -66,14 +65,15 @@ public class SimpleData extends ConfigTestElement
     }
 
 
-    protected DataProvider getDataProvider(Storage storage, String key) {
+    protected DataProvider getDataProvider() {
+        Storage storage = Storage.getStorage();
+        String key = getKey();
         DataProvider dataProvider;
         if (storage.hasKey(key)) {
             dataProvider = storage.get(key);
-        }
-        else {
-            dataProvider = DataProviderFactory.createDataProviderInstance(getDataProviderImplClassName(),getFilename());
-            storage.put(key,dataProvider);
+        } else {
+            dataProvider = DataProviderFactory.createDataProviderInstance(getDataProviderImplClassName(), getFilename());
+            storage.put(key, dataProvider);
         }
         return dataProvider;
     }
@@ -89,19 +89,24 @@ public class SimpleData extends ConfigTestElement
         String shareMode = getShareMode();
         int modeInt = SimpleDataBeanInfo.getShareModeAsInt(shareMode);
         String suffix;
-        switch(modeInt){
-            case SimpleDataBeanInfo.SHARE_ALL:
+        switch (modeInt) {
+            case SimpleDataBeanInfo.SHARE_ALL: {
                 suffix = "";
                 break;
-            case SimpleDataBeanInfo.SHARE_GROUP:
+            }
+
+            case SimpleDataBeanInfo.SHARE_GROUP: {
                 suffix = context.getThreadGroup().getName();
                 break;
-            case SimpleDataBeanInfo.SHARE_THREAD:
+            }
+            case SimpleDataBeanInfo.SHARE_THREAD: {
                 suffix = context.getThread().getThreadName();
                 break;
-            default:
+            }
+            default: {
                 suffix = "";
                 break;
+            }
         }
         return suffix;
     }
@@ -118,7 +123,10 @@ public class SimpleData extends ConfigTestElement
     }
 
     @Override
-    public void testEnded() {
+    public synchronized void testEnded() {
+        Storage storage = Storage.getStorage();
+        storage.closeAll();
+        storage.removeAll();
         log.info("Test ended");
     }
 

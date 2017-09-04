@@ -52,8 +52,6 @@ public class FileUtils {
         String suffix = FileUtils.getFileNameExtention(origFileName);
         String tempFileName = tempFileNamePrefix+suffix;
         Path p = FileUtils.copyFileToSameFolder(origFileName,tempFileName);
-        File f = new File(p.toString());
-        f.deleteOnExit();
         return p.toString();
     }
 
