@@ -40,13 +40,13 @@ public class DataProviderAdapter implements DataProvider {
     }
 
     @Override
-    public Object[] getNextLine() {
+    public synchronized Object[] getNextLine() {
         if (currentIndex == data.length) reset();
         return data[currentIndex++];
     }
 
     @Override
-    public void reset() {
+    public synchronized void reset() {
         currentIndex = 0;
     }
 
@@ -56,11 +56,13 @@ public class DataProviderAdapter implements DataProvider {
     }
 
     @Override
-    public void close() {
+    public  synchronized void close() {
         try {
-            this.provider.closeWorkBook();
-            this.data = null;
-            this.provider = null;
+            if (provider != null ) {
+                provider.closeWorkBook();
+                provider = null;
+                data = null;
+            }
 
         } catch (IOException e) {
             e.printStackTrace();

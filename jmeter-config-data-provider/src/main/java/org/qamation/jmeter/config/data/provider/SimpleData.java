@@ -24,8 +24,8 @@ public class SimpleData extends ConfigTestElement
         implements
         TestBean,
         LoopIterationListener,
-        NoConfigMerge,
-        TestStateListener {
+        NoConfigMerge
+         {
     private static final org.slf4j.Logger log = LoggerFactory.getLogger(SimpleData.class);
 
     public static final String SHARE_MODE_ALL = "shareMode.all";
@@ -38,13 +38,13 @@ public class SimpleData extends ConfigTestElement
     protected boolean resetAtEOF;
     protected String shareMode;
 
+
     private Storage container;
 
     @Override
     public void iterationStart(LoopIterationEvent loopIterationEvent) {
-
+        log.info("iteration start by thread: "+getThreadName());
         DataProvider dataProvider = getDataProvider();
-
         if (isEndReached(dataProvider)) {
             if (!isResetAtEOF()) {
                 //context.getThread().stop();
@@ -85,7 +85,6 @@ public class SimpleData extends ConfigTestElement
     }
 
     private String getSuffix() {
-        final JMeterContext context = getThreadContext();
         String shareMode = getShareMode();
         int modeInt = SimpleDataBeanInfo.getShareModeAsInt(shareMode);
         String suffix;
@@ -94,12 +93,13 @@ public class SimpleData extends ConfigTestElement
                 suffix = "";
                 break;
             }
-
             case SimpleDataBeanInfo.SHARE_GROUP: {
+                final JMeterContext context = getThreadContext();
                 suffix = context.getThreadGroup().getName();
                 break;
             }
             case SimpleDataBeanInfo.SHARE_THREAD: {
+                final JMeterContext context = getThreadContext();
                 suffix = context.getThread().getThreadName();
                 break;
             }
@@ -109,30 +109,6 @@ public class SimpleData extends ConfigTestElement
             }
         }
         return suffix;
-    }
-
-
-    @Override
-    public void testStarted() {
-        Storage.resetAtStart();
-    }
-
-    @Override
-    public void testStarted(String s) {
-        testStarted();
-    }
-
-    @Override
-    public synchronized void testEnded() {
-        Storage storage = Storage.getStorage();
-        storage.closeAll();
-        storage.removeAll();
-        log.info("Test ended");
-    }
-
-    @Override
-    public void testEnded(String s) {
-        testEnded();
     }
 
     public String getFilename() {

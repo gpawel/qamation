@@ -18,6 +18,7 @@ public class ExcelReader {
 
     private String[] fieldNames;
     private int rowSize;
+    private File theFile;
 
     /*
     public static ExcelReader createExcelReader(String fileName, int sheetIndex) {
@@ -28,7 +29,8 @@ public class ExcelReader {
         try {
             String tempFileName = FileUtils.createTempFile(fileName);
             this.fileName = tempFileName;
-            workBook = WorkbookFactory.create(new File(this.fileName));
+            theFile = new File(this.fileName);
+            workBook = WorkbookFactory.create(theFile);
             if (index < 0 || index > workBook.getNumberOfSheets())
                 throw new RuntimeException("Sheet index cannot be less than 0 or hight than available sheets.");
             this.activeSheetIndex = index;
@@ -93,8 +95,7 @@ public class ExcelReader {
             workBook.close();
             workBook = null;
         }
-        File f = new File(fileName);
-        if (f.exists()) f.delete();
+        if (theFile.exists()) theFile.delete();
     }
 
     public String[] getFieldNames () {return fieldNames;}

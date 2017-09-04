@@ -23,7 +23,7 @@ public class Storage<T extends DataProvider>{
         return storage;
     }
 
-    synchronized public static void resetAtStart() {
+     public static synchronized void resetAtStart() {
         Storage storage = getStorage();
         storage.reset();
     }
@@ -32,6 +32,22 @@ public class Storage<T extends DataProvider>{
 
     private Storage() {
         container = new HashMap<String, Object>();
+        Runtime.getRuntime().addShutdownHook(new Thread(new Runnable() {
+            public void run() {
+                Set<String> keys = container.keySet();
+                for (String key : keys) {
+                    if (container.containsKey(key)) {
+                        T provider = (T) container.get(key);
+                        provider.close();
+                    }
+                }
+                keys = container.keySet();
+                for (String key: keys) {
+                    container.remove(key);
+                }
+
+            }
+        }, "Shutdown-thread"));
     }
 
     public synchronized boolean hasKey(String key) {
@@ -66,23 +82,9 @@ public class Storage<T extends DataProvider>{
         return container.keySet();
     }
 
-    public synchronized void closeAll() {
-        Set<String> keys = container.keySet();
-        for (String key : keys) {
-            if (container.containsKey(key)) {
-                T provider = (T) container.get(key);
-                provider.close();
-            }
-        }
-    }
 
-    public synchronized void removeAll() {
-        Set<String> keys = container.keySet();
-        keys = container.keySet();
-        for (String key: keys) {
-            container.remove(key);
-        }
-    }
+
+
 
 
 
