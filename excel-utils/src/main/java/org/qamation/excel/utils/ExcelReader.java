@@ -38,9 +38,20 @@ public class ExcelReader {
             fieldNames = readFirstLine();
             rowSize = getHeaderLineSize();
             evaluator = workBook.getCreationHelper().createFormulaEvaluator();
+            addShutDownHook();
+
         } catch (Exception ex) {
             throw new RuntimeException("Unable to create a workbook from " + fileName+"\n"+ StringUtils.getStackTrace(ex));
         }
+    }
+
+    private void addShutDownHook() {
+        Runtime.getRuntime().addShutdownHook(new Thread(new Runnable() {
+            public void run() {
+                closeBook();
+                deleteFile();
+            }
+        }, "Shutdown-thread"));
     }
 
     public ExcelReader(String fileName) {
@@ -91,15 +102,26 @@ public class ExcelReader {
     public int getActiveSheetIndex() {return activeSheetIndex;}
 
     public void closeWorkBook() throws IOException {
-        if (workBook != null) {
-            workBook.close();
-            workBook = null;
-        }
-        if (theFile.exists()) theFile.delete();
+        closeBook();
+        deleteFile();
     }
 
     public String[] getFieldNames () {return fieldNames;}
 
+    private void closeBook()  {
+        try {
+            if (workBook != null) {
+                workBook.close();
+                workBook = null;
+            }
+        }
+        catch (Exception ex) {
+            throw new RuntimeException("Unable to close workbook for file: "+theFile.getPath());
+        }
+    }
+    private void deleteFile() {
+        if (theFile.exists()) theFile.delete();
+    }
 
     private String[] readFirstLine() {
         int headerLength = getHeaderLineSize();

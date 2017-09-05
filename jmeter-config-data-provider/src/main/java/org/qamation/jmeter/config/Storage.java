@@ -1,5 +1,8 @@
 package org.qamation.jmeter.config;
 
+import org.apache.jmeter.engine.StandardJMeterEngine;
+import org.apache.jmeter.testelement.TestStateListener;
+import org.apache.jmeter.threads.JMeterContextService;
 import org.qamation.data.provider.DataProvider;
 
 import java.util.HashMap;
@@ -11,7 +14,9 @@ import org.slf4j.LoggerFactory;
 /**
  * Created by Pavel on 2017-05-19.
  */
-public class Storage<T extends DataProvider>{
+public class Storage<T extends DataProvider>
+implements TestStateListener
+{
 
     private static final Logger log = LoggerFactory.getLogger(Storage.class);
     private static Storage storage = null;
@@ -19,35 +24,16 @@ public class Storage<T extends DataProvider>{
     public static Storage getStorage() {
         if (storage == null) {
             storage = new Storage();
+            StandardJMeterEngine.register(storage);
         }
         return storage;
     }
 
-     public static synchronized void resetAtStart() {
-        Storage storage = getStorage();
-        storage.reset();
-    }
 
     private  HashMap<String,Object> container = null;
 
     private Storage() {
         container = new HashMap<String, Object>();
-        Runtime.getRuntime().addShutdownHook(new Thread(new Runnable() {
-            public void run() {
-                Set<String> keys = container.keySet();
-                for (String key : keys) {
-                    if (container.containsKey(key)) {
-                        T provider = (T) container.get(key);
-                        provider.close();
-                    }
-                }
-                keys = container.keySet();
-                for (String key: keys) {
-                    container.remove(key);
-                }
-
-            }
-        }, "Shutdown-thread"));
     }
 
     public synchronized boolean hasKey(String key) {
@@ -80,6 +66,28 @@ public class Storage<T extends DataProvider>{
 
     public synchronized Set<String> getKeys() {
         return container.keySet();
+    }
+
+    @Override
+    public void testStarted() {
+        log.info("test starting");
+        reset();
+    }
+
+    @Override
+    public void testStarted(String s) {
+        testStarted();
+    }
+
+    @Override
+    public void testEnded() {
+
+
+    }
+
+    @Override
+    public void testEnded(String s) {
+
     }
 
 
