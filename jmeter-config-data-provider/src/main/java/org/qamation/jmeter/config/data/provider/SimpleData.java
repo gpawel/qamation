@@ -43,7 +43,7 @@ public class SimpleData extends ConfigTestElement
 
     @Override
     public void iterationStart(LoopIterationEvent loopIterationEvent) {
-        log.info("iteration start by thread: "+getThreadName());
+        log.info("iteration start by thread: "+JMeterContextService.getContext().getThread().getThreadName());
         DataProvider dataProvider = getDataProvider();
         if (isEndReached(dataProvider)) {
             if (!isResetAtEOF()) {
