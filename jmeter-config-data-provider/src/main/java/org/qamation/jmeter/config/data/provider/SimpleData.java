@@ -45,23 +45,22 @@ public class SimpleData extends ConfigTestElement
     public void iterationStart(LoopIterationEvent loopIterationEvent) {
         log.info("iteration start by thread: "+JMeterContextService.getContext().getThread().getThreadName());
         DataProvider dataProvider = getDataProvider();
-        if (isEndReached(dataProvider)) {
-            if (!isResetAtEOF()) {
-                //context.getThread().stop();
-                throw new JMeterStopThreadException("End of data.");
-            }
-        }
+        isEndReached(dataProvider);
         Object[] dataLine = dataProvider.getNextLine();
         final JMeterContext context = getThreadContext();
         JMeterVariables threadVars = context.getVariables();
         threadVars.putObject(dataLabel, dataLine);
     }
 
-    private boolean isEndReached(DataProvider dataProvider) {
+    protected void isEndReached(DataProvider dataProvider) {
         int size = dataProvider.getSize();
         int currentIndex = dataProvider.getCurrentLineIndex();
-        if (currentIndex == size) return true;
-        return false;
+        if (currentIndex == size) {
+            if (!isResetAtEOF()) {
+                //context.getThread().stop();
+                throw new JMeterStopThreadException("End of data.");
+            }
+        }
     }
 
 
