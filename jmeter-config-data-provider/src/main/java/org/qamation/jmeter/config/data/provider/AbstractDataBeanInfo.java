@@ -40,7 +40,7 @@ public abstract class AbstractDataBeanInfo extends BeanInfoSupport {
         setProperties();
     }
 
-    abstract protected void setProperties();
+
 
     public static int getShareModeAsInt(String mode) {
         if (mode == null || mode.length() == 0){
@@ -53,5 +53,47 @@ public abstract class AbstractDataBeanInfo extends BeanInfoSupport {
         }
         return -1;
     }
+
+    protected PropertyDescriptor manageFileNamePropertyDescriptor() {
+        PropertyDescriptor p = property(FILENAME);
+        p.setValue(NOT_UNDEFINED,Boolean.TRUE);
+        p.setValue(DEFAULT, "<ENTER FILE NAME HERE>");
+        return p;
+    }
+
+    protected PropertyDescriptor manageClassNamePropertyDescriptor() {
+        PropertyDescriptor p = property(CLASSNAME);
+        p.setValue(NOT_UNDEFINED,Boolean.TRUE);
+        p.setValue(DEFAULT,"ENTER CLASS NAME IMPLEMENTING DataProvider HERE");
+        return p;
+    }
+
+    protected PropertyDescriptor manageSourcePropertyDescriptor() {
+        PropertyDescriptor p=property(SOURCENAME);
+        p.setValue(NOT_UNDEFINED,Boolean.TRUE);
+        p.setValue(DEFAULT,"SIMPLEDATA");
+        return p;
+    }
+
+    protected PropertyDescriptor manageResetPropertyDescriptor() {
+        PropertyDescriptor p = property(RESET);
+        p.setValue(NOT_UNDEFINED,Boolean.TRUE);
+        p.setValue(DEFAULT,Boolean.FALSE);
+        return p;
+    }
+
+    protected PropertyDescriptor manageShareModePropertyDescriptor() {
+        PropertyDescriptor p = property(SHAREMODE);
+        p.setValue(RESOURCE_BUNDLE, getBeanDescriptor().getValue(RESOURCE_BUNDLE));
+        p.setValue(NOT_UNDEFINED,Boolean.TRUE);
+        p.setValue(DEFAULT, SHARE_TAGS[SHARE_ALL]);
+        p.setValue(NOT_OTHER, Boolean.FALSE);
+        p.setValue(NOT_EXPRESSION, Boolean.FALSE);
+        p.setValue(TAGS,SHARE_TAGS);
+        return p;
+    }
+
+    abstract protected void setProperties();
+
 
 }
