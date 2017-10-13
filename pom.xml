@@ -262,11 +262,11 @@
             <groupId>com.ibm</groupId>
             <artifactId>com.ibm.mq.allclient</artifactId>
         </dependency>
-        <dependency>
+        <!--dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-api</artifactId>
             <version>1.7.16</version>
-        </dependency>
+        </dependency-->
     </dependencies>
 
     <modules>
