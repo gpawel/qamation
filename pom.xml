@@ -13,7 +13,7 @@
         <maven.jar.plugin.version>3.0.0</maven.jar.plugin.version>
         <httpcomponents.version>4.5.2</httpcomponents.version>
         <junit.version>4.12</junit.version>
-        <selenium.version>2.53.0</selenium.version>
+        <selenium.version>3.6.0</selenium.version>
         <apache.jmeter.core.version>3.2</apache.jmeter.core.version>
         <apache.jmeter.java.version>3.2</apache.jmeter.java.version>
         <sikulixapi.version>1.1.0</sikulixapi.version>
@@ -262,11 +262,11 @@
             <groupId>com.ibm</groupId>
             <artifactId>com.ibm.mq.allclient</artifactId>
         </dependency>
-        <dependency>
+        <!--dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-api</artifactId>
             <version>1.7.16</version>
-        </dependency>
+        </dependency-->
     </dependencies>
 
     <modules>
