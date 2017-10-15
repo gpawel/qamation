@@ -20,10 +20,10 @@ public abstract class AbstractDataBeanInfo extends BeanInfoSupport {
     protected static final String SHAREMODE = "shareMode";
 
     // Access needed from CSVDataSet
-    static final String[] SHARE_TAGS = new String[3];
-    static final int SHARE_ALL    = 0;
-    static final int SHARE_GROUP  = 1;
-    static final int SHARE_THREAD = 2;
+    protected static final String[] SHARE_TAGS = new String[3];
+    protected static final int SHARE_ALL    = 0;
+    protected static final int SHARE_GROUP  = 1;
+    protected static final int SHARE_THREAD = 2;
 
     // Store the resource keys
     static {

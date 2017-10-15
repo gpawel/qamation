@@ -1,32 +1,24 @@
 package org.qamation.jmeter.config.data.provider;
 
-
 import org.apache.jmeter.config.ConfigTestElement;
-import org.apache.jmeter.engine.event.LoopIterationEvent;
 import org.apache.jmeter.engine.event.LoopIterationListener;
 import org.apache.jmeter.engine.util.NoConfigMerge;
 import org.apache.jmeter.testbeans.TestBean;
-
-import org.apache.jmeter.testelement.TestStateListener;
 import org.apache.jmeter.threads.JMeterContext;
-import org.apache.jmeter.threads.JMeterContextService;
-import org.apache.jmeter.threads.JMeterVariables;
 import org.apache.jorphan.util.JMeterStopThreadException;
 import org.qamation.data.provider.DataProvider;
-import org.qamation.data.provider.DataProviderFactory;
+import org.qamation.data.provider.excel.ExcelDataProvider;
+import org.qamation.data.provider.excel.ExcelDataProviderFactory;
 import org.qamation.jmeter.config.Storage;
+import org.qamation.jmeter.config.data.provider.simple.SimpleDataBeanInfo;
 import org.slf4j.LoggerFactory;
 
-import java.util.Set;
-
-
-public class SimpleData extends ConfigTestElement
+public abstract class AbstractData extends ConfigTestElement
         implements
         TestBean,
         LoopIterationListener,
-        NoConfigMerge
-         {
-    private static final org.slf4j.Logger log = LoggerFactory.getLogger(SimpleData.class);
+        NoConfigMerge {
+    private static final org.slf4j.Logger log = LoggerFactory.getLogger(AbstractData.class);
 
     public static final String SHARE_MODE_ALL = "shareMode.all";
     public static final String SHARE_MODE_GROUP = "shareMode.group";
@@ -37,45 +29,6 @@ public class SimpleData extends ConfigTestElement
     protected String dataLabel;
     protected boolean resetAtEOF;
     protected String shareMode;
-
-
-    private Storage container;
-
-    @Override
-    public void iterationStart(LoopIterationEvent loopIterationEvent) {
-        log.info("iteration start by thread: "+JMeterContextService.getContext().getThread().getThreadName());
-        DataProvider dataProvider = getDataProvider();
-        isEndReached(dataProvider);
-        Object[] dataLine = dataProvider.getNextLine();
-        final JMeterContext context = getThreadContext();
-        JMeterVariables threadVars = context.getVariables();
-        threadVars.putObject(dataLabel, dataLine);
-    }
-
-    protected void isEndReached(DataProvider dataProvider) {
-        int size = dataProvider.getSize();
-        int currentIndex = dataProvider.getCurrentLineIndex();
-        if (currentIndex == size) {
-            if (!isResetAtEOF()) {
-                //context.getThread().stop();
-                throw new JMeterStopThreadException("End of data.");
-            }
-        }
-    }
-
-
-    protected DataProvider getDataProvider() {
-        Storage storage = Storage.getStorage();
-        String key = getKey();
-        DataProvider dataProvider;
-        if (storage.hasKey(key)) {
-            dataProvider = storage.get(key);
-        } else {
-            dataProvider = DataProviderFactory.createDataProviderInstance(getDataProviderImplClassName(), getFilename());
-            storage.put(key, dataProvider);
-        }
-        return dataProvider;
-    }
 
     protected String getKey() {
         String suffix = getSuffix();
@@ -109,6 +62,30 @@ public class SimpleData extends ConfigTestElement
         }
         return suffix;
     }
+
+    protected < P extends DataProvider > void isEndReached(P provider) {
+        int size = provider.getSize();
+        int currentIndex = provider.getCurrentLineIndex();
+        if (currentIndex == size) {
+            if (!isResetAtEOF()) {
+                throw new JMeterStopThreadException("End of data.");
+            }
+        }
+    }
+
+    protected <T extends DataProvider > T getDataProvider() {
+        Storage<T> storage = Storage.getStorage();
+        String key = getKey();
+        T dataProvider;
+        if (storage.hasKey(key)) {
+            dataProvider = storage.get(key);
+        } else {
+            dataProvider = callFactory();
+            storage.put(key, dataProvider);
+        }
+        return dataProvider;
+    }
+
 
     public String getFilename() {
         return filename;
@@ -149,4 +126,6 @@ public class SimpleData extends ConfigTestElement
     public void setShareMode(String shareMode) {
         this.shareMode = shareMode;
     }
+
+    public abstract <T extends DataProvider> T callFactory();
 }

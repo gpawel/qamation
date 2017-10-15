@@ -12,21 +12,19 @@ public class ExcelDataAdapter extends DataProviderAdapter implements ExcelDataPr
     private static final Logger log = LoggerFactory.getLogger(ExcelDataAdapter.class);
 
     private int sheetIndex;
-    protected ExcelReader provider;
 
 
-    public ExcelDataAdapter(String fileName, int sheetIncex) {
+
+    public ExcelDataAdapter(String fileName, int sheetIndx) {
         super(fileName);
-        this.sheetIndex = sheetIncex;
-        this.fileName = fileName;
-        provider = new ExcelReader(fileName,sheetIncex);
+        this.sheetIndex = sheetIndx;
     }
+
 
 
     public String[] getFieldNames() {
         return provider.getFieldNames();
     }
-
 
     public int getDataSize() {
         return getSize()-1;
@@ -39,5 +37,6 @@ public class ExcelDataAdapter extends DataProviderAdapter implements ExcelDataPr
     public int getSheetIndex() {
         return sheetIndex;
     }
+
 
 }

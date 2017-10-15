@@ -1,6 +1,5 @@
 package org.qamation.utils;
 
-import net.didion.jwnl.data.Exc;
 
 import java.io.File;
 import java.nio.file.*;

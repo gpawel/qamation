@@ -13,9 +13,9 @@
         <maven.jar.plugin.version>3.0.0</maven.jar.plugin.version>
         <httpcomponents.version>4.5.2</httpcomponents.version>
         <junit.version>4.12</junit.version>
-        <selenium.version>3.6.0</selenium.version>
-        <apache.jmeter.core.version>3.2</apache.jmeter.core.version>
-        <apache.jmeter.java.version>3.2</apache.jmeter.java.version>
+        <selenium.version>3.0.1</selenium.version>
+        <apache.jmeter.core.version>3.3</apache.jmeter.core.version>
+        <apache.jmeter.java.version>3.3</apache.jmeter.java.version>
         <sikulixapi.version>1.1.0</sikulixapi.version>
         <jackson.core.version>2.7.5</jackson.core.version>
         <jackson.annotations.version>2.7.5</jackson.annotations.version>

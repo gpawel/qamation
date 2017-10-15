@@ -1,5 +1,5 @@
 #! /bin/sh
-TARGET=/home/pavel/workspace/envs/QAMATION_TEST_ENV/Jmeter/lib/ext
+TARGET=/home/pavel/workspace/envs/jmeter_src/lib/ext
 rm ./build/*.*
 cp ./data-provider/target/*.jar ./build
 cp ./excel-utils/target/*.jar ./build

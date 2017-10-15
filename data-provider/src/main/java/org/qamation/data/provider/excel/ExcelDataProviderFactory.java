@@ -21,7 +21,7 @@ public class ExcelDataProviderFactory extends DataProviderFactory {
         }
     }
     public static  <A extends ExcelDataProvider> A createExcelDataProviderInstance(String dataProviderImplClassName, String dataFileName, int tabNumber ) {
-        A page = (A)createInstance(dataProviderImplClassName, dataFileName, tabNumber);
-        return page;
+        A provider = (A)createInstance(dataProviderImplClassName, dataFileName, tabNumber);
+        return provider;
     }
 }

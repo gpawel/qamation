@@ -1,7 +1,6 @@
 package org.qamation.java.sampler.data.provider.excel;
 
-import net.didion.jwnl.data.Exc;
-import org.apache.jmeter.testelement.TestStateListener;
+
 import org.apache.jorphan.logging.LoggingManager;
 import org.apache.log.Logger;
 import org.qamation.excel.utils.ExcelUtils;

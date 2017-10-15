@@ -1,5 +1,6 @@
-package org.qamation.jmeter.config.data.provider;
+package org.qamation.jmeter.config.data.provider.simple;
 
+import org.qamation.jmeter.config.data.provider.AbstractDataBeanInfo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
