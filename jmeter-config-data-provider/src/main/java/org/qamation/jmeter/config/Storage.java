@@ -24,8 +24,8 @@ implements TestStateListener
     public static Storage getStorage() {
         if (storage == null) {
             storage = new Storage();
-            StandardJMeterEngine.register(storage);
         }
+        StandardJMeterEngine.register(storage);
         return storage;
     }
 
