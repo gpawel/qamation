@@ -23,7 +23,7 @@ public class SampleDataTest extends JMeterTestCase {
 
     private JMeterVariables threadVars;
     private String fileName = "Simple_Excel_Data.xlsx";
-    private String dataProviderImplClassName = "org.qamation.data.provider.DataProviderAdapter";
+    private String dataProviderImplClassName = "org.qamation.data.excelReader.DataProviderAdapter";
 
 
 

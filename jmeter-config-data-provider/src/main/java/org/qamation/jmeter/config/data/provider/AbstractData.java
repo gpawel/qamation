@@ -67,9 +67,13 @@ public abstract class AbstractData extends ConfigTestElement
         int size = provider.getSize();
         int currentIndex = provider.getCurrentLineIndex();
         if (currentIndex == size) {
-            if (!isResetAtEOF()) {
-                throw new JMeterStopThreadException("End of data.");
-            }
+            stopIfRequired();
+        }
+    }
+
+    protected void stopIfRequired() {
+        if (!isResetAtEOF()) {
+            throw new JMeterStopThreadException("End of data.");
         }
     }
 

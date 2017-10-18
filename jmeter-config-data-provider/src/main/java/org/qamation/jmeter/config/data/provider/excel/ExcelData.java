@@ -9,6 +9,9 @@ import org.qamation.data.provider.excel.ExcelDataProvider;
 import org.qamation.data.provider.excel.ExcelDataProviderFactory;
 import org.qamation.jmeter.config.data.provider.AbstractData;
 import org.slf4j.LoggerFactory;
+
+import java.util.Iterator;
+
 public class ExcelData extends AbstractData {
 
     private static final org.slf4j.Logger log = LoggerFactory.getLogger(ExcelData.class);
@@ -17,16 +20,36 @@ public class ExcelData extends AbstractData {
 
 
 
+
     @Override
     public void iterationStart(LoopIterationEvent loopIterationEvent) {
         log.info("iteration start by thread: "+ JMeterContextService.getContext().getThread().getThreadName());
         ExcelDataProvider excelDataProvider = getDataProvider();
-        isEndReached(excelDataProvider);
-        Object[] dataLine = excelDataProvider.getNextLine();
-        final JMeterContext context = getThreadContext();
-        JMeterVariables threadVars = context.getVariables();
-        threadVars.putObject(dataLabel, dataLine);
+        addDataFieldsIntoContext(excelDataProvider);
     }
+
+    private void addDataFieldsIntoContext(ExcelDataProvider excelDataProvider) {
+        Iterator<String[]> iterator = excelDataProvider.getIterator();
+        if (iterator.hasNext()) {
+            JMeterVariables threadVars = getVariables();
+            String[] line = iterator.next();
+            String[] header = excelDataProvider.getFieldNames();
+            for (int i = 0; i < header.length; i++) {
+                threadVars.put(header[i],line[i]) ;
+            }
+        }
+        else {
+            stopIfRequired();
+            excelDataProvider.reset();
+            addDataFieldsIntoContext(excelDataProvider);
+        }
+    }
+
+    private JMeterVariables getVariables() {
+        final JMeterContext context = getThreadContext();
+        return context.getVariables();
+    }
+
 
     @Override
     public <T extends DataProvider> T callFactory() {
