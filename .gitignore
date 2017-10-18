@@ -1,0 +1,13 @@
+target
+*.class
+.idea
+.git
+*.iml
+.project
+.classpath
+debug.tree
+depend.tree
+build
+*.versionsBackup
+set_root.bat
+
