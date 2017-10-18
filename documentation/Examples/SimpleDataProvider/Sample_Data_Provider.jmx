@@ -26,13 +26,13 @@
         <stringProp name="ThreadGroup.delay"></stringProp>
       </ThreadGroup>
       <hashTree>
-        <org.qamation.jmeter.config.data.provider.SimpleData guiclass="TestBeanGUI" testclass="org.qamation.jmeter.config.data.provider.SimpleData" testname="Simple Data Provider" enabled="true">
+        <org.qamation.jmeter.config.data.provider.simple.SimpleData guiclass="TestBeanGUI" testclass="org.qamation.jmeter.config.data.provider.simple.SimpleData" testname="Simple Data Provider" enabled="true">
           <stringProp name="dataProviderImplClassName">org.qamation.data.provider.DataProviderAdapter</stringProp>
           <stringProp name="dataLabel">DATA</stringProp>
           <stringProp name="filename">D:/QAMATION/documentation/Examples/SimpleDataProvider/Simple_Excel_Data.xlsx</stringProp>
           <boolProp name="resetAtEOF">true</boolProp>
           <stringProp name="shareMode">shareMode.thread</stringProp>
-        </org.qamation.jmeter.config.data.provider.SimpleData>
+        </org.qamation.jmeter.config.data.provider.simple.SimpleData>
         <hashTree/>
         <BeanShellSampler guiclass="BeanShellSamplerGui" testclass="BeanShellSampler" testname="BeanShell Sampler" enabled="true">
           <stringProp name="BeanShellSampler.query">import org.apache.jmeter.threads.JMeterContext;
@@ -57,13 +57,13 @@ for (int i=0; i &lt; line.length; i++) {
           <stringProp name="LoopController.loops">2</stringProp>
         </LoopController>
         <hashTree>
-          <org.qamation.jmeter.config.data.provider.SimpleData guiclass="TestBeanGUI" testclass="org.qamation.jmeter.config.data.provider.SimpleData" testname="Simple Data Provider" enabled="true">
+          <org.qamation.jmeter.config.data.provider.simple.SimpleData guiclass="TestBeanGUI" testclass="org.qamation.jmeter.config.data.provider.simple.SimpleData" testname="Simple Data Provider" enabled="true">
             <stringProp name="dataProviderImplClassName">org.qamation.data.provider.DataProviderAdapter</stringProp>
             <stringProp name="dataLabel">DATA_1</stringProp>
             <stringProp name="filename">D:/QAMATION/documentation/Examples/SimpleDataProvider/Simple_Excel_Data_2.xlsx</stringProp>
             <boolProp name="resetAtEOF">true</boolProp>
             <stringProp name="shareMode">shareMode.all</stringProp>
-          </org.qamation.jmeter.config.data.provider.SimpleData>
+          </org.qamation.jmeter.config.data.provider.simple.SimpleData>
           <hashTree/>
           <BeanShellSampler guiclass="BeanShellSamplerGui" testclass="BeanShellSampler" testname="BeanShell Sampler" enabled="true">
             <stringProp name="BeanShellSampler.query">import org.apache.jmeter.threads.JMeterContext;

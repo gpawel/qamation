@@ -2,27 +2,31 @@ package org.qamation.data.provider;
 
 
 import org.qamation.excel.utils.ExcelReader;
-import org.qamation.utils.FileUtils;
 
 import java.io.IOException;
 
 /**
  * Created by Pavel on 2017-05-14.
  */
-public class DataProviderAdapter implements DataProvider {
+public class DataProviderAdapter  implements DataProvider {
     //private static final org.slf4j.Logger log = LoggerFactory.getLogger(DataProviderAdapter.class);
-    protected ExcelReader provider;
+    protected ExcelReader excelReader;
     protected Object[][] data;
     protected String fileName;
     protected int currentIndex;
 
     public DataProviderAdapter(String fileName) {
-        //TODO COPY ORIGINAL FILE INTO A WORKING FILE
-        this.fileName = fileName;
-        this.provider = new ExcelReader(fileName,0);
-        this.data = provider.getData();
-        this.currentIndex = 0;
+        this(fileName,0);
     }
+
+    public DataProviderAdapter(String fileName, int sheetIndx) {
+        this.fileName = fileName;
+        this.excelReader = new ExcelReader(fileName,sheetIndx);
+        this.data = excelReader.getData();
+        this.currentIndex = 0;
+
+    }
+
 
     @Override
     public Object[][] getData() {
@@ -58,9 +62,9 @@ public class DataProviderAdapter implements DataProvider {
     @Override
     public  synchronized void close() {
         try {
-            if (provider != null ) {
-                provider.closeWorkBook();
-                provider = null;
+            if (excelReader != null ) {
+                excelReader.closeWorkBook();
+                excelReader = null;
                 data = null;
             }
 
@@ -68,4 +72,5 @@ public class DataProviderAdapter implements DataProvider {
             e.printStackTrace();
         }
     }
+
 }

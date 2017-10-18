@@ -11,7 +11,7 @@ public class ExcelDataBeanInfo extends AbstractDataBeanInfo {
 
     protected static final String TAB_NUMBER = "tabNumber";
 
-    public ExcelDataBeanInfo () {super(ExcelDataBeanInfo.class);}
+    public ExcelDataBeanInfo () {super(ExcelData.class);}
 
 
     @Override

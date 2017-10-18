@@ -1,4 +1,4 @@
-package org.qamation.jmeter.config.data.provider;
+package org.qamation.jmeter.config.data.provider.simple;
 
 
 
@@ -22,8 +22,8 @@ import org.slf4j.LoggerFactory;
 public class SampleDataTest extends JMeterTestCase {
 
     private JMeterVariables threadVars;
-    private String fileName = "D:/QAMATION/documentation/Examples/SimpleDataProvider/Simple_Excel_Data.xlsx";
-    private String dataProviderImplClassName = "org.qamation.data.provider.DataProviderAdapter";
+    private String fileName = "Simple_Excel_Data.xlsx";
+    private String dataProviderImplClassName = "org.qamation.data.excelReader.DataProviderAdapter";
 
 
 
@@ -34,6 +34,7 @@ public class SampleDataTest extends JMeterTestCase {
         jmcx.setVariables(new JMeterVariables());
         threadVars = jmcx.getVariables();
         threadVars.put("b", "value");
+        fileName = this.getClass().getClassLoader().getResource(fileName).getPath();
     }
 
     @After
@@ -65,7 +66,7 @@ public class SampleDataTest extends JMeterTestCase {
     public void createSimpleDataTest() {
         SimpleData data = createSimpleData(dataProviderImplClassName,fileName, "DATA",true,SimpleData.SHARE_MODE_ALL);
         Assert.assertNotNull(data);
-        Assert.assertEquals("DATA",data.dataLabel);
+        Assert.assertEquals("DATA",data.getDataLabel());
         Assert.assertEquals(true,data.isResetAtEOF());
         Assert.assertEquals(SimpleData.SHARE_MODE_ALL,data.getShareMode());
     }

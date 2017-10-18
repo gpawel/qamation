@@ -65,7 +65,7 @@ public class ExcelReader {
 
             @Override
             public boolean hasNext() {
-                if (cursor <= availableLines) return true;
+                if (cursor < availableLines) return true;
                 return false;
             }
             @Override
