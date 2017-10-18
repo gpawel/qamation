@@ -98,7 +98,7 @@ public class WebDriverFactory {
 	private static DesiredCapabilities setChromeCapabilities() {
 		DesiredCapabilities dc = DesiredCapabilities.chrome();
 		ChromeOptions options = new ChromeOptions();
-		options.addArguments("--disable-extensions");
+		options = options.addArguments("--disable-extensions");
 		dc.setCapability(ChromeOptions.CAPABILITY, options);
 		return dc;
 	}
