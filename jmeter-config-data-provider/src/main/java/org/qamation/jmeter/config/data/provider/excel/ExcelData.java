@@ -52,7 +52,7 @@ public class ExcelData extends AbstractData {
 
 
     @Override
-    public <T extends DataProvider> T callFactory() {
+    public <T extends DataProvider> T callDataProviderFactory() {
         return ExcelDataProviderFactory.createExcelDataProviderInstance(getDataProviderImplClassName(), getFilename(), tabNumber);
     }
 

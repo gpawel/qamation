@@ -23,6 +23,8 @@ public class SimpleData extends AbstractData
 {
     private static final org.slf4j.Logger log = LoggerFactory.getLogger(SimpleData.class);
 
+    protected String dataLabel;
+
     @Override
     public void iterationStart(LoopIterationEvent loopIterationEvent) {
         log.info("iteration start by thread: " + JMeterContextService.getContext().getThread().getThreadName());
@@ -35,8 +37,16 @@ public class SimpleData extends AbstractData
     }
 
     @Override
-    public <T extends DataProvider> T callFactory() {
+    public <T extends DataProvider> T callDataProviderFactory() {
         return DataProviderFactory.createDataProviderInstance(getDataProviderImplClassName(), getFilename());
+    }
+
+    public String getDataLabel() {
+        return dataLabel;
+    }
+
+    public void setDataLabel(String dataLabel) {
+        this.dataLabel = dataLabel;
     }
 
 

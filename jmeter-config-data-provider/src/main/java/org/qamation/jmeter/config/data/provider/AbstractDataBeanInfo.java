@@ -68,12 +68,7 @@ public abstract class AbstractDataBeanInfo extends BeanInfoSupport {
         return p;
     }
 
-    protected PropertyDescriptor manageSourcePropertyDescriptor() {
-        PropertyDescriptor p=property(SOURCENAME);
-        p.setValue(NOT_UNDEFINED,Boolean.TRUE);
-        p.setValue(DEFAULT,"SIMPLEDATA");
-        return p;
-    }
+
 
     protected PropertyDescriptor manageResetPropertyDescriptor() {
         PropertyDescriptor p = property(RESET);

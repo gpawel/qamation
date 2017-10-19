@@ -17,8 +17,16 @@
         <stringProp name="filename">/home/pavel/workspace/qamation/documentation/Examples/SimpleDataProvider/Excel_Data.xlsx</stringProp>
         <boolProp name="resetAtEOF">true</boolProp>
         <stringProp name="shareMode">shareMode.all</stringProp>
-        <intProp name="tabNumber">0</intProp>
+        <intProp name="tabNumber">1</intProp>
       </org.qamation.jmeter.config.data.provider.excel.ExcelData>
+      <hashTree/>
+      <org.qamation.jmeter.config.data.provider.simple.SimpleData guiclass="TestBeanGUI" testclass="org.qamation.jmeter.config.data.provider.simple.SimpleData" testname="Simple Data Provider" enabled="true">
+        <stringProp name="dataLabel">SIMPLEDATA</stringProp>
+        <stringProp name="dataProviderImplClassName">ENTER CLASS NAME IMPLEMENTING DataProvider HERE</stringProp>
+        <stringProp name="filename">&lt;ENTER FILE NAME HERE&gt;</stringProp>
+        <boolProp name="resetAtEOF">false</boolProp>
+        <stringProp name="shareMode">shareMode.all</stringProp>
+      </org.qamation.jmeter.config.data.provider.simple.SimpleData>
       <hashTree/>
       <ThreadGroup guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="Thread Group" enabled="true">
         <stringProp name="ThreadGroup.on_sample_error">continue</stringProp>
@@ -35,24 +43,12 @@
         <stringProp name="ThreadGroup.delay"></stringProp>
       </ThreadGroup>
       <hashTree>
-        <JSR223Sampler guiclass="TestBeanGUI" testclass="JSR223Sampler" testname="EXCELDATA" enabled="true">
-          <stringProp name="cacheKey"></stringProp>
-          <stringProp name="filename"></stringProp>
-          <stringProp name="parameters"></stringProp>
-          <stringProp name="script">log.info(&quot;Field_1 = &quot;+&quot;${Field_1}&quot;+&quot; or &quot;+vars.get(&quot;Field_1&quot;));
-log.info(&quot;Field_2 = &quot;+&quot;${Field_2}&quot;+&quot; or &quot;+vars.get(&quot;Field_2&quot;));
-log.info(&quot;Field_3 = &quot;+&quot;${Field_3}&quot;+&quot; or &quot;+vars.get(&quot;Field_3&quot;));
-log.info(&quot;Field_4 = &quot;+&quot;${Field_4}&quot;+&quot; or &quot;+vars.get(&quot;Field_4&quot;));
-</stringProp>
-          <stringProp name="scriptLanguage">groovy</stringProp>
-        </JSR223Sampler>
-        <hashTree/>
         <LoopController guiclass="LoopControlPanel" testclass="LoopController" testname="Loop Controller" enabled="true">
           <boolProp name="LoopController.continue_forever">true</boolProp>
-          <stringProp name="LoopController.loops">1</stringProp>
+          <stringProp name="LoopController.loops">2</stringProp>
         </LoopController>
         <hashTree>
-          <org.qamation.jmeter.config.data.provider.excel.ExcelData guiclass="TestBeanGUI" testclass="org.qamation.jmeter.config.data.provider.excel.ExcelData" testname="Excel Data Provider" enabled="true">
+          <org.qamation.jmeter.config.data.provider.excel.ExcelData guiclass="TestBeanGUI" testclass="org.qamation.jmeter.config.data.provider.excel.ExcelData" testname="Excel Data Provider" enabled="false">
             <stringProp name="filename">/home/pavel/workspace/qamation/documentation/Examples/SimpleDataProvider/Excel_Data_1.xlsx</stringProp>
             <stringProp name="dataProviderImplClassName">org.qamation.data.provider.excel.ExcelDataAdapter</stringProp>
             <boolProp name="resetAtEOF">true</boolProp>
@@ -61,7 +57,7 @@ log.info(&quot;Field_4 = &quot;+&quot;${Field_4}&quot;+&quot; or &quot;+vars.get
             <intProp name="tabNumber">0</intProp>
           </org.qamation.jmeter.config.data.provider.excel.ExcelData>
           <hashTree/>
-          <JSR223Sampler guiclass="TestBeanGUI" testclass="JSR223Sampler" testname="DATA2" enabled="true">
+          <JSR223Sampler guiclass="TestBeanGUI" testclass="JSR223Sampler" testname="DATA2" enabled="false">
             <stringProp name="scriptLanguage">groovy</stringProp>
             <stringProp name="parameters"></stringProp>
             <stringProp name="filename"></stringProp>
@@ -70,6 +66,18 @@ log.info(&quot;Field_4 = &quot;+&quot;${Field_4}&quot;+&quot; or &quot;+vars.get
 log.info(&quot;Value_2 = &quot;+&quot;${Value_2}&quot;+&quot; or &quot;+vars.get(&quot;Value_2&quot;));
 log.info(&quot;Value_3 = &quot;+&quot;${Value_3}&quot;+&quot; or &quot;+vars.get(&quot;Value_3&quot;));
 log.info(&quot;Value_4 = &quot;+&quot;${Value_4}&quot;+&quot; or &quot;+vars.get(&quot;Value_4&quot;));</stringProp>
+          </JSR223Sampler>
+          <hashTree/>
+          <JSR223Sampler guiclass="TestBeanGUI" testclass="JSR223Sampler" testname="EXCELDATA" enabled="true">
+            <stringProp name="cacheKey"></stringProp>
+            <stringProp name="filename"></stringProp>
+            <stringProp name="parameters"></stringProp>
+            <stringProp name="script">log.info(&quot;Field_1 = &quot;+&quot;${Field_1}&quot;+&quot; or &quot;+vars.get(&quot;Field_1&quot;));
+log.info(&quot;Field_2 = &quot;+&quot;${Field_2}&quot;+&quot; or &quot;+vars.get(&quot;Field_2&quot;));
+log.info(&quot;Field_3 = &quot;+&quot;${Field_3}&quot;+&quot; or &quot;+vars.get(&quot;Field_3&quot;));
+log.info(&quot;Field_4 = &quot;+&quot;${Field_4}&quot;+&quot; or &quot;+vars.get(&quot;Field_4&quot;));
+</stringProp>
+            <stringProp name="scriptLanguage">groovy</stringProp>
           </JSR223Sampler>
           <hashTree/>
         </hashTree>

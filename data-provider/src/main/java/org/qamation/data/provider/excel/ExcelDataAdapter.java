@@ -15,7 +15,7 @@ public class ExcelDataAdapter extends DataProviderAdapter implements ExcelDataPr
 
 
     public ExcelDataAdapter(String fileName, int sheetIndx) {
-        super(fileName);
+        super(fileName, sheetIndx);
         this.sheetIndex = sheetIndx;
         this.currentIndex = 1;
         this.iterator = excelReader.iterator();

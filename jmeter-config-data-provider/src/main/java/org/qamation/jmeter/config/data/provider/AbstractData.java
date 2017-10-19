@@ -7,8 +7,6 @@ import org.apache.jmeter.testbeans.TestBean;
 import org.apache.jmeter.threads.JMeterContext;
 import org.apache.jorphan.util.JMeterStopThreadException;
 import org.qamation.data.provider.DataProvider;
-import org.qamation.data.provider.excel.ExcelDataProvider;
-import org.qamation.data.provider.excel.ExcelDataProviderFactory;
 import org.qamation.jmeter.config.Storage;
 import org.qamation.jmeter.config.data.provider.simple.SimpleDataBeanInfo;
 import org.slf4j.LoggerFactory;
@@ -26,7 +24,7 @@ public abstract class AbstractData extends ConfigTestElement
 
     protected String filename;
     protected String dataProviderImplClassName;
-    protected String dataLabel;
+
     protected boolean resetAtEOF;
     protected String shareMode;
 
@@ -84,7 +82,7 @@ public abstract class AbstractData extends ConfigTestElement
         if (storage.hasKey(key)) {
             dataProvider = storage.get(key);
         } else {
-            dataProvider = callFactory();
+            dataProvider = callDataProviderFactory();
             storage.put(key, dataProvider);
         }
         return dataProvider;
@@ -115,14 +113,6 @@ public abstract class AbstractData extends ConfigTestElement
         this.resetAtEOF = resetAtEOF;
     }
 
-    public String getDataLabel() {
-        return dataLabel;
-    }
-
-    public void setDataLabel(String dataLabel) {
-        this.dataLabel = dataLabel;
-    }
-
     public String getShareMode() {
         return shareMode;
     }
@@ -131,5 +121,5 @@ public abstract class AbstractData extends ConfigTestElement
         this.shareMode = shareMode;
     }
 
-    public abstract <T extends DataProvider> T callFactory();
+    public abstract <T extends DataProvider> T callDataProviderFactory();
 }

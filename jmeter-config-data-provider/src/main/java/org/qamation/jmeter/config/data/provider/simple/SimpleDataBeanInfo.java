@@ -13,16 +13,28 @@ public class SimpleDataBeanInfo extends AbstractDataBeanInfo {
 
     private static final Logger log = LoggerFactory.getLogger(SimpleDataBeanInfo.class);
 
+
     public SimpleDataBeanInfo() {
         super(SimpleData.class);
     }
 
+
+
     protected void setProperties() {
-        createPropertyGroup("dataprovider_properties", new String[] {FILENAME,CLASSNAME,RESET,SOURCENAME,SHAREMODE});
+        createPropertyGroup("General", new String[] {FILENAME,CLASSNAME,RESET,SOURCENAME,SHAREMODE});
         PropertyDescriptor p = manageFileNamePropertyDescriptor();
         p = manageClassNamePropertyDescriptor();
         p = manageSourcePropertyDescriptor();
         p = manageResetPropertyDescriptor();
         p = manageShareModePropertyDescriptor();
     }
+
+    private PropertyDescriptor manageSourcePropertyDescriptor() {
+        PropertyDescriptor p=property(SOURCENAME);
+        p.setValue(NOT_UNDEFINED,Boolean.TRUE);
+        p.setValue(DEFAULT,"SIMPLEDATA");
+        return p;
+    }
+
+
 }
