@@ -15,7 +15,8 @@ public abstract class AbstractDataBeanInfo extends BeanInfoSupport {
 
     protected static final String FILENAME = "filename";
     protected static final String CLASSNAME = "dataProviderImplClassName";
-    protected static final String RESET = "resetAtEOF";
+    protected static final String RESET_AT_EOF = "resetAtEOF";
+    protected static final String RESET_AT_TEST_START="resetAtTestStart";
     protected static final String SOURCENAME = "dataLabel";
     protected static final String SHAREMODE = "shareMode";
 
@@ -70,8 +71,8 @@ public abstract class AbstractDataBeanInfo extends BeanInfoSupport {
 
 
 
-    protected PropertyDescriptor manageResetPropertyDescriptor() {
-        PropertyDescriptor p = property(RESET);
+    protected PropertyDescriptor manageResetAtEOFPropertyDescriptor() {
+        PropertyDescriptor p = property(RESET_AT_EOF);
         p.setValue(NOT_UNDEFINED,Boolean.TRUE);
         p.setValue(DEFAULT,Boolean.FALSE);
         return p;
@@ -85,6 +86,13 @@ public abstract class AbstractDataBeanInfo extends BeanInfoSupport {
         p.setValue(NOT_OTHER, Boolean.FALSE);
         p.setValue(NOT_EXPRESSION, Boolean.FALSE);
         p.setValue(TAGS,SHARE_TAGS);
+        return p;
+    }
+
+    protected PropertyDescriptor manageResetAtTestStartDescriptor() {
+        PropertyDescriptor p = property(RESET_AT_TEST_START);
+        p.setValue(NOT_UNDEFINED,Boolean.TRUE);
+        p.setValue(DEFAULT,Boolean.FALSE);
         return p;
     }
 

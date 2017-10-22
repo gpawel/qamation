@@ -26,6 +26,7 @@ public abstract class AbstractData extends ConfigTestElement
     protected String dataProviderImplClassName;
 
     protected boolean resetAtEOF;
+    protected boolean resetAtTestStart;
     protected String shareMode;
 
     protected String getKey() {
@@ -111,6 +112,14 @@ public abstract class AbstractData extends ConfigTestElement
 
     public void setResetAtEOF(boolean resetAtEOF) {
         this.resetAtEOF = resetAtEOF;
+    }
+
+    public boolean isResetAtTestStart() {
+        return resetAtTestStart;
+    }
+
+    public void setResetAtTestStart(boolean resetAtTestStart) {
+        this.resetAtTestStart = resetAtTestStart;
     }
 
     public String getShareMode() {

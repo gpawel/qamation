@@ -2,7 +2,6 @@ package org.qamation.jmeter.config;
 
 import org.apache.jmeter.engine.StandardJMeterEngine;
 import org.apache.jmeter.testelement.TestStateListener;
-import org.apache.jmeter.threads.JMeterContextService;
 import org.qamation.data.provider.DataProvider;
 
 import java.util.HashMap;
@@ -30,42 +29,42 @@ implements TestStateListener
     }
 
 
-    private  HashMap<String,Object> container = null;
+    private  HashMap<String,Object> providerContainer = null;
 
     private Storage() {
-        container = new HashMap<String, Object>();
+        providerContainer = new HashMap<String, Object>();
     }
 
     public synchronized boolean hasKey(String key) {
-        return container.containsKey(key);
+        return providerContainer.containsKey(key);
     }
 
     public synchronized void put (String key, T t) {
-        container.put(key, t);
+        providerContainer.put(key, t);
     }
 
     public synchronized T get (String key) {
-        return (T)container.get(key);
+        return (T) providerContainer.get(key);
     }
 
     public synchronized void reset() {
-        Set<String> keys = container.keySet();
+        Set<String> keys = providerContainer.keySet();
         if (keys.size()>0) {
             for (String key : keys) {
-                T provider = (T) container.get(key);
+                T provider = (T) providerContainer.get(key);
                 provider.reset();
             }
         }
     }
 
     public synchronized void remove(String key) {
-        if (container.containsKey(key)) {
-            container.remove(key);
+        if (providerContainer.containsKey(key)) {
+            providerContainer.remove(key);
         }
     }
 
     public synchronized Set<String> getKeys() {
-        return container.keySet();
+        return providerContainer.keySet();
     }
 
     @Override

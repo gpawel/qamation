@@ -21,12 +21,13 @@ public class SimpleDataBeanInfo extends AbstractDataBeanInfo {
 
 
     protected void setProperties() {
-        createPropertyGroup("General", new String[] {FILENAME,CLASSNAME,RESET,SOURCENAME,SHAREMODE});
+        createPropertyGroup("General", new String[] {FILENAME,CLASSNAME, RESET_AT_EOF,SOURCENAME,SHAREMODE});
         PropertyDescriptor p = manageFileNamePropertyDescriptor();
         p = manageClassNamePropertyDescriptor();
         p = manageSourcePropertyDescriptor();
-        p = manageResetPropertyDescriptor();
+        p = manageResetAtEOFPropertyDescriptor();
         p = manageShareModePropertyDescriptor();
+        p = manageResetAtTestStartDescriptor();
     }
 
     private PropertyDescriptor manageSourcePropertyDescriptor() {

@@ -11,22 +11,25 @@
       <stringProp name="TestPlan.user_define_classpath"></stringProp>
     </TestPlan>
     <hashTree>
+      <Arguments guiclass="ArgumentsPanel" testclass="Arguments" testname="User Defined Variables" enabled="true">
+        <collectionProp name="Arguments.arguments">
+          <elementProp name="BASE_DIR" elementType="Argument">
+            <stringProp name="Argument.name">BASE_DIR</stringProp>
+            <stringProp name="Argument.value">${__BeanShell( import org.apache.jmeter.services.FileServer; FileServer.getFileServer().getBaseDir(); )}</stringProp>
+            <stringProp name="Argument.metadata">=</stringProp>
+          </elementProp>
+        </collectionProp>
+      </Arguments>
+      <hashTree/>
       <org.qamation.jmeter.config.data.provider.excel.ExcelData guiclass="TestBeanGUI" testclass="org.qamation.jmeter.config.data.provider.excel.ExcelData" testname="Excel Data Provider" enabled="true">
         <stringProp name="dataLabel">EXCELDATA</stringProp>
         <stringProp name="dataProviderImplClassName">org.qamation.data.provider.excel.ExcelDataAdapter</stringProp>
-        <stringProp name="filename">/home/pavel/workspace/qamation/documentation/Examples/SimpleDataProvider/Excel_Data.xlsx</stringProp>
+        <stringProp name="filename">${BASE_DIR}/Excel_Data.xlsx</stringProp>
         <boolProp name="resetAtEOF">true</boolProp>
         <stringProp name="shareMode">shareMode.all</stringProp>
         <intProp name="tabNumber">1</intProp>
+        <boolProp name="resetAtTestStart">false</boolProp>
       </org.qamation.jmeter.config.data.provider.excel.ExcelData>
-      <hashTree/>
-      <org.qamation.jmeter.config.data.provider.simple.SimpleData guiclass="TestBeanGUI" testclass="org.qamation.jmeter.config.data.provider.simple.SimpleData" testname="Simple Data Provider" enabled="true">
-        <stringProp name="dataLabel">SIMPLEDATA</stringProp>
-        <stringProp name="dataProviderImplClassName">ENTER CLASS NAME IMPLEMENTING DataProvider HERE</stringProp>
-        <stringProp name="filename">&lt;ENTER FILE NAME HERE&gt;</stringProp>
-        <boolProp name="resetAtEOF">false</boolProp>
-        <stringProp name="shareMode">shareMode.all</stringProp>
-      </org.qamation.jmeter.config.data.provider.simple.SimpleData>
       <hashTree/>
       <ThreadGroup guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="Thread Group" enabled="true">
         <stringProp name="ThreadGroup.on_sample_error">continue</stringProp>
@@ -49,12 +52,13 @@
         </LoopController>
         <hashTree>
           <org.qamation.jmeter.config.data.provider.excel.ExcelData guiclass="TestBeanGUI" testclass="org.qamation.jmeter.config.data.provider.excel.ExcelData" testname="Excel Data Provider" enabled="false">
-            <stringProp name="filename">/home/pavel/workspace/qamation/documentation/Examples/SimpleDataProvider/Excel_Data_1.xlsx</stringProp>
+            <stringProp name="filename">Excel_Data_1.xlsx</stringProp>
             <stringProp name="dataProviderImplClassName">org.qamation.data.provider.excel.ExcelDataAdapter</stringProp>
             <boolProp name="resetAtEOF">true</boolProp>
             <stringProp name="dataLabel">DATA2</stringProp>
             <stringProp name="shareMode">shareMode.all</stringProp>
             <intProp name="tabNumber">0</intProp>
+            <boolProp name="resetAtTestStart">false</boolProp>
           </org.qamation.jmeter.config.data.provider.excel.ExcelData>
           <hashTree/>
           <JSR223Sampler guiclass="TestBeanGUI" testclass="JSR223Sampler" testname="DATA2" enabled="false">

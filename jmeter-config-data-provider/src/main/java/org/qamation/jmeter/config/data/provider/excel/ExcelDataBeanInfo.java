@@ -16,10 +16,10 @@ public class ExcelDataBeanInfo extends AbstractDataBeanInfo {
 
     @Override
     protected void setProperties() {
-        createPropertyGroup("exceldata_properties", new String[] {FILENAME,CLASSNAME,RESET,SHAREMODE,TAB_NUMBER});
+        createPropertyGroup("exceldata_properties", new String[] {FILENAME,CLASSNAME, RESET_AT_EOF,SHAREMODE,TAB_NUMBER});
         PropertyDescriptor p = manageFileNamePropertyDescriptor();
         p = manageClassNamePropertyDescriptor();
-        p = manageResetPropertyDescriptor();
+        p = manageResetAtEOFPropertyDescriptor();
         p = manageShareModePropertyDescriptor();
         p = manageTabNumberPropertyDescriptor();
     }
