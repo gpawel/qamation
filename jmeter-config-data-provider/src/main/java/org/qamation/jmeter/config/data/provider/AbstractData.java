@@ -7,8 +7,8 @@ import org.apache.jmeter.testbeans.TestBean;
 import org.apache.jmeter.threads.JMeterContext;
 import org.apache.jorphan.util.JMeterStopThreadException;
 import org.qamation.data.provider.DataProvider;
-import org.qamation.jmeter.config.Storage;
 import org.qamation.jmeter.config.data.provider.simple.SimpleDataBeanInfo;
+import org.qamation.jmeter.utils.storage.data.provider.*;
 import org.slf4j.LoggerFactory;
 
 public abstract class AbstractData extends ConfigTestElement
@@ -62,12 +62,13 @@ public abstract class AbstractData extends ConfigTestElement
         return suffix;
     }
 
-    protected < P extends DataProvider > void isEndReached(P provider) {
+    protected < P extends DataProvider > boolean hasMore(P provider) {
         int size = provider.getSize();
         int currentIndex = provider.getCurrentLineIndex();
-        if (currentIndex == size) {
-            stopIfRequired();
+        if (currentIndex < size) {
+            return  true;
         }
+        return false;
     }
 
     protected void stopIfRequired() {

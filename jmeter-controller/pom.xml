@@ -8,9 +8,10 @@
         <version>3.2.0</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
+
     <groupId>org.qamation.jmeter</groupId>
-    <artifactId>jmeter-config-data-provider</artifactId>
-    <version>${jmeter-config-data-provider.version}</version>
+    <artifactId>jmeter-controller</artifactId>
+    <version>${jmeter-controller.version}</version>
     <build>
         <resources>
             <resource>
@@ -30,15 +31,6 @@
             <groupId>org.qamation.jmeter</groupId>
             <artifactId>jmeter-test</artifactId>
         </dependency>
-        <dependency>
-            <groupId>org.qamation.jmeter</groupId>
-            <artifactId>jmeter-utils</artifactId>
-            <version>${jmeter-utils.version}</version>
-        </dependency>
     </dependencies>
 
 </project>
-
-<!--
-
--->

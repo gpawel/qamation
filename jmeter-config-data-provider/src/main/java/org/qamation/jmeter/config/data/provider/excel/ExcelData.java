@@ -17,6 +17,7 @@ public class ExcelData extends AbstractData {
     private static final org.slf4j.Logger log = LoggerFactory.getLogger(ExcelData.class);
 
     protected int tabNumber=0;
+    protected String hasNextVariableName="";
 
 
 
@@ -30,8 +31,9 @@ public class ExcelData extends AbstractData {
 
     private void addDataFieldsIntoContext(ExcelDataProvider excelDataProvider) {
         Iterator<String[]> iterator = excelDataProvider.getIterator();
+        JMeterVariables threadVars = getVariables();
         if (iterator.hasNext()) {
-            JMeterVariables threadVars = getVariables();
+            threadVars.put(hasNextVariableName,"true");
             String[] line = iterator.next();
             String[] header = excelDataProvider.getFieldNames();
             for (int i = 0; i < header.length; i++) {
@@ -39,6 +41,7 @@ public class ExcelData extends AbstractData {
             }
         }
         else {
+            threadVars.put(hasNextVariableName,"false");
             stopIfRequired();
             excelDataProvider.reset();
             addDataFieldsIntoContext(excelDataProvider);
@@ -66,5 +69,11 @@ public class ExcelData extends AbstractData {
         this.tabNumber = tabNumber;
     }
 
+    public String getHasNextVariableName() {
+        return hasNextVariableName;
+    }
 
+    public void setHasNextVariableName(String hasNextVariableName) {
+        this.hasNextVariableName = hasNextVariableName;
+    }
 }

@@ -21,16 +21,6 @@
         </collectionProp>
       </Arguments>
       <hashTree/>
-      <org.qamation.jmeter.config.data.provider.excel.ExcelData guiclass="TestBeanGUI" testclass="org.qamation.jmeter.config.data.provider.excel.ExcelData" testname="Excel Data Provider" enabled="true">
-        <stringProp name="dataLabel">EXCELDATA</stringProp>
-        <stringProp name="dataProviderImplClassName">org.qamation.data.provider.excel.ExcelDataAdapter</stringProp>
-        <stringProp name="filename">${BASE_DIR}/Excel_Data.xlsx</stringProp>
-        <boolProp name="resetAtEOF">true</boolProp>
-        <stringProp name="shareMode">shareMode.all</stringProp>
-        <intProp name="tabNumber">1</intProp>
-        <boolProp name="resetAtTestStart">false</boolProp>
-      </org.qamation.jmeter.config.data.provider.excel.ExcelData>
-      <hashTree/>
       <ThreadGroup guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="Thread Group" enabled="true">
         <stringProp name="ThreadGroup.on_sample_error">continue</stringProp>
         <elementProp name="ThreadGroup.main_controller" elementType="LoopController" guiclass="LoopControlPanel" testclass="LoopController" testname="Loop Controller" enabled="true">
@@ -46,7 +36,7 @@
         <stringProp name="ThreadGroup.delay"></stringProp>
       </ThreadGroup>
       <hashTree>
-        <LoopController guiclass="LoopControlPanel" testclass="LoopController" testname="Loop Controller" enabled="true">
+        <LoopController guiclass="LoopControlPanel" testclass="LoopController" testname="Loop Controller" enabled="false">
           <boolProp name="LoopController.continue_forever">true</boolProp>
           <stringProp name="LoopController.loops">2</stringProp>
         </LoopController>
@@ -59,6 +49,7 @@
             <stringProp name="shareMode">shareMode.all</stringProp>
             <intProp name="tabNumber">0</intProp>
             <boolProp name="resetAtTestStart">false</boolProp>
+            <stringProp name="hasNextVariableName">HAS_MORE</stringProp>
           </org.qamation.jmeter.config.data.provider.excel.ExcelData>
           <hashTree/>
           <JSR223Sampler guiclass="TestBeanGUI" testclass="JSR223Sampler" testname="DATA2" enabled="false">
@@ -72,25 +63,7 @@ log.info(&quot;Value_3 = &quot;+&quot;${Value_3}&quot;+&quot; or &quot;+vars.get
 log.info(&quot;Value_4 = &quot;+&quot;${Value_4}&quot;+&quot; or &quot;+vars.get(&quot;Value_4&quot;));</stringProp>
           </JSR223Sampler>
           <hashTree/>
-          <JSR223Sampler guiclass="TestBeanGUI" testclass="JSR223Sampler" testname="EXCELDATA" enabled="true">
-            <stringProp name="cacheKey"></stringProp>
-            <stringProp name="filename"></stringProp>
-            <stringProp name="parameters"></stringProp>
-            <stringProp name="script">log.info(&quot;Field_1 = &quot;+&quot;${Field_1}&quot;+&quot; or &quot;+vars.get(&quot;Field_1&quot;));
-log.info(&quot;Field_2 = &quot;+&quot;${Field_2}&quot;+&quot; or &quot;+vars.get(&quot;Field_2&quot;));
-log.info(&quot;Field_3 = &quot;+&quot;${Field_3}&quot;+&quot; or &quot;+vars.get(&quot;Field_3&quot;));
-log.info(&quot;Field_4 = &quot;+&quot;${Field_4}&quot;+&quot; or &quot;+vars.get(&quot;Field_4&quot;));
-</stringProp>
-            <stringProp name="scriptLanguage">groovy</stringProp>
-          </JSR223Sampler>
-          <hashTree/>
         </hashTree>
-        <DebugSampler guiclass="TestBeanGUI" testclass="DebugSampler" testname="Debug Sampler" enabled="true">
-          <boolProp name="displayJMeterProperties">false</boolProp>
-          <boolProp name="displayJMeterVariables">true</boolProp>
-          <boolProp name="displaySystemProperties">false</boolProp>
-        </DebugSampler>
-        <hashTree/>
         <BeanShellSampler guiclass="BeanShellSamplerGui" testclass="BeanShellSampler" testname="BeanShell Sampler" enabled="false">
           <stringProp name="BeanShellSampler.query">import org.qamation.data.provider.excel.ExcelDataProvider;
 import java.util.Iterator;
@@ -118,6 +91,40 @@ while (itrtr.hasNext()) {
           <boolProp name="BeanShellSampler.resetInterpreter">false</boolProp>
         </BeanShellSampler>
         <hashTree/>
+        <WhileController guiclass="WhileControllerGui" testclass="WhileController" testname="While Controller" enabled="true">
+          <stringProp name="WhileController.condition">${HAS_MORE}</stringProp>
+        </WhileController>
+        <hashTree>
+          <org.qamation.jmeter.config.data.provider.excel.ExcelData guiclass="TestBeanGUI" testclass="org.qamation.jmeter.config.data.provider.excel.ExcelData" testname="Excel Data Provider" enabled="true">
+            <stringProp name="dataLabel">EXCELDATA</stringProp>
+            <stringProp name="dataProviderImplClassName">org.qamation.data.provider.excel.ExcelDataAdapter</stringProp>
+            <stringProp name="filename">${BASE_DIR}/Excel_Data.xlsx</stringProp>
+            <boolProp name="resetAtEOF">true</boolProp>
+            <stringProp name="shareMode">shareMode.all</stringProp>
+            <intProp name="tabNumber">1</intProp>
+            <boolProp name="resetAtTestStart">false</boolProp>
+            <stringProp name="hasNextVariableName">HAS_MORE</stringProp>
+          </org.qamation.jmeter.config.data.provider.excel.ExcelData>
+          <hashTree/>
+          <JSR223Sampler guiclass="TestBeanGUI" testclass="JSR223Sampler" testname="EXCELDATA" enabled="true">
+            <stringProp name="cacheKey"></stringProp>
+            <stringProp name="filename"></stringProp>
+            <stringProp name="parameters"></stringProp>
+            <stringProp name="script">log.info(&quot;Field_1 = &quot;+&quot;${Field_1}&quot;+&quot; or &quot;+vars.get(&quot;Field_1&quot;));
+log.info(&quot;Field_2 = &quot;+&quot;${Field_2}&quot;+&quot; or &quot;+vars.get(&quot;Field_2&quot;));
+log.info(&quot;Field_3 = &quot;+&quot;${Field_3}&quot;+&quot; or &quot;+vars.get(&quot;Field_3&quot;));
+log.info(&quot;Field_4 = &quot;+&quot;${Field_4}&quot;+&quot; or &quot;+vars.get(&quot;Field_4&quot;));
+</stringProp>
+            <stringProp name="scriptLanguage">groovy</stringProp>
+          </JSR223Sampler>
+          <hashTree/>
+          <DebugSampler guiclass="TestBeanGUI" testclass="DebugSampler" testname="Debug Sampler" enabled="true">
+            <boolProp name="displayJMeterProperties">false</boolProp>
+            <boolProp name="displayJMeterVariables">true</boolProp>
+            <boolProp name="displaySystemProperties">false</boolProp>
+          </DebugSampler>
+          <hashTree/>
+        </hashTree>
       </hashTree>
       <ResultCollector guiclass="ViewResultsFullVisualizer" testclass="ResultCollector" testname="View Results Tree" enabled="true">
         <boolProp name="ResultCollector.error_logging">false</boolProp>

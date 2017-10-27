@@ -1,4 +1,4 @@
-package org.qamation.jmeter.config;
+package org.qamation.jmeter.utils.storage.data.provider;
 
 import org.qamation.data.provider.DataProvider;
 

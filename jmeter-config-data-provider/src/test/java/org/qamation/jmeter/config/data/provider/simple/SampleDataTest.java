@@ -11,7 +11,8 @@ import org.junit.Test;
 import org.qamation.data.provider.DataProvider;
 import org.qamation.data.provider.DataProviderFactory;
 import org.qamation.jmeter.apache.junit.JMeterTestCase;
-import org.qamation.jmeter.config.Storage;
+
+import org.qamation.jmeter.utils.storage.data.provider.Storage;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
