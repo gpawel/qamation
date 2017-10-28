@@ -34,7 +34,7 @@ public class ExcelDataBeanInfo extends AbstractDataBeanInfo {
 
     }
 
-    private PropertyDescriptor manageTabNumberPropertyDescriptor() {
+    protected PropertyDescriptor manageTabNumberPropertyDescriptor() {
         PropertyDescriptor p = property(TAB_NUMBER);
         p.setValue(NOT_UNDEFINED,Boolean.TRUE);
         p.setValue(DEFAULT,0);
