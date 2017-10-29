@@ -62,7 +62,7 @@ public class ExcelUtils {
             wb.write(fileOut);
             fileOut.close();
         } catch (Exception ex) {
-            throw new RuntimeException("Unable to create excel file for " + fileName,ex);
+            throw new RuntimeException("Unable to create org.qamation.jmeter.data.provider.controller.excel file for " + fileName,ex);
         }
     }
     public Iterator iterator() {

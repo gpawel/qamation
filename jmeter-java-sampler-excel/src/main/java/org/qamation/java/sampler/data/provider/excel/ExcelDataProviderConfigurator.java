@@ -25,7 +25,7 @@ public class ExcelDataProviderConfigurator  extends AbstractExcelDataProvider  {
 
     public Arguments getDefaultParameters() {
         Arguments defaultParameters = super.getDefaultParameters();
-        defaultParameters.addArgument(EXCEL_FILE,"<excel file name here>");
+        defaultParameters.addArgument(EXCEL_FILE,"<org.qamation.jmeter.data.provider.controller.excel file name here>");
         defaultParameters.addArgument(ACTIVE_WORKSHEET,"");
         defaultParameters.addArgument(VARIABLES,"FIRST LINE IN THE FILE SHOULD BE A HEADER");
         return defaultParameters;

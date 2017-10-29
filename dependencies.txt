@@ -12,8 +12,8 @@
 [WARNING] Some problems were encountered while building the effective model for org.qamation:wmq-wrapper:jar:3.0.0
 [WARNING] 'version' contains an expression but should be a constant. @ org.qamation:wmq-wrapper:${wmq-wrapper.version}, D:\QAMATION\wmq-wrapper\pom.xml, line 12, column 14
 [WARNING] 
-[WARNING] Some problems were encountered while building the effective model for org.qamation:excel-utils:jar:3.0.0
-[WARNING] 'version' contains an expression but should be a constant. @ org.qamation:excel-utils:${excel-utils.version}, D:\QAMATION\excel-utils\pom.xml, line 12, column 14
+[WARNING] Some problems were encountered while building the effective model for org.qamation:org.qamation.jmeter.data.provider.controller.excel-utils:jar:3.0.0
+[WARNING] 'version' contains an expression but should be a constant. @ org.qamation:org.qamation.jmeter.data.provider.controller.excel-utils:${org.qamation.jmeter.data.provider.controller.excel-utils.version}, D:\QAMATION\org.qamation.jmeter.data.provider.controller.excel-utils\pom.xml, line 12, column 14
 [WARNING] 
 [WARNING] Some problems were encountered while building the effective model for org.qamation:keyboard:jar:3.0.0
 [WARNING] 'version' contains an expression but should be a constant. @ org.qamation:keyboard:${keyboard.version}, D:\QAMATION\keyboard\pom.xml, line 12, column 14
@@ -33,8 +33,8 @@
 [WARNING] Some problems were encountered while building the effective model for org.qamation.jmeter:jmeter-java-sampler-wmq:jar:3.0.0
 [WARNING] 'version' contains an expression but should be a constant. @ org.qamation.jmeter:jmeter-java-sampler-wmq:${jmeter-java-sampler-wmq.version}, D:\QAMATION\jmeter-java-sampler-wmq\pom.xml, line 13, column 14
 [WARNING] 
-[WARNING] Some problems were encountered while building the effective model for org.qamation.jmeter:jmeter-java-sampler-excel:jar:3.0.1
-[WARNING] 'version' contains an expression but should be a constant. @ org.qamation.jmeter:jmeter-java-sampler-excel:${jmeter-java-sampler-excel.version}, D:\QAMATION\jmeter-java-sampler-excel\pom.xml, line 13, column 14
+[WARNING] Some problems were encountered while building the effective model for org.qamation.jmeter:jmeter-java-sampler-org.qamation.jmeter.data.provider.controller.excel:jar:3.0.1
+[WARNING] 'version' contains an expression but should be a constant. @ org.qamation.jmeter:jmeter-java-sampler-org.qamation.jmeter.data.provider.controller.excel:${jmeter-java-sampler-org.qamation.jmeter.data.provider.controller.excel.version}, D:\QAMATION\jmeter-java-sampler-org.qamation.jmeter.data.provider.controller.excel\pom.xml, line 13, column 14
 [WARNING] 
 [WARNING] Some problems were encountered while building the effective model for org.qamation.jmeter:jmeter-config-data-provider:jar:1.0.0
 [WARNING] 'version' contains an expression but should be a constant. @ org.qamation.jmeter:jmeter-config-data-provider:${jmeter-config-data-provider.version}, D:\QAMATION\jmeter-config-data-provider\pom.xml, line 13, column 14
@@ -54,7 +54,7 @@
 [INFO] webdriver-utils
 [INFO] web-page
 [INFO] wmq-wrapper
-[INFO] excel-utils
+[INFO] org.qamation.jmeter.data.provider.controller.excel-utils
 [INFO] keyboard
 [INFO] navigator
 [INFO] data-provider
@@ -62,7 +62,7 @@
 [INFO] jmeter-java-sampler-web-extension
 [INFO] jmeter-java-sampler-keyboard
 [INFO] jmeter-java-sampler-wmq
-[INFO] jmeter-java-sampler-excel
+[INFO] jmeter-java-sampler-org.qamation.jmeter.data.provider.controller.excel
 [INFO] jmeter-test
 [INFO] jmeter-config-data-provider
 [INFO]                                                                         
@@ -1196,11 +1196,11 @@
 [INFO] \- com.ibm:com.ibm.mq.allclient:jar:8.0.0.4:compile
 [INFO]                                                                         
 [INFO] ------------------------------------------------------------------------
-[INFO] Building excel-utils 3.0.0
+[INFO] Building org.qamation.jmeter.data.provider.controller.excel-utils 3.0.0
 [INFO] ------------------------------------------------------------------------
 [INFO] 
-[INFO] --- maven-dependency-plugin:2.8:tree (default-cli) @ excel-utils ---
-[INFO] org.qamation:excel-utils:jar:3.0.0
+[INFO] --- maven-dependency-plugin:2.8:tree (default-cli) @ org.qamation.jmeter.data.provider.controller.excel-utils ---
+[INFO] org.qamation:org.qamation.jmeter.data.provider.controller.excel-utils:jar:3.0.0
 [INFO] +- org.qamation:utils:jar:3.1.1:compile
 [INFO] +- org.apache.maven.plugins:maven-jar-plugin:jar:2.6:compile
 [INFO] |  +- org.apache.maven:maven-plugin-api:jar:2.2.1:compile
@@ -3019,13 +3019,13 @@
 [INFO] \- com.ibm:com.ibm.mq.allclient:jar:8.0.0.4:compile
 [INFO]                                                                         
 [INFO] ------------------------------------------------------------------------
-[INFO] Building jmeter-java-sampler-excel 3.0.1
+[INFO] Building jmeter-java-sampler-org.qamation.jmeter.data.provider.controller.excel 3.0.1
 [INFO] ------------------------------------------------------------------------
 [INFO] 
-[INFO] --- maven-dependency-plugin:2.8:tree (default-cli) @ jmeter-java-sampler-excel ---
-[INFO] org.qamation.jmeter:jmeter-java-sampler-excel:jar:3.0.1
+[INFO] --- maven-dependency-plugin:2.8:tree (default-cli) @ jmeter-java-sampler-org.qamation.jmeter.data.provider.controller.excel ---
+[INFO] org.qamation.jmeter:jmeter-java-sampler-org.qamation.jmeter.data.provider.controller.excel:jar:3.0.1
 [INFO] +- org.qamation.jmeter:jmeter-java-sampler-abstracts:jar:3.0.0:compile
-[INFO] +- org.qamation:excel-utils:jar:3.0.0:compile
+[INFO] +- org.qamation:org.qamation.jmeter.data.provider.controller.excel-utils:jar:3.0.0:compile
 [INFO] +- org.qamation:utils:jar:3.1.1:compile
 [INFO] +- org.apache.maven.plugins:maven-jar-plugin:jar:2.6:compile
 [INFO] |  +- org.apache.maven:maven-plugin-api:jar:2.2.1:compile
@@ -3481,7 +3481,7 @@
 [INFO] 
 [INFO] --- maven-dependency-plugin:2.8:tree (default-cli) @ jmeter-config-data-provider ---
 [INFO] org.qamation.jmeter:jmeter-config-data-provider:jar:1.0.0
-[INFO] +- org.qamation:excel-utils:jar:3.0.0:compile
+[INFO] +- org.qamation:org.qamation.jmeter.data.provider.controller.excel-utils:jar:3.0.0:compile
 [INFO] |  \- org.qamation:utils:jar:3.1.1:compile
 [INFO] +- org.qamation:data-provider:jar:1.0.0:compile
 [INFO] +- org.qamation.jmeter:jmeter-test:jar:1.0.0:compile
@@ -3713,7 +3713,7 @@
 [INFO] webdriver-utils .................................... SUCCESS [  0.332 s]
 [INFO] web-page ........................................... SUCCESS [  0.218 s]
 [INFO] wmq-wrapper ........................................ SUCCESS [  0.201 s]
-[INFO] excel-utils ........................................ SUCCESS [  0.294 s]
+[INFO] org.qamation.jmeter.data.provider.controller.excel-utils ........................................ SUCCESS [  0.294 s]
 [INFO] keyboard ........................................... SUCCESS [  0.269 s]
 [INFO] navigator .......................................... SUCCESS [  0.272 s]
 [INFO] data-provider ...................................... SUCCESS [  0.273 s]
@@ -3721,7 +3721,7 @@
 [INFO] jmeter-java-sampler-web-extension .................. SUCCESS [  0.254 s]
 [INFO] jmeter-java-sampler-keyboard ....................... SUCCESS [  0.290 s]
 [INFO] jmeter-java-sampler-wmq ............................ SUCCESS [  0.252 s]
-[INFO] jmeter-java-sampler-excel .......................... SUCCESS [  0.280 s]
+[INFO] jmeter-java-sampler-org.qamation.jmeter.data.provider.controller.excel .......................... SUCCESS [  0.280 s]
 [INFO] jmeter-test ........................................ SUCCESS [  0.243 s]
 [INFO] jmeter-config-data-provider ........................ SUCCESS [  0.254 s]
 [INFO] ------------------------------------------------------------------------

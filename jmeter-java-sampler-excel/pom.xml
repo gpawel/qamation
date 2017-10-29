@@ -18,11 +18,11 @@
         </dependency>
         <dependency>
             <groupId>org.qamation</groupId>
-            <artifactId>excel-utils</artifactId>
+            <artifactId>utils</artifactId>
         </dependency>
         <dependency>
             <groupId>org.qamation</groupId>
-            <artifactId>utils</artifactId>
+            <artifactId>excel-utils</artifactId>
         </dependency>
     </dependencies>
 </project>
