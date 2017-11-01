@@ -2,8 +2,7 @@ package org.qamation.jmeter.data.provider.controller.excel;
 
 import org.apache.jmeter.control.GenericController;
 import org.apache.jmeter.testbeans.TestBean;
-import org.qamation.data.provider.excel.ExcelDataProvider;
-import org.qamation.data.provider.excel.ExcelDataProviderFactory;
+import org.qamation.data.provider.DataProviderFactory;
 import org.qamation.jmeter.data.provider.utils.Storage;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -34,7 +33,7 @@ public class ExcelDataController extends GenericController
         }
         else {
             ExcelDataProvider dataProvider =
-                    ExcelDataProviderFactory.createExcelDataProviderInstance(
+                    DataProviderFactory.createExcelDataProviderInstance(
                             dataProviderImplClassName, fileName,tabNumber
                     );
             storage.put(fileName,dataProvider);

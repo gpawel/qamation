@@ -1,11 +1,13 @@
 package org.qamation.data.provider;
 
+
 import java.lang.reflect.Constructor;
 
 /**
- * Created by Pavel on 2017-04-23.
+ * Created by Pavel on 2017-05-11.
  */
-public class DataProviderFactory {
+public class DataProviderFactory  {
+
     protected static Class<?> getClassForName(String className) {
         try {
             return Class.forName(className);
@@ -15,20 +17,38 @@ public class DataProviderFactory {
         }
     }
 
-    protected static Object createInstance(String className, String fileName) {
+    protected static Object createInstance(String className, String fileName, int tabNumber) {
         try {
-            Class<?> pageClass = getClassForName(className);
-            Constructor<?> cons = pageClass.getConstructor(String.class);
-            Object obj = cons.newInstance(fileName);
+            Class<?> clss = getClassForName(className);
+            Constructor<?> cons = clss.getConstructor(String.class, int.class);
+            Object obj = cons.newInstance(fileName,tabNumber);
             return obj;
         }
         catch (Exception e) {
-            throw new RuntimeException("Cannot create Instance for class "+className,e);
+            throw new RuntimeException("Cannot create ExcelDataProvider instance for class "+className,e);
         }
     }
 
-    public static  <A extends DataProvider> A createDataProviderInstance(String dataProviderImplClassName, String dataFileName ) {
-        A page = (A)createInstance(dataProviderImplClassName, dataFileName);
-        return page;
+    protected static Object createInstance(String className, String fileName, int tabNumber, String[] header) {
+        try {
+            Class<?> clss = getClassForName(className);
+            Constructor<?> cons = clss.getConstructor(String.class, int.class, String[].class);
+            Object obj = cons.newInstance(fileName,tabNumber,header);
+            return obj;
+        }
+        catch (Exception e) {
+            throw new RuntimeException("Cannot create ExcelDataProvider instance for class "+className,e);
+        }
     }
+
+    public static  <A extends DataProvider> A createExcelDataProviderInstance(String dataProviderImplClassName, String dataFileName, int tabNumber ) {
+        A provider = (A)createInstance(dataProviderImplClassName, dataFileName, tabNumber);
+        return provider;
+    }
+
+    public static  <A extends DataProvider> A createExcelDataProviderInstance(String dataProviderImplClassName, String dataFileName, int tabNumber, String[] header ) {
+        A provider = (A)createInstance(dataProviderImplClassName, dataFileName, tabNumber, header);
+        return provider;
+    }
+
 }
