@@ -19,14 +19,17 @@ public class ExcelReader {
     private String[] fieldNames;
     private int rowSize;
     private File theFile;
+    private int iteratorInitPosition;
 
-    public ExcelReader(String fileName, int index) {
-        init(fileName, index);
+    public ExcelReader(String fileName, int sheetIndex) {
+        init(fileName, sheetIndex);
+        this.iteratorInitPosition = 1;
         this.fieldNames = readFirstLine();
     }
 
     public ExcelReader(String fileName, int sheetIndex, String[] headers) {
         init(fileName, sheetIndex);
+        this.iteratorInitPosition = 0;
         this.fieldNames = headers;
     }
 
@@ -36,11 +39,15 @@ public class ExcelReader {
         this(fileName, 0);
     }
 
-    public Iterator iterator() {
-        return new Iterator<String[]>() {
-            private int cursor = 1;
-            int availableLines = getNmberOfLinesInActiveWorkSheet();
+    public ExcelReader(String fileName, String[] headers) {
+        this(fileName,0,headers);
+    }
 
+    public Iterator <String[]> getIterator() {
+        final int initPosition = this.iteratorInitPosition;
+        return new Iterator<String[]>() {
+            int availableLines = getNumberOfLinesInActiveWorkSheet();
+            private int cursor= initPosition;
             @Override
             public boolean hasNext() {
                 if (cursor < availableLines) return true;
@@ -55,7 +62,7 @@ public class ExcelReader {
     }
 
     public String[][] getData() {
-        int lines = getNmberOfLinesInActiveWorkSheet();
+        int lines = getNumberOfLinesInActiveWorkSheet();
         String[][] data = new String[lines][];
         for (int i = 0; i < lines; i++) {
             data[i] = readValuesFromLine(i);
@@ -63,7 +70,7 @@ public class ExcelReader {
         return data;
     }
 
-    public int getNmberOfLinesInActiveWorkSheet() {
+    public int getNumberOfLinesInActiveWorkSheet() {
         return sheet.getLastRowNum() + 1;
     }
 

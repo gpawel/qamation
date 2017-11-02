@@ -8,6 +8,28 @@ import java.lang.reflect.Constructor;
  */
 public class DataProviderFactory  {
 
+    public static  <A extends DataProvider> A createExcelDataProviderInstance(String dataProviderImplClassName, String dataFileName ) {
+        A provider = (A)createInstance(dataProviderImplClassName, dataFileName);
+        return provider;
+    }
+
+
+    public static  <A extends DataProvider> A createExcelDataProviderInstance(String dataProviderImplClassName, String dataFileName, int tabNumber ) {
+        A provider = (A)createInstance(dataProviderImplClassName, dataFileName, tabNumber);
+        return provider;
+    }
+
+    public static  <A extends DataProvider> A createExcelDataProviderInstance(String dataProviderImplClassName, String dataFileName, int tabNumber, String[] header ) {
+        A provider = (A)createInstance(dataProviderImplClassName, dataFileName, tabNumber, header);
+        return provider;
+    }
+
+    public static  <A extends DataProvider> A createExcelDataProviderInstance(String dataProviderImplClassName, String dataFileName, String[] header ) {
+        A provider = (A)createInstance(dataProviderImplClassName, dataFileName, header);
+        return provider;
+    }
+
+
     protected static Class<?> getClassForName(String className) {
         try {
             return Class.forName(className);
@@ -41,14 +63,13 @@ public class DataProviderFactory  {
         }
     }
 
-    public static  <A extends DataProvider> A createExcelDataProviderInstance(String dataProviderImplClassName, String dataFileName, int tabNumber ) {
-        A provider = (A)createInstance(dataProviderImplClassName, dataFileName, tabNumber);
-        return provider;
+    protected  static Object createInstance(String dataProviderImplClassName, String dataFileName) {
+        return createInstance(dataProviderImplClassName,dataFileName,0);
     }
 
-    public static  <A extends DataProvider> A createExcelDataProviderInstance(String dataProviderImplClassName, String dataFileName, int tabNumber, String[] header ) {
-        A provider = (A)createInstance(dataProviderImplClassName, dataFileName, tabNumber, header);
-        return provider;
+    protected  static Object createInstance(String dataProviderImplClassName, String dataFileName, String[] header) {
+        return createInstance(dataProviderImplClassName,dataFileName,0,header);
     }
+
 
 }

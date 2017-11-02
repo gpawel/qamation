@@ -7,9 +7,8 @@ import java.util.Iterator;
  */
 public interface DataProvider {
     public int getNumberOfLines();
-    public int getNumberOfFields();
-    public String[] getFields();
+    public String[] getFieldNames();
     public String[] getLine(int lineIndex);
     public Iterator<String[]> getIterator();
-    public void reset();
+
 }
