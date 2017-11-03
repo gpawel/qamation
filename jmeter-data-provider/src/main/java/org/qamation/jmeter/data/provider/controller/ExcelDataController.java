@@ -1,4 +1,4 @@
-package org.qamation.jmeter.data.provider.controller.excel;
+package org.qamation.jmeter.data.provider.controller;
 
 import org.apache.jmeter.control.GenericController;
 import org.apache.jmeter.testbeans.TestBean;

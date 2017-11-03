@@ -28,7 +28,7 @@
       <hashTree>
         <GenericController guiclass="LogicControllerGui" testclass="GenericController" testname="Simple Controller" enabled="true"/>
         <hashTree/>
-        <org.qamation.jmeter.data.provider.config.excel.ExcelDataConfig guiclass="TestBeanGUI" testclass="org.qamation.jmeter.data.provider.config.excel.ExcelDataConfig" testname="ExcelDataConfig" enabled="true"/>
+        <org.qamation.jmeter.data.provider.config.excel.ExcelDataConfigSupport guiclass="TestBeanGUI" testclass="org.qamation.jmeter.data.provider.config.excel.ExcelDataConfigSupport" testname="ExcelDataConfig" enabled="true"/>
         <hashTree/>
         <org.qamation.jmeter.data.provider.controller.excel.ExcelDataController guiclass="TestBeanGUI" testclass="org.qamation.jmeter.data.provider.controller.excel.ExcelDataController" testname="ExcelDataController" enabled="true"/>
         <hashTree/>

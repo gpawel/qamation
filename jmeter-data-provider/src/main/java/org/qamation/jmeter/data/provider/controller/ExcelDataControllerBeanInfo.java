@@ -1,11 +1,11 @@
-package org.qamation.jmeter.data.provider.controller.excel;
+package org.qamation.jmeter.data.provider.controller;
 
 import org.apache.jmeter.testbeans.TestBean;
-import org.qamation.jmeter.data.provider.config.AbstractDataConfigBeanInfo;
+import org.qamation.jmeter.data.provider.DataProviderBeanInfoSupport;
 
 import java.beans.PropertyDescriptor;
 
-public class ExcelDataControllerBeanInfo extends AbstractDataConfigBeanInfo {
+public class ExcelDataControllerBeanInfo extends DataProviderBeanInfoSupport {
 
     private final static String FILENAME="fileName";
     private final static String CLASSNAME="dataProviderImplClassName";
