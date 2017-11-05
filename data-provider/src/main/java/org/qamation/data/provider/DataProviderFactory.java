@@ -8,23 +8,23 @@ import java.lang.reflect.Constructor;
  */
 public class DataProviderFactory  {
 
-    public static  <A extends DataProvider> A createExcelDataProviderInstance(String dataProviderImplClassName, String dataFileName ) {
+    public static  <A extends DataProvider> A createDataProviderInstance(String dataProviderImplClassName, String dataFileName ) {
         A provider = (A)createInstance(dataProviderImplClassName, dataFileName);
         return provider;
     }
 
 
-    public static  <A extends DataProvider> A createExcelDataProviderInstance(String dataProviderImplClassName, String dataFileName, int tabNumber ) {
+    public static  <A extends DataProvider> A createDataProviderInstance(String dataProviderImplClassName, String dataFileName, int tabNumber ) {
         A provider = (A)createInstance(dataProviderImplClassName, dataFileName, tabNumber);
         return provider;
     }
 
-    public static  <A extends DataProvider> A createExcelDataProviderInstance(String dataProviderImplClassName, String dataFileName, int tabNumber, String[] header ) {
+    public static  <A extends DataProvider> A createDataProviderInstance(String dataProviderImplClassName, String dataFileName, int tabNumber, String[] header ) {
         A provider = (A)createInstance(dataProviderImplClassName, dataFileName, tabNumber, header);
         return provider;
     }
 
-    public static  <A extends DataProvider> A createExcelDataProviderInstance(String dataProviderImplClassName, String dataFileName, String[] header ) {
+    public static  <A extends DataProvider> A createDataProviderInstance(String dataProviderImplClassName, String dataFileName, String[] header ) {
         A provider = (A)createInstance(dataProviderImplClassName, dataFileName, header);
         return provider;
     }

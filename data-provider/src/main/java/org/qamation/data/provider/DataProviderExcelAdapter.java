@@ -4,6 +4,7 @@ import org.qamation.excel.utils.ExcelReader;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import java.util.Iterator;
+import java.util.function.Consumer;
 
 
 public class DataProviderExcelAdapter implements DataProvider {
@@ -11,6 +12,7 @@ public class DataProviderExcelAdapter implements DataProvider {
     protected ExcelReader excelReader;
     protected String fileName;
     private int sheetIndex;
+    private Iterator<String[]> iterator;
 
 
     public DataProviderExcelAdapter(String fileName) {
@@ -20,6 +22,7 @@ public class DataProviderExcelAdapter implements DataProvider {
     public DataProviderExcelAdapter(String fileName, int sheetIndx) {
         this.fileName = fileName;
         this.excelReader = new ExcelReader(fileName,sheetIndx);
+        reset();
         // we assume the excel has header
     }
 
@@ -31,6 +34,7 @@ public class DataProviderExcelAdapter implements DataProvider {
         this.fileName = fileName;
         this.sheetIndex = sheetIndex;
         this.excelReader = new ExcelReader(fileName,sheetIndex,header);
+        reset();
     }
 
 
@@ -50,8 +54,17 @@ public class DataProviderExcelAdapter implements DataProvider {
     }
 
     @Override
-    public Iterator<String[]> getIterator() {
-        return this.excelReader.getIterator();
+    public void reset() {
+        this.iterator = null;
+        this.iterator = excelReader.getIterator();
+    }
+
+    public boolean hasNext() {
+        return this.iterator.hasNext();
+    }
+
+    public String[] next() {
+        return iterator.next();
     }
 
 

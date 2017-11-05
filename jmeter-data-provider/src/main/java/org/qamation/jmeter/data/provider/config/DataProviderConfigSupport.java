@@ -1,27 +1,44 @@
 package org.qamation.jmeter.data.provider.config;
 
 import org.apache.jmeter.threads.JMeterContext;
+import org.qamation.data.provider.DataProvider;
+import org.qamation.data.provider.DataProviderFactory;
 import org.qamation.jmeter.data.provider.DataProviderSupport;
+import org.qamation.jmeter.data.provider.GuiData;
 
-public class ConfigDataProviderSupport extends DataProviderSupport {
+public class DataProviderConfigSupport extends DataProviderSupport {
 
     public static final String SHARE_MODE_ALL = "shareMode.all";
     public static final String SHARE_MODE_GROUP = "shareMode.group";
     public static final String SHARE_MODE_THREAD = "shareMode.thread";
 
-
-    public ConfigDataProviderSupport(String fileName, String dataProviderImplClass, int tabNumber, String[] header) {
-        super(fileName, dataProviderImplClass, tabNumber, header);
+    public DataProviderConfigSupport(GuiData guiData, JMeterContext context){
+        super(guiData,context);
     }
 
-    public String getKey(JMeterContext context) {
+     public String getKey() {
         String suffix = getSuffix(context);
-        String key = getFilename() + suffix;
+        String key = guiData.getFilename() + suffix;
         return key;
     }
 
+    @Override
+    public <T extends DataProvider> T callDataProviderFactory() {
+        guiData.
+    }
+        if (guiData.isIsfirstLineIsHeaer()) {
+        return DataProviderFactory.createDataProviderInstance(guiData.getDataProviderImplClassName(), guiData.getFilename());
+    }
+
+    public void itterationStart() {
+        String key = getKey();
+        putDataIntoJMeterContext(key);
+
+    }
+
+
     private String getSuffix(JMeterContext context) {
-        String shareMode = getShareMode();
+        String shareMode = guiData.getShareMode();
         int modeInt = SimpleDataBeanInfo.getShareModeAsInt(shareMode);
         String suffix;
         switch (modeInt) {
@@ -44,5 +61,6 @@ public class ConfigDataProviderSupport extends DataProviderSupport {
         }
         return suffix;
     }
+
 
 }

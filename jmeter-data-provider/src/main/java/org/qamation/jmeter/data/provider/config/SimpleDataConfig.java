@@ -9,8 +9,8 @@ import org.apache.jmeter.engine.util.NoConfigMerge;
 import org.apache.jmeter.testbeans.TestBean;
 import org.apache.jmeter.threads.JMeterContext;
 import org.apache.jmeter.threads.JMeterContextService;
-import org.apache.jmeter.threads.JMeterVariables;
 import org.qamation.data.provider.DataProvider;
+import org.qamation.jmeter.data.provider.GuiData;
 import org.slf4j.LoggerFactory;
 
 
@@ -18,9 +18,10 @@ public class SimpleDataConfig extends ConfigTestElement
         implements
         TestBean,
         LoopIterationListener,
-        NoConfigMerge {
+        NoConfigMerge, GuiData {
 
     private static final org.slf4j.Logger log = LoggerFactory.getLogger(SimpleDataConfig.class);
+    private DataProviderConfigSupport support;
 
     protected String filename;
     protected String dataProviderImplClassName;
@@ -29,29 +30,25 @@ public class SimpleDataConfig extends ConfigTestElement
     protected String shareMode;
     protected int tabNumber;
     protected String fieldNames;
-    protected boolean firstLineIsHeaer;
+    protected boolean isfirstLineIsHeaer;
 
 
     @Override
     public void iterationStart(LoopIterationEvent loopIterationEvent) {
-        log.info("iteration start by thread: " + JMeterContextService.getContext().getThread().getThreadName());
-        DataProvider dataProvider = getDataProvider();
-        if (hasMore(dataProvider)) {
-            Object[] dataLine = dataProvider.getNextLine();
-            final JMeterContext context = getThreadContext();
-            JMeterVariables threadVars = context.getVariables();
-            threadVars.putObject(dataLabel, dataLine);
-        }
-        stopIfRequired();
+        JMeterContext context = JMeterContextService.getContext();
+        log.info("iteration start by thread: " + context.getThread().getThreadName());
+        this.support = new DataProviderConfigSupport(this,context);
+        support.itterationStart();
+
     }
 
 
+    @Override
     public <T extends DataProvider> T callDataProviderFactory() {
-        return DataProviderFactory.createDataProviderInstance(getDataProviderImplClassName(), getFilename());
+        return this.support.callDataProviderFactory();
     }
 
-
-
+    @Override
     public String getFilename() {
         return filename;
     }
@@ -60,6 +57,7 @@ public class SimpleDataConfig extends ConfigTestElement
         this.filename = filename;
     }
 
+    @Override
     public String getDataProviderImplClassName() {
         return dataProviderImplClassName;
     }
@@ -68,6 +66,7 @@ public class SimpleDataConfig extends ConfigTestElement
         this.dataProviderImplClassName = dataProviderImplClassName;
     }
 
+    @Override
     public boolean isResetAtEOF() {
         return resetAtEOF;
     }
@@ -76,6 +75,7 @@ public class SimpleDataConfig extends ConfigTestElement
         this.resetAtEOF = resetAtEOF;
     }
 
+    @Override
     public boolean isResetAtTestStart() {
         return resetAtTestStart;
     }
@@ -84,6 +84,7 @@ public class SimpleDataConfig extends ConfigTestElement
         this.resetAtTestStart = resetAtTestStart;
     }
 
+    @Override
     public String getShareMode() {
         return shareMode;
     }
@@ -93,4 +94,30 @@ public class SimpleDataConfig extends ConfigTestElement
     }
 
 
+    @Override
+    public int getTabNumber() {
+        return tabNumber;
+    }
+
+    public void setTabNumber(int tabNumber) {
+        this.tabNumber = tabNumber;
+    }
+
+    @Override
+    public String getFieldNames() {
+        return fieldNames;
+    }
+
+    public void setFieldNames(String fieldNames) {
+        this.fieldNames = fieldNames;
+    }
+
+    @Override
+    public boolean isIsfirstLineIsHeaer() {
+        return isfirstLineIsHeaer;
+    }
+
+    public void setIsfirstLineIsHeaer(boolean isfirstLineIsHeaer) {
+        this.isfirstLineIsHeaer = isfirstLineIsHeaer;
+    }
 }

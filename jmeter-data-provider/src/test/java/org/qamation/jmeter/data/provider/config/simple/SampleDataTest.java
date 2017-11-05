@@ -11,6 +11,7 @@ import org.junit.Test;
 import org.qamation.data.provider.DataProvider;
 import org.qamation.jmeter.apache.junit.JMeterTestCase;
 
+import org.qamation.jmeter.data.provider.GuiData;
 import org.qamation.jmeter.data.provider.config.SimpleDataConfig;
 import org.qamation.jmeter.data.provider.utils.Storage;
 import org.slf4j.Logger;
@@ -65,7 +66,7 @@ public class SampleDataTest extends JMeterTestCase {
 
     @Test
     public void createSimpleDataTest() {
-        SimpleDataConfig data = createSimpleData(dataProviderImplClassName,fileName, "DATA",true, SimpleDataConfig.SHARE_MODE_ALL);
+        GuiData data = createSimpleData(dataProviderImplClassName,fileName, "DATA",true, SimpleDataConfig.SHARE_MODE_ALL);
         Assert.assertNotNull(data);
         Assert.assertEquals("DATA",data.getDataLabel());
         Assert.assertEquals(true,data.isResetAtEOF());

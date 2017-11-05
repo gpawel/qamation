@@ -5,6 +5,7 @@ import org.apache.jmeter.testelement.TestStateListener;
 import org.qamation.data.provider.DataProvider;
 
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Set;
 
 import org.slf4j.Logger;
@@ -29,10 +30,10 @@ implements TestStateListener
     }
 
 
-    private  HashMap<String,Object> providerContainer = null;
+    private HashMap<String,T> providerContainer = null;
 
     private Storage() {
-        providerContainer = new HashMap<String, Object>();
+        providerContainer = new HashMap<String,T>();
     }
 
     public synchronized boolean hasKey(String key) {
@@ -51,7 +52,7 @@ implements TestStateListener
         Set<String> keys = providerContainer.keySet();
         if (keys.size()>0) {
             for (String key : keys) {
-                T provider = (T) providerContainer.get(key);
+                T provider = providerContainer.get(key);
                 provider.reset();
             }
         }
