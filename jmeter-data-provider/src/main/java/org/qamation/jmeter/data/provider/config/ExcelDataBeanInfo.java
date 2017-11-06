@@ -9,9 +9,9 @@ import java.beans.PropertyDescriptor;
 /**
  * Created by Pavel on 2017-04-22.
  */
-public class SimpleDataBeanInfo extends DataProviderBeanInfoSupport {
+public class ExcelDataBeanInfo extends DataProviderBeanInfoSupport {
 
-    private static final Logger log = LoggerFactory.getLogger(SimpleDataBeanInfo.class);
+    private static final Logger log = LoggerFactory.getLogger(ExcelDataBeanInfo.class);
 
     // Access needed from CSVDataSet
     protected static final String[] SHARE_TAGS = new String[3];
@@ -26,6 +26,8 @@ public class SimpleDataBeanInfo extends DataProviderBeanInfoSupport {
         SHARE_TAGS[SHARE_THREAD] = "shareMode.thread"; //$NON-NLS-1$
     }
 
+    public final String SHAREMODE = "shareMode";
+
     public static int getShareModeAsInt(String mode) {
         if (mode == null || mode.length() == 0) {
             return SHARE_ALL; // default (e.g. if test plan does not have definition)
@@ -38,25 +40,31 @@ public class SimpleDataBeanInfo extends DataProviderBeanInfoSupport {
         return -1;
     }
 
-    public SimpleDataBeanInfo() {
-        super(SimpleDataConfig.class);
+    public ExcelDataBeanInfo() {
+        super(ExcelDataConfig.class);
     }
 
     protected void setProperties() {
-        createPropertyGroup("General", new String[]{FILENAME, CLASSNAME, RESET_AT_EOF, SOURCENAME, SHAREMODE});
-        PropertyDescriptor p = manageFileNamePropertyDescriptor();
-        p = manageClassNamePropertyDescriptor();
-        p = manageSourcePropertyDescriptor();
-        p = manageResetAtEOFPropertyDescriptor();
+        createPropertyGroup("General", new String[]{
+                FILENAME,
+                CLASSNAME,
+                RESET_AT_EOF,
+                RESET_AT_TEST_START,
+                SHAREMODE,
+                TAB_NUMBER,
+                FIELDS,
+                IS_FIRST_LINE_HEADER
+        });
+
+        PropertyDescriptor p = manageFileNameDescriptor();
+        p = manageClassNameDescriptor();
+        p = manageResetAtEOFDescriptor();
         p = manageShareModePropertyDescriptor();
         p = manageResetAtTestStartDescriptor();
-    }
-
-    private PropertyDescriptor manageSourcePropertyDescriptor() {
-        PropertyDescriptor p = property(SOURCENAME);
-        p.setValue(NOT_UNDEFINED, Boolean.TRUE);
-        p.setValue(DEFAULT, "SIMPLEDATA");
-        return p;
+        p = manageResetAtTestStartDescriptor();
+        p = manageTabNamberDescriptor();
+        p = manageFieldsDescriptor();
+        p = manageIsFirstLineHeaderDescriptor();
     }
 
     protected PropertyDescriptor manageShareModePropertyDescriptor() {

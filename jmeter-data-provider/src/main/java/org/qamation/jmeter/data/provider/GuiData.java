@@ -20,5 +20,5 @@ public interface GuiData {
 
     String getFieldNames();
 
-    boolean isIsfirstLineIsHeaer();
+    boolean isFirstLineHeader();
 }

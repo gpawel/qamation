@@ -19,20 +19,13 @@
         </elementProp>
         <stringProp name="ThreadGroup.num_threads">1</stringProp>
         <stringProp name="ThreadGroup.ramp_time">1</stringProp>
-        <longProp name="ThreadGroup.start_time">1509309369000</longProp>
-        <longProp name="ThreadGroup.end_time">1509309369000</longProp>
+        <longProp name="ThreadGroup.start_time">1509931443000</longProp>
+        <longProp name="ThreadGroup.end_time">1509931443000</longProp>
         <boolProp name="ThreadGroup.scheduler">false</boolProp>
         <stringProp name="ThreadGroup.duration"></stringProp>
         <stringProp name="ThreadGroup.delay"></stringProp>
       </ThreadGroup>
-      <hashTree>
-        <GenericController guiclass="LogicControllerGui" testclass="GenericController" testname="Simple Controller" enabled="true"/>
-        <hashTree/>
-        <org.qamation.jmeter.data.provider.config.excel.ExcelDataConfigSupport guiclass="TestBeanGUI" testclass="org.qamation.jmeter.data.provider.config.excel.ExcelDataConfigSupport" testname="ExcelDataConfig" enabled="true"/>
-        <hashTree/>
-        <org.qamation.jmeter.data.provider.controller.excel.ExcelDataController guiclass="TestBeanGUI" testclass="org.qamation.jmeter.data.provider.controller.excel.ExcelDataController" testname="ExcelDataController" enabled="true"/>
-        <hashTree/>
-      </hashTree>
+      <hashTree/>
     </hashTree>
     <WorkBench guiclass="WorkBenchGui" testclass="WorkBench" testname="WorkBench" enabled="true">
       <boolProp name="WorkBench.save">true</boolProp>

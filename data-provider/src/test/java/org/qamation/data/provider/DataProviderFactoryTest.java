@@ -28,13 +28,13 @@ public class DataProviderFactoryTest {
     @Test
     public void testFactoryJustFile() {
         DataProvider provider = DataProviderFactory
-                .createExcelDataProviderInstance(
+                .createDataProviderInstance(
                         DataProviderExcelAdapter.class.getName(),bookXURL.getFile());
         Assert.assertNotNull(provider);
-        Iterator<String[]> itrtr = provider.getIterator();
+
         String[] header = provider.getFieldNames();
-        while (itrtr.hasNext()) {
-            String [] line = itrtr.next();
+        while (provider.hasNext()) {
+            String [] line = provider.next();
             System.out.println("======= Start Line =======");
             for(int i = 0; i < line.length; i++) {
                 System.out.print(header[i]+" = "+line[i]+"; ");
@@ -48,13 +48,12 @@ public class DataProviderFactoryTest {
     @Test
     public void testFactoryFileAndTabNumber() {
         DataProvider provider = DataProviderFactory
-                .createExcelDataProviderInstance(
+                .createDataProviderInstance(
                         DataProviderExcelAdapter.class.getName(),bookXURL.getFile(),1);
         Assert.assertNotNull(provider);
-        Iterator<String[]> itrtr = provider.getIterator();
         String[] header = provider.getFieldNames();
-        while (itrtr.hasNext()) {
-            String [] line = itrtr.next();
+        while (provider.hasNext()) {
+            String [] line = provider.next();
             System.out.println("======= Start Line =======");
             for(int i = 0; i < line.length; i++) {
                 System.out.print(header[i]+" = "+line[i]+"; ");
@@ -69,12 +68,12 @@ public class DataProviderFactoryTest {
     public void testFactoryFileAndTabNumberAndHeader() {
         String[] header = new String[] {"V1","V2","V3"};
         DataProvider provider = DataProviderFactory
-                .createExcelDataProviderInstance(
+                .createDataProviderInstance(
                         DataProviderExcelAdapter.class.getName(),bookXURL.getFile(),1,header);
         Assert.assertNotNull(provider);
-        Iterator<String[]> itrtr = provider.getIterator();
-        while (itrtr.hasNext()) {
-            String [] line = itrtr.next();
+
+        while (provider.hasNext()) {
+            String [] line = provider.next();
             System.out.println("======= Start Line =======");
             for(int i = 0; i < line.length; i++) {
                 System.out.print(header[i]+" = "+line[i]+"; ");
@@ -89,12 +88,12 @@ public class DataProviderFactoryTest {
     public void testFactoryFileAndHeader() {
         String[] header = new String[] {"V1","V2","V3","V4"};
         DataProvider provider = DataProviderFactory
-                .createExcelDataProviderInstance(
+                .createDataProviderInstance(
                         DataProviderExcelAdapter.class.getName(),bookXURL.getFile(),header);
         Assert.assertNotNull(provider);
-        Iterator<String[]> itrtr = provider.getIterator();
-        while (itrtr.hasNext()) {
-            String [] line = itrtr.next();
+
+        while (provider.hasNext()) {
+            String [] line = provider.next();
             System.out.println("======= Start Line =======");
             for(int i = 0; i < line.length; i++) {
                 System.out.print(header[i]+" = "+line[i]+"; ");

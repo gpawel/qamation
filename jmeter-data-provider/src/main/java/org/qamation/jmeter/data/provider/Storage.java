@@ -1,11 +1,10 @@
-package org.qamation.jmeter.data.provider.utils;
+package org.qamation.jmeter.data.provider;
 
 import org.apache.jmeter.engine.StandardJMeterEngine;
 import org.apache.jmeter.testelement.TestStateListener;
 import org.qamation.data.provider.DataProvider;
 
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.Set;
 
 import org.slf4j.Logger;
@@ -89,37 +88,4 @@ implements TestStateListener
     public void testEnded(String s) {
 
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    /*public Object[] getNextDataLine(boolean shouldReset) {
-        if (cursor > dataProvider.getData().length-1) {
-            if (shouldReset) {
-                resetData();
-            }
-            else {
-                throw new JMeterStopThreadException("End of "+fileName+" is reached");
-            }
-        }
-        return dataProvider.getData()[cursor++];
-    }*/
-
-
 }

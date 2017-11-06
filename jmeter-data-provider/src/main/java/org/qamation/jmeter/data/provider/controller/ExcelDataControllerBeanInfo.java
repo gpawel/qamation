@@ -18,8 +18,8 @@ public class ExcelDataControllerBeanInfo extends DataProviderBeanInfoSupport {
     @Override
     protected void setProperties() {
         createPropertyGroup("excel_data_controller", new String[] {FILENAME,CLASSNAME, TAB_NUMBER});
-        PropertyDescriptor p = manageFileNamePropertyDescriptor();
-        p = manageClassNamePropertyDescriptor();
+        PropertyDescriptor p = manageFileNameDescriptor();
+        p = manageClassNameDescriptor();
         p = manageTabNumberPropertyDescriptor();
 
     }

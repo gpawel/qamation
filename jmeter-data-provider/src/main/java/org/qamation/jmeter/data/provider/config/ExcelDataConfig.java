@@ -14,13 +14,13 @@ import org.qamation.jmeter.data.provider.GuiData;
 import org.slf4j.LoggerFactory;
 
 
-public class SimpleDataConfig extends ConfigTestElement
+public class ExcelDataConfig extends ConfigTestElement
         implements
         TestBean,
         LoopIterationListener,
         NoConfigMerge, GuiData {
 
-    private static final org.slf4j.Logger log = LoggerFactory.getLogger(SimpleDataConfig.class);
+    private static final org.slf4j.Logger log = LoggerFactory.getLogger(ExcelDataConfig.class);
     private DataProviderConfigSupport support;
 
     protected String filename;
@@ -30,7 +30,7 @@ public class SimpleDataConfig extends ConfigTestElement
     protected String shareMode;
     protected int tabNumber;
     protected String fieldNames;
-    protected boolean isfirstLineIsHeaer;
+    protected boolean isFirstLineHeader;
 
 
     @Override
@@ -38,7 +38,7 @@ public class SimpleDataConfig extends ConfigTestElement
         JMeterContext context = JMeterContextService.getContext();
         log.info("iteration start by thread: " + context.getThread().getThreadName());
         this.support = new DataProviderConfigSupport(this,context);
-        support.itterationStart();
+        support.iterationStart();
 
     }
 
@@ -113,11 +113,11 @@ public class SimpleDataConfig extends ConfigTestElement
     }
 
     @Override
-    public boolean isIsfirstLineIsHeaer() {
-        return isfirstLineIsHeaer;
+    public boolean isFirstLineHeader() {
+        return isFirstLineHeader;
     }
 
-    public void setIsfirstLineIsHeaer(boolean isfirstLineIsHeaer) {
-        this.isfirstLineIsHeaer = isfirstLineIsHeaer;
+    public void setIsFirstLineHeader(boolean firstLineHeader) {
+        this.isFirstLineHeader = firstLineHeader;
     }
 }

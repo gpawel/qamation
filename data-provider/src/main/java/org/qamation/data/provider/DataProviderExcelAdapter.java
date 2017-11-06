@@ -22,7 +22,6 @@ public class DataProviderExcelAdapter implements DataProvider {
     public DataProviderExcelAdapter(String fileName, int sheetIndx) {
         this.fileName = fileName;
         this.excelReader = new ExcelReader(fileName,sheetIndx);
-        reset();
         // we assume the excel has header
     }
 
@@ -34,7 +33,6 @@ public class DataProviderExcelAdapter implements DataProvider {
         this.fileName = fileName;
         this.sheetIndex = sheetIndex;
         this.excelReader = new ExcelReader(fileName,sheetIndex,header);
-        reset();
     }
 
 
@@ -56,15 +54,21 @@ public class DataProviderExcelAdapter implements DataProvider {
     @Override
     public void reset() {
         this.iterator = null;
-        this.iterator = excelReader.getIterator();
+        this.iterator = setIterator();
     }
 
     public boolean hasNext() {
+        if (this.iterator == null) this.iterator = setIterator();
         return this.iterator.hasNext();
     }
 
     public String[] next() {
+        if (this.iterator == null) this.iterator = setIterator();
         return iterator.next();
+    }
+
+    private Iterator<String[]> setIterator() {
+        return excelReader.getIterator();
     }
 
 
