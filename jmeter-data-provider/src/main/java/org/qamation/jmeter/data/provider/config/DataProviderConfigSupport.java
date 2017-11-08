@@ -1,9 +1,6 @@
 package org.qamation.jmeter.data.provider.config;
 
 import org.apache.jmeter.threads.JMeterContext;
-import org.apache.jorphan.util.JMeterStopThreadException;
-import org.qamation.data.provider.DataProvider;
-import org.qamation.data.provider.DataProviderFactory;
 import org.qamation.jmeter.data.provider.DataProviderSupport;
 import org.qamation.jmeter.data.provider.GuiData;
 
@@ -34,18 +31,18 @@ public class DataProviderConfigSupport extends DataProviderSupport {
 
     private String getSuffix(JMeterContext context) {
         String shareMode = guiData.getShareMode();
-        int modeInt = ExcelDataBeanInfo.getShareModeAsInt(shareMode);
+        int modeInt = ExcelDataConfigBeanInfo.getShareModeAsInt(shareMode);
         String suffix;
         switch (modeInt) {
-            case ExcelDataBeanInfo.SHARE_ALL: {
+            case ExcelDataConfigBeanInfo.SHARE_ALL: {
                 suffix = "_all";
                 break;
             }
-            case ExcelDataBeanInfo.SHARE_GROUP: {
+            case ExcelDataConfigBeanInfo.SHARE_GROUP: {
                 suffix = context.getThreadGroup().getName();
                 break;
             }
-            case ExcelDataBeanInfo.SHARE_THREAD: {
+            case ExcelDataConfigBeanInfo.SHARE_THREAD: {
                 suffix = context.getThread().getThreadName();
                 break;
             }

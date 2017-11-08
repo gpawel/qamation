@@ -9,9 +9,9 @@ import java.beans.PropertyDescriptor;
 /**
  * Created by Pavel on 2017-04-22.
  */
-public class ExcelDataBeanInfo extends DataProviderBeanInfoSupport {
+public class ExcelDataConfigBeanInfo extends DataProviderBeanInfoSupport {
 
-    private static final Logger log = LoggerFactory.getLogger(ExcelDataBeanInfo.class);
+    private static final Logger log = LoggerFactory.getLogger(ExcelDataConfigBeanInfo.class);
 
     // Access needed from CSVDataSet
     protected static final String[] SHARE_TAGS = new String[3];
@@ -40,7 +40,7 @@ public class ExcelDataBeanInfo extends DataProviderBeanInfoSupport {
         return -1;
     }
 
-    public ExcelDataBeanInfo() {
+    public ExcelDataConfigBeanInfo() {
         super(ExcelDataConfig.class);
     }
 
