@@ -3,6 +3,7 @@ package org.qamation.jmeter.data.provider;
 import org.apache.jmeter.engine.StandardJMeterEngine;
 import org.apache.jmeter.testelement.TestStateListener;
 import org.apache.jmeter.threads.JMeterContext;
+import org.apache.jorphan.util.JMeterError;
 import org.apache.jorphan.util.JMeterStopThreadException;
 import org.qamation.data.provider.DataProvider;
 import org.qamation.data.provider.DataProviderFactory;
@@ -65,8 +66,8 @@ public class DataProviderSupport implements TestStateListener {
             return DataProviderFactory.createDataProviderInstance(
                     guiData.getDataProviderImplClassName(), guiData.getFilename(), tabNumber);
         } else {
-            if (guiData.getFieldNames().length() == 0)
-                throw new JMeterStopThreadException("When Data file does not have header, Field names must be provided.");
+            if (guiData.getFieldNames()==null)
+                throw new JMeterError("\n\nWhen Data file does not have header, Field names must be provided.");
             String[] headers = guiData.getFieldNames().split(",");
             return DataProviderFactory.createDataProviderInstance(
                     guiData.getDataProviderImplClassName(), guiData.getFilename(), tabNumber, headers);
