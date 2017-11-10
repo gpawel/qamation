@@ -51,7 +51,7 @@ public abstract class DataProviderBeanInfoSupport extends BeanInfoSupport {
     }
 
     public PropertyDescriptor manageFieldsDescriptor() {
-        return manageStringPropertyNoDefaultValue(FIELDS);
+        return manageStringPropertyWithDefaultValue(FIELDS,"");
     }
 
     public PropertyDescriptor manageIsFirstLineHeaderDescriptor() {
