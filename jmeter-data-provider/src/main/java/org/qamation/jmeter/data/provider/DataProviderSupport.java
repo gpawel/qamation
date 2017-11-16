@@ -33,15 +33,6 @@ public class DataProviderSupport implements TestStateListener {
         }
         StandardJMeterEngine.register(this);
         return provider;
-        /*
-        if (storage.hasKey(key)) {
-            return storage.get(key);
-        } else {
-            T dataProvider = callDataProviderFactory();
-            storage.put(key, dataProvider);
-            return dataProvider;
-        }
-        */
     }
 
     public <T extends DataProvider> void putDataIntoJMeterContext(String key) {
@@ -60,7 +51,7 @@ public class DataProviderSupport implements TestStateListener {
 
     // @Override//
     public <T extends DataProvider> T callDataProviderFactory() {
-        int tabNumber = guiData.getTabNumber();
+        int tabNumber = Integer.parseInt(guiData.getTabNumber());
 
         if (guiData.isFirstLineHeader()) {
             return DataProviderFactory.createDataProviderInstance(
@@ -78,7 +69,9 @@ public class DataProviderSupport implements TestStateListener {
     public <T extends DataProvider> void reset() {
         if (this.key == null) return;
         if (guiData.isResetAtTestStart()) {
+            if (context == null) throw new JMeterStopThreadException("Context is null at the reset()");
             T provider = (T) context.getVariables().getObject(this.key);
+            if (provider == null) throw new JMeterStopThreadException("Data provider is null for key="+key);
             provider.reset();
         }
     }

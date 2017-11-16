@@ -28,7 +28,7 @@ public class ExcelDataConfig extends ConfigTestElement
     protected boolean resetAtEOF;
     protected boolean resetAtTestStart;
     protected String shareMode;
-    protected int tabNumber;
+    protected String tabNumber;
     protected String fieldNames;
     protected boolean isFirstLineHeader;
 
@@ -95,11 +95,11 @@ public class ExcelDataConfig extends ConfigTestElement
 
 
     @Override
-    public int getTabNumber() {
+    public String getTabNumber() {
         return tabNumber;
     }
 
-    public void setTabNumber(int tabNumber) {
+    public void setTabNumber(String tabNumber) {
         this.tabNumber = tabNumber;
     }
 
@@ -108,12 +108,17 @@ public class ExcelDataConfig extends ConfigTestElement
         return fieldNames;
     }
 
+    @Override
+    public boolean isFirstLineHeader() {
+        return getIsFirstLineHeader();
+    }
+
     public void setFieldNames(String fieldNames) {
         this.fieldNames = fieldNames;
     }
 
-    @Override
-    public boolean isFirstLineHeader() {
+
+    public boolean getIsFirstLineHeader() {
         return isFirstLineHeader;
     }
 

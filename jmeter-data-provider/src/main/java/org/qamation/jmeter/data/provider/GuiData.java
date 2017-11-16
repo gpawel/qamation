@@ -16,7 +16,7 @@ public interface GuiData {
 
     String getShareMode();
 
-    int getTabNumber();
+    String getTabNumber();
 
     String getFieldNames();
 

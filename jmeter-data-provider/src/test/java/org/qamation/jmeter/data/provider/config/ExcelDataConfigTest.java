@@ -5,16 +5,12 @@ package org.qamation.jmeter.data.provider.config;
 
 import org.apache.jmeter.engine.event.LoopIterationEvent;
 import org.apache.jmeter.threads.*;
-import org.apache.jorphan.collections.HashTree;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import org.qamation.data.provider.DataProvider;
 import org.qamation.jmeter.apache.junit.JMeterTestCase;
 
-import org.qamation.jmeter.data.provider.GuiData;
-import org.qamation.jmeter.data.provider.Storage;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -54,7 +50,7 @@ public class ExcelDataConfigTest extends JMeterTestCase {
                 true,
                 true,
                 "shareMode.all",
-                1,
+                "1",
                 "",
                 true
                 );
@@ -79,7 +75,7 @@ public class ExcelDataConfigTest extends JMeterTestCase {
             boolean resetAtEOF,
             boolean resetAtTestStart,
             String shareMode,
-            int tabNumber,
+            String tabNumber,
             String fieldNames,
             boolean isFirstLineHeader
             ) {

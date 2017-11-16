@@ -55,7 +55,7 @@ public abstract class DataProviderBeanInfoSupport extends BeanInfoSupport {
     }
 
     public PropertyDescriptor manageIsFirstLineHeaderDescriptor() {
-        return manageStringPropertyWithDefaultValue(IS_FIRST_LINE_HEADER,"true");
+        return manageBooleanPropertyWithDefaultValue(IS_FIRST_LINE_HEADER,true);
     }
 
 

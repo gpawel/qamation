@@ -4,10 +4,7 @@ import org.apache.jmeter.control.GenericController;
 import org.apache.jmeter.testbeans.TestBean;
 import org.apache.jmeter.threads.JMeterContextService;
 import org.qamation.data.provider.DataProvider;
-import org.qamation.data.provider.DataProviderFactory;
 import org.qamation.jmeter.data.provider.GuiData;
-import org.qamation.jmeter.data.provider.config.DataProviderConfigSupport;
-import org.qamation.jmeter.data.provider.Storage;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -26,7 +23,7 @@ public class ExcelDataController extends GenericController
     protected boolean resetAtEOF;
     protected boolean resetAtTestStart;
     protected String shareMode;
-    protected int tabNumber;
+    protected String tabNumber;
     protected String fieldNames;
     protected boolean isFirstLineHeader;
 
@@ -88,11 +85,11 @@ public class ExcelDataController extends GenericController
     }
 
     @Override
-    public int getTabNumber() {
+    public String getTabNumber() {
         return tabNumber;
     }
 
-    public void setTabNumber(int tabNumber) {
+    public void setTabNumber(String tabNumber) {
         this.tabNumber = tabNumber;
     }
 

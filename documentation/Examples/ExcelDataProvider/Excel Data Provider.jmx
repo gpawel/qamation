@@ -15,7 +15,7 @@
         <stringProp name="ThreadGroup.on_sample_error">continue</stringProp>
         <elementProp name="ThreadGroup.main_controller" elementType="LoopController" guiclass="LoopControlPanel" testclass="LoopController" testname="Loop Controller" enabled="true">
           <boolProp name="LoopController.continue_forever">false</boolProp>
-          <stringProp name="LoopController.loops">3</stringProp>
+          <stringProp name="LoopController.loops">6</stringProp>
         </elementProp>
         <stringProp name="ThreadGroup.num_threads">1</stringProp>
         <stringProp name="ThreadGroup.ramp_time">1</stringProp>
@@ -26,14 +26,30 @@
         <stringProp name="ThreadGroup.delay"></stringProp>
       </ThreadGroup>
       <hashTree>
+        <Arguments guiclass="ArgumentsPanel" testclass="Arguments" testname="SET DATA FILE PATH" enabled="true">
+          <collectionProp name="Arguments.arguments">
+            <elementProp name="PATH" elementType="Argument">
+              <stringProp name="Argument.name">PATH</stringProp>
+              <stringProp name="Argument.value">${__BeanShell(import org.apache.jmeter.gui.GuiPackage;
+import org.apache.commons.io.FilenameUtils;
+String testPlanFile = GuiPackage.getInstance().getTestPlanFile();
+String testPlanFileDir = FilenameUtils.getFullPathNoEndSeparator(testPlanFile);
+return testPlanFileDir;
+)}</stringProp>
+              <stringProp name="Argument.metadata">=</stringProp>
+            </elementProp>
+          </collectionProp>
+        </Arguments>
+        <hashTree/>
         <org.qamation.jmeter.data.provider.config.ExcelDataConfig guiclass="TestBeanGUI" testclass="org.qamation.jmeter.data.provider.config.ExcelDataConfig" testname="ExcelDataConfig" enabled="true">
-          <stringProp name="filename">Excel_Data.xlsx</stringProp>
+          <stringProp name="filename">${PATH}/Excel_Data.xlsx</stringProp>
           <stringProp name="dataProviderImplClassName">org.qamation.data.provider.DataProviderExcelAdapter</stringProp>
-          <boolProp name="resetAtEOF">false</boolProp>
-          <boolProp name="resetAtTestStart">false</boolProp>
+          <boolProp name="resetAtEOF">true</boolProp>
+          <boolProp name="resetAtTestStart">true</boolProp>
           <stringProp name="shareMode">shareMode.all</stringProp>
-          <intProp name="tabNumber">0</intProp>
-          <stringProp name="isFirstLineHeader">true</stringProp>
+          <stringProp name="tabNumber">0</stringProp>
+          <boolProp name="isFirstLineHeader">true</boolProp>
+          <stringProp name="fieldNames"></stringProp>
         </org.qamation.jmeter.data.provider.config.ExcelDataConfig>
         <hashTree/>
         <DebugSampler guiclass="TestBeanGUI" testclass="DebugSampler" testname="Debug Sampler" enabled="true">
