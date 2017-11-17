@@ -12,8 +12,6 @@ public interface GuiData {
 
     boolean isResetAtEOF();
 
-    boolean isResetAtTestStart();
-
     String getShareMode();
 
     String getTabNumber();

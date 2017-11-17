@@ -3,7 +3,6 @@ package org.qamation.jmeter.data.provider.config;
 
 import org.apache.jmeter.config.ConfigTestElement;
 import org.apache.jmeter.engine.event.LoopIterationEvent;
-
 import org.apache.jmeter.engine.event.LoopIterationListener;
 import org.apache.jmeter.engine.util.NoConfigMerge;
 import org.apache.jmeter.testbeans.TestBean;
@@ -26,7 +25,6 @@ public class ExcelDataConfig extends ConfigTestElement
     protected String filename;
     protected String dataProviderImplClassName;
     protected boolean resetAtEOF;
-    protected boolean resetAtTestStart;
     protected String shareMode;
     protected String tabNumber;
     protected String fieldNames;
@@ -73,15 +71,6 @@ public class ExcelDataConfig extends ConfigTestElement
 
     public void setResetAtEOF(boolean resetAtEOF) {
         this.resetAtEOF = resetAtEOF;
-    }
-
-    @Override
-    public boolean isResetAtTestStart() {
-        return resetAtTestStart;
-    }
-
-    public void setResetAtTestStart(boolean resetAtTestStart) {
-        this.resetAtTestStart = resetAtTestStart;
     }
 
     @Override

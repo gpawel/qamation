@@ -67,15 +67,6 @@ public class ExcelDataController extends GenericController
     }
 
     @Override
-    public boolean isResetAtTestStart() {
-        return resetAtTestStart;
-    }
-
-    public void setResetAtTestStart(boolean resetAtTestStart) {
-        this.resetAtTestStart = resetAtTestStart;
-    }
-
-    @Override
     public String getShareMode() {
         return shareMode;
     }

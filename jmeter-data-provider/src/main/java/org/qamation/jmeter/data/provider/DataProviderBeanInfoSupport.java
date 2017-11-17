@@ -17,7 +17,6 @@ public abstract class DataProviderBeanInfoSupport extends BeanInfoSupport {
     public static final String FILENAME = "filename";
     public static final String CLASSNAME = "dataProviderImplClassName";
     public static final String RESET_AT_EOF = "resetAtEOF";
-    public static final String RESET_AT_TEST_START="resetAtTestStart";
     public static final String TAB_NUMBER = "tabNumber";
     public static final String FIELDS = "fieldNames";
     public static final String IS_FIRST_LINE_HEADER = "isFirstLineHeader";
@@ -41,10 +40,6 @@ public abstract class DataProviderBeanInfoSupport extends BeanInfoSupport {
         return manageBooleanPropertyWithDefaultValue(RESET_AT_EOF,Boolean.FALSE);
     }
 
-
-    public PropertyDescriptor manageResetAtTestStartDescriptor() {
-        return manageBooleanPropertyWithDefaultValue(RESET_AT_TEST_START,Boolean.FALSE);
-    }
 
     public PropertyDescriptor manageTabNamberDescriptor() {
         return manageStringPropertyWithDefaultValue(TAB_NUMBER,"0");

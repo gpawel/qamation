@@ -49,7 +49,6 @@ public class ExcelDataConfigBeanInfo extends DataProviderBeanInfoSupport {
                 FILENAME,
                 CLASSNAME,
                 RESET_AT_EOF,
-                RESET_AT_TEST_START,
                 SHAREMODE,
                 TAB_NUMBER,
                 FIELDS,
@@ -60,8 +59,6 @@ public class ExcelDataConfigBeanInfo extends DataProviderBeanInfoSupport {
         p = manageClassNameDescriptor();
         p = manageResetAtEOFDescriptor();
         p = manageShareModePropertyDescriptor();
-        p = manageResetAtTestStartDescriptor();
-        p = manageResetAtTestStartDescriptor();
         p = manageTabNamberDescriptor();
         p = manageFieldsDescriptor();
         p = manageIsFirstLineHeaderDescriptor();

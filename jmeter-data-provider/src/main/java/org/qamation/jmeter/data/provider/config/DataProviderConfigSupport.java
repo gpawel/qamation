@@ -25,7 +25,6 @@ public class DataProviderConfigSupport extends DataProviderSupport {
     public void iterationStart() {
         String key = getKey();
         putDataIntoJMeterContext(key);
-
     }
 
 

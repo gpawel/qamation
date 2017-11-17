@@ -15,7 +15,7 @@
         <stringProp name="ThreadGroup.on_sample_error">continue</stringProp>
         <elementProp name="ThreadGroup.main_controller" elementType="LoopController" guiclass="LoopControlPanel" testclass="LoopController" testname="Loop Controller" enabled="true">
           <boolProp name="LoopController.continue_forever">false</boolProp>
-          <stringProp name="LoopController.loops">6</stringProp>
+          <stringProp name="LoopController.loops">7</stringProp>
         </elementProp>
         <stringProp name="ThreadGroup.num_threads">1</stringProp>
         <stringProp name="ThreadGroup.ramp_time">1</stringProp>
@@ -48,7 +48,7 @@ return testPlanFileDir;
           <boolProp name="resetAtTestStart">true</boolProp>
           <stringProp name="shareMode">shareMode.all</stringProp>
           <stringProp name="tabNumber">0</stringProp>
-          <boolProp name="isFirstLineHeader">true</boolProp>
+          <boolProp name="isFirstLineHeader">false</boolProp>
           <stringProp name="fieldNames"></stringProp>
         </org.qamation.jmeter.data.provider.config.ExcelDataConfig>
         <hashTree/>

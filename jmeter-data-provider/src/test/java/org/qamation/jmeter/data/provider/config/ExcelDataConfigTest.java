@@ -83,7 +83,6 @@ public class ExcelDataConfigTest extends JMeterTestCase {
         config.setFilename(fileName);
         config.setDataProviderImplClassName(className);
         config.setResetAtEOF(resetAtEOF);
-        config.setResetAtTestStart(resetAtTestStart);
         config.setShareMode(shareMode);
         config.setTabNumber(tabNumber);
         config.setFieldNames(fieldNames);
