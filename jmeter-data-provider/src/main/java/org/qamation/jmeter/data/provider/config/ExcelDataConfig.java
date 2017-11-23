@@ -8,6 +8,7 @@ import org.apache.jmeter.engine.util.NoConfigMerge;
 import org.apache.jmeter.testbeans.TestBean;
 import org.apache.jmeter.threads.JMeterContext;
 import org.apache.jmeter.threads.JMeterContextService;
+import org.apache.jorphan.util.JMeterError;
 import org.qamation.data.provider.DataProvider;
 import org.qamation.jmeter.data.provider.GuiData;
 import org.slf4j.LoggerFactory;
@@ -34,10 +35,12 @@ public class ExcelDataConfig extends ConfigTestElement
     @Override
     public void iterationStart(LoopIterationEvent loopIterationEvent) {
         JMeterContext context = JMeterContextService.getContext();
+        if (!isFirstLineHeader && fieldNames.isEmpty()) {
+            throw new JMeterError("Field names not provided.");
+        }
         log.info("iteration start by thread: " + context.getThread().getThreadName());
         this.support = new DataProviderConfigSupport(this,context);
         support.iterationStart();
-
     }
 
 
