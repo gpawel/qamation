@@ -3,9 +3,10 @@ package org.qamation.jmeter.data.provider.config;
 import org.apache.jmeter.threads.JMeterContext;
 import org.qamation.jmeter.data.provider.DataProviderSupport;
 import org.qamation.jmeter.data.provider.GuiData;
+import org.slf4j.LoggerFactory;
 
 public class DataProviderConfigSupport extends DataProviderSupport {
-
+    private static final org.slf4j.Logger log = LoggerFactory.getLogger(DataProviderConfigSupport.class);
     public static final String SHARE_MODE_ALL = "shareMode.all";
     public static final String SHARE_MODE_GROUP = "shareMode.group";
     public static final String SHARE_MODE_THREAD = "shareMode.thread";
@@ -17,6 +18,7 @@ public class DataProviderConfigSupport extends DataProviderSupport {
     public String getKey() {
         String suffix = getSuffix(context);
         String key = guiData.getFilename() + suffix;
+        log.info("Created Key: "+key);
         return key;
     }
 

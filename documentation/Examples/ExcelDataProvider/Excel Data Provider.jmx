@@ -42,7 +42,7 @@ return testPlanFileDir;
           <boolProp name="LoopController.continue_forever">false</boolProp>
           <stringProp name="LoopController.loops">1</stringProp>
         </elementProp>
-        <stringProp name="ThreadGroup.num_threads">3</stringProp>
+        <stringProp name="ThreadGroup.num_threads">1</stringProp>
         <stringProp name="ThreadGroup.ramp_time">1</stringProp>
         <longProp name="ThreadGroup.start_time">1509931443000</longProp>
         <longProp name="ThreadGroup.end_time">1509931443000</longProp>
@@ -56,21 +56,21 @@ return testPlanFileDir;
           <stringProp name="dataProviderImplClassName">org.qamation.data.provider.DataProviderExcelAdapter</stringProp>
           <boolProp name="resetAtEOF">true</boolProp>
           <boolProp name="resetAtTestStart">true</boolProp>
-          <stringProp name="shareMode">shareMode.thread</stringProp>
-          <stringProp name="tabNumber">0</stringProp>
-          <boolProp name="isFirstLineHeader">false</boolProp>
-          <stringProp name="fieldNames">th1,th2,th3</stringProp>
-        </org.qamation.jmeter.data.provider.config.ExcelDataConfig>
-        <hashTree/>
-        <org.qamation.jmeter.data.provider.config.ExcelDataConfig guiclass="TestBeanGUI" testclass="org.qamation.jmeter.data.provider.config.ExcelDataConfig" testname="ExcelDataConfig" enabled="true">
-          <stringProp name="filename">${PATH}/Excel_Data.xlsx</stringProp>
-          <stringProp name="dataProviderImplClassName">org.qamation.data.provider.DataProviderExcelAdapter</stringProp>
-          <boolProp name="resetAtEOF">true</boolProp>
-          <boolProp name="resetAtTestStart">true</boolProp>
           <stringProp name="shareMode">shareMode.group</stringProp>
           <stringProp name="tabNumber">0</stringProp>
           <boolProp name="isFirstLineHeader">false</boolProp>
           <stringProp name="fieldNames">gr1,gr2,gr3</stringProp>
+        </org.qamation.jmeter.data.provider.config.ExcelDataConfig>
+        <hashTree/>
+        <org.qamation.jmeter.data.provider.config.ExcelDataConfig guiclass="TestBeanGUI" testclass="org.qamation.jmeter.data.provider.config.ExcelDataConfig" testname="ExcelDataConfig" enabled="false">
+          <stringProp name="filename">${PATH}/Excel_Data.xlsx</stringProp>
+          <stringProp name="dataProviderImplClassName">org.qamation.data.provider.DataProviderExcelAdapter</stringProp>
+          <boolProp name="resetAtEOF">true</boolProp>
+          <boolProp name="resetAtTestStart">true</boolProp>
+          <stringProp name="shareMode">shareMode.thread</stringProp>
+          <stringProp name="tabNumber">0</stringProp>
+          <boolProp name="isFirstLineHeader">false</boolProp>
+          <stringProp name="fieldNames">th1,th2,th3</stringProp>
         </org.qamation.jmeter.data.provider.config.ExcelDataConfig>
         <hashTree/>
         <DebugSampler guiclass="TestBeanGUI" testclass="DebugSampler" testname="Debug Sampler" enabled="true">

@@ -18,7 +18,7 @@ public class Storage<T extends DataProvider> {
     private static final Logger log = LoggerFactory.getLogger(Storage.class);
     private static Storage storage = null;
 
-    public static Storage getStorage() {
+    public synchronized static Storage getStorage() {
         if (storage == null) {
             storage = new Storage();
             //StandardJMeterEngine.register(this);
@@ -37,16 +37,16 @@ public class Storage<T extends DataProvider> {
         return container.containsKey(key);
     }
 
-    public void put(String key, T t) {
+    public synchronized void put(String key, T t) {
         container.put(key, t);
     }
 
-    public  T get(String key) {
+    public synchronized T get(String key) {
         return  container.get(key);
     }
 
 
-    public  void remove(String key) {
+    public synchronized   void remove(String key) {
         if (container.containsKey(key)) {
             container.remove(key);
         }
