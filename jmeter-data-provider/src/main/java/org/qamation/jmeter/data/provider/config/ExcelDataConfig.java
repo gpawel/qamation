@@ -45,11 +45,6 @@ public class ExcelDataConfig extends ConfigTestElement
 
 
     @Override
-    public <T extends DataProvider> T callDataProviderFactory() {
-        return this.support.callDataProviderFactory();
-    }
-
-    @Override
     public String getFilename() {
         return filename;
     }

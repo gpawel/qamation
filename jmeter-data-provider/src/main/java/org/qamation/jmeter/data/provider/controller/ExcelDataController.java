@@ -35,11 +35,6 @@ public class ExcelDataController extends GenericController
 
 
     @Override
-    public <T extends DataProvider> T callDataProviderFactory() {
-        return null;
-    }
-
-    @Override
     public String getFilename() {
         return filename;
     }

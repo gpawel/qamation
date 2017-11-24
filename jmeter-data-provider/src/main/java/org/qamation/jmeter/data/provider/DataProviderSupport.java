@@ -15,50 +15,25 @@ import org.slf4j.LoggerFactory;
 
 import java.util.Set;
 
-public class DataProviderSupport  {
+public abstract class DataProviderSupport  {
     private static final org.slf4j.Logger log = LoggerFactory.getLogger(DataProviderSupport.class);
 
     protected GuiData guiData;
     protected JMeterContext context;
-    protected String key = null;
+    protected String key;
 
-    public DataProviderSupport(GuiData guiData, JMeterContext context) {
-        this.guiData = guiData;
-        this.context = context;
-    }
-
-
-    public <T extends DataProvider> T getDataProvider(String key) {
-        this.key = key;
+    public synchronized  static <T extends DataProvider> T getDataProvider(String key, GuiData guiData) {
         Storage storage = Storage.getStorage();
         T provider = (T) storage.get(key);
         if (provider == null) {
-            provider = callDataProviderFactory();
+            provider = DataProviderSupport.callDataProviderFactory(guiData);
             storage.put(key,provider);
         }
         //StandardJMeterEngine.register(this);
         return provider;
     }
 
-    public <T extends DataProvider> void putDataIntoJMeterContext(String key) {
-        T dataProvider = getDataProvider(key);
-        if (dataProvider.hasNext()) {
-            String[] dataLine = dataProvider.next();
-            String[] headers = dataProvider.getFieldNames();
-            for (int i = 0; i < headers.length; i++) {
-                context.getVariables().put(headers[i], dataLine[i]);
-            }
-            return;
-        }
-        if (guiData.isResetAtEOF()) {
-            dataProvider.reset();
-            putDataIntoJMeterContext(key);
-        }
-        else throw new JMeterStopThreadException("End of data.");
-    }
-
-    // @Override//
-    public <T extends DataProvider> T callDataProviderFactory() {
+    private static <T extends DataProvider> T callDataProviderFactory(GuiData guiData) {
         int tabNumber = Integer.parseInt(guiData.getTabNumber());
 
         if (guiData.isFirstLineHeader()) {
@@ -74,6 +49,29 @@ public class DataProviderSupport  {
         }
     }
 
+    public DataProviderSupport(GuiData guiData, JMeterContext context) {
+        this.guiData = guiData;
+        this.context = context;
+        this.key = getKey();
+    }
 
-    //public abstract <T extends DataProvider> T callDataProviderFactory();
+
+    public <T extends DataProvider> void putDataIntoJMeterContext() {
+        T dataProvider = DataProviderSupport.getDataProvider(key, guiData);
+        if (dataProvider.hasNext()) {
+            String[] dataLine = dataProvider.next();
+            String[] headers = dataProvider.getFieldNames();
+            for (int i = 0; i < headers.length; i++) {
+                context.getVariables().put(headers[i], dataLine[i]);
+            }
+            return;
+        }
+        if (guiData.isResetAtEOF()) {
+            dataProvider.reset();
+            putDataIntoJMeterContext();
+        }
+        else throw new JMeterStopThreadException("End of data.");
+    }
+
+    public abstract String getKey();
 }

@@ -1,10 +1,6 @@
 package org.qamation.jmeter.data.provider;
 
-import org.qamation.data.provider.DataProvider;
-
 public interface GuiData {
-
-    <T extends DataProvider> T callDataProviderFactory();
 
     String getFilename();
 

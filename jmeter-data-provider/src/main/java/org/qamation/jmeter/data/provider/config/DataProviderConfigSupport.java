@@ -15,6 +15,7 @@ public class DataProviderConfigSupport extends DataProviderSupport {
         super(guiData, context);
     }
 
+    @Override
     public String getKey() {
         String suffix = getSuffix(context);
         String key = guiData.getFilename() + suffix;
@@ -25,8 +26,8 @@ public class DataProviderConfigSupport extends DataProviderSupport {
 
 
     public void iterationStart() {
-        String key = getKey();
-        putDataIntoJMeterContext(key);
+        this.key = getKey();
+        putDataIntoJMeterContext();
     }
 
 
