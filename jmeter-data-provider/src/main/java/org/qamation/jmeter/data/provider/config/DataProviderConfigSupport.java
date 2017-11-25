@@ -2,7 +2,6 @@ package org.qamation.jmeter.data.provider.config;
 
 import org.apache.jmeter.threads.JMeterContext;
 import org.qamation.jmeter.data.provider.DataProviderSupport;
-import org.qamation.jmeter.data.provider.GuiData;
 import org.slf4j.LoggerFactory;
 
 public class DataProviderConfigSupport extends DataProviderSupport {
@@ -11,14 +10,16 @@ public class DataProviderConfigSupport extends DataProviderSupport {
     public static final String SHARE_MODE_GROUP = "shareMode.group";
     public static final String SHARE_MODE_THREAD = "shareMode.thread";
 
-    public DataProviderConfigSupport(GuiData guiData, JMeterContext context) {
-        super(guiData, context);
+    private ConfigGuiData configGuiData;
+
+    public DataProviderConfigSupport(ConfigGuiData configGuiData, JMeterContext context) {
+        super(configGuiData, context);
+        this.configGuiData = configGuiData;
     }
 
-    @Override
-    public String getKey() {
+    public String getDataProviderName() {
         String suffix = getSuffix(context);
-        String key = guiData.getFilename() + suffix;
+        String key = configGuiData.getFilename() + suffix;
         log.info("Created Key: "+key);
         return key;
     }
@@ -26,13 +27,13 @@ public class DataProviderConfigSupport extends DataProviderSupport {
 
 
     public void iterationStart() {
-        this.key = getKey();
-        putDataIntoJMeterContext();
+        String providerName = getDataProviderName();
+        putDataIntoJMeterContext(providerName);
     }
 
 
     private String getSuffix(JMeterContext context) {
-        String shareMode = guiData.getShareMode();
+        String shareMode = configGuiData.getShareMode();
         int modeInt = ExcelDataConfigBeanInfo.getShareModeAsInt(shareMode);
         String suffix;
         switch (modeInt) {

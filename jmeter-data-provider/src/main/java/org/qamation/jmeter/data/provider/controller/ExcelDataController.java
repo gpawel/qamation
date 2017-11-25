@@ -18,14 +18,12 @@ public class ExcelDataController extends GenericController
     private static final long serialVersionUID = 253L;
     private DataProviderControllerSupport support;
 
-    protected String filename;
-    protected String dataProviderImplClassName;
-    protected boolean resetAtEOF;
-    protected boolean resetAtTestStart;
-    protected String shareMode;
-    protected String tabNumber;
-    protected String fieldNames;
-    protected boolean isFirstLineHeader;
+    protected String filename = "";
+    protected String dataProviderImplClassName = "";
+    protected boolean resetAtEOF = true;
+    protected String tabNumber = "0";
+    protected String fieldNames = "";
+    protected boolean isFirstLineHeader = true;
 
 
     public ExcelDataController() {
@@ -61,14 +59,6 @@ public class ExcelDataController extends GenericController
         this.resetAtEOF = resetAtEOF;
     }
 
-    @Override
-    public String getShareMode() {
-        return shareMode;
-    }
-
-    public void setShareMode(String shareMode) {
-        this.shareMode = shareMode;
-    }
 
     @Override
     public String getTabNumber() {

@@ -20,7 +20,6 @@ public abstract class DataProviderSupport  {
 
     protected GuiData guiData;
     protected JMeterContext context;
-    protected String key;
 
     public synchronized  static <T extends DataProvider> T getDataProvider(String key, GuiData guiData) {
         Storage storage = Storage.getStorage();
@@ -52,12 +51,11 @@ public abstract class DataProviderSupport  {
     public DataProviderSupport(GuiData guiData, JMeterContext context) {
         this.guiData = guiData;
         this.context = context;
-        this.key = getKey();
     }
 
 
-    public <T extends DataProvider> void putDataIntoJMeterContext() {
-        T dataProvider = DataProviderSupport.getDataProvider(key, guiData);
+    public <T extends DataProvider> void putDataIntoJMeterContext(String providerName) {
+        T dataProvider = DataProviderSupport.getDataProvider(providerName, guiData);
         if (dataProvider.hasNext()) {
             String[] dataLine = dataProvider.next();
             String[] headers = dataProvider.getFieldNames();
@@ -68,10 +66,10 @@ public abstract class DataProviderSupport  {
         }
         if (guiData.isResetAtEOF()) {
             dataProvider.reset();
-            putDataIntoJMeterContext();
+            putDataIntoJMeterContext(providerName);
         }
         else throw new JMeterStopThreadException("End of data.");
     }
 
-    public abstract String getKey();
+
 }

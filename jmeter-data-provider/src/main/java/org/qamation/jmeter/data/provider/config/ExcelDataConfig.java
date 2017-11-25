@@ -18,7 +18,8 @@ public class ExcelDataConfig extends ConfigTestElement
         implements
         TestBean,
         LoopIterationListener,
-        NoConfigMerge, GuiData {
+        NoConfigMerge,
+        ConfigGuiData {
 
     private static final org.slf4j.Logger log = LoggerFactory.getLogger(ExcelDataConfig.class);
     private DataProviderConfigSupport support;

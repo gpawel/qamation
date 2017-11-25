@@ -8,8 +8,6 @@ public interface GuiData {
 
     boolean isResetAtEOF();
 
-    String getShareMode();
-
     String getTabNumber();
 
     String getFieldNames();
