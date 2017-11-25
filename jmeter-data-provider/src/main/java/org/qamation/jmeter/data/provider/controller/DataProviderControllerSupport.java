@@ -10,7 +10,7 @@ public class DataProviderControllerSupport extends DataProviderSupport {
 
     public DataProviderControllerSupport(GuiData guiData, JMeterContext context) {
         super(guiData, context);
-        putDataIntoJMeterContext(guiData.getFilename());
+        //putDataIntoJMeterContext(guiData.getFilename());
     }
 
 }

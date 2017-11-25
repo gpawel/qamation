@@ -18,12 +18,12 @@ public class ExcelDataController extends GenericController
     private static final long serialVersionUID = 253L;
     private DataProviderControllerSupport support;
 
-    protected String filename = "";
-    protected String dataProviderImplClassName = "";
-    protected boolean resetAtEOF = true;
-    protected String tabNumber = "0";
-    protected String fieldNames = "";
-    protected boolean isFirstLineHeader = true;
+    protected String filename;
+    protected String dataProviderImplClassName;
+    protected boolean resetAtEOF;// = true;
+    protected String tabNumber;// = "0";
+    protected String fieldNames;// = "";
+    protected boolean isFirstLineHeader;// = true;
 
 
     public ExcelDataController() {
@@ -41,7 +41,7 @@ public class ExcelDataController extends GenericController
         this.filename = filename;
     }
 
-    @Override
+
     public String getDataProviderImplClassName() {
         return dataProviderImplClassName;
     }
@@ -50,7 +50,6 @@ public class ExcelDataController extends GenericController
         this.dataProviderImplClassName = dataProviderImplClassName;
     }
 
-    @Override
     public boolean isResetAtEOF() {
         return resetAtEOF;
     }
@@ -60,7 +59,7 @@ public class ExcelDataController extends GenericController
     }
 
 
-    @Override
+
     public String getTabNumber() {
         return tabNumber;
     }
@@ -69,7 +68,7 @@ public class ExcelDataController extends GenericController
         this.tabNumber = tabNumber;
     }
 
-    @Override
+
     public String getFieldNames() {
         return fieldNames;
     }
@@ -78,12 +77,17 @@ public class ExcelDataController extends GenericController
         this.fieldNames = fieldNames;
     }
 
-    @Override
-    public boolean isFirstLineHeader() {
+
+    public boolean getIsFirstLineHeader() {
         return isFirstLineHeader;
     }
 
-    public void setFirstLineHeader(boolean firstLineHeader) {
+    public void setIsFirstLineHeader(boolean firstLineHeader) {
         isFirstLineHeader = firstLineHeader;
+    }
+
+    @Override
+    public boolean isFirstLineHeader() {
+        return isFirstLineHeader;
     }
 }

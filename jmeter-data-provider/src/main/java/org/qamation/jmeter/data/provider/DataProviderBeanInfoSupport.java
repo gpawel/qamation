@@ -23,7 +23,7 @@ public abstract class DataProviderBeanInfoSupport extends BeanInfoSupport {
 
     public DataProviderBeanInfoSupport(Class className) {
         super(className);
-        log.info("Bean Info super is done.");
+        log.info("Bean Info super is done for "+className.getCanonicalName());
         log.info("creating group");
         setProperties();
     }
