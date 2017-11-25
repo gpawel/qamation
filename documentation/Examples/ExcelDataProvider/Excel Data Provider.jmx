@@ -26,7 +26,7 @@ return testPlanFileDir;
         </collectionProp>
       </Arguments>
       <hashTree/>
-      <org.qamation.jmeter.data.provider.config.ExcelDataConfig guiclass="TestBeanGUI" testclass="org.qamation.jmeter.data.provider.config.ExcelDataConfig" testname="Excel Data Provider Config Element" enabled="false">
+      <org.qamation.jmeter.data.provider.config.ExcelDataConfig guiclass="TestBeanGUI" testclass="org.qamation.jmeter.data.provider.config.ExcelDataConfig" testname="Excel Data Provider Config Element" enabled="true">
         <stringProp name="filename">${PATH}/Excel_Data.xlsx</stringProp>
         <stringProp name="dataProviderImplClassName">org.qamation.data.provider.DataProviderExcelAdapter</stringProp>
         <boolProp name="resetAtEOF">true</boolProp>
@@ -36,7 +36,7 @@ return testPlanFileDir;
         <boolProp name="isFirstLineHeader">false</boolProp>
       </org.qamation.jmeter.data.provider.config.ExcelDataConfig>
       <hashTree/>
-      <org.qamation.jmeter.data.provider.config.ExcelDataConfig guiclass="TestBeanGUI" testclass="org.qamation.jmeter.data.provider.config.ExcelDataConfig" testname="ExcelDataConfig" enabled="false">
+      <org.qamation.jmeter.data.provider.config.ExcelDataConfig guiclass="TestBeanGUI" testclass="org.qamation.jmeter.data.provider.config.ExcelDataConfig" testname="ExcelDataConfig" enabled="true">
         <stringProp name="filename">${PATH}/Excel_Data.xlsx</stringProp>
         <stringProp name="dataProviderImplClassName">org.qamation.data.provider.DataProviderExcelAdapter</stringProp>
         <boolProp name="resetAtEOF">true</boolProp>
@@ -57,18 +57,6 @@ return testPlanFileDir;
         <boolProp name="isFirstLineHeader">false</boolProp>
         <stringProp name="fieldNames">th1,th2,th3</stringProp>
       </org.qamation.jmeter.data.provider.config.ExcelDataConfig>
-      <hashTree/>
-      <UserParameters guiclass="UserParametersGui" testclass="UserParameters" testname="User Parameters" enabled="true">
-        <collectionProp name="UserParameters.names">
-          <stringProp name="1675813340">COUNTER</stringProp>
-        </collectionProp>
-        <collectionProp name="UserParameters.thread_values">
-          <collectionProp name="-1679889557">
-            <stringProp name="99330740">${__counter(FALSE)}</stringProp>
-          </collectionProp>
-        </collectionProp>
-        <boolProp name="UserParameters.per_iteration">true</boolProp>
-      </UserParameters>
       <hashTree/>
       <ResultCollector guiclass="ViewResultsFullVisualizer" testclass="ResultCollector" testname="View Results Tree" enabled="true">
         <boolProp name="ResultCollector.error_logging">false</boolProp>
@@ -106,7 +94,7 @@ return testPlanFileDir;
         <stringProp name="filename"></stringProp>
       </ResultCollector>
       <hashTree/>
-      <UserParameters guiclass="UserParametersGui" testclass="UserParameters" testname="User Parameters" enabled="false">
+      <UserParameters guiclass="UserParametersGui" testclass="UserParameters" testname="User Parameters" enabled="true">
         <collectionProp name="UserParameters.names">
           <stringProp name="957830652">counter</stringProp>
         </collectionProp>
@@ -119,6 +107,18 @@ return testPlanFileDir;
           </collectionProp>
           <collectionProp name="-1879318585">
             <stringProp name="4324069">${__counter(TRUE)}</stringProp>
+          </collectionProp>
+        </collectionProp>
+        <boolProp name="UserParameters.per_iteration">true</boolProp>
+      </UserParameters>
+      <hashTree/>
+      <UserParameters guiclass="UserParametersGui" testclass="UserParameters" testname="User Parameters" enabled="true">
+        <collectionProp name="UserParameters.names">
+          <stringProp name="1797724404">GL-COUNTER</stringProp>
+        </collectionProp>
+        <collectionProp name="UserParameters.thread_values">
+          <collectionProp name="-1679889557">
+            <stringProp name="99330740">${__counter(FALSE)}</stringProp>
           </collectionProp>
         </collectionProp>
         <boolProp name="UserParameters.per_iteration">true</boolProp>
@@ -139,7 +139,7 @@ return testPlanFileDir;
         <stringProp name="ThreadGroup.delay"></stringProp>
       </ThreadGroup>
       <hashTree>
-        <DebugSampler guiclass="TestBeanGUI" testclass="DebugSampler" testname="Debug Sampler" enabled="true">
+        <DebugSampler guiclass="TestBeanGUI" testclass="DebugSampler" testname="Iter: ${GL-COUNTER}   ${__BeanShell(import org.apache.jmeter.threads.JMeterContext;import org.apache.jmeter.threads.JMeterContextService;return JMeterContextService.getContext().getThread().getThreadName();)}  ${counter} " enabled="true">
           <boolProp name="displayJMeterProperties">false</boolProp>
           <boolProp name="displayJMeterVariables">true</boolProp>
           <boolProp name="displaySystemProperties">false</boolProp>
