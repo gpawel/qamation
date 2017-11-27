@@ -11,6 +11,51 @@
       <stringProp name="TestPlan.user_define_classpath"></stringProp>
     </TestPlan>
     <hashTree>
+      <Arguments guiclass="ArgumentsPanel" testclass="Arguments" testname="SET DATA FILE PATH" enabled="true">
+        <collectionProp name="Arguments.arguments">
+          <elementProp name="PATH" elementType="Argument">
+            <stringProp name="Argument.name">PATH</stringProp>
+            <stringProp name="Argument.value">${__BeanShell(import org.apache.jmeter.gui.GuiPackage;
+import org.apache.commons.io.FilenameUtils;
+String testPlanFile = GuiPackage.getInstance().getTestPlanFile();
+String testPlanFileDir = FilenameUtils.getFullPathNoEndSeparator(testPlanFile);
+return testPlanFileDir;
+)}</stringProp>
+            <stringProp name="Argument.metadata">=</stringProp>
+          </elementProp>
+        </collectionProp>
+      </Arguments>
+      <hashTree/>
+      <UserParameters guiclass="UserParametersGui" testclass="UserParameters" testname="User Parameters" enabled="true">
+        <collectionProp name="UserParameters.names">
+          <stringProp name="957830652">counter</stringProp>
+        </collectionProp>
+        <collectionProp name="UserParameters.thread_values">
+          <collectionProp name="-1879318585">
+            <stringProp name="4324069">${__counter(TRUE)}</stringProp>
+          </collectionProp>
+          <collectionProp name="-1879318585">
+            <stringProp name="4324069">${__counter(TRUE)}</stringProp>
+          </collectionProp>
+          <collectionProp name="-1879318585">
+            <stringProp name="4324069">${__counter(TRUE)}</stringProp>
+          </collectionProp>
+        </collectionProp>
+        <boolProp name="UserParameters.per_iteration">true</boolProp>
+      </UserParameters>
+      <hashTree/>
+      <UserParameters guiclass="UserParametersGui" testclass="UserParameters" testname="User Parameters" enabled="true">
+        <collectionProp name="UserParameters.names">
+          <stringProp name="1797724404">GL-COUNTER</stringProp>
+        </collectionProp>
+        <collectionProp name="UserParameters.thread_values">
+          <collectionProp name="-1679889557">
+            <stringProp name="99330740">${__counter(FALSE)}</stringProp>
+          </collectionProp>
+        </collectionProp>
+        <boolProp name="UserParameters.per_iteration">true</boolProp>
+      </UserParameters>
+      <hashTree/>
       <ThreadGroup guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="Thread Group" enabled="true">
         <stringProp name="ThreadGroup.on_sample_error">continue</stringProp>
         <elementProp name="ThreadGroup.main_controller" elementType="LoopController" guiclass="LoopControlPanel" testclass="LoopController" testname="Loop Controller" enabled="true">
@@ -29,13 +74,56 @@
         <org.qamation.jmeter.data.provider.controller.ExcelDataController guiclass="TestBeanGUI" testclass="org.qamation.jmeter.data.provider.controller.ExcelDataController" testname="Excel Data Controller" enabled="true">
           <stringProp name="dataProviderImplClassName">org.qamation.data.provider.DataProviderExcelAdapter</stringProp>
           <stringProp name="fieldNames"></stringProp>
-          <stringProp name="filename">&lt;ENTER FILE NAME HERE&gt;</stringProp>
+          <stringProp name="filename">${PATH}/Excel_Data.xlsx</stringProp>
           <boolProp name="isFirstLineHeader">true</boolProp>
           <boolProp name="resetAtEOF">false</boolProp>
           <stringProp name="tabNumber">0</stringProp>
         </org.qamation.jmeter.data.provider.controller.ExcelDataController>
-        <hashTree/>
+        <hashTree>
+          <DebugSampler guiclass="TestBeanGUI" testclass="DebugSampler" testname="Iter: ${GL-COUNTER}   ${__BeanShell(import org.apache.jmeter.threads.JMeterContext;import org.apache.jmeter.threads.JMeterContextService;return JMeterContextService.getContext().getThread().getThreadName();)}  ${counter} " enabled="true">
+            <boolProp name="displayJMeterProperties">false</boolProp>
+            <boolProp name="displayJMeterVariables">true</boolProp>
+            <boolProp name="displaySystemProperties">false</boolProp>
+          </DebugSampler>
+          <hashTree/>
+        </hashTree>
       </hashTree>
+      <ResultCollector guiclass="ViewResultsFullVisualizer" testclass="ResultCollector" testname="View Results Tree" enabled="true">
+        <boolProp name="ResultCollector.error_logging">false</boolProp>
+        <objProp>
+          <name>saveConfig</name>
+          <value class="SampleSaveConfiguration">
+            <time>true</time>
+            <latency>true</latency>
+            <timestamp>true</timestamp>
+            <success>true</success>
+            <label>true</label>
+            <code>true</code>
+            <message>true</message>
+            <threadName>true</threadName>
+            <dataType>true</dataType>
+            <encoding>false</encoding>
+            <assertions>true</assertions>
+            <subresults>true</subresults>
+            <responseData>false</responseData>
+            <samplerData>false</samplerData>
+            <xml>false</xml>
+            <fieldNames>true</fieldNames>
+            <responseHeaders>false</responseHeaders>
+            <requestHeaders>false</requestHeaders>
+            <responseDataOnError>false</responseDataOnError>
+            <saveAssertionResultsFailureMessage>true</saveAssertionResultsFailureMessage>
+            <assertionsResultsToSave>0</assertionsResultsToSave>
+            <bytes>true</bytes>
+            <sentBytes>true</sentBytes>
+            <threadCounts>true</threadCounts>
+            <idleTime>true</idleTime>
+            <connectTime>true</connectTime>
+          </value>
+        </objProp>
+        <stringProp name="filename"></stringProp>
+      </ResultCollector>
+      <hashTree/>
     </hashTree>
     <WorkBench guiclass="WorkBenchGui" testclass="WorkBench" testname="WorkBench" enabled="true">
       <boolProp name="WorkBench.save">true</boolProp>
