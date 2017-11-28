@@ -36,8 +36,16 @@ public class ExcelDataController extends GenericController
     public Sampler next() {
         initProperties();
         support = new DataProviderControllerSupport(this, JMeterContextService.getContext());
-        support.putDataIntoJMeterContext(filename);
-        return super.next();
+        String dataProviderName = filename+JMeterContextService.getContext().getThread().getThreadName();
+        DataProvider provider = DataProviderSupport.getDataProvider(dataProviderName,this);
+        if (provider.hasNext()) {
+            support.putDataIntoJMeterContext(filename);
+            return super.next();
+        }
+        else {
+            provider.reset();
+            return null;
+        }
     }
 
 
