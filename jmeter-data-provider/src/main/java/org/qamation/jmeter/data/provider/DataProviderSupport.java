@@ -18,7 +18,6 @@ import java.util.Set;
 public abstract class DataProviderSupport  {
     private static final org.slf4j.Logger log = LoggerFactory.getLogger(DataProviderSupport.class);
 
-    protected GuiData guiData;
     protected JMeterContext context;
 
     public synchronized  static <T extends DataProvider> T getDataProvider(String key, GuiData guiData) {
@@ -48,13 +47,7 @@ public abstract class DataProviderSupport  {
         }
     }
 
-    public DataProviderSupport(GuiData guiData, JMeterContext context) {
-        this.guiData = guiData;
-        this.context = context;
-    }
-
-
-    public <T extends DataProvider> void putDataIntoJMeterContext(String providerName) {
+    public <T extends DataProvider> void putDataIntoJMeterContext(String providerName, GuiData guiData) {
         T dataProvider = DataProviderSupport.getDataProvider(providerName, guiData);
         if (dataProvider.hasNext()) {
             String[] dataLine = dataProvider.next();
@@ -62,14 +55,13 @@ public abstract class DataProviderSupport  {
             for (int i = 0; i < headers.length; i++) {
                 context.getVariables().put(headers[i], dataLine[i]);
             }
-            return;
         }
-        if (guiData.isResetAtEOF()) {
-            dataProvider.reset();
-            putDataIntoJMeterContext(providerName);
+        else {
+            dataFinished (dataProvider);
         }
-        else throw new JMeterStopThreadException("End of data.");
     }
+
+    protected abstract <T extends DataProvider> void dataFinished(T dataProvider);
 
 
 }

@@ -6,8 +6,6 @@ public interface GuiData {
 
     String getDataProviderImplClassName();
 
-    boolean isResetAtEOF();
-
     String getTabNumber();
 
     String getFieldNames();

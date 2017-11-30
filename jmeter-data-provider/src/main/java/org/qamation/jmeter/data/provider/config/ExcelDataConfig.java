@@ -40,8 +40,8 @@ public class ExcelDataConfig extends ConfigTestElement
             throw new JMeterError("Field names not provided.");
         }
         log.info("iteration start by thread: " + context.getThread().getThreadName());
-        this.support = new DataProviderConfigSupport(this,context);
-        support.iterationStart();
+        this.support = new DataProviderConfigSupport();
+        support.iterationStart(this, context);
     }
 
 

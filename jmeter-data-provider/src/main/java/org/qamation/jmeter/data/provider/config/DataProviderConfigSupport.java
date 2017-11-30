@@ -1,6 +1,8 @@
 package org.qamation.jmeter.data.provider.config;
 
 import org.apache.jmeter.threads.JMeterContext;
+import org.apache.jorphan.util.JMeterStopThreadException;
+import org.qamation.data.provider.DataProvider;
 import org.qamation.jmeter.data.provider.DataProviderSupport;
 import org.slf4j.LoggerFactory;
 
@@ -12,11 +14,6 @@ public class DataProviderConfigSupport extends DataProviderSupport {
 
     private ConfigGuiData configGuiData;
 
-    public DataProviderConfigSupport(ConfigGuiData configGuiData, JMeterContext context) {
-        super(configGuiData, context);
-        this.configGuiData = configGuiData;
-    }
-
     public String getDataProviderName() {
         String suffix = getSuffix(context);
         String key = configGuiData.getFilename() + suffix;
@@ -26,9 +23,11 @@ public class DataProviderConfigSupport extends DataProviderSupport {
 
 
 
-    public void iterationStart() {
+    public void iterationStart(ConfigGuiData configGuiData, JMeterContext context) {
+        this.configGuiData = configGuiData;
+        this.context = context;
         String providerName = getDataProviderName();
-        putDataIntoJMeterContext(providerName);
+        putDataIntoJMeterContext(providerName, configGuiData);
     }
 
 
@@ -58,4 +57,13 @@ public class DataProviderConfigSupport extends DataProviderSupport {
     }
 
 
+    @Override
+    protected <T extends DataProvider> void dataFinished(T dataProvider) {
+        if (configGuiData.isResetAtEOF()) {
+            dataProvider.reset();
+            putDataIntoJMeterContext(getDataProviderName(),configGuiData);
+        }
+        else throw new JMeterStopThreadException("End of data.");
+
+    }
 }

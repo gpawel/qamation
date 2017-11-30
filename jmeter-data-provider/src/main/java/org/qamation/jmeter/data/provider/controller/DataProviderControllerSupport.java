@@ -1,15 +1,25 @@
 package org.qamation.jmeter.data.provider.controller;
 
 import org.apache.jmeter.threads.JMeterContext;
+import org.apache.jmeter.threads.JMeterContextService;
 import org.qamation.data.provider.DataProvider;
 import org.qamation.jmeter.data.provider.DataProviderSupport;
 import org.qamation.jmeter.data.provider.GuiData;
 
 public class DataProviderControllerSupport extends DataProviderSupport {
 
+    private boolean continueLoop = true;
 
-    public DataProviderControllerSupport(GuiData guiData, JMeterContext context) {
-        super(guiData, context);
+    @Override
+    protected <T extends DataProvider> void dataFinished(T dataProvider) {
+        dataProvider.reset();
+        continueLoop = false;
     }
 
+    public boolean next(GuiData guiData, JMeterContext context) {
+        this.context = context;
+        String dataProviderName = guiData.getFilename()+ context.getThread().getThreadName();
+        putDataIntoJMeterContext(dataProviderName, guiData);
+        return continueLoop;
+    }
 }

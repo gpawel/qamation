@@ -29,26 +29,21 @@ public class ExcelDataController extends GenericController
 
 
     public ExcelDataController() {
-        //DataProvider dataProvider = support.getDataProvider();
+        log.info("\n\nExcelDataController constructor is called\n\n");
     }
 
     @Override
     public Sampler next() {
         initProperties();
-        support = new DataProviderControllerSupport(this, JMeterContextService.getContext());
-        String dataProviderName = filename+JMeterContextService.getContext().getThread().getThreadName();
-        DataProvider provider = DataProviderSupport.getDataProvider(dataProviderName,this);
-        if (provider.hasNext()) {
-            support.putDataIntoJMeterContext(filename);
+        support = new DataProviderControllerSupport();
+        if (support.next(this, JMeterContextService.getContext()))
             return super.next();
-        }
         else {
-            provider.reset();
+
+            setDone(true);
             return null;
         }
     }
-
-
 
     @Override
     public String getFilename() {

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<jmeterTestPlan version="1.2" properties="3.2" jmeter="3.3.20171101">
+<jmeterTestPlan version="1.2" properties="3.2" jmeter="3.3.20171014">
   <hashTree>
     <TestPlan guiclass="TestPlanGui" testclass="TestPlan" testname="Test Plan" enabled="true">
       <stringProp name="TestPlan.comments"></stringProp>
@@ -147,6 +147,18 @@ return testPlanFileDir;
           <boolProp name="resetAtEOF">false</boolProp>
           <stringProp name="tabNumber">0</stringProp>
         </org.qamation.jmeter.data.provider.controller.ExcelDataController>
+        <hashTree>
+          <DebugSampler guiclass="TestBeanGUI" testclass="DebugSampler" testname="Iter: ${GL-COUNTER}   ${__BeanShell(import org.apache.jmeter.threads.JMeterContext;import org.apache.jmeter.threads.JMeterContextService;return JMeterContextService.getContext().getThread().getThreadName();)}  ${counter} " enabled="true">
+            <boolProp name="displayJMeterProperties">false</boolProp>
+            <boolProp name="displayJMeterVariables">true</boolProp>
+            <boolProp name="displaySystemProperties">false</boolProp>
+          </DebugSampler>
+          <hashTree/>
+        </hashTree>
+        <LoopController guiclass="LoopControlPanel" testclass="LoopController" testname="Loop Controller" enabled="false">
+          <boolProp name="LoopController.continue_forever">true</boolProp>
+          <stringProp name="LoopController.loops">5</stringProp>
+        </LoopController>
         <hashTree>
           <DebugSampler guiclass="TestBeanGUI" testclass="DebugSampler" testname="Iter: ${GL-COUNTER}   ${__BeanShell(import org.apache.jmeter.threads.JMeterContext;import org.apache.jmeter.threads.JMeterContextService;return JMeterContextService.getContext().getThread().getThreadName();)}  ${counter} " enabled="true">
             <boolProp name="displayJMeterProperties">false</boolProp>

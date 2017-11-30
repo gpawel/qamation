@@ -39,7 +39,7 @@ return testPlanFileDir;
       <org.qamation.jmeter.data.provider.config.ExcelDataConfig guiclass="TestBeanGUI" testclass="org.qamation.jmeter.data.provider.config.ExcelDataConfig" testname="ExcelDataConfig" enabled="true">
         <stringProp name="filename">${PATH}/Excel_Data.xlsx</stringProp>
         <stringProp name="dataProviderImplClassName">org.qamation.data.provider.DataProviderExcelAdapter</stringProp>
-        <boolProp name="resetAtEOF">true</boolProp>
+        <boolProp name="resetAtEOF">false</boolProp>
         <boolProp name="resetAtTestStart">true</boolProp>
         <stringProp name="shareMode">shareMode.group</stringProp>
         <stringProp name="tabNumber">0</stringProp>
