@@ -1,6 +1,8 @@
 package org.qamation.jmeter.data.provider.controller;
 
+import org.apache.jmeter.control.Controller;
 import org.apache.jmeter.control.GenericController;
+import org.apache.jmeter.control.NextIsNullException;
 import org.apache.jmeter.samplers.Sampler;
 import org.apache.jmeter.testbeans.TestBean;
 import org.apache.jmeter.threads.JMeterContextService;
@@ -18,7 +20,7 @@ public class ExcelDataController extends GenericController
     private static final Logger log = LoggerFactory.getLogger(ExcelDataController.class);
 
     private static final long serialVersionUID = 253L;
-    private DataProviderControllerSupport support;
+
 
     protected String filename;
     protected String dataProviderImplClassName;
@@ -35,14 +37,21 @@ public class ExcelDataController extends GenericController
     @Override
     public Sampler next() {
         initProperties();
-        support = new DataProviderControllerSupport();
-        if (support.next(this, JMeterContextService.getContext()))
-            return super.next();
+        return super.next();
+    }
+
+
+    @Override
+    public Sampler nextIsASampler(Sampler currentElement) throws NextIsNullException {
+        DataProviderControllerSupport support = new DataProviderControllerSupport();
+        boolean cont =  support.next(this,JMeterContextService.getContext());
+        if (cont) {
+            return super.nextIsASampler(currentElement);
+        }
         else {
 
-            setDone(true);
-            return null;
         }
+        return super.nextIsASampler(currentElement);
     }
 
     @Override

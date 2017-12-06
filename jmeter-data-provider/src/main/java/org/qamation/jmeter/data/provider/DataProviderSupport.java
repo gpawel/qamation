@@ -18,8 +18,6 @@ import java.util.Set;
 public abstract class DataProviderSupport  {
     private static final org.slf4j.Logger log = LoggerFactory.getLogger(DataProviderSupport.class);
 
-    protected JMeterContext context;
-
     public synchronized  static <T extends DataProvider> T getDataProvider(String key, GuiData guiData) {
         Storage storage = Storage.getStorage();
         T provider = (T) storage.get(key);
@@ -47,7 +45,7 @@ public abstract class DataProviderSupport  {
         }
     }
 
-    public <T extends DataProvider> void putDataIntoJMeterContext(String providerName, GuiData guiData) {
+    public <T extends DataProvider> void putDataIntoJMeterContext(String providerName, GuiData guiData, JMeterContext context) {
         T dataProvider = DataProviderSupport.getDataProvider(providerName, guiData);
         if (dataProvider.hasNext()) {
             String[] dataLine = dataProvider.next();

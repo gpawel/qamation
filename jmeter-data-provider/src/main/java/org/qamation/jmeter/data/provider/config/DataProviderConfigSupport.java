@@ -13,21 +13,18 @@ public class DataProviderConfigSupport extends DataProviderSupport {
     public static final String SHARE_MODE_THREAD = "shareMode.thread";
 
     private ConfigGuiData configGuiData;
+    private String providerName;
+    private JMeterContext context;
 
-    public String getDataProviderName() {
-        String suffix = getSuffix(context);
-        String key = configGuiData.getFilename() + suffix;
-        log.info("Created Key: "+key);
-        return key;
-    }
+
 
 
 
     public void iterationStart(ConfigGuiData configGuiData, JMeterContext context) {
         this.configGuiData = configGuiData;
         this.context = context;
-        String providerName = getDataProviderName();
-        putDataIntoJMeterContext(providerName, configGuiData);
+        this.providerName = getDataProviderName(context);
+        putDataIntoJMeterContext(providerName, this.configGuiData, this.context);
     }
 
 
@@ -61,9 +58,16 @@ public class DataProviderConfigSupport extends DataProviderSupport {
     protected <T extends DataProvider> void dataFinished(T dataProvider) {
         if (configGuiData.isResetAtEOF()) {
             dataProvider.reset();
-            putDataIntoJMeterContext(getDataProviderName(),configGuiData);
+            putDataIntoJMeterContext(providerName, configGuiData, context);
         }
         else throw new JMeterStopThreadException("End of data.");
 
+    }
+
+    private String getDataProviderName(JMeterContext context) {
+        String suffix = getSuffix(context);
+        String key = configGuiData.getFilename() + suffix;
+        log.info("Created Key: "+key);
+        return key;
     }
 }

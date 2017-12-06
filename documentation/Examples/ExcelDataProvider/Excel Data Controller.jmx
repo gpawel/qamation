@@ -157,7 +157,7 @@ return testPlanFileDir;
         </hashTree>
         <LoopController guiclass="LoopControlPanel" testclass="LoopController" testname="Loop Controller" enabled="false">
           <boolProp name="LoopController.continue_forever">true</boolProp>
-          <stringProp name="LoopController.loops">5</stringProp>
+          <stringProp name="LoopController.loops">1</stringProp>
         </LoopController>
         <hashTree>
           <DebugSampler guiclass="TestBeanGUI" testclass="DebugSampler" testname="Iter: ${GL-COUNTER}   ${__BeanShell(import org.apache.jmeter.threads.JMeterContext;import org.apache.jmeter.threads.JMeterContextService;return JMeterContextService.getContext().getThread().getThreadName();)}  ${counter} " enabled="true">
