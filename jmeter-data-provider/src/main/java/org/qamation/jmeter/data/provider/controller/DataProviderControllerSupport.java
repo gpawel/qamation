@@ -16,9 +16,15 @@ public class DataProviderControllerSupport extends DataProviderSupport {
         continueLoop = false;
     }
 
-    public boolean next(GuiData guiData, JMeterContext context) {
-        String dataProviderName = guiData.getFilename()+ context.getThread().getThreadName();
-        putDataIntoJMeterContext(dataProviderName, guiData, context);
+    public <T extends DataProvider> boolean next(GuiData guiData, JMeterContext context) {
+        String dataProviderName = getDataProviderName(guiData,context);
+        T dataProvider = DataProviderSupport.getDataProvider(dataProviderName,guiData);
+        putDataIntoJMeterContext(dataProvider, context);
         return continueLoop;
     }
+
+    public String getDataProviderName(GuiData guiData, JMeterContext context) {
+        return guiData.getFilename()+ context.getThread().getThreadName()+"controller";
+    }
+
 }

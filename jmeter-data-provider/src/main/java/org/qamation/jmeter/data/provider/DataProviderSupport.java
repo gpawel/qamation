@@ -29,6 +29,21 @@ public abstract class DataProviderSupport  {
         return provider;
     }
 
+    public <T extends DataProvider> void putDataIntoJMeterContext(T dataProvider, JMeterContext context) {
+        if (dataProvider.hasNext()) {
+            String[] dataLine = dataProvider.next();
+            String[] headers = dataProvider.getFieldNames();
+            for (int i = 0; i < headers.length; i++) {
+                context.getVariables().put(headers[i], dataLine[i]);
+            }
+        }
+        else {
+            dataFinished (dataProvider);
+        }
+    }
+
+
+
     private static <T extends DataProvider> T callDataProviderFactory(GuiData guiData) {
         int tabNumber = Integer.parseInt(guiData.getTabNumber());
 
@@ -45,19 +60,7 @@ public abstract class DataProviderSupport  {
         }
     }
 
-    public <T extends DataProvider> void putDataIntoJMeterContext(String providerName, GuiData guiData, JMeterContext context) {
-        T dataProvider = DataProviderSupport.getDataProvider(providerName, guiData);
-        if (dataProvider.hasNext()) {
-            String[] dataLine = dataProvider.next();
-            String[] headers = dataProvider.getFieldNames();
-            for (int i = 0; i < headers.length; i++) {
-                context.getVariables().put(headers[i], dataLine[i]);
-            }
-        }
-        else {
-            dataFinished (dataProvider);
-        }
-    }
+
 
     protected abstract <T extends DataProvider> void dataFinished(T dataProvider);
 

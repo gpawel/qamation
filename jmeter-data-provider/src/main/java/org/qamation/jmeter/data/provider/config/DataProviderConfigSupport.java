@@ -20,11 +20,12 @@ public class DataProviderConfigSupport extends DataProviderSupport {
 
 
 
-    public void iterationStart(ConfigGuiData configGuiData, JMeterContext context) {
+    public <T extends DataProvider> void iterationStart(ConfigGuiData configGuiData, JMeterContext context) {
         this.configGuiData = configGuiData;
         this.context = context;
         this.providerName = getDataProviderName(context);
-        putDataIntoJMeterContext(providerName, this.configGuiData, this.context);
+        T dataProvider = DataProviderSupport.getDataProvider(providerName,configGuiData);
+        putDataIntoJMeterContext(dataProvider, this.context);
     }
 
 
@@ -58,7 +59,7 @@ public class DataProviderConfigSupport extends DataProviderSupport {
     protected <T extends DataProvider> void dataFinished(T dataProvider) {
         if (configGuiData.isResetAtEOF()) {
             dataProvider.reset();
-            putDataIntoJMeterContext(providerName, configGuiData, context);
+            putDataIntoJMeterContext(dataProvider, context);
         }
         else throw new JMeterStopThreadException("End of data.");
 

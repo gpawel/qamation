@@ -1,6 +1,5 @@
 package org.qamation.jmeter.data.provider.controller;
 
-import org.apache.jmeter.control.Controller;
 import org.apache.jmeter.control.GenericController;
 import org.apache.jmeter.control.NextIsNullException;
 import org.apache.jmeter.samplers.Sampler;
@@ -34,25 +33,28 @@ public class ExcelDataController extends GenericController
         log.info("\n\nExcelDataController constructor is called\n\n");
     }
 
+
+
     @Override
     public Sampler next() {
         initProperties();
+        if (isFirst()) {
+            readDataLine();
+        }
         return super.next();
     }
 
-
     @Override
-    public Sampler nextIsASampler(Sampler currentElement) throws NextIsNullException {
-        DataProviderControllerSupport support = new DataProviderControllerSupport();
-        boolean cont =  support.next(this,JMeterContextService.getContext());
-        if (cont) {
-            return super.nextIsASampler(currentElement);
+    protected Sampler nextIsNull() throws NextIsNullException  {
+        reInitialize();
+        if (isEndOfLoop()) {
+            setDone(true);
+            return null;
         }
-        else {
+        return next();
 
-        }
-        return super.nextIsASampler(currentElement);
     }
+
 
     @Override
     public String getFilename() {
@@ -121,4 +123,29 @@ public class ExcelDataController extends GenericController
         fieldNames = getPropertyAsString("fieldNames");
         isFirstLineHeader = getPropertyAsBoolean("isFirstLineHeader");
     }
+
+    private <T extends DataProvider > void readDataLine() {
+        DataProviderControllerSupport support = new DataProviderControllerSupport();
+        boolean hasMore =  support.next(this,JMeterContextService.getContext());
+        if (hasMore) {
+        }
+        else {
+            T dataProvider = getDataProvider();
+            dataProvider.reset();
+            readDataLine();
+        }
+    }
+
+    private <T extends DataProvider > boolean isEndOfLoop() {
+        T provider = getDataProvider();
+        return !provider.hasNext();
+    }
+
+    private <T extends DataProvider > T getDataProvider() {
+        DataProviderControllerSupport support = new DataProviderControllerSupport();
+        String dataProviderName = support.getDataProviderName(this,JMeterContextService.getContext());
+        T provider = DataProviderSupport.getDataProvider(dataProviderName,this);
+        return provider;
+    }
+
 }
