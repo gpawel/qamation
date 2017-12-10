@@ -48,7 +48,7 @@ public class ExcelDataController extends GenericController
     protected Sampler nextIsNull() throws NextIsNullException  {
         reInitialize();
         if (isEndOfLoop()) {
-            setDone(true);
+            //setDone(true);
             return null;
         }
         return next();
