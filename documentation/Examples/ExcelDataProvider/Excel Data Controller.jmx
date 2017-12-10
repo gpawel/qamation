@@ -26,39 +26,7 @@ return testPlanFileDir;
         </collectionProp>
       </Arguments>
       <hashTree/>
-      <org.qamation.jmeter.data.provider.config.ExcelDataConfig guiclass="TestBeanGUI" testclass="org.qamation.jmeter.data.provider.config.ExcelDataConfig" testname="Excel Data Provider Config Element" enabled="false">
-        <stringProp name="filename">${PATH}/Excel_Data.xlsx</stringProp>
-        <stringProp name="dataProviderImplClassName">org.qamation.data.provider.DataProviderExcelAdapter</stringProp>
-        <boolProp name="resetAtEOF">true</boolProp>
-        <stringProp name="shareMode">shareMode.all</stringProp>
-        <stringProp name="tabNumber">0</stringProp>
-        <stringProp name="fieldNames">all1,all2,all3</stringProp>
-        <boolProp name="isFirstLineHeader">false</boolProp>
-      </org.qamation.jmeter.data.provider.config.ExcelDataConfig>
-      <hashTree/>
-      <org.qamation.jmeter.data.provider.config.ExcelDataConfig guiclass="TestBeanGUI" testclass="org.qamation.jmeter.data.provider.config.ExcelDataConfig" testname="ExcelDataConfig" enabled="false">
-        <stringProp name="filename">${PATH}/Excel_Data.xlsx</stringProp>
-        <stringProp name="dataProviderImplClassName">org.qamation.data.provider.DataProviderExcelAdapter</stringProp>
-        <boolProp name="resetAtEOF">true</boolProp>
-        <boolProp name="resetAtTestStart">true</boolProp>
-        <stringProp name="shareMode">shareMode.group</stringProp>
-        <stringProp name="tabNumber">0</stringProp>
-        <boolProp name="isFirstLineHeader">false</boolProp>
-        <stringProp name="fieldNames">gr1,gr2,gr3</stringProp>
-      </org.qamation.jmeter.data.provider.config.ExcelDataConfig>
-      <hashTree/>
-      <org.qamation.jmeter.data.provider.config.ExcelDataConfig guiclass="TestBeanGUI" testclass="org.qamation.jmeter.data.provider.config.ExcelDataConfig" testname="ExcelDataConfig" enabled="false">
-        <stringProp name="filename">${PATH}/Excel_Data.xlsx</stringProp>
-        <stringProp name="dataProviderImplClassName">org.qamation.data.provider.DataProviderExcelAdapter</stringProp>
-        <boolProp name="resetAtEOF">true</boolProp>
-        <boolProp name="resetAtTestStart">true</boolProp>
-        <stringProp name="shareMode">shareMode.thread</stringProp>
-        <stringProp name="tabNumber">0</stringProp>
-        <boolProp name="isFirstLineHeader">false</boolProp>
-        <stringProp name="fieldNames">th1,th2,th3</stringProp>
-      </org.qamation.jmeter.data.provider.config.ExcelDataConfig>
-      <hashTree/>
-      <ResultCollector guiclass="ViewResultsFullVisualizer" testclass="ResultCollector" testname="View Results Tree" enabled="true">
+      <ResultCollector guiclass="ViewResultsFullVisualizer" testclass="ResultCollector" testname="VIEW RESULTS" enabled="true">
         <boolProp name="ResultCollector.error_logging">false</boolProp>
         <objProp>
           <name>saveConfig</name>
@@ -140,7 +108,7 @@ return testPlanFileDir;
         <stringProp name="ThreadGroup.on_sample_error">continue</stringProp>
         <elementProp name="ThreadGroup.main_controller" elementType="LoopController" guiclass="LoopControlPanel" testclass="LoopController" testname="Loop Controller" enabled="true">
           <boolProp name="LoopController.continue_forever">false</boolProp>
-          <stringProp name="LoopController.loops">2</stringProp>
+          <stringProp name="LoopController.loops">1</stringProp>
         </elementProp>
         <stringProp name="ThreadGroup.num_threads">2</stringProp>
         <stringProp name="ThreadGroup.ramp_time">1</stringProp>
@@ -165,30 +133,6 @@ return testPlanFileDir;
             <boolProp name="displayJMeterVariables">true</boolProp>
             <boolProp name="displaySystemProperties">false</boolProp>
           </DebugSampler>
-          <hashTree/>
-        </hashTree>
-        <DebugSampler guiclass="TestBeanGUI" testclass="DebugSampler" testname="Iter: ${GL-COUNTER} index=${index}   ${__BeanShell(import org.apache.jmeter.threads.JMeterContext;import org.apache.jmeter.threads.JMeterContextService;return JMeterContextService.getContext().getThread().getThreadName();)}  ${counter} " enabled="false">
-          <boolProp name="displayJMeterProperties">false</boolProp>
-          <boolProp name="displayJMeterVariables">true</boolProp>
-          <boolProp name="displaySystemProperties">false</boolProp>
-        </DebugSampler>
-        <hashTree/>
-        <WhileController guiclass="WhileControllerGui" testclass="WhileController" testname="While Controller" enabled="false">
-          <stringProp name="WhileController.condition">${__BeanShell(log.info(&quot;index ==&gt; &quot;+vars.get(&quot;index&quot;)); return ${index} &lt; 2)}</stringProp>
-        </WhileController>
-        <hashTree>
-          <DebugSampler guiclass="TestBeanGUI" testclass="DebugSampler" testname="Iter: ${GL-COUNTER} index=${index}   ${__BeanShell(import org.apache.jmeter.threads.JMeterContext;import org.apache.jmeter.threads.JMeterContextService;return JMeterContextService.getContext().getThread().getThreadName();)}  ${counter} " enabled="true">
-            <boolProp name="displayJMeterProperties">false</boolProp>
-            <boolProp name="displayJMeterVariables">true</boolProp>
-            <boolProp name="displaySystemProperties">false</boolProp>
-          </DebugSampler>
-          <hashTree/>
-          <BeanShellSampler guiclass="BeanShellSamplerGui" testclass="BeanShellSampler" testname="BeanShell Sampler" enabled="true">
-            <stringProp name="BeanShellSampler.query">vars.put(&quot;index&quot;,String.valueOf(Integer.parseInt(vars.get(&quot;index&quot;))+1));</stringProp>
-            <stringProp name="BeanShellSampler.filename"></stringProp>
-            <stringProp name="BeanShellSampler.parameters"></stringProp>
-            <boolProp name="BeanShellSampler.resetInterpreter">false</boolProp>
-          </BeanShellSampler>
           <hashTree/>
         </hashTree>
       </hashTree>

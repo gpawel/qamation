@@ -26,39 +26,39 @@ return testPlanFileDir;
         </collectionProp>
       </Arguments>
       <hashTree/>
-      <org.qamation.jmeter.data.provider.config.ExcelDataConfig guiclass="TestBeanGUI" testclass="org.qamation.jmeter.data.provider.config.ExcelDataConfig" testname="Excel Data Provider Config Element" enabled="true">
-        <stringProp name="filename">${PATH}/Excel_Data.xlsx</stringProp>
+      <org.qamation.jmeter.data.provider.config.ExcelDataConfig guiclass="TestBeanGUI" testclass="org.qamation.jmeter.data.provider.config.ExcelDataConfig" testname="Excel Data Provider Config For All" enabled="true">
+        <stringProp name="filename">${PATH}/Excel_Data_All.xlsx</stringProp>
         <stringProp name="dataProviderImplClassName">org.qamation.data.provider.DataProviderExcelAdapter</stringProp>
         <boolProp name="resetAtEOF">true</boolProp>
         <stringProp name="shareMode">shareMode.all</stringProp>
         <stringProp name="tabNumber">0</stringProp>
         <stringProp name="fieldNames">all1,all2,all3</stringProp>
-        <boolProp name="isFirstLineHeader">false</boolProp>
+        <boolProp name="isFirstLineHeader">true</boolProp>
       </org.qamation.jmeter.data.provider.config.ExcelDataConfig>
       <hashTree/>
-      <org.qamation.jmeter.data.provider.config.ExcelDataConfig guiclass="TestBeanGUI" testclass="org.qamation.jmeter.data.provider.config.ExcelDataConfig" testname="ExcelDataConfig" enabled="true">
-        <stringProp name="filename">${PATH}/Excel_Data.xlsx</stringProp>
+      <org.qamation.jmeter.data.provider.config.ExcelDataConfig guiclass="TestBeanGUI" testclass="org.qamation.jmeter.data.provider.config.ExcelDataConfig" testname="Excel Data Provider Config For Group" enabled="true">
+        <stringProp name="filename">${PATH}/Excel_Data_Group.xlsx</stringProp>
         <stringProp name="dataProviderImplClassName">org.qamation.data.provider.DataProviderExcelAdapter</stringProp>
-        <boolProp name="resetAtEOF">false</boolProp>
+        <boolProp name="resetAtEOF">true</boolProp>
         <boolProp name="resetAtTestStart">true</boolProp>
         <stringProp name="shareMode">shareMode.group</stringProp>
         <stringProp name="tabNumber">0</stringProp>
-        <boolProp name="isFirstLineHeader">false</boolProp>
+        <boolProp name="isFirstLineHeader">true</boolProp>
         <stringProp name="fieldNames">gr1,gr2,gr3</stringProp>
       </org.qamation.jmeter.data.provider.config.ExcelDataConfig>
       <hashTree/>
-      <org.qamation.jmeter.data.provider.config.ExcelDataConfig guiclass="TestBeanGUI" testclass="org.qamation.jmeter.data.provider.config.ExcelDataConfig" testname="ExcelDataConfig" enabled="true">
-        <stringProp name="filename">${PATH}/Excel_Data.xlsx</stringProp>
+      <org.qamation.jmeter.data.provider.config.ExcelDataConfig guiclass="TestBeanGUI" testclass="org.qamation.jmeter.data.provider.config.ExcelDataConfig" testname="Excel Data Provider Config For a Thread" enabled="true">
+        <stringProp name="filename">${PATH}/Excel_Data_Thread.xlsx</stringProp>
         <stringProp name="dataProviderImplClassName">org.qamation.data.provider.DataProviderExcelAdapter</stringProp>
         <boolProp name="resetAtEOF">true</boolProp>
         <boolProp name="resetAtTestStart">true</boolProp>
         <stringProp name="shareMode">shareMode.thread</stringProp>
         <stringProp name="tabNumber">0</stringProp>
-        <boolProp name="isFirstLineHeader">false</boolProp>
+        <boolProp name="isFirstLineHeader">true</boolProp>
         <stringProp name="fieldNames">th1,th2,th3</stringProp>
       </org.qamation.jmeter.data.provider.config.ExcelDataConfig>
       <hashTree/>
-      <ResultCollector guiclass="ViewResultsFullVisualizer" testclass="ResultCollector" testname="View Results Tree" enabled="true">
+      <ResultCollector guiclass="ViewResultsFullVisualizer" testclass="ResultCollector" testname="VIEW RESULTS" enabled="true">
         <boolProp name="ResultCollector.error_logging">false</boolProp>
         <objProp>
           <name>saveConfig</name>
