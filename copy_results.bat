@@ -1,7 +1,7 @@
 rem echo off
 call set_root.bat
 @ECHO %ROOT%
-set TARGET=%ROOT%\Jmeter\lib\ext
+
 set ARCH=%ROOT%\Tests\REQUIRED_FILES\for_jmeter_lib_ext
 call del /Q .\build\*.*
 call copy /y .\data-provider\target\*.jar build

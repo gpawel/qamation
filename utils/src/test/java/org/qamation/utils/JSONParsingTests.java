@@ -67,7 +67,11 @@ public class JSONParsingTests {
 	@After
 	public void tearDown() {}
 	
-	
+	@Test
+	public void findNodeByPath() {
+		JsonNode n = jsonUtils.findNode("/filterResult/1/facilityId");
+		printFoundResult(n);
+	}
 	
 	@Test
 	public void iterateThroughJson() {
@@ -161,21 +165,32 @@ public class JSONParsingTests {
 		for (JsonNode n : result) {
 			printFoundResult(n);
 		}
-		
 	}
-	
+
+	@Test
+	public void replaceValueInPosition() {
+		String fieldName = "facilityId";
+		String oldValue = "1";
+		String newValue = "970";
+		int position = 2;
+		String newJson = jsonUtils.replaceFieldValueInPosition(fieldName,oldValue,newValue,position);
+		JSONUtils u = new JSONUtils(newJson);
+		printFoundResult(u.getRoot());
+
+	}
+
 	@Test
 	public void findParentNodeByPath() {
 		findAndPrint("/filterResult/2");
 		findAndPrint("/vector/1");
 		findAndPrint("/vector");
 		findAndPrint("/filterResult/2/locationCode");
-		findAndPrint("/filterResult/0/locationCode");
+		findAndPrint("/filterResult/1/locationCode");
 	}
 
 	private void findAndPrint(String path) {
 		JsonNode result = jsonUtils.findParentNodeByPath(path);
-		printFoundResult(result);
+		printFoundResult(path, result);
 	}
 
 	@Test
@@ -282,6 +297,12 @@ public class JSONParsingTests {
 		nodeToString(n);
 		System.out.println(">");
 		System.out.println();
+	}
+
+	private void printFoundResult(String path, JsonNode n) {
+		System.out.println();
+		System.out.print("Path: "+path);
+		printFoundResult(n);
 	}
 
 	private void nodeToString(JsonNode node) {

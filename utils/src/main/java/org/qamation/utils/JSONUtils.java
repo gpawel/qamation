@@ -5,6 +5,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map.Entry;
 
+import com.fasterxml.jackson.core.JsonPointer;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -40,7 +41,12 @@ public class JSONUtils {
 			}
 		}
 	}
-	
+
+	public JsonNode findNode(String path) {
+	    JsonPointer pointer = JsonPointer.compile(path);
+        return root.at(pointer);
+    }
+
 	public String replaceFieldValueInAllNodes(String fieldName, String oldValue, String newValue) {
 		List<JsonNode> parents = root.findParents(fieldName);
 		for (JsonNode parentNode : parents) {
@@ -72,6 +78,13 @@ public class JSONUtils {
 	public String replaceFieldValueInFirst(String fieldName, String oldValue, String newValue) {
 		List<JsonNode> parents = root.findParents(fieldName);
 		if (parents.size()>0) replaceFieldValueInNode(parents.get(0), fieldName, oldValue, newValue);
+		else throw new RuntimeException("replaceFieldValueInFirst expectes at least one node with field name: "+fieldName+" to have value:"+oldValue);
+		return nodeToString(root);
+	}
+
+	public String replaceFieldValueInPosition(String fieldName, String oldValue, String newValue, int position) {
+		List<JsonNode> parents = root.findParents(fieldName);
+		if (parents.size()>0) replaceFieldValueInNode(parents.get(position), fieldName, oldValue, newValue);
 		else throw new RuntimeException("replaceFieldValueInFirst expectes at least one node with field name: "+fieldName+" to have value:"+oldValue);
 		return nodeToString(root);
 	}
