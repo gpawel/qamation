@@ -36,7 +36,7 @@ public class JSONParsingTests {
 			 +" }, {"
 			 +"   \"facilityId\" : 1,"
 			 +"   \"locationUseCode\" : \"1\","
-			 +"   \"cartNumber\" : null,"
+			 +"   \"cartNumber\" : 666,"
 			 +"   \"locationCode\" : \"001R03\","
 			 +"   \"locationDescription\" : \"Auto Accessories\""
 			 +" }"
@@ -70,8 +70,21 @@ public class JSONParsingTests {
 	@Test
 	public void findNodeByPath() {
 		JsonNode n = jsonUtils.findNode("/filterResult/1/facilityId");
+		//String value = jsonUtils.getFieldValueFromNode(n,"facilityID");
+		Assert.assertEquals("1",n.asText());
+		n = jsonUtils.findNode("/filterResult");
 		printFoundResult(n);
+		n = jsonUtils.findNode("/filterResult/1");
+		printFoundResult(n);
+		n = jsonUtils.findNode("/vector");
+		printFoundResult(n);
+		n = jsonUtils.findNode("/vector/1");
+		printFoundResult(n);
+		Assert.assertEquals("2",n.asText());
+
 	}
+
+
 	
 	@Test
 	public void iterateThroughJson() {
@@ -173,7 +186,7 @@ public class JSONParsingTests {
 		String oldValue = "1";
 		String newValue = "970";
 		int position = 2;
-		String newJson = jsonUtils.replaceFieldValueInPosition(fieldName,oldValue,newValue,position);
+		String newJson = jsonUtils.replaceFieldValueAtIndex(fieldName,oldValue,newValue,position);
 		JSONUtils u = new JSONUtils(newJson);
 		printFoundResult(u.getRoot());
 
@@ -188,10 +201,7 @@ public class JSONParsingTests {
 		findAndPrint("/filterResult/1/locationCode");
 	}
 
-	private void findAndPrint(String path) {
-		JsonNode result = jsonUtils.findParentNodeByPath(path);
-		printFoundResult(path, result);
-	}
+
 
 	@Test
 	public void insertIntoRoot() {
@@ -290,6 +300,24 @@ public class JSONParsingTests {
 		fieldValue = fieldValue.replace("\"","\\\"");
 		System.out.println(fieldValue);
 	}
+
+	@Test
+	public void replaceFieldValueInPath() {
+		String path = "/filterResult/0";
+		String fieldName = "cartNumber";
+		String newValue = "4111111111111111";
+		String result = jsonUtils.replaceValueInPath(path,fieldName,newValue);
+		System.out.println("result => "+result);
+
+		//Assert.assertEquals(true, result.contains(newValue));
+
+	}
+
+	private void findAndPrint(String path) {
+		JsonNode result = jsonUtils.findParentNodeByPath(path);
+		printFoundResult(path, result);
+	}
+
 
 	private void printFoundResult(JsonNode n) {
 		System.out.println();

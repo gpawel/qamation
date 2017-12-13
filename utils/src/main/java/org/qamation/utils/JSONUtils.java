@@ -20,6 +20,30 @@ public class JSONUtils {
 	private String PATH_DELIMETER = "/";
     private ObjectMapper mapper;
 
+
+    public static JsonNode findPath(String jsonInput, String path) {
+    	JSONUtils utils = new JSONUtils(jsonInput);
+    	return utils.findNode(path);
+	}
+
+	public static JsonNode insertStringFieldIntoNode(JsonNode node, String fieldName, String fieldValue) {
+		((ObjectNode)node).put(fieldName,fieldValue);
+		return node;
+	}
+
+	/**
+	 * Inserts a field with int value into provided JsonNode
+	 * @param node
+	 * @param fieldName
+	 * @param fieldValue
+	 * @return the node with inserted field
+	 */
+	public static JsonNode insertIntFieldIntoNode(JsonNode node,String fieldName, int fieldValue) {
+		((ObjectNode)node).put(fieldName,fieldValue);
+		return node;
+	}
+
+
 	public JSONUtils(String jsonInp) {
 		this.jsonInput = jsonInp;
 		root = getRoot();
@@ -42,6 +66,17 @@ public class JSONUtils {
 		}
 	}
 
+	/**
+	 * For example the path is /a/b/1/c and returned value
+	 * stored in variable node.
+	 * If c is a string value in array b then in order to access it
+	 * use node.asText() function.
+	 * If c is an object then use node.get(String fieldName) to dig
+	 * deeper into the c node.
+	 *
+	 * @param  path
+	 * @return JsonNode
+	 */
 	public JsonNode findNode(String path) {
 	    JsonPointer pointer = JsonPointer.compile(path);
         return root.at(pointer);
@@ -54,43 +89,99 @@ public class JSONUtils {
 		}
 		return nodeToString(root);
 	}
-	
+
+	/**
+	 * Inserts a field with string value into provided JsonNode
+	 * @param node
+	 * @param fieldName
+	 * @param fieldValue
+	 * @return the node with inserted field
+	 */
+
 	public String insertIntoNode(JsonNode node, String fieldName, String fieldValue) {
 		((ObjectNode) node).put(fieldName,fieldValue);
 		return nodeToString(root);
 	}
-	
-	public String insertIntoNode(JsonNode node, String fieldName, int value) {
-		((ObjectNode) node).put(fieldName, value);
-		return nodeToString(root);
-	}
-	
-	public String insertIntoNode(JsonNode node, String fieldName, double value) {
-		((ObjectNode) node).put(fieldName, value);
+
+	/**
+	 * Inserts a field with int value into provided JsonNode
+	 * @param node
+	 * @param fieldName
+	 * @param fieldValue
+	 * @return the node with inserted field
+	 */
+
+	public String insertIntoNode(JsonNode node, String fieldName, int fieldValue) {
+		((ObjectNode) node).put(fieldName, fieldValue);
 		return nodeToString(root);
 	}
 
+	/**
+	 * Inserts a field with double value into provided JsonNode
+	 * @param node
+	 * @param fieldName
+	 * @param fieldValue
+	 * @return the node with inserted field
+	 */
+
+	public String insertIntoNode(JsonNode node, String fieldName, double fieldValue) {
+		((ObjectNode) node).put(fieldName, fieldValue);
+		return nodeToString(root);
+	}
+
+	/**
+	 * Inserts a JsonNode into another JsonNode
+	 * @param parent node
+	 * @param fieldName
+	 * @param child node
+	 * @return the updated json.
+	 */
 	public String insertNodeIntoNode (JsonNode parent, String fieldName, JsonNode child) {
 		((ObjectNode)parent).set(fieldName,child);
 		return nodeToString(root);
 	}
-	
+
+	/**
+	 * First it searches all nodes that have fieldName with oldValue.
+	 * Then it replaces oldValue with newValue in the first found node.
+	 * @param fieldName
+	 * @param oldValue
+	 * @param newValue
+	 * @return updated jsonInput
+	 */
 	public String replaceFieldValueInFirst(String fieldName, String oldValue, String newValue) {
 		List<JsonNode> parents = root.findParents(fieldName);
 		if (parents.size()>0) replaceFieldValueInNode(parents.get(0), fieldName, oldValue, newValue);
 		else throw new RuntimeException("replaceFieldValueInFirst expectes at least one node with field name: "+fieldName+" to have value:"+oldValue);
 		return nodeToString(root);
 	}
-
-	public String replaceFieldValueInPosition(String fieldName, String oldValue, String newValue, int position) {
+	/**
+	 * First it searches all nodes that have fieldName with oldValue.
+	 * Then it replaces oldValue with newValue in the node at index.
+	 * Note, if you provided index <= found list size, then RuntimeException witll be
+	 * thrown with appropriate message.
+	 * @param fieldName
+	 * @param oldValue
+	 * @param newValue
+	 * @return updated jsonInput
+	 */
+	public String replaceFieldValueAtIndex(String fieldName, String oldValue, String newValue, int index) {
 		List<JsonNode> parents = root.findParents(fieldName);
-		if (parents.size()>0) replaceFieldValueInNode(parents.get(position), fieldName, oldValue, newValue);
+		if (parents.size()>index) replaceFieldValueInNode(parents.get(index), fieldName, oldValue, newValue);
 		else throw new RuntimeException("replaceFieldValueInFirst expectes at least one node with field name: "+fieldName+" to have value:"+oldValue);
 		return nodeToString(root);
 	}
 
-	//for example in path /a/b/c c as a last element points to an object's  field
+	/**
+	 * The last element of the path must point to a field with String value.
+	 *
+	 * @param path
+	 * @param oldValue
+	 * @param newValue
+	 * @return the updated json.
+	 */
 	public String replaceFieldValueInPath(String path, String oldValue, String newValue) {
+		JsonNode node = findNode(path);
 		String[] pathTokens = splitPathIntoTokens(path);
 		if (pathTokens.length==0) throw new RuntimeException("replaceFieldValueInPath expects the path "+path+" to have at least one token.");
 		JsonNode parentNode = findParentNodeByPath(pathTokens);
@@ -100,6 +191,14 @@ public class JSONUtils {
 			return nodeToString(root);
 		}
 		throw new RuntimeException("Replacing value is supported in object nodes only. Array support comes shortly.");
+	}
+
+	public String replaceValueInPath(String path, String fieldName, String fieldValue) {
+		JsonNode node = findNode(path);
+		if (node.has(fieldName)) {
+			((ObjectNode)node).put(fieldName, fieldValue);
+		}
+		return nodeToString(root);
 	}
 	
 	
@@ -193,6 +292,7 @@ public class JSONUtils {
             case NUMBER: {return numberNodeToString(node);}
             default: return unknownNodeTypeToString(node);
         }
+
     }
 
     private String unknownNodeTypeToString(JsonNode el) {
