@@ -45,6 +45,18 @@ public class JSONParsingTests {
 			 +" \"fcpoStatusEffDateCorp\" : \"09/09/12\","
 			 +" \"date\" : \"2016-01-21\""
 			 +"}";
+
+	final private String jsonArray = "["
+			+"{"
+			+"\"id\":123,"
+			+" \"name\":\"GGGGg\""
+			+"},"
+			+"{"
+			+"\"id\":663,"
+			+" \"name\":\"dfghdfhg\""
+			+"}"
+			+"]";
+
 	private JsonNode root;
 	private Map<String,String> jsonMap;
 	private JSONUtils jsonUtils;
@@ -99,7 +111,6 @@ public class JSONParsingTests {
 		}
 	}
 	
-	
 	@Test
 	public void findNodesWithName() {
 		List<JsonNode> result = root.findValues("cartNumber");
@@ -144,23 +155,7 @@ public class JSONParsingTests {
 	}
 	
 	@Test
-	public void replaceFieldValueByPath() {
-		String path = "/filterResult/2/cartNumber";
-		String result = jsonUtils.replaceFieldValueInPath(path, "null", "321");
-		System.out.println(result);
-		String path2 = "/cartNumber";
-		String result2 = jsonUtils.replaceFieldValueInPath(path2, "null", "888");
-		System.out.println(result2);
-
-		String path3 = "/editMode";
-		String oldFieldValue3 = "false";
-		String newValue3 = "true";
-		String result3 = jsonUtils.replaceFieldValueInPath(path3,oldFieldValue3,newValue3);
-		System.out.println(result3);
-	}
-
-	@Test
-	public void replaceFieldVlaueInNode() {
+	public void replaceFieldValueInNode() {
 		String path3 = "/filterResult/cartNumber";
 		String fieldName3 = "cartNumber";
 		String oldFieldValue3 = "null";
@@ -206,7 +201,7 @@ public class JSONParsingTests {
 	@Test
 	public void insertIntoRoot() {
 		JsonNode  root = jsonUtils.getRoot();
-		String result1 = jsonUtils.insertIntoNode(root, "newField", "New Value");
+		String result1 = jsonUtils.insertStringFieldIntoNode(root, "newField", "New Value");
 		System.out.println(result1);
 		
 	}
@@ -215,9 +210,9 @@ public class JSONParsingTests {
 	public void insertIntoParentNode() {
 		String path = "/filterResult"; //\"locationCode\" : \"001R03\","
 		JsonNode parent = jsonUtils.findParentNodeByPath(path);
-		jsonUtils.insertIntoNode(parent, "string field name", "string value");
-		jsonUtils.insertIntoNode(parent,"fload field name", 2.054);
-		String str = jsonUtils.insertIntoNode(parent, "int field name", 5);
+		jsonUtils.insertStringFieldIntoNode(parent, "string field name", "string value");
+		jsonUtils.insertDoubleFieldIntoNode(parent,"fload field name", 2.054);
+		String str = jsonUtils.insertIntFieldIntoNode(parent, "int field name", 5);
 		System.out.println(str);
 	}
 	@Test
@@ -225,9 +220,9 @@ public class JSONParsingTests {
 		String path = "/filterResult/locationCode"; //\"locationCode\" : \"001R03\","
 		List<JsonNode> parents = jsonUtils.findParentsByPathWithValue(path, "001R03");
 		for (JsonNode parent : parents) {
-			jsonUtils.insertIntoNode(parent, "string field name", "string value");
-			jsonUtils.insertIntoNode(parent,"fload field name", 2.054);
-			String str = jsonUtils.insertIntoNode(parent, "int field name", 5);
+			jsonUtils.insertStringFieldIntoNode(parent, "string field name", "string value");
+			jsonUtils.insertDoubleFieldIntoNode(parent,"fload field name", 2.054);
+			String str = jsonUtils.insertIntFieldIntoNode(parent, "int field name", 5);
 			System.out.println(str);
 		}
 	}
@@ -306,10 +301,27 @@ public class JSONParsingTests {
 		String path = "/filterResult/0";
 		String fieldName = "cartNumber";
 		String newValue = "4111111111111111";
-		String result = jsonUtils.replaceValueInPath(path,fieldName,newValue);
+		String result = jsonUtils.setStringFieldValueInPath(path,fieldName,newValue);
 		System.out.println("result => "+result);
 
 		//Assert.assertEquals(true, result.contains(newValue));
+
+	}
+
+	@Test
+	public void replaceValueInArray() {
+		JSONUtils utils = new JSONUtils(jsonArray);
+		String path = "/0";
+		String fieldName = "id";
+		int fieldValue = 457456;
+		String result =  utils.setIntFieldValueInPath(path,fieldName,fieldValue);
+		Assert.assertTrue(result.contains("\"id\" : 457456"));
+	}
+
+	@Test
+	public void setValueInArray() {
+		JSONUtils utils = new JSONUtils(jsonArray);
+		String path = "/2";
 
 	}
 

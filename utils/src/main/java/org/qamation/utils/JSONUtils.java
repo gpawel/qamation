@@ -10,6 +10,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
+import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.JsonNodeType;
 import com.fasterxml.jackson.databind.node.NullNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
@@ -26,11 +27,6 @@ public class JSONUtils {
     	return utils.findNode(path);
 	}
 
-	public static JsonNode insertStringFieldIntoNode(JsonNode node, String fieldName, String fieldValue) {
-		((ObjectNode)node).put(fieldName,fieldValue);
-		return node;
-	}
-
 	/**
 	 * Inserts a field with int value into provided JsonNode
 	 * @param node
@@ -38,11 +34,10 @@ public class JSONUtils {
 	 * @param fieldValue
 	 * @return the node with inserted field
 	 */
-	public static JsonNode insertIntFieldIntoNode(JsonNode node,String fieldName, int fieldValue) {
+	public String insertIntFieldIntoNode(JsonNode node,String fieldName, int fieldValue) {
 		((ObjectNode)node).put(fieldName,fieldValue);
-		return node;
+		return nodeToString(root);
 	}
-
 
 	public JSONUtils(String jsonInp) {
 		this.jsonInput = jsonInp;
@@ -90,6 +85,34 @@ public class JSONUtils {
 		return nodeToString(root);
 	}
 
+	public String setFieldValueInAllNodes(String fieldName, String newValue) {
+		List<JsonNode> parents = root.findParents(fieldName);
+		for (JsonNode parentNode : parents) {
+
+		}
+		return nodeToString(root);
+	}
+
+    public String setStringFieldValueInNode(JsonNode node, String fieldName, String fieldValue) {
+	    ((ObjectNode)node).put(fieldName,fieldValue);
+	    return nodeToString(root);
+    }
+
+    public String setIntFieldValueInNode(JsonNode node, String fieldName, int fieldValue) {
+        ((ObjectNode)node).put(fieldName,fieldValue);
+        return nodeToString(root);
+    }
+
+	public String setLongFieldValueInNode(JsonNode node, String fieldName, long fieldValue) {
+		((ObjectNode)node).put(fieldName,fieldValue);
+		return nodeToString(root);
+	}
+
+    public String setDoubleFieldValueInNode(JsonNode node, String fieldName, double fieldValue) {
+        ((ObjectNode)node).put(fieldName,fieldValue);
+        return nodeToString(root);
+    }
+
 	/**
 	 * Inserts a field with string value into provided JsonNode
 	 * @param node
@@ -98,23 +121,11 @@ public class JSONUtils {
 	 * @return the node with inserted field
 	 */
 
-	public String insertIntoNode(JsonNode node, String fieldName, String fieldValue) {
+	public String insertStringFieldIntoNode(JsonNode node, String fieldName, String fieldValue) {
 		((ObjectNode) node).put(fieldName,fieldValue);
 		return nodeToString(root);
 	}
 
-	/**
-	 * Inserts a field with int value into provided JsonNode
-	 * @param node
-	 * @param fieldName
-	 * @param fieldValue
-	 * @return the node with inserted field
-	 */
-
-	public String insertIntoNode(JsonNode node, String fieldName, int fieldValue) {
-		((ObjectNode) node).put(fieldName, fieldValue);
-		return nodeToString(root);
-	}
 
 	/**
 	 * Inserts a field with double value into provided JsonNode
@@ -124,7 +135,7 @@ public class JSONUtils {
 	 * @return the node with inserted field
 	 */
 
-	public String insertIntoNode(JsonNode node, String fieldName, double fieldValue) {
+	public String insertDoubleFieldIntoNode(JsonNode node, String fieldName, double fieldValue) {
 		((ObjectNode) node).put(fieldName, fieldValue);
 		return nodeToString(root);
 	}
@@ -172,28 +183,28 @@ public class JSONUtils {
 		return nodeToString(root);
 	}
 
-	/**
-	 * The last element of the path must point to a field with String value.
-	 *
-	 * @param path
-	 * @param oldValue
-	 * @param newValue
-	 * @return the updated json.
-	 */
-	public String replaceFieldValueInPath(String path, String oldValue, String newValue) {
+
+	public String setStringFieldValueInPath(String path, String fieldName, String fieldValue) {
 		JsonNode node = findNode(path);
-		String[] pathTokens = splitPathIntoTokens(path);
-		if (pathTokens.length==0) throw new RuntimeException("replaceFieldValueInPath expects the path "+path+" to have at least one token.");
-		JsonNode parentNode = findParentNodeByPath(pathTokens);
-		if (parentNode.isObject()) {
-			String fieldName = pathTokens[pathTokens.length-1];
-			replaceFieldValueInNode(parentNode, fieldName, oldValue, newValue);
-			return nodeToString(root);
+		if (node.has(fieldName)) {
+			((ObjectNode)node).put(fieldName, fieldValue);
 		}
-		throw new RuntimeException("Replacing value is supported in object nodes only. Array support comes shortly.");
+		return nodeToString(root);
 	}
 
-	public String replaceValueInPath(String path, String fieldName, String fieldValue) {
+
+
+
+
+	public String setIntFieldValueInPath(String path, String fieldName, int fieldValue) {
+		JsonNode node = findNode(path);
+		if (node.has(fieldName)) {
+			((ObjectNode)node).put(fieldName, fieldValue);
+		}
+		return nodeToString(root);
+	}
+
+	public String setDoubleFieldValueInPath(String path, String fieldName, double fieldValue) {
 		JsonNode node = findNode(path);
 		if (node.has(fieldName)) {
 			((ObjectNode)node).put(fieldName, fieldValue);
@@ -340,7 +351,7 @@ public class JSONUtils {
 	private String[] splitPathIntoTokens(String path) {
 		return path.split(PATH_DELIMETER);
 	}
-	
+
 	//remember, last token in a path is a fieldName.
 	private String getFieldNameFromPath(String path) {
 		String[] tokens = splitPathIntoTokens(path); 
@@ -404,5 +415,7 @@ public class JSONUtils {
 			default: return false;
 		}
 	}
+
+
 
 }
