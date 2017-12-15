@@ -10,4 +10,6 @@ public interface DataProvider extends Iterator<String[]> {
     String[] getFieldNames();
     String[] getLine(int lineIndex);
     void reset();
+    void reload();
+    void close();
 }

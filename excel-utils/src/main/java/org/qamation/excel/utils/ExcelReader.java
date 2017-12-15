@@ -14,6 +14,7 @@ public class ExcelReader {
     private Workbook workBook;
     private int activeSheetIndex;
     private String fileName;
+    private String originalFileName;
     private Sheet sheet;
     private FormulaEvaluator evaluator;
     private String[] fieldNames;
@@ -21,10 +22,12 @@ public class ExcelReader {
     private File theFile;
     private int iteratorInitPosition;
 
+
     public ExcelReader(String fileName, int sheetIndex) {
         init(fileName, sheetIndex);
         this.iteratorInitPosition = 1;
         this.fieldNames = readFirstLine();
+        this.originalFileName = fileName;
     }
 
     public ExcelReader(String fileName, int sheetIndex, String[] headers) {
@@ -229,5 +232,7 @@ public class ExcelReader {
         }, "Shutdown-thread"));
     }
 
-
+    public String getOriginalFileName() {
+        return originalFileName;
+    }
 }

@@ -22,23 +22,6 @@ public class JSONUtils {
     private ObjectMapper mapper;
 
 
-    public static JsonNode findPath(String jsonInput, String path) {
-    	JSONUtils utils = new JSONUtils(jsonInput);
-    	return utils.findNode(path);
-	}
-
-	/**
-	 * Inserts a field with int value into provided JsonNode
-	 * @param node
-	 * @param fieldName
-	 * @param fieldValue
-	 * @return the node with inserted field
-	 */
-	public String insertIntFieldIntoNode(JsonNode node,String fieldName, int fieldValue) {
-		((ObjectNode)node).put(fieldName,fieldValue);
-		return nodeToString(root);
-	}
-
 	public JSONUtils(String jsonInp) {
 		this.jsonInput = jsonInp;
 		root = getRoot();
@@ -90,52 +73,8 @@ public class JSONUtils {
 	}
 
 
-    public String setStringFieldValueInNode(JsonNode node, String fieldName, String fieldValue) {
-	    ((ObjectNode)node).put(fieldName,fieldValue);
-	    return nodeToString(root);
-    }
-
-    public String setIntFieldValueInNode(JsonNode node, String fieldName, int fieldValue) {
-        ((ObjectNode)node).put(fieldName,fieldValue);
-        return nodeToString(root);
-    }
-
-	public String setLongFieldValueInNode(JsonNode node, String fieldName, long fieldValue) {
-		((ObjectNode)node).put(fieldName,fieldValue);
-		return nodeToString(root);
-	}
-
-    public String setDoubleFieldValueInNode(JsonNode node, String fieldName, double fieldValue) {
-        ((ObjectNode)node).put(fieldName,fieldValue);
-        return nodeToString(root);
-    }
-
-	/**
-	 * Inserts a field with string value into provided JsonNode
-	 * @param node
-	 * @param fieldName
-	 * @param fieldValue
-	 * @return the node with inserted field
-	 */
-
-	public String insertStringFieldIntoNode(JsonNode node, String fieldName, String fieldValue) {
-		((ObjectNode) node).put(fieldName,fieldValue);
-		return nodeToString(root);
-	}
 
 
-	/**
-	 * Inserts a field with double value into provided JsonNode
-	 * @param node
-	 * @param fieldName
-	 * @param fieldValue
-	 * @return the node with inserted field
-	 */
-
-	public String insertDoubleFieldIntoNode(JsonNode node, String fieldName, double fieldValue) {
-		((ObjectNode) node).put(fieldName, fieldValue);
-		return nodeToString(root);
-	}
 
 	/**
 	 * Inserts a JsonNode into another JsonNode
@@ -148,72 +87,113 @@ public class JSONUtils {
 		((ObjectNode)parent).set(fieldName,child);
 		return nodeToString(root);
 	}
-
-	/**
-	 * First it searches all nodes that have fieldName with oldValue.
-	 * Then it replaces oldValue with newValue in the first found node.
-	 * @param fieldName
-	 * @param oldValue
-	 * @param newValue
-	 * @return updated jsonInput
-	 */
-	public String replaceFieldValueInFirst(String fieldName, String oldValue, String newValue) {
-		List<JsonNode> parents = root.findParents(fieldName);
-		if (parents.size()>0) replaceFieldValueInNode(parents.get(0), fieldName, oldValue, newValue);
-		else throw new RuntimeException("replaceFieldValueInFirst expectes at least one node with field name: "+fieldName+" to have value:"+oldValue);
-		return nodeToString(root);
-	}
-	/**
-	 * First it searches all nodes that have fieldName with oldValue.
-	 * Then it replaces oldValue with newValue in the node at index.
-	 * Note, if you provided index <= found list size, then RuntimeException witll be
-	 * thrown with appropriate message.
-	 * @param fieldName
-	 * @param oldValue
-	 * @param newValue
-	 * @return updated jsonInput
-	 */
-	public String replaceFieldValueAtIndex(String fieldName, String oldValue, String newValue, int index) {
-		List<JsonNode> parents = root.findParents(fieldName);
-		if (parents.size()>index) replaceFieldValueInNode(parents.get(index), fieldName, oldValue, newValue);
-		else throw new RuntimeException("replaceFieldValueInFirst expectes at least one node with field name: "+fieldName+" to have value:"+oldValue);
-		return nodeToString(root);
-	}
-
 	public String setStringValueInArray(String pathToArray, int index, String value) {
-	    JsonNode node = findNode(pathToArray);
+	    ArrayNode arrayNode = prepareArrayNodeForInsert(pathToArray,index);
+		arrayNode.insert(index,value);
+		return nodeToString(root);
+	}
+
+    public String setStringValueInArray(ArrayNode arrayNode, int index, String value) {
+        arrayNode.insert(index,value);
+        return nodeToString(root);
     }
 
-
-	public String setStringFieldValueInPath(String path, String fieldName, String fieldValue) {
-		JsonNode node = findNode(path);
-		if (node.has(fieldName)) {
-			((ObjectNode)node).put(fieldName, fieldValue);
-		}
+	public String setIntValueInArray(String pathToArray, int index, int value) {
+		ArrayNode arrayNode = prepareArrayNodeForInsert(pathToArray,index);
+		arrayNode.insert(index,value);
 		return nodeToString(root);
 	}
 
+    public String setIntValueInArray(ArrayNode arrayNode, int index, int value) {
+        arrayNode.insert(index,value);
+        return nodeToString(root);
+    }
 
+	public String setDoubleValueInArray(String pathToArray, int index, double value) {
+		ArrayNode arrayNode = prepareArrayNodeForInsert(pathToArray,index);
+		arrayNode.insert(index,value);
+		return nodeToString(root);
+	}
+    public String setDoubleValueInArray(ArrayNode arrayNode, int index, double value) {
+        arrayNode.insert(index,value);
+        return nodeToString(root);
+    }
+	public String setBooleanValueInArray(String pathToArray, int index, boolean value) {
+		ArrayNode arrayNode = prepareArrayNodeForInsert(pathToArray,index);
+		arrayNode.insert(index,value);
+		return nodeToString(root);
+	}
+    public String setBooleanValueInArray(ArrayNode arrayNode, int index, boolean value) {
+        arrayNode.insert(index,value);
+        return nodeToString(root);
+    }
 
+    public ArrayNode prepareArrayNodeForInsert(String pathToArray, int index) {
+	    ArrayNode node = getArrayNodeByPath(pathToArray);
+        node.remove(index);
+        return node;
+	}
 
+	public ArrayNode getArrayNodeByPath(String pathToArray) {
+        JsonNode node = findNode(pathToArray);
+        if (node.isArray()) {
+            return (ArrayNode)node;
+        }
+        else throw new RuntimeException ("Path\n"+pathToArray+"\ndoes not point to Array element.");
 
-    public String setIntFieldValueInPath(String path, String fieldName, int fieldValue) {
-		JsonNode node = findNode(path);
-		if (node.has(fieldName)) {
-			((ObjectNode)node).put(fieldName, fieldValue);
-		}
+    }
+
+    public ObjectNode getObjectNodeByPath (String path) {
+        JsonNode node = findNode(path);
+        if (node.isObject()) {
+            return (ObjectNode)node;
+        }
+        throw new RuntimeException("Path\n"+path+"\n does not point to an object element.");
+    }
+
+	public String setStringFieldValueObject(String path, String fieldName, String fieldValue) {
+		ObjectNode node = getObjectNodeByPath(path);
+		node.put(fieldName, fieldValue);
 		return nodeToString(root);
 	}
 
-	public String setDoubleFieldValueInPath(String path, String fieldName, double fieldValue) {
-		JsonNode node = findNode(path);
-		if (node.has(fieldName)) {
-			((ObjectNode)node).put(fieldName, fieldValue);
-		}
-		return nodeToString(root);
-	}
-	
-	
+    public String setStringFieldValueObject(ObjectNode node, String fieldName, String fieldValue) {
+        node.put(fieldName, fieldValue);
+        return nodeToString(root);
+    }
+
+    public String setIntFieldValueObject(String path, String fieldName, int fieldValue) {
+        ObjectNode node = getObjectNodeByPath(path);
+        node.put(fieldName, fieldValue);
+        return nodeToString(root);
+    }
+
+    public String setIntFieldValueObject(ObjectNode node, String fieldName, int fieldValue) {
+        node.put(fieldName, fieldValue);
+        return nodeToString(root);
+    }
+
+    public String setDoubleFieldValueObject(String path, String fieldName, double fieldValue) {
+        ObjectNode node = getObjectNodeByPath(path);
+        node.put(fieldName, fieldValue);
+        return nodeToString(root);
+    }
+
+    public String setDoubleFieldValueObject(ObjectNode  node, String fieldName, double fieldValue) {
+        node.put(fieldName, fieldValue);
+        return nodeToString(root);
+    }
+
+    public String setBooleanFieldValueObject(String path, String fieldName, boolean fieldValue) {
+        ObjectNode node = getObjectNodeByPath(path);
+        node.put(fieldName, fieldValue);
+        return nodeToString(root);
+    }
+
+    public String setBooleanFieldValueObject(ObjectNode node, String fieldName, boolean fieldValue) {
+        node.put(fieldName, fieldValue);
+        return nodeToString(root);
+    }
 	
 	public List<JsonNode> findParentsByPathWithValue(String startPath, String fieldValue) {
 		String fieldName = getFieldNameFromPath(startPath);
