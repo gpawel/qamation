@@ -14,19 +14,20 @@ import org.slf4j.LoggerFactory;
 /**
  * Created by Pavel on 2017-05-19.
  */
-public class Storage<T extends DataProvider> implements TestStateListener {
+public class Storage<T extends DataProvider> {
 
     private static final Logger log = LoggerFactory.getLogger(Storage.class);
     private static Storage storage = null;
+    private static boolean shouldReload = true;
 
     public synchronized static Storage getStorage() {
         if (storage == null) {
             storage = new Storage();
-            StandardJMeterEngine.register(storage);
         }
         return storage;
     }
 
+// StandardJMeterEngine.register(storage);
 
     private ConcurrentHashMap<String, T> container = null;
 
@@ -43,7 +44,7 @@ public class Storage<T extends DataProvider> implements TestStateListener {
     }
 
     public synchronized T get(String key) {
-        return  container.get(key);
+        return container.get(key);
     }
 
     public synchronized void remove(String key) {
@@ -52,33 +53,21 @@ public class Storage<T extends DataProvider> implements TestStateListener {
         }
     }
 
-    public  Set<String> getKeys() {
+    public Set<String> getKeys() {
         return container.keySet();
     }
 
-    @Override
-    public void testStarted() {
-        if (container.isEmpty()) return;
-        Set<String> keys = getKeys();
-        for (String key: keys) {
-            T dataProvider = container.get(key);
-            dataProvider.reload();
+    public synchronized static void reload() {
+        if (shouldReload) {
+            log.info("\nRELOADING\n");
+            shouldReload = false;
         }
-
     }
 
-    @Override
-    public void testStarted(String s) {
-        testStarted();
+    public static void resetReload() {
+        if (!shouldReload) {
+            shouldReload = true;
+        }
     }
 
-    @Override
-    public void testEnded() {
-
-    }
-
-    @Override
-    public void testEnded(String s) {
-        testEnded();
-    }
 }

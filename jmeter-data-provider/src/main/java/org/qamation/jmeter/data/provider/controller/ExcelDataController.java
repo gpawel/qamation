@@ -4,17 +4,19 @@ import org.apache.jmeter.control.GenericController;
 import org.apache.jmeter.control.NextIsNullException;
 import org.apache.jmeter.samplers.Sampler;
 import org.apache.jmeter.testbeans.TestBean;
+import org.apache.jmeter.testelement.TestStateListener;
 import org.apache.jmeter.threads.JMeterContextService;
 import org.qamation.data.provider.DataProvider;
 import org.qamation.jmeter.data.provider.DataProviderSupport;
 import org.qamation.jmeter.data.provider.GuiData;
+import org.qamation.jmeter.data.provider.Storage;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 
 
 public class ExcelDataController extends GenericController
-        implements TestBean, GuiData {
+        implements TestBean, GuiData, TestStateListener {
 
     private static final Logger log = LoggerFactory.getLogger(ExcelDataController.class);
 
@@ -131,7 +133,7 @@ public class ExcelDataController extends GenericController
         }
         else {
             T dataProvider = getDataProvider();
-            dataProvider.reset();
+            dataProvider.reload();
             readDataLine();
         }
     }
@@ -148,4 +150,24 @@ public class ExcelDataController extends GenericController
         return provider;
     }
 
+
+    @Override
+    public void testStarted() {
+       Storage.reload();
+    }
+
+    @Override
+    public void testStarted(String s) {
+        Storage.reload();
+    }
+
+    @Override
+    public void testEnded() {
+        Storage.resetReload();
+    }
+
+    @Override
+    public void testEnded(String s) {
+        Storage.resetReload();
+    }
 }
