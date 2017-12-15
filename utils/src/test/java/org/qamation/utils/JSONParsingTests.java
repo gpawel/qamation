@@ -245,8 +245,8 @@ public class JSONParsingTests {
 
 	@Test
 	public void getFieldValueFromPath() {
-		String path = "/filterResult/2/locationCode";
-		String value = jsonUtils.getFieldValueFromPath(path);
+		String path = "/filterResult/1/locationCode";
+		String value = jsonUtils.getValueFromPath(path);
 		Assert.assertTrue("001R02".equals(value));
 	}
 
@@ -255,7 +255,30 @@ public class JSONParsingTests {
 		String path = "/filterResult/2/locationCode";
 		JsonNode node = jsonUtils.findParentNodeByPath(path);
 		String value = jsonUtils.getFieldValueFromNode(node,"locationCode");
-		Assert.assertTrue("001R02".equals(value));
+		Assert.assertTrue("001R03".equals(value));
+	}
+	@Test
+	public void getFieldValueFromArrayNode() {
+		String path = "/vector/1";
+		JsonNode node = jsonUtils.findNode(path);
+		String value = jsonUtils.nodeToString(node);
+		Assert.assertEquals("2",value);
+
+	}
+
+	@Test
+	public void getValueFromArray() {
+		String path = "/vector";
+		JsonNode node = jsonUtils.findNode(path);
+		String value = jsonUtils.getValueFromArray(node,2);
+		Assert.assertEquals("3",value);
+	}
+
+	@Test (expected = RuntimeException.class)
+	public void getValueFromArrayIndex() {
+		String path = "/vector";
+		JsonNode node = jsonUtils.findNode(path);
+		String value = jsonUtils.getValueFromArray(node,5);
 	}
 	
 	@Test

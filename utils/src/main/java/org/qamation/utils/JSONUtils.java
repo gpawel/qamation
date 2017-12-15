@@ -74,6 +74,10 @@ public class JSONUtils {
 	 */
 	public JsonNode findNode(String path) {
 	    JsonPointer pointer = JsonPointer.compile(path);
+        return findNode(pointer);
+    }
+
+    public JsonNode findNode(JsonPointer pointer) {
         return root.at(pointer);
     }
 
@@ -85,13 +89,6 @@ public class JSONUtils {
 		return nodeToString(root);
 	}
 
-	public String setFieldValueInAllNodes(String fieldName, String newValue) {
-		List<JsonNode> parents = root.findParents(fieldName);
-		for (JsonNode parentNode : parents) {
-
-		}
-		return nodeToString(root);
-	}
 
     public String setStringFieldValueInNode(JsonNode node, String fieldName, String fieldValue) {
 	    ((ObjectNode)node).put(fieldName,fieldValue);
@@ -183,6 +180,10 @@ public class JSONUtils {
 		return nodeToString(root);
 	}
 
+	public String setStringValueInArray(String pathToArray, int index, String value) {
+	    JsonNode node = findNode(pathToArray);
+    }
+
 
 	public String setStringFieldValueInPath(String path, String fieldName, String fieldValue) {
 		JsonNode node = findNode(path);
@@ -196,7 +197,7 @@ public class JSONUtils {
 
 
 
-	public String setIntFieldValueInPath(String path, String fieldName, int fieldValue) {
+    public String setIntFieldValueInPath(String path, String fieldName, int fieldValue) {
 		JsonNode node = findNode(path);
 		if (node.has(fieldName)) {
 			((ObjectNode)node).put(fieldName, fieldValue);
@@ -237,43 +238,6 @@ public class JSONUtils {
 		return nodeToString(root);
 	}
 
-	/*
-	Finds a node by a path.
-	A path always starts from /
-	A path always finishes with a file name.
-	Array elements numbering starts from 1.
-
-	For example, with json :
-	{
-	"paging" : null,
-    "positionToLocation" : null,
-	"cartNumber" : null,
-	"editMode" : false,
-	"filterResult" : [ {
-	    "facilityId" : 1,
-		"locationUseCode" : "1",
-	    "cartNumber" : 444,
-	    "locationCode" : "001R01",
-			 +"   \"locationDescription\" : \"Auto Accessories\""
-			 +" }, {"
-			 +"   \"facilityId\" : 1,"
-			 +"   \"locationUseCode\" : \"1\","
-			 +"   \"cartNumber\" : null,"
-			 +"   \"locationCode\" : \"001R02\","
-			 +"   \"locationDescription\" : \"Auto Accessories\""
-			 +" }, {"
-			 +"   \"facilityId\" : 1,"
-			 +"   \"locationUseCode\" : \"1\","
-			 +"   \"cartNumber\" : null,"
-			 +"   \"locationCode\" : \"001R03\","
-			 +"   \"locationDescription\" : \"Auto Accessories\""
-			 +" }"
-			 + "],"
-			 +" \"vector\" :[1,2,3],"
-			 +" \"fcpoStatusEffDateCorp\" : \"09/09/12\","
-			 +" \"date\" : \"2016-01-21\""
-			 +"}"
-	 */
 
 	public JsonNode findParentNodeByPath(String path) {
 		String [] tokens = splitPathIntoTokens(path);
@@ -282,14 +246,35 @@ public class JSONUtils {
 	}
 
 	public String getFieldValueFromNode(JsonNode node, String fieldName) {
-		return extractFieldValueFromNode(node,fieldName);
+		if (node.isObject()) {
+			if (node.has(fieldName)) {
+				JsonNode n = node.get(fieldName);
+				return getValueFromNode(n);
+			}
+			throw new RuntimeException("Given node does not have field "+fieldName);
+		}
+		throw new RuntimeException("Given node does not have fields.");
+
 	}
 
-	public String getFieldValueFromPath(String path) {
-		String fieldName = getFieldNameFromPath(path);
-		JsonNode node = findParentNodeByPath(path);
-		String value = extractFieldValueFromNode(node,fieldName);
-		return value;
+	public String getValueFromNode(JsonNode node) {
+		return nodeToString(node);
+	}
+
+	public String getValueFromArray(JsonNode array, int index) {
+	    if (array.isArray()) {
+            if (index>=array.size()) throw new RuntimeException("Provided index is outside of boundaries of provided array.");
+            JsonNode node = array.get(index);
+            if (node.isObject())
+                throw new RuntimeException("Provided index " + index + " points to an object node, not a primitive value");
+            return getValueFromNode(node);
+        }
+        throw new RuntimeException("Provided node is not array");
+	}
+
+	public String getValueFromPath(String path) {
+		JsonNode node = findNode(path);
+		return nodeToString(node);
 	}
 
 	public String nodeToString(JsonNode node) {
