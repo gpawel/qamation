@@ -1,25 +1,16 @@
 package org.qamation.jmeter.data.provider;
 
-import org.apache.jmeter.engine.StandardJMeterEngine;
-import org.apache.jmeter.testelement.TestStateListener;
-import org.apache.jmeter.testelement.ThreadListener;
-import org.apache.jmeter.testelement.property.JMeterProperty;
 import org.apache.jmeter.threads.JMeterContext;
-import org.apache.jmeter.threads.JMeterContextService;
-import org.apache.jmeter.threads.JMeterVariables;
 import org.apache.jorphan.util.JMeterError;
-import org.apache.jorphan.util.JMeterStopThreadException;
 import org.qamation.data.provider.DataProvider;
 import org.qamation.data.provider.DataProviderFactory;
 import org.slf4j.LoggerFactory;
-
-import java.util.Set;
 
 public abstract class DataProviderSupport  {
     private static final org.slf4j.Logger log = LoggerFactory.getLogger(DataProviderSupport.class);
 
     public synchronized  static <T extends DataProvider> T getDataProvider(String key, GuiData guiData) {
-        Storage storage = Storage.getStorage();
+        Storage storage = Storage.getStorage(guiData.getClassNameForStorage());
         T provider = (T) storage.get(key);
         if (provider == null) {
             provider = DataProviderSupport.callDataProviderFactory(guiData);

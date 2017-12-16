@@ -9,8 +9,6 @@ import org.apache.jmeter.testbeans.TestBean;
 import org.apache.jmeter.threads.JMeterContext;
 import org.apache.jmeter.threads.JMeterContextService;
 import org.apache.jorphan.util.JMeterError;
-import org.qamation.data.provider.DataProvider;
-import org.qamation.jmeter.data.provider.GuiData;
 import org.slf4j.LoggerFactory;
 
 
@@ -99,6 +97,11 @@ public class ExcelDataConfig extends ConfigTestElement
     @Override
     public boolean isFirstLineHeader() {
         return getIsFirstLineHeader();
+    }
+
+    @Override
+    public String getClassNameForStorage() {
+        return ExcelDataConfig.class.getCanonicalName();
     }
 
     public void setFieldNames(String fieldNames) {

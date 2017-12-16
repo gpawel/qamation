@@ -117,6 +117,11 @@ public class ExcelDataController extends GenericController
         return isFirstLineHeader;
     }
 
+    @Override
+    public String getClassNameForStorage() {
+        return ExcelDataController.class.getCanonicalName();
+    }
+
     private void initProperties() {
         filename = getPropertyAsString("filename");
         dataProviderImplClassName = getPropertyAsString("dataProviderImplClassName");
@@ -153,12 +158,12 @@ public class ExcelDataController extends GenericController
 
     @Override
     public void testStarted() {
-       Storage.reload();
+       Storage.reload(getClassNameForStorage());
     }
 
     @Override
     public void testStarted(String s) {
-        Storage.reload();
+        Storage.reload(getClassNameForStorage());
     }
 
     @Override

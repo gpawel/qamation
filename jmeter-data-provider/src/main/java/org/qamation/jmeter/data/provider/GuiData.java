@@ -11,4 +11,6 @@ public interface GuiData {
     String getFieldNames();
 
     boolean isFirstLineHeader();
+
+    String getClassNameForStorage();
 }
