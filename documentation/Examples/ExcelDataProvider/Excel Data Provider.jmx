@@ -131,7 +131,7 @@ return testPlanFileDir;
           <stringProp name="LoopController.loops">3</stringProp>
         </elementProp>
         <stringProp name="ThreadGroup.num_threads">3</stringProp>
-        <stringProp name="ThreadGroup.ramp_time">1</stringProp>
+        <stringProp name="ThreadGroup.ramp_time">3</stringProp>
         <longProp name="ThreadGroup.start_time">1509931443000</longProp>
         <longProp name="ThreadGroup.end_time">1509931443000</longProp>
         <boolProp name="ThreadGroup.scheduler">false</boolProp>

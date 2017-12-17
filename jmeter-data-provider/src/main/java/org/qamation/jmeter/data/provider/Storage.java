@@ -11,16 +11,18 @@ import java.util.Set;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.xml.crypto.Data;
+
 /**
  * Created by Pavel on 2017-05-19.
  */
-public class Storage<T extends DataProvider> {
+public class Storage <T extends DataProvider> {
 
     private static final Logger log = LoggerFactory.getLogger(Storage.class);
     private static Storage storage = null;
     private static ConcurrentHashMap<String,Storage> repository = new ConcurrentHashMap<String,Storage>();
     private static boolean shouldReload = true;
-
+    private ConcurrentHashMap <String, T> container;
 
 
     public synchronized static Storage getStorage(String clss) {
@@ -33,9 +35,9 @@ public class Storage<T extends DataProvider> {
     }
 
 // StandardJMeterEngine.register(storage);
-    private ConcurrentHashMap<String, T> container = null;
 
-    private Storage() {
+
+    private  Storage() {
         container = new ConcurrentHashMap<String, T>();
     }
 
@@ -63,16 +65,17 @@ public class Storage<T extends DataProvider> {
         return container.keySet();
     }
 
-    public synchronized static void reload(String clss) {
-        //Storage s = repository.get(clss);
-        // if (s == null) return;
-        log.info("\nRELOADING\n");
+    public synchronized static <T extends DataProvider> void reload(String clss) {
+        Storage strg = repository.get(clss);
+        if (strg == null) return;
+        if (strg.getKeys().isEmpty()) return;
+        Set<String> keys = strg.getKeys();
+        for (String key : keys) {
+             T dataProvider = (T) strg.get(key);
+             dataProvider.reload();
+        }
     }
 
-    public static void resetReload() {
-        /*if (!shouldReload) {
-            shouldReload = true;
-        }*/
-    }
+
 
 }

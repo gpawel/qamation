@@ -138,7 +138,7 @@ public class ExcelDataController extends GenericController
         }
         else {
             T dataProvider = getDataProvider();
-            dataProvider.reload();
+            dataProvider.reset();
             readDataLine();
         }
     }
@@ -168,11 +168,10 @@ public class ExcelDataController extends GenericController
 
     @Override
     public void testEnded() {
-        Storage.resetReload();
+
     }
 
     @Override
     public void testEnded(String s) {
-        Storage.resetReload();
     }
 }
