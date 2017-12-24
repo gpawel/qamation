@@ -4,12 +4,12 @@
 	<groupId>org.qamation</groupId>
     <artifactId>qamation</artifactId>
 	<packaging>pom</packaging>
-	<version>3.2.0</version>
+	<version>3.2.1</version>
 
     <url>http://maven.apache.org</url>
 
     <properties>
-        <qamation.version>3.2.0</qamation.version>
+        <qamation.version>3.2.1</qamation.version>
         <maven.jar.plugin.version>3.0.0</maven.jar.plugin.version>
         <httpcomponents.version>4.5.2</httpcomponents.version>
         <junit.version>4.12</junit.version>
@@ -28,7 +28,7 @@
         <maven.compiler.target>1.8</maven.compiler.target>
         <mq.jms>8.0.0.4</mq.jms>
         <utils.version>3.2.0</utils.version>
-        <data-provider.version>2.0.0</data-provider.version>
+        <data-provider.version>2.1.0</data-provider.version>
         <webdriver-utils.version>3.2.0</webdriver-utils.version>
         <web-page.version>3.2.0</web-page.version>
         <wmq-wrapper.version>3.2.0</wmq-wrapper.version>
@@ -40,7 +40,7 @@
         <jmeter-java-sampler-keyboard.version>3.2.0</jmeter-java-sampler-keyboard.version>
         <jmeter-java-sampler-wmq.version>3.2.0</jmeter-java-sampler-wmq.version>
         <jmeter-java-sampler-excel.version>3.2.0</jmeter-java-sampler-excel.version>
-        <jmeter-data-provider.version>2.0.0</jmeter-data-provider.version>
+        <jmeter-data-provider.version>2.1.0</jmeter-data-provider.version>
         <jmeter-test.version>1.0.0</jmeter-test.version>
         <slf4j.version>1.7.25</slf4j.version>
     </properties>
