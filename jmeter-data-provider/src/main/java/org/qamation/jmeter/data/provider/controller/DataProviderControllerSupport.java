@@ -16,7 +16,7 @@ public class DataProviderControllerSupport extends DataProviderSupport {
         continueLoop = false;
     }
 
-    public <T extends DataProvider> boolean next(GuiData guiData, JMeterContext context) {
+    public <T extends DataProvider> boolean readNextDataPortion(GuiData guiData, JMeterContext context) {
         String dataProviderName = getDataProviderName(guiData,context);
         T dataProvider = DataProviderSupport.getDataProvider(dataProviderName,guiData);
         putDataIntoJMeterContext(dataProvider, context);

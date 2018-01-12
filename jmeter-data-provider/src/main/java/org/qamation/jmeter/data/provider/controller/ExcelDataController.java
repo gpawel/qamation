@@ -133,7 +133,7 @@ public class ExcelDataController extends GenericController
 
     private <T extends DataProvider > void readDataLine() {
         DataProviderControllerSupport support = new DataProviderControllerSupport();
-        boolean hasMore =  support.next(this,JMeterContextService.getContext());
+        boolean hasMore =  support.readNextDataPortion(this,JMeterContextService.getContext());
         if (hasMore) {
         }
         else {
@@ -155,10 +155,9 @@ public class ExcelDataController extends GenericController
         return provider;
     }
 
-
     @Override
     public void testStarted() {
-       Storage.reload(getClassNameForStorage());
+        Storage.reload(getClassNameForStorage());
     }
 
     @Override

@@ -74,8 +74,11 @@ public class DataProviderExcelAdapter implements DataProvider {
     public void close() {
         try {
             excelReader.closeWorkBook();
+            iterator = null;
         } catch (Exception e) {
-            throw new RuntimeException("Unable to close DataProvider for "+excelReader.getFileName()+" with original file name " + excelReader.getOriginalFileName() + " failed.", e);
+            String message = "Unable to close DataProvider for "+excelReader.getFileName()+" with original file name " + excelReader.getOriginalFileName() + " failed.";
+            log.error(message);
+            throw new RuntimeException(message, e);
         }
     }
 
