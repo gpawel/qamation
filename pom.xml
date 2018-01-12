@@ -28,7 +28,7 @@
         <maven.compiler.target>1.8</maven.compiler.target>
         <mq.jms>8.0.0.4</mq.jms>
         <utils.version>3.2.0</utils.version>
-        <data-provider.version>2.1.0</data-provider.version>
+        <data-provider.version>2.1.1</data-provider.version>
         <webdriver-utils.version>3.2.0</webdriver-utils.version>
         <web-page.version>3.2.0</web-page.version>
         <wmq-wrapper.version>3.2.0</wmq-wrapper.version>
