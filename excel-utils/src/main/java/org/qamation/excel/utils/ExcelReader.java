@@ -110,7 +110,7 @@ public class ExcelReader {
                 workBook = null;
             }
         } catch (Exception ex) {
-            throw new RuntimeException("Unable to close workbook for file: " + theFile.getPath());
+            throw new RuntimeException("Unable to close workbook for file: " + theFile.getPath()+"\n"+ ex.getMessage());
         }
     }
 
