@@ -21,6 +21,7 @@ public class ExcelReader {
     private int rowSize;
     private File theFile;
     private int iteratorInitPosition;
+    private ShutDownHook hook;
 
 
     public ExcelReader(String fileName, int sheetIndex) {
@@ -97,6 +98,7 @@ public class ExcelReader {
     public void closeWorkBook() throws IOException {
         closeBook();
         deleteFile();
+        removeShutDownHook(hook);
     }
 
     public String[] getFieldNames() {
@@ -201,7 +203,8 @@ public class ExcelReader {
             this.sheet = workBook.getSheetAt(activeSheetIndex);
             this.rowSize = getHeaderLineSize();
             this.evaluator = workBook.getCreationHelper().createFormulaEvaluator();
-            addShutDownHook();
+            this.hook = new ShutDownHook(fileName);
+            addShutDownHook(hook);
         } catch (Exception ex) {
             throw new RuntimeException("Unable to create a workbook from " + fileName + "\n" + StringUtils.getStackTrace(ex));
         }
@@ -223,16 +226,27 @@ public class ExcelReader {
         return (givenSheetIndex < 0 || givenSheetIndex > workbookSize);
     }
 
-    private void addShutDownHook() {
-        Runtime.getRuntime().addShutdownHook(new Thread(new Runnable() {
-            public void run() {
-                closeBook();
-                deleteFile();
-            }
-        }, "Shutdown-thread"));
+    private void addShutDownHook(ShutDownHook hook) {
+        Runtime.getRuntime().addShutdownHook(hook);
+    }
+
+    private void removeShutDownHook(ShutDownHook hook) {
+        Runtime.getRuntime().removeShutdownHook(hook);
     }
 
     public String getOriginalFileName() {
         return originalFileName;
+    }
+
+    private class ShutDownHook extends Thread {
+        private String name;
+        ShutDownHook(String name) {
+            this.name = name;
+        }
+        @Override
+        public void run() {
+            closeBook();
+            deleteFile();
+        }
     }
 }
