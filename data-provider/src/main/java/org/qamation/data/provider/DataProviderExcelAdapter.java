@@ -73,6 +73,7 @@ public class DataProviderExcelAdapter implements DataProvider {
     @Override
     public void close() {
         try {
+            log.info("closing "+excelReader.getFileName()+" workbook");
             excelReader.closeWorkBook();
             iterator = null;
             excelReader = null;
