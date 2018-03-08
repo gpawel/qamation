@@ -1,7 +1,6 @@
 package org.qamation.excel.utils;
 
 
-
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.apache.poi.ss.usermodel.*;
 import org.qamation.utils.FileUtils;
@@ -12,7 +11,6 @@ import org.slf4j.LoggerFactory;
 import java.io.File;
 import java.io.IOException;
 import java.util.Iterator;
-
 
 
 public class ExcelReader {
@@ -45,20 +43,20 @@ public class ExcelReader {
     }
 
 
-
     public ExcelReader(String fileName) {
         this(fileName, 0);
     }
 
     public ExcelReader(String fileName, String[] headers) {
-        this(fileName,0,headers);
+        this(fileName, 0, headers);
     }
 
-    public Iterator <String[]> getIterator() {
+    public Iterator<String[]> getIterator() {
         final int initPosition = this.iteratorInitPosition;
         return new Iterator<String[]>() {
             int availableLines = getNumberOfLinesInActiveWorkSheet();
-            private int cursor= initPosition;
+            private int cursor = initPosition;
+
             @Override
             public boolean hasNext() {
                 if (cursor < availableLines) return true;
@@ -115,23 +113,19 @@ public class ExcelReader {
     private void closeBook() {
         try {
             if (workBook != null) {
-                System.out.println("Workbook is not null. Closing");
                 workBook.close();
                 workBook = null;
             }
-            else System.out.println("Workbook is null.");
         } catch (Exception ex) {
             ex.printStackTrace();
-            throw new RuntimeException("Unable to close workbook for file: " + theFile.getPath()+"\n"+ ex.getMessage());
+            throw new RuntimeException("Unable to close workbook for file: " + theFile.getPath() + "\n" + ex.getMessage());
         }
     }
 
     private void deleteFile() {
         if (theFile.exists()) {
-            System.out.println("   =====> Deleting file: "+theFile.getName());
             theFile.delete();
         }
-        else System.out.println("  ====>File "+theFile.getName()+" does not exists any more");
     }
 
     private String[] readFirstLine() {
@@ -249,24 +243,22 @@ public class ExcelReader {
     }
 
 
-
     public String getOriginalFileName() {
         return originalFileName;
     }
 
-    private  final class ShutDownHook extends Thread {
+    private final class ShutDownHook extends Thread {
         private ExcelReader reader;
+
         ShutDownHook(ExcelReader reader) {
             this.reader = reader;
         }
+
         @Override
         public void run() {
-            synchronized (LOCK) {
-                System.out.println("   =======>  Shutting down: " + reader.getFileName());
-                reader.closeBook();
-                reader.deleteFile();
-                reader = null;
-            }
+            reader.closeBook();
+            reader.deleteFile();
+            reader = null;
         }
     }
 }
