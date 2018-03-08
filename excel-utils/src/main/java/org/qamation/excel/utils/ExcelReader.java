@@ -1,16 +1,23 @@
 package org.qamation.excel.utils;
 
+
+
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.apache.poi.ss.usermodel.*;
 import org.qamation.utils.FileUtils;
 import org.qamation.utils.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.File;
 import java.io.IOException;
 import java.util.Iterator;
 
 
+
 public class ExcelReader {
+    private static final Logger log = LoggerFactory.getLogger(ExcelReader.class);
+    private static final Object LOCK = new Object();
     private Workbook workBook;
     private int activeSheetIndex;
     private String fileName;
@@ -96,7 +103,7 @@ public class ExcelReader {
     }
 
     public void closeWorkBook() throws IOException {
-        closeBook();
+        //closeBook();
         deleteFile();
         removeShutDownHook(hook);
     }
@@ -108,16 +115,23 @@ public class ExcelReader {
     private void closeBook() {
         try {
             if (workBook != null) {
+                System.out.println("Workbook is not null. Closing");
                 workBook.close();
                 workBook = null;
             }
+            else System.out.println("Workbook is null.");
         } catch (Exception ex) {
+            ex.printStackTrace();
             throw new RuntimeException("Unable to close workbook for file: " + theFile.getPath()+"\n"+ ex.getMessage());
         }
     }
 
     private void deleteFile() {
-        if (theFile.exists()) theFile.delete();
+        if (theFile.exists()) {
+            System.out.println("   =====> Deleting file: "+theFile.getName());
+            theFile.delete();
+        }
+        else System.out.println("  ====>File "+theFile.getName()+" does not exists any more");
     }
 
     private String[] readFirstLine() {
@@ -203,7 +217,7 @@ public class ExcelReader {
             this.sheet = workBook.getSheetAt(activeSheetIndex);
             this.rowSize = getHeaderLineSize();
             this.evaluator = workBook.getCreationHelper().createFormulaEvaluator();
-            this.hook = new ShutDownHook(fileName);
+            this.hook = new ShutDownHook(this);
             addShutDownHook(hook);
         } catch (Exception ex) {
             throw new RuntimeException("Unable to create a workbook from " + fileName + "\n" + StringUtils.getStackTrace(ex));
@@ -234,19 +248,25 @@ public class ExcelReader {
         Runtime.getRuntime().removeShutdownHook(hook);
     }
 
+
+
     public String getOriginalFileName() {
         return originalFileName;
     }
 
-    private class ShutDownHook extends Thread {
-        private String name;
-        ShutDownHook(String name) {
-            this.name = name;
+    private  final class ShutDownHook extends Thread {
+        private ExcelReader reader;
+        ShutDownHook(ExcelReader reader) {
+            this.reader = reader;
         }
         @Override
         public void run() {
-            closeBook();
-            deleteFile();
+            synchronized (LOCK) {
+                System.out.println("   =======>  Shutting down: " + reader.getFileName());
+                reader.closeBook();
+                reader.deleteFile();
+                reader = null;
+            }
         }
     }
 }

@@ -16,7 +16,7 @@ import javax.xml.crypto.Data;
 /**
  * Created by Pavel on 2017-05-19.
  */
-public class Storage <T extends DataProvider> {
+public class Storage <T extends DataProvider> implements TestStateListener {
 
     private static final Logger log = LoggerFactory.getLogger(Storage.class);
     private static Storage storage = null;
@@ -26,10 +26,10 @@ public class Storage <T extends DataProvider> {
 
 
     public synchronized static Storage getStorage(String clss) {
-        Storage s = repository.get(clss);
         if (storage == null) {
             storage = new Storage();
             repository.put(clss,storage);
+            StandardJMeterEngine.register(storage);
         }
         return storage;
     }
@@ -77,5 +77,23 @@ public class Storage <T extends DataProvider> {
     }
 
 
+    @Override
+    public void testStarted() {
 
+    }
+
+    @Override
+    public void testStarted(String s) {
+
+    }
+
+    @Override
+    public void testEnded() {
+        //log.info("\nTEST ENDED\n");
+    }
+
+    @Override
+    public void testEnded(String s) {
+        testEnded();
+    }
 }
