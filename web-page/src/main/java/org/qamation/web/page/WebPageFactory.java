@@ -11,6 +11,6 @@ public class WebPageFactory extends BasedWebDriverInstanceFactory {
 	}
 
 	public static Page createGeneralPageInstance(WebDriver driver) {
-		return (Page)createInstance("GeneralPage", driver);
+		return (Page)createInstance("org.qamation.web.page.GeneralPage", driver);
 	}
 }

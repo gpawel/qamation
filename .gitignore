@@ -10,4 +10,6 @@ depend.tree
 build
 *.versionsBackup
 set_root.bat
+Selenium
+
 
