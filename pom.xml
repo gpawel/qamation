@@ -35,6 +35,7 @@
         <excel-utils.version>3.2.2</excel-utils.version>
         <keyboard.version>3.2.2</keyboard.version>
         <navigator.version>3.2.2</navigator.version>
+        <mouse.version>1.0.0</mouse.version>
         <jmeter-java-sampler-abstracts.version>3.2.2</jmeter-java-sampler-abstracts.version>
         <jmeter-java-sampler-web-extension.version>3.2.2</jmeter-java-sampler-web-extension.version>
         <jmeter-java-sampler-keyboard.version>3.2.2</jmeter-java-sampler-keyboard.version>
@@ -161,6 +162,11 @@
                 <groupId>org.qamation</groupId>
                 <artifactId>data-provider</artifactId>
                 <version>${data-provider.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.qamation</groupId>
+                <artifactId>mouse</artifactId>
+                <version>${mouse.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.qamation.jmeter</groupId>
