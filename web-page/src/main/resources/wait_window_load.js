@@ -18,4 +18,4 @@ function exit (event) {
     console.log("exiting. ",endTs);
     callback(endTs-startTs);
 }
-document.addEventListener("load",exit(event),true);
+window.addEventListener("load",exit(event),true);
