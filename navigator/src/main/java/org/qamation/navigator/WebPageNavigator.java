@@ -85,7 +85,7 @@ public class WebPageNavigator {
 		String convertedSpecialKey = rewriteSpecialKey(specialKey);
 		String s = StringUtils.extractContentFromCurlyBruckets(convertedSpecialKey);
 		keyboard.sendSpecialKeys(s);
-		if (specialKey.equalsIgnoreCase("{TAB}")) return;
+		if (specialKey.equalsIgnoreCase("{TAB}") || specialKey.equalsIgnoreCase("{DELETE}")) return;
 		page.isReady();
 	}
 
