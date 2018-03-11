@@ -2,7 +2,7 @@ var callback = arguments[arguments.length - 1];
 var timeOut = arguments[0];
 var pauseTime = arguments[1];
 var element = document.documentElement;//arguments[2];
-console.log("timeout: ",timeOut," pause: ",pauseTime," element: ",element);
+console.log("timeout: ",timeOut," pause: ",pauseTime);
 var changes=0;
 var drawStarted = false;
 var startingTime = Date.now();
@@ -14,7 +14,7 @@ var screenReadyObserver = new MutationObserver(function(mutations) {
 });
 //var target = document.querySelector('.grid-ui');
 var target = element;
-var config = { attributes: true, subtree: true, childList: true, characterData: true, attributeOldValue: false, characterDataOldValue: false}
+var config = { attributes: true, subtree: true, childList: true, characterData: true, attributeOldValue: true, characterDataOldValue: true}
 screenReadyObserver.observe(target, config);
 
 var intervalObserverHandler = function() {

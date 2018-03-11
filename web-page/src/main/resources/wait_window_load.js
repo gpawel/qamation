@@ -1,5 +1,5 @@
 var callback = arguments[arguments.length-1];
-console.log("entering wait window load. ",Date.now());
+console.log("entering wait window load. ");
 var startTs = Date.now();
 function exit (event) {
     if (event != null) {

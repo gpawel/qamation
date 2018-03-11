@@ -52,7 +52,7 @@ public class KeyboardEmulator implements Keyboard {
 		String[] sequence = StringUtils.convertCharSequenceToArray(keys);
 		for (int i=0; i < sequence.length; i++) {
 			keyboard.sendKeys(sequence[i]);
-			//pause(KEY_PRESS_PAUSE_MIL_SEC);
+			pause(KEY_PRESS_PAUSE_MIL_SEC);
 		}
 	}
 	
@@ -66,7 +66,7 @@ public class KeyboardEmulator implements Keyboard {
 		String[] sequence = StringUtils.convertCharSequenceToArray(keys);
 		for (int i=0; i < sequence.length; i++) {
 			el.sendKeys(sequence[i]);
-			//pause(KEY_PRESS_PAUSE_MIL_SEC);
+			pause(KEY_PRESS_PAUSE_MIL_SEC);
 		}
 	}
 
@@ -100,7 +100,7 @@ public class KeyboardEmulator implements Keyboard {
 			Actions action = new Actions(driver);
 			action.sendKeys(key);			
 			action.build().perform();
-			//pause(KEY_PRESS_PAUSE_MIL_SEC);
+			pause(KEY_PRESS_PAUSE_MIL_SEC);
 		}
 	}
 
