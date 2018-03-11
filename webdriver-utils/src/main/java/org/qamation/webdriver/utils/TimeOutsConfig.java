@@ -28,7 +28,7 @@ public class TimeOutsConfig {
     private final static String CURRENT_PAGE_CHANGES_TIMEOUT_MILLIS = "CURRENT_PAGE_CHANGES_TIMEOUT_MILLIS";
     private final static String CURRENT_PAGE_CHANGES_INTERVAL_MILLIS = "CURRENT_PAGE_CHANGES_INTERVAL_MILLIS";
 
-    private static long implicitWaitTimeOutMillis = Long.parseLong(System.getProperty(DRIVER_IMPLICIT_WAIT_TIMEOUT_MILLIS,"15000"));
+    private static long implicitWaitTimeOutMillis = Long.parseLong(System.getProperty(DRIVER_IMPLICIT_WAIT_TIMEOUT_MILLIS,"0"));
 
     private static long newPageScriptExecTimeOutMillis = Long.parseLong(System.getProperty(DRIVER_NEW_PAGE_SCRIPT_EXEC_TIMEOUT_MILLIS,"30000"));
     private static long newPageLoadTimeOutMillis = Long.parseLong(System.getProperty(DRIVER_NEW_PAGE_LOAD_TIMEOUT_MILLIS,"120000"));
