@@ -54,14 +54,14 @@ public class CreateBrowser extends AbstractExtentionBrowser {
     @Override
     protected SampleResult assembleTestResult() {
         String message = browserType + " " + browserName + " browser is created.";
-        SampleResult result = setSuccess(null,message,message);
+        result = setSuccess(null,message,message);
         return result;
     }
 
     @Override
     protected SampleResult assembleTestFailure(Exception e) {
         String message = browserType + " " + browserName + " browser is not created\n"+e.toString();
-        SampleResult result = setFailure(null,message,message);
+        result = setFailure(null,message,message);
         return result;
     }
 

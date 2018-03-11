@@ -111,7 +111,7 @@ public class PageNavigatAndCheck extends PageNavigator {
 	protected SampleResult assembleTestResult() {
 		String label = getLabel();
 		String message = "OK";
-		SampleResult result = setSuccess(message, label.getBytes());
+		result = setSuccess(label,message, label);
 		result.setSampleLabel(label);
 		return result;
 	}
@@ -128,9 +128,9 @@ public class PageNavigatAndCheck extends PageNavigator {
 			message = "Opening <" + navigationSequence + "> OR " + "<" + backToURL + "> FAILED";
 		}
 		// label = label+"\n\n"+StringUtils.getStackTrace(ex);
-		SampleResult result = setFailure(message, ex);
+		result = setFailure(label,message, ex.toString());
 		result.setSampleLabel(label);
-		result.setStopThread(false);
+		result.setStopThread(shouldStop);
 		return result;
 	}
 

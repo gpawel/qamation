@@ -38,11 +38,11 @@ public abstract class AbstractExtentionBrowser extends AbstractExtention {
 			readSamplerParameters();
 			getDriverFromContext(); 
 			toDo();
-			SampleResult result = assembleTestResult();
+			result = assembleTestResult();
 			return result;
 			
 		} catch (Exception e) {
-			SampleResult result = assembleTestFailure(e);
+			result = assembleTestFailure(e);
 			return result;
 		}
 	}

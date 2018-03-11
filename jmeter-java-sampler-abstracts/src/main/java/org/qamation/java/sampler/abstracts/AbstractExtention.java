@@ -21,7 +21,7 @@ public abstract class AbstractExtention extends AbstractJavaSamplerClient {
 
 	protected JavaSamplerContext ctx;
 	protected boolean shouldStop;
-	protected SampleResult result = new SampleResult();
+	protected SampleResult result;
 
 
 	abstract protected void toDo();

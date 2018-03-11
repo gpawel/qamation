@@ -60,14 +60,14 @@ public class PageNavigator extends AbstractExtentionPage {
 
 	@Override
 	protected SampleResult assembleTestResult() {
-		SampleResult result = setSuccess("OK", (navigationSequence + " IS PROCESSED").getBytes());
+		result = setSuccess("OK", (navigationSequence + " IS PROCESSED").getBytes());
 		return result;
 	}
 
 	@Override
 	protected SampleResult assembleTestFailure(Exception e) {
 		String message = navigationSequence + " CANNOT BE PROCESSED";
-		SampleResult result = setFailure(message, e);
+		result = setFailure(message, e);
 		return result;
 	}
 
