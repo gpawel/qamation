@@ -40,12 +40,12 @@ public abstract class AbstractExtention extends AbstractJavaSamplerClient {
 	}
 	public SampleResult runTest(JavaSamplerContext ctx) {
 		this.ctx = ctx;
+		result = new SampleResult();
+		result.sampleStart();
 		return implementTest();
 	}
 
 	public SampleResult implementTest() {
-		result = new SampleResult();
-		result.sampleStart();
 		try {	
 			readSamplerParameters();
 			toDo();

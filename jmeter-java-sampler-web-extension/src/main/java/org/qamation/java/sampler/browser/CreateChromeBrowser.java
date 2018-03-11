@@ -44,7 +44,7 @@ public class CreateChromeBrowser extends AbstractExtentionBrowser {
 	@Override
 	protected SampleResult assembleTestResult() {
 		String message = "Chrome browser is placed into variable named: "+browserVariableName;
-		SampleResult result = setSuccess(
+		result = setSuccess(
 				message,
 				message.getBytes()
 				);
@@ -53,7 +53,7 @@ public class CreateChromeBrowser extends AbstractExtentionBrowser {
 
 	@Override
 	protected SampleResult assembleTestFailure(Exception e) {
-		SampleResult result = setFailure("Chrome WebDriver cannot be created", e);
+		result = setFailure("Chrome WebDriver cannot be created", e);
 		result.setStopThread(shouldStop);
 		return result;
 	}

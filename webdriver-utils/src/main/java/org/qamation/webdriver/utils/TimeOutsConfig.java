@@ -9,13 +9,13 @@ import java.util.concurrent.TimeUnit;
  */
 public class TimeOutsConfig {
 
-    private final static String IMPLICIT_WAIT_TIMEOUT_MILLIS = "IMPLICIT_WAIT_TIMEOUT_MILLIS";
+    private final static String DRIVER_IMPLICIT_WAIT_TIMEOUT_MILLIS = "DRIVER_IMPLICIT_WAIT_TIMEOUT_MILLIS";
 
-    private final static String NEW_PAGE_SCRIPT_EXEC_TIMEOUT_MILLIS = "NEW_PAGE_SCRIPT_EXEC_TIMEOUT_MILLIS";
-    private final static String NEW_PAGE_LOAD_TIMEOUT_MILLIS = "NEW_PAGE_LOAD_TIMEOUT_MILLIS";
+    private final static String DRIVER_NEW_PAGE_SCRIPT_EXEC_TIMEOUT_MILLIS = "DRIVER_NEW_PAGE_SCRIPT_EXEC_TIMEOUT_MILLIS";
+    private final static String DRIVER_NEW_PAGE_LOAD_TIMEOUT_MILLIS = "DRIVER_NEW_PAGE_LOAD_TIMEOUT_MILLIS";
 
-    private final static String CURRENT_PAGE_SCRIPT_EXEC_TIMEOUT_MILLIS = "CURRENT_PAGE_SCRIPT_EXEC_TIMEOUT_MILLIS";
-    private final static String CURRENT_PAGE_LOAD_TIMEOUT_MILLIS = "CURRENT_PAGE_LOAD_TIMEOUT_MILLIS";
+    private final static String DRIVER_CURRENT_PAGE_SCRIPT_EXEC_TIMEOUT_MILLIS = "DRIVER_CURRENT_PAGE_SCRIPT_EXEC_TIMEOUT_MILLIS";
+    private final static String DRIVER_CURRENT_PAGE_LOAD_TIMEOUT_MILLIS = "DRIVER_CURRENT_PAGE_LOAD_TIMEOUT_MILLIS";
 
     private final static String NEW_PAGE_LOAD_SCRIPTS_TIMEOUT_MILLIS = "NEW_PAGE_LOAD_SCRIPTS_TIMEOUT_MILLIS";
     private final static String NEW_PAGE_LOAD_SCRIPTS_INTERVAL_MILLIS = "NEW_PAGE_LOAD_SCRIPTS_INTERVAL_MILLIS";
@@ -28,12 +28,12 @@ public class TimeOutsConfig {
     private final static String CURRENT_PAGE_CHANGES_TIMEOUT_MILLIS = "CURRENT_PAGE_CHANGES_TIMEOUT_MILLIS";
     private final static String CURRENT_PAGE_CHANGES_INTERVAL_MILLIS = "CURRENT_PAGE_CHANGES_INTERVAL_MILLIS";
 
-    private static long implicitWaitTimeOutMillis = Long.parseLong(System.getProperty(IMPLICIT_WAIT_TIMEOUT_MILLIS,"15000"));
+    private static long implicitWaitTimeOutMillis = Long.parseLong(System.getProperty(DRIVER_IMPLICIT_WAIT_TIMEOUT_MILLIS,"15000"));
 
-    private static long newPageScriptExecTimeOutMillis = Long.parseLong(System.getProperty(NEW_PAGE_SCRIPT_EXEC_TIMEOUT_MILLIS,"30000"));
-    private static long newPageLoadTimeOutMillis = Long.parseLong(System.getProperty(NEW_PAGE_LOAD_TIMEOUT_MILLIS,"120000"));
-    private static long curPageScriptExecTimeOutMillis = Long.parseLong(System.getProperty(CURRENT_PAGE_SCRIPT_EXEC_TIMEOUT_MILLIS,"1000"));
-    private static long curPageLoadTimeOutMillis = Long.parseLong(System.getProperty(CURRENT_PAGE_LOAD_TIMEOUT_MILLIS,"15000"));
+    private static long newPageScriptExecTimeOutMillis = Long.parseLong(System.getProperty(DRIVER_NEW_PAGE_SCRIPT_EXEC_TIMEOUT_MILLIS,"30000"));
+    private static long newPageLoadTimeOutMillis = Long.parseLong(System.getProperty(DRIVER_NEW_PAGE_LOAD_TIMEOUT_MILLIS,"120000"));
+    private static long curPageScriptExecTimeOutMillis = Long.parseLong(System.getProperty(DRIVER_CURRENT_PAGE_SCRIPT_EXEC_TIMEOUT_MILLIS,"1000"));
+    private static long curPageLoadTimeOutMillis = Long.parseLong(System.getProperty(DRIVER_CURRENT_PAGE_LOAD_TIMEOUT_MILLIS,"15000"));
 
 
     private static long newPageLoadScriptsTimeOutMillis = Long.parseLong(System.getProperty(NEW_PAGE_LOAD_SCRIPTS_TIMEOUT_MILLIS,"4000"));
