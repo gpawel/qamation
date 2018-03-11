@@ -15,7 +15,7 @@ function exit (event) {
     }
     else {console.log("event is null");}
     var endTs = Date.now();
-    console.log("exiting. ",endTs);
+    console.log("exiting in ",endTs-startTs);
     callback(endTs-startTs);
 }
 window.addEventListener("load",exit(event),true);
