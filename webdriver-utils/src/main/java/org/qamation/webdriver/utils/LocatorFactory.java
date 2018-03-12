@@ -6,7 +6,7 @@ import org.openqa.selenium.By;
 
 public class LocatorFactory {
 
-	public final String [] METHODS = new String[] {
+	public static final String [] METHODS = new String[] {
 		"id"
 		,"xpath"
 		,"cssSelector"
@@ -17,7 +17,7 @@ public class LocatorFactory {
 		,"tagName"
 	}; 
 	
-	private  By executeMethod(Method method, String... param ) {
+	private static By executeMethod(Method method, String... param ) {
 		try {
 			return (By) method.invoke(null,param);
 		}
@@ -26,7 +26,7 @@ public class LocatorFactory {
 		}
 	}
 	
-	private  Method findMethod(String methodName) {
+	private static  Method findMethod(String methodName) {
 		try {
 			Class<By> cls = By.class;
 			Method method = cls.getMethod(methodName, String.class);
@@ -36,7 +36,7 @@ public class LocatorFactory {
 		}
 	}
 
-	private By generateLocator(String location) {
+	private static By generateLocator(String location) {
 		String[] elements = splitElementLocation(location);
 		String methodName = elements[0];
 		String description = elements[1];
@@ -46,14 +46,14 @@ public class LocatorFactory {
 	}
 	
 
-	public By getLocator(String location) {
+	public static By getLocator(String location) {
 		if (location.contains("=")) {
 			return generateLocator(location);
 		} else
 			return By.id(location);
 	}
 	
-	public String[] splitElementLocation(String elementLocation) {
+	public static String[] splitElementLocation(String elementLocation) {
 		if (elementLocation.contains("=")) {
 			int elementLocationLength = elementLocation.length();
 			for (String method: METHODS) {

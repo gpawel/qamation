@@ -2,8 +2,9 @@ var callback = arguments[arguments.length - 1];
 var timeOut = arguments[0];
 var pauseTime = arguments[1];
 var element = document.documentElement;//arguments[2];
-console.log("timeout: ",timeOut," pause: ",pauseTime);
+console.log("Waiting for page changes to stop: timeout: ",timeOut," pause: ",pauseTime);
 var changes=0;
+var totalChanges=0;
 var drawStarted = false;
 var startingTime = Date.now();
 
@@ -19,26 +20,28 @@ screenReadyObserver.observe(target, config);
 
 var intervalObserverHandler = function() {
   if (drawStarted) {
-        console.log("drawing started");
         if (changes == 0) {
           console.log("drawing; mutations: ",0," - exiting");
-          stopAndExit(true);
+          stopAndExit(totalChanges);
         }
         else {
           console.log("drawing; mutations: ",changes);
+          totalChanges = totalChanges + changes;
           changes = 0;
         }
   }
   else {
         console.log("drawing not started");
         if (changes > 0) {
+           console.log("drawing started in ",Date.now() - startingTime);
            drawStarted = true;
            console.log("mutions found: ",changes);
+           totalChanges = totalChanges + changes;
            changes=0;
         } else
            if ((Date.now() - startingTime) > timeOut) {
             console.log("time out");
-            stopAndExit(false);
+            stopAndExit(0);
            }
   }
 }

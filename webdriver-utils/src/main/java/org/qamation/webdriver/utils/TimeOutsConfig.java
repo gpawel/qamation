@@ -11,86 +11,127 @@ public class TimeOutsConfig {
 
     private final static String DRIVER_IMPLICIT_WAIT_TIMEOUT_MILLIS = "DRIVER_IMPLICIT_WAIT_TIMEOUT_MILLIS";
 
-    private final static String DRIVER_NEW_PAGE_SCRIPT_EXEC_TIMEOUT_MILLIS = "DRIVER_NEW_PAGE_SCRIPT_EXEC_TIMEOUT_MILLIS";
-    private final static String DRIVER_NEW_PAGE_LOAD_TIMEOUT_MILLIS = "DRIVER_NEW_PAGE_LOAD_TIMEOUT_MILLIS";
+    private final static String DRIVER_SCRIPT_EXEC_TIMEOUT_MILLIS = "DRIVER_SCRIPT_EXEC_TIMEOUT_MILLIS";
+    private final static String DRIVER_PAGE_LOAD_TIMEOUT_MILLIS = "DRIVER_PAGE_LOAD_TIMEOUT_MILLIS";
 
-    private final static String DRIVER_CURRENT_PAGE_SCRIPT_EXEC_TIMEOUT_MILLIS = "DRIVER_CURRENT_PAGE_SCRIPT_EXEC_TIMEOUT_MILLIS";
-    private final static String DRIVER_CURRENT_PAGE_LOAD_TIMEOUT_MILLIS = "DRIVER_CURRENT_PAGE_LOAD_TIMEOUT_MILLIS";
+    private final static String LOAD_SCRIPTS_TIMEOUT_MILLIS = "LOAD_SCRIPTS_TIMEOUT_MILLIS";
+    private final static String LOAD_SCRIPTS_INTERVAL_MILLIS = "LOAD_SCRIPTS_INTERVAL_MILLIS";
 
-    private final static String NEW_PAGE_LOAD_SCRIPTS_TIMEOUT_MILLIS = "NEW_PAGE_LOAD_SCRIPTS_TIMEOUT_MILLIS";
-    private final static String NEW_PAGE_LOAD_SCRIPTS_INTERVAL_MILLIS = "NEW_PAGE_LOAD_SCRIPTS_INTERVAL_MILLIS";
-    private final static String CURRENT_PAGE_LOAD_SCRIPTS_TIMEOUT_MILLIS = "CURRENT_PAGE_LOAD_SCRIPTS_TIMEOUT_MILLIS";
-    private final static String CURRENT_PAGE_LOAD_SCRIPTS_INTERVAL_MILLIS = "CURRENT_PAGE_LOAD_SCRIPTS_INTERVAL_MILLIS";
+    private final static String PAGE_CHANGES_TIMEOUT_MILLIS = "PAGE_CHANGES_TIMEOUT_MILLIS";
+    private final static String PAGE_CHANGES_INTERVAL_MILLIS = "PAGE_CHANGES_INTERVAL_MILLIS";
 
-    private final static String NEW_PAGE_CHANGES_TIMEOUT_MILLIS = "NEW_PAGE_CHANGES_TIMEOUT_MILLIS";
-    private final static String NEW_PAGE_CHANGES_INTERVAL_MILLIS = "NEW_PAGE_CHANGES_INTERVAL_MILLIS";
+    private final static String WAIT_FOR_SPINNER_TO_APPEAR_TIME_OUT_MILLIS = "WAIT_FOR_SPINNER_TO_APPEAR_TIME_OUT_MILLIS";
+    private final static String WAIT_FOR_SPINNER_TO_APPEAR_INTERVAL_MILLIS = "WAIT_FOR_SPINNER_TO_APPEAR_INTERVAL_MILLIS";
+    private final static String WAIT_FOR_SPINNER_TO_DISAPPEAR_TIME_OUT_MILLIS = "WAIT_FOR_SPINNER_TO_DISAPPEAR_TIME_OUT_MILLIS";
+    private final static String WAIT_FOR_SPINNER_TO_DISAPPEAR_INTERVAL_MILLIS = "WAIT_FOR_SPINNER_TO_DISAPPEAR_INTERVAL_MILLIS";
 
-    private final static String CURRENT_PAGE_CHANGES_TIMEOUT_MILLIS = "CURRENT_PAGE_CHANGES_TIMEOUT_MILLIS";
-    private final static String CURRENT_PAGE_CHANGES_INTERVAL_MILLIS = "CURRENT_PAGE_CHANGES_INTERVAL_MILLIS";
+    private static long driverImplicitWaitTimeOutMillis = Long.parseLong(System.getProperty(DRIVER_IMPLICIT_WAIT_TIMEOUT_MILLIS,"0"));
 
-    private static long implicitWaitTimeOutMillis = Long.parseLong(System.getProperty(DRIVER_IMPLICIT_WAIT_TIMEOUT_MILLIS,"0"));
+    private static long driverScriptExecTimeOutMillis = Long.parseLong(System.getProperty(DRIVER_SCRIPT_EXEC_TIMEOUT_MILLIS,"30000"));
+    private static long driverPageLoadTimeOutMillis = Long.parseLong(System.getProperty(DRIVER_PAGE_LOAD_TIMEOUT_MILLIS,"120000"));
 
-    private static long newPageScriptExecTimeOutMillis = Long.parseLong(System.getProperty(DRIVER_NEW_PAGE_SCRIPT_EXEC_TIMEOUT_MILLIS,"30000"));
-    private static long newPageLoadTimeOutMillis = Long.parseLong(System.getProperty(DRIVER_NEW_PAGE_LOAD_TIMEOUT_MILLIS,"120000"));
-    private static long curPageScriptExecTimeOutMillis = Long.parseLong(System.getProperty(DRIVER_CURRENT_PAGE_SCRIPT_EXEC_TIMEOUT_MILLIS,"1000"));
-    private static long curPageLoadTimeOutMillis = Long.parseLong(System.getProperty(DRIVER_CURRENT_PAGE_LOAD_TIMEOUT_MILLIS,"15000"));
+    private static long loadScriptTimeOutMillis = Long.parseLong(System.getProperty(LOAD_SCRIPTS_TIMEOUT_MILLIS,"1000"));
+    private static long loadScriptIntervalMillis = Long.parseLong(System.getProperty(LOAD_SCRIPTS_INTERVAL_MILLIS,"300"));
+    private static long pageChangesTimeOutMillis = Long.parseLong(System.getProperty(PAGE_CHANGES_TIMEOUT_MILLIS,"600"));
+    private static long pageChangesIntervalMillis = Long.parseLong(System.getProperty(PAGE_CHANGES_INTERVAL_MILLIS,"400"));
 
+    private static long waitForSpinnerToAppearTimeOut = Long.parseLong(System.getProperty(WAIT_FOR_SPINNER_TO_APPEAR_TIME_OUT_MILLIS,"1000"));
+    private static long waitForSpinnerToAppearInterval = Long.parseLong(System.getProperty(WAIT_FOR_SPINNER_TO_APPEAR_INTERVAL_MILLIS,"300"));
 
-    private static long newPageLoadScriptsTimeOutMillis = Long.parseLong(System.getProperty(NEW_PAGE_LOAD_SCRIPTS_TIMEOUT_MILLIS,"4000"));
-    private static long newPageLoadScriptsIntervalMillis = Long.parseLong(System.getProperty(NEW_PAGE_LOAD_SCRIPTS_INTERVAL_MILLIS,"1000"));
-    private static long newPageChangesTimeOutMillis = Long.parseLong(System.getProperty(NEW_PAGE_CHANGES_TIMEOUT_MILLIS,"4000"));
-    private static long newPageChangesIntervalMillis = Long.parseLong(System.getProperty(NEW_PAGE_CHANGES_INTERVAL_MILLIS,"1000"));
+    private static long waitForSpinnerToDisappearTimeOut = Long.parseLong(System.getProperty(WAIT_FOR_SPINNER_TO_DISAPPEAR_TIME_OUT_MILLIS,"300000"));
+    private static long waitForSpinnerToDisappearInterval = Long.parseLong(System.getProperty(WAIT_FOR_SPINNER_TO_DISAPPEAR_INTERVAL_MILLIS,"300"));
 
-    private static long curPageLoadScriptsTimeOutMillis = Long.parseLong(System.getProperty(CURRENT_PAGE_LOAD_SCRIPTS_TIMEOUT_MILLIS,"1000"));
-    private static long curPageLoadScriptsIntervalMillis = Long.parseLong(System.getProperty(CURRENT_PAGE_LOAD_SCRIPTS_INTERVAL_MILLIS,"300"));
-    private static long curPageChangesTimeOutMillis = Long.parseLong(System.getProperty(CURRENT_PAGE_CHANGES_TIMEOUT_MILLIS,"500"));
-    private static long curPageChangesIntervalMillis = Long.parseLong(System.getProperty(CURRENT_PAGE_CHANGES_INTERVAL_MILLIS,"200"));
-
-    private static long loadScriptTimeOutMillis;
-    private static long loadScriptIntervalMillis;
-    private static long pageChangesTimeOutMillis;
-    private static long pageChangesIntervalMillis;
-
-
-    public static void setNewPageTimeOuts(WebDriver driver) {
-        setDriverTimeOuts(driver,newPageLoadTimeOutMillis,newPageScriptExecTimeOutMillis,implicitWaitTimeOutMillis);
-        loadScriptTimeOutMillis = newPageLoadScriptsTimeOutMillis;
-        loadScriptIntervalMillis = newPageLoadScriptsIntervalMillis;
-        pageChangesTimeOutMillis = newPageChangesTimeOutMillis;
-        pageChangesIntervalMillis = newPageChangesIntervalMillis;
+    public static void setDriverTimeOuts(WebDriver driver) {
+        driver.manage().timeouts().pageLoadTimeout(driverPageLoadTimeOutMillis, TimeUnit.MILLISECONDS);
+        driver.manage().timeouts().setScriptTimeout(driverScriptExecTimeOutMillis, TimeUnit.MILLISECONDS);
+        driver.manage().timeouts().implicitlyWait(driverImplicitWaitTimeOutMillis,TimeUnit.MILLISECONDS);
     }
 
-    public static void setCurrentPageTimeOuts(WebDriver driver) {
-        setDriverTimeOuts(driver,curPageLoadTimeOutMillis,curPageScriptExecTimeOutMillis,implicitWaitTimeOutMillis);
-        loadScriptTimeOutMillis = curPageLoadScriptsTimeOutMillis;
-        loadScriptIntervalMillis = curPageLoadScriptsIntervalMillis;
-        pageChangesTimeOutMillis = curPageChangesTimeOutMillis;
-        pageChangesIntervalMillis = curPageChangesIntervalMillis;
+    public static long getDriverImplicitWaitTimeOutMillis() {
+        return driverImplicitWaitTimeOutMillis;
     }
 
-    private static void setDriverTimeOuts(WebDriver driver, long pageLoadTimeOut, long scriptTimeOut, long imlicitWaitTimeOut) {
-        driver.manage().timeouts().pageLoadTimeout(pageLoadTimeOut, TimeUnit.MILLISECONDS);
-        driver.manage().timeouts().setScriptTimeout(scriptTimeOut, TimeUnit.MILLISECONDS);
-        driver.manage().timeouts().implicitlyWait(imlicitWaitTimeOut,TimeUnit.MILLISECONDS);
+    public static void setDriverImplicitWaitTimeOutMillis(long driverImplicitWaitTimeOutMillis) {
+        TimeOutsConfig.driverImplicitWaitTimeOutMillis = driverImplicitWaitTimeOutMillis;
+    }
+
+    public static long getDriverScriptExecTimeOutMillis() {
+        return driverScriptExecTimeOutMillis;
+    }
+
+    public static void setDriverScriptExecTimeOutMillis(long driverScriptExecTimeOutMillis) {
+        TimeOutsConfig.driverScriptExecTimeOutMillis = driverScriptExecTimeOutMillis;
+    }
+
+    public static long getDriverPageLoadTimeOutMillis() {
+        return driverPageLoadTimeOutMillis;
+    }
+
+    public static void setDriverPageLoadTimeOutMillis(long driverPageLoadTimeOutMillis) {
+        TimeOutsConfig.driverPageLoadTimeOutMillis = driverPageLoadTimeOutMillis;
     }
 
     public static long getLoadScriptTimeOutMillis() {
         return loadScriptTimeOutMillis;
     }
 
+    public static void setLoadScriptTimeOutMillis(long loadScriptTimeOutMillis) {
+        TimeOutsConfig.loadScriptTimeOutMillis = loadScriptTimeOutMillis;
+    }
+
     public static long getLoadScriptIntervalMillis() {
         return loadScriptIntervalMillis;
+    }
+
+    public static void setLoadScriptIntervalMillis(long loadScriptIntervalMillis) {
+        TimeOutsConfig.loadScriptIntervalMillis = loadScriptIntervalMillis;
     }
 
     public static long getPageChangesTimeOutMillis() {
         return pageChangesTimeOutMillis;
     }
 
+    public static void setPageChangesTimeOutMillis(long pageChangesTimeOutMillis) {
+        TimeOutsConfig.pageChangesTimeOutMillis = pageChangesTimeOutMillis;
+    }
+
     public static long getPageChangesIntervalMillis() {
         return pageChangesIntervalMillis;
     }
 
-    public static long getImplicitWaitTimeOutMillis() {
-        return implicitWaitTimeOutMillis;
+    public static void setPageChangesIntervalMillis(long pageChangesIntervalMillis) {
+        TimeOutsConfig.pageChangesIntervalMillis = pageChangesIntervalMillis;
+    }
+
+    public static long getWaitForSpinnerToAppearTimeOut() {
+        return waitForSpinnerToAppearTimeOut;
+    }
+
+    public static void setWaitForSpinnerToAppearTimeOut(long waitForSpinnerToAppearTimeOut) {
+        TimeOutsConfig.waitForSpinnerToAppearTimeOut = waitForSpinnerToAppearTimeOut;
+    }
+
+    public static long getWaitForSpinnerToAppearInterval() {
+        return waitForSpinnerToAppearInterval;
+    }
+
+    public static void setWaitForSpinnerToAppearInterval(long waitForSpinnerToAppearInterval) {
+        TimeOutsConfig.waitForSpinnerToAppearInterval = waitForSpinnerToAppearInterval;
+    }
+
+    public static long getWaitForSpinnerToDisappearTimeOut() {
+        return waitForSpinnerToDisappearTimeOut;
+    }
+
+    public static void setWaitForSpinnerToDisappearTimeOut(long waitForSpinnerToDisappearTimeOut) {
+        TimeOutsConfig.waitForSpinnerToDisappearTimeOut = waitForSpinnerToDisappearTimeOut;
+    }
+
+    public static long getWaitForSpinnerToDisappearInterval() {
+        return waitForSpinnerToDisappearInterval;
+    }
+
+    public static void setWaitForSpinnerToDisappearInterval(long waitForSpinnerToDisappearInterval) {
+        TimeOutsConfig.waitForSpinnerToDisappearInterval = waitForSpinnerToDisappearInterval;
     }
 }

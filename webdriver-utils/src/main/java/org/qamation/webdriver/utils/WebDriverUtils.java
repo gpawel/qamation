@@ -41,7 +41,7 @@ public class WebDriverUtils {
 
 
 	public WebElement getWebElementIfPresents(By locator) {
-		WebDriverWait wait = new WebDriverWait(driver, TimeOutsConfig.getImplicitWaitTimeOutMillis());
+		WebDriverWait wait = new WebDriverWait(driver, TimeOutsConfig.getDriverImplicitWaitTimeOutMillis());
 		wait.until(ExpectedConditions.presenceOfElementLocated(locator));
 		wait.until(ExpectedConditions.visibilityOfElementLocated(locator));
 		WebElement el = driver.findElement(locator);
