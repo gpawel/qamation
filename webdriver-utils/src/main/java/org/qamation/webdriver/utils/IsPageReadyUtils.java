@@ -1,8 +1,11 @@
 package org.qamation.webdriver.utils;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedCondition;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.qamation.utils.StringUtils;
 
@@ -46,10 +49,10 @@ public class IsPageReadyUtils {
 
     public static int isPageChangeStopped(WebDriver driver) {
         JavascriptExecutor js = getJavaScriptExecutor(driver);
-        int result = (int) js.executeAsyncScript(PAGE_CHANGES_OBSERVER_ASYNC_SCRIPT,
+        Integer result = (Integer) js.executeAsyncScript(PAGE_CHANGES_OBSERVER_ASYNC_SCRIPT,
                 TimeOutsConfig.getPageChangesTimeOutMillis(),
                 TimeOutsConfig.getPageChangesIntervalMillis());
-        return result;
+        return result.intValue();
     }
 
     public static Long waitPageWindowLoaded(WebDriver driver) {
@@ -58,9 +61,26 @@ public class IsPageReadyUtils {
         return duration;
     }
 
+    public static Boolean waitForSpinnerToAppear(WebDriver driver, By spinnerLocator) {
+        WebDriverWait wait = new WebDriverWait(driver,
+                TimeOutsConfig.getWaitForSpinnerToAppearTimeOutMillis()/1000,
+                TimeOutsConfig.getWaitForSpinnerToAppearIntervalMillis());
+        WebElement el = wait.until(ExpectedConditions.presenceOfElementLocated(spinnerLocator));
+        return el != null;
+    }
+
+    public static Boolean waitForSpinnerToDisappear(WebDriver driver, By spinnerLocation) {
+        WebDriverWait wait = new WebDriverWait(driver,
+                TimeOutsConfig.getWaitForSpinnerToDisappearTimeOutMillis()/100,
+                TimeOutsConfig.getWaitForSpinnerToDisappearIntervalMillis());
+        return wait.until(ExpectedConditions.presenceOfElementLocated()
+    }
+
+
+
     private static  Boolean waitDocumentStateReady(WebDriver driver) {
         WebDriverWait wait = new WebDriverWait(driver,120,300);
-        return wait.until(getDocumentReadyCondition());
+        return wait.until(ExpectedConditionsUtils.getDocumentReadyCondition());
     }
 
     private static JavascriptExecutor getJavaScriptExecutor(WebDriver driver) {
@@ -69,18 +89,7 @@ public class IsPageReadyUtils {
         } else throw new RuntimeException("Cannot turn this driver into JavaScript");
     }
 
-    private static ExpectedCondition<Boolean> getDocumentReadyCondition() {
-        ExpectedCondition<Boolean> condition = new ExpectedCondition<Boolean>() {
-            @Nullable
-            @Override
-            public Boolean apply(@Nullable WebDriver drvr) {
-                JavascriptExecutor jse = getJavaScriptExecutor(drvr);
-                Boolean result = (Boolean)jse.executeAsyncScript(DOCUMENT_READY_ASYNC_SCRIPT);
-                return result;
-            }
-        };
-        return condition;
-    }
+
 
 
 }

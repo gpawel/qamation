@@ -13,9 +13,6 @@ import java.util.concurrent.TimeUnit;
  * Created by pavel.gouchtchine on 12/14/2016.
  */
 public class ExpectedConditionsUtils {
-    public final static String JS_EXECUTOR_TIME_OUT_SYS_PROP = "JS_EXECUTOR_TIMEOUT_MILLS";
-    public final static String PAGE_MUTATIONS_TIME_OUT_SYS_PROP = "PAGE_MUTATIONS_TIME_OUT_MILLS";
-    public final static String PATE_MUTATIONS_INTERVAL_SYS_PROP = "PAGE_MUTATIONS_INTERVAL_MILLS";
 
     private final static String DOCUMENT_READY_ASYNC_SCRIPT = StringUtils.readFileIntoString("document_ready_async.js");
     private final static String GET_DOCUMENT_CONTENT_ASYNC_SCRIPT = StringUtils.readFileIntoString("get_document_content_async.js");
@@ -34,7 +31,7 @@ public class ExpectedConditionsUtils {
             public Boolean apply(@Nullable WebDriver drvr) {
                 JavascriptExecutor js = getJSExecutor(drvr);
                 String md5_1 = getPageContentMD5(js);
-                long sleepIntervalMils = getMillsecondsFromSystemProperties(PATE_MUTATIONS_INTERVAL_SYS_PROP);
+                long sleepIntervalMils = TimeOutsConfig.getPageChangesIntervalMillis();//getMillsecondsFromSystemProperties(PATE_MUTATIONS_INTERVAL_SYS_PROP);
                 sleep(sleepIntervalMils);
                 String md5_2 = getPageContentMD5(js);
                 if (md5_1.equals(md5_2)) return true;
@@ -50,8 +47,8 @@ public class ExpectedConditionsUtils {
             @Override
             public Long apply(@Nullable WebDriver drvr) {
                 JavascriptExecutor jse = getJSExecutor(drvr);
-                long mutationsTimeOut = getMillsecondsFromSystemProperties(PAGE_MUTATIONS_TIME_OUT_SYS_PROP);
-                long mutationsInterval = getMillsecondsFromSystemProperties(PATE_MUTATIONS_INTERVAL_SYS_PROP);
+                long mutationsTimeOut = TimeOutsConfig.getPageChangesTimeOutMillis(); //getMillsecondsFromSystemProperties(PAGE_MUTATIONS_TIME_OUT_SYS_PROP);
+                long mutationsInterval = TimeOutsConfig.getPageChangesIntervalMillis();// getMillsecondsFromSystemProperties(PATE_MUTATIONS_INTERVAL_SYS_PROP);
                 Long result = (Long)jse.executeAsyncScript(MUTATIONS_OBSERVER_ASYNC_SCRIPT,mutationsTimeOut,mutationsInterval,element);
                 return result;
             }
@@ -66,7 +63,7 @@ public class ExpectedConditionsUtils {
             @Override
             public Long apply(@Nullable WebDriver webDriver) {
                 JavascriptExecutor js = getJSExecutor(webDriver);
-                Long result = (Long) js.executeAsyncScript(SCRIPTS_LOADING_STOPED,getMillsecondsFromSystemProperties(PATE_MUTATIONS_INTERVAL_SYS_PROP));
+                Long result = (Long) js.executeAsyncScript(SCRIPTS_LOADING_STOPED,TimeOutsConfig.getLoadScriptTimeOutMillis(), TimeOutsConfig.getLoadScriptIntervalMillis());
                 return result;
             }
         };
@@ -74,15 +71,22 @@ public class ExpectedConditionsUtils {
     }
 
     public static JavascriptExecutor getJSExecutor(WebDriver drvr) {
-        long executorTimeOutMills = getMillsecondsFromSystemProperties(JS_EXECUTOR_TIME_OUT_SYS_PROP);
-        drvr.manage().timeouts().setScriptTimeout(executorTimeOutMills,TimeUnit.MILLISECONDS);
+        TimeOutsConfig.setDriverTimeOuts(drvr);
         JavascriptExecutor js = (JavascriptExecutor)drvr;
         return js;
     }
 
-    private static long getMillsecondsFromSystemProperties(String propertyName) {
-        String timestr = System.getProperty(propertyName,"2000");
-        return Long.parseLong(timestr);
+    public static ExpectedCondition<Boolean> getDocumentReadyCondition() {
+        ExpectedCondition<Boolean> condition = new ExpectedCondition<Boolean>() {
+            @Nullable
+            @Override
+            public Boolean apply(@Nullable WebDriver drvr) {
+                JavascriptExecutor jse = getJSExecutor(drvr);
+                Boolean result = (Boolean)jse.executeAsyncScript(DOCUMENT_READY_ASYNC_SCRIPT);
+                return result;
+            }
+        };
+        return condition;
     }
 
     private static String getPageContentMD5 (JavascriptExecutor js) {
@@ -126,6 +130,8 @@ public class ExpectedConditionsUtils {
             throw new RuntimeException("Unable to sleep.", e);
         }
     }
+
+
 }
 
 

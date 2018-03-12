@@ -35,11 +35,11 @@ public class TimeOutsConfig {
     private static long pageChangesTimeOutMillis = Long.parseLong(System.getProperty(PAGE_CHANGES_TIMEOUT_MILLIS,"600"));
     private static long pageChangesIntervalMillis = Long.parseLong(System.getProperty(PAGE_CHANGES_INTERVAL_MILLIS,"400"));
 
-    private static long waitForSpinnerToAppearTimeOut = Long.parseLong(System.getProperty(WAIT_FOR_SPINNER_TO_APPEAR_TIME_OUT_MILLIS,"1000"));
-    private static long waitForSpinnerToAppearInterval = Long.parseLong(System.getProperty(WAIT_FOR_SPINNER_TO_APPEAR_INTERVAL_MILLIS,"300"));
+    private static long waitForSpinnerToAppearTimeOutMillis = Long.parseLong(System.getProperty(WAIT_FOR_SPINNER_TO_APPEAR_TIME_OUT_MILLIS,"1000"));
+    private static long waitForSpinnerToAppearIntervalMillis = Long.parseLong(System.getProperty(WAIT_FOR_SPINNER_TO_APPEAR_INTERVAL_MILLIS,"300"));
 
-    private static long waitForSpinnerToDisappearTimeOut = Long.parseLong(System.getProperty(WAIT_FOR_SPINNER_TO_DISAPPEAR_TIME_OUT_MILLIS,"300000"));
-    private static long waitForSpinnerToDisappearInterval = Long.parseLong(System.getProperty(WAIT_FOR_SPINNER_TO_DISAPPEAR_INTERVAL_MILLIS,"300"));
+    private static long waitForSpinnerToDisappearTimeOutMillis = Long.parseLong(System.getProperty(WAIT_FOR_SPINNER_TO_DISAPPEAR_TIME_OUT_MILLIS,"300000"));
+    private static long waitForSpinnerToDisappearIntervalMillis = Long.parseLong(System.getProperty(WAIT_FOR_SPINNER_TO_DISAPPEAR_INTERVAL_MILLIS,"300"));
 
     public static void setDriverTimeOuts(WebDriver driver) {
         driver.manage().timeouts().pageLoadTimeout(driverPageLoadTimeOutMillis, TimeUnit.MILLISECONDS);
@@ -103,35 +103,36 @@ public class TimeOutsConfig {
         TimeOutsConfig.pageChangesIntervalMillis = pageChangesIntervalMillis;
     }
 
-    public static long getWaitForSpinnerToAppearTimeOut() {
-        return waitForSpinnerToAppearTimeOut;
+    public static long getWaitForSpinnerToAppearTimeOutMillis() {
+        return waitForSpinnerToAppearTimeOutMillis;
     }
 
-    public static void setWaitForSpinnerToAppearTimeOut(long waitForSpinnerToAppearTimeOut) {
-        TimeOutsConfig.waitForSpinnerToAppearTimeOut = waitForSpinnerToAppearTimeOut;
+    public static void setWaitForSpinnerToAppearTimeOutMillis(long waitForSpinnerToAppearTimeOutMillis) {
+        TimeOutsConfig.waitForSpinnerToAppearTimeOutMillis = waitForSpinnerToAppearTimeOutMillis;
     }
 
-    public static long getWaitForSpinnerToAppearInterval() {
-        return waitForSpinnerToAppearInterval;
+    public static void setWaitForSpinnerToAppearIntervalMillis(long waitForSpinnerToAppearIntervalMillis) {
+        TimeOutsConfig.waitForSpinnerToAppearIntervalMillis = waitForSpinnerToAppearIntervalMillis;
     }
 
-    public static void setWaitForSpinnerToAppearInterval(long waitForSpinnerToAppearInterval) {
-        TimeOutsConfig.waitForSpinnerToAppearInterval = waitForSpinnerToAppearInterval;
+    public static long getWaitForSpinnerToAppearIntervalMillis() {
+        return waitForSpinnerToAppearIntervalMillis;
     }
 
-    public static long getWaitForSpinnerToDisappearTimeOut() {
-        return waitForSpinnerToDisappearTimeOut;
+
+    public static long getWaitForSpinnerToDisappearTimeOutMillis() {
+        return waitForSpinnerToDisappearTimeOutMillis;
     }
 
-    public static void setWaitForSpinnerToDisappearTimeOut(long waitForSpinnerToDisappearTimeOut) {
-        TimeOutsConfig.waitForSpinnerToDisappearTimeOut = waitForSpinnerToDisappearTimeOut;
+    public static void setWaitForSpinnerToDisappearTimeOutMillis(long waitForSpinnerToDisappearTimeOutMillis) {
+        TimeOutsConfig.waitForSpinnerToDisappearTimeOutMillis = waitForSpinnerToDisappearTimeOutMillis;
     }
 
-    public static long getWaitForSpinnerToDisappearInterval() {
-        return waitForSpinnerToDisappearInterval;
+    public static long getWaitForSpinnerToDisappearIntervalMillis() {
+        return waitForSpinnerToDisappearIntervalMillis;
     }
 
-    public static void setWaitForSpinnerToDisappearInterval(long waitForSpinnerToDisappearInterval) {
-        TimeOutsConfig.waitForSpinnerToDisappearInterval = waitForSpinnerToDisappearInterval;
+    public static void setWaitForSpinnerToDisappearIntervalMillis(long waitForSpinnerToDisappearIntervalMillis) {
+        TimeOutsConfig.waitForSpinnerToDisappearIntervalMillis = waitForSpinnerToDisappearIntervalMillis;
     }
 }
