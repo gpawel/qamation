@@ -1,11 +1,15 @@
 package org.qamation.webdriver.utils;
 
+import org.openqa.selenium.By;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import org.qamation.utils.StringUtils;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import javax.annotation.Nullable;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 
@@ -29,7 +33,7 @@ public class ExpectedConditionsUtils {
             @Nullable
             @Override
             public Boolean apply(@Nullable WebDriver drvr) {
-                JavascriptExecutor js = getJSExecutor(drvr);
+                JavascriptExecutor js = WebDriverUtils.getJavaScriptExecutor(drvr);
                 String md5_1 = getPageContentMD5(js);
                 long sleepIntervalMils = TimeOutsConfig.getPageChangesIntervalMillis();//getMillsecondsFromSystemProperties(PATE_MUTATIONS_INTERVAL_SYS_PROP);
                 sleep(sleepIntervalMils);
@@ -46,7 +50,7 @@ public class ExpectedConditionsUtils {
             @Nullable
             @Override
             public Long apply(@Nullable WebDriver drvr) {
-                JavascriptExecutor jse = getJSExecutor(drvr);
+                JavascriptExecutor jse = WebDriverUtils.getJavaScriptExecutor(drvr);
                 long mutationsTimeOut = TimeOutsConfig.getPageChangesTimeOutMillis(); //getMillsecondsFromSystemProperties(PAGE_MUTATIONS_TIME_OUT_SYS_PROP);
                 long mutationsInterval = TimeOutsConfig.getPageChangesIntervalMillis();// getMillsecondsFromSystemProperties(PATE_MUTATIONS_INTERVAL_SYS_PROP);
                 Long result = (Long)jse.executeAsyncScript(MUTATIONS_OBSERVER_ASYNC_SCRIPT,mutationsTimeOut,mutationsInterval,element);
@@ -62,7 +66,7 @@ public class ExpectedConditionsUtils {
             @Nullable
             @Override
             public Long apply(@Nullable WebDriver webDriver) {
-                JavascriptExecutor js = getJSExecutor(webDriver);
+                JavascriptExecutor js = WebDriverUtils.getJavaScriptExecutor(webDriver);
                 Long result = (Long) js.executeAsyncScript(SCRIPTS_LOADING_STOPED,TimeOutsConfig.getLoadScriptTimeOutMillis(), TimeOutsConfig.getLoadScriptIntervalMillis());
                 return result;
             }
@@ -70,23 +74,34 @@ public class ExpectedConditionsUtils {
         return condition;
     }
 
-    public static JavascriptExecutor getJSExecutor(WebDriver drvr) {
-        TimeOutsConfig.setDriverTimeOuts(drvr);
-        JavascriptExecutor js = (JavascriptExecutor)drvr;
-        return js;
-    }
+
+
+
 
     public static ExpectedCondition<Boolean> getDocumentReadyCondition() {
         ExpectedCondition<Boolean> condition = new ExpectedCondition<Boolean>() {
             @Nullable
             @Override
             public Boolean apply(@Nullable WebDriver drvr) {
-                JavascriptExecutor jse = getJSExecutor(drvr);
+                JavascriptExecutor jse = WebDriverUtils.getJavaScriptExecutor(drvr);
                 Boolean result = (Boolean)jse.executeAsyncScript(DOCUMENT_READY_ASYNC_SCRIPT);
                 return result;
             }
         };
         return condition;
+    }
+
+    public static ExpectedCondition<Boolean> getSpinnerDissapearedCondition(final By spinnerLocation) {
+        ExpectedCondition<Boolean> spinnerDisappers = new ExpectedCondition<Boolean>(){
+            public Boolean apply(final WebDriver drvr) {
+                List<WebElement> spinners = drvr.findElements(spinnerLocation);
+                if (spinners.isEmpty()) {
+                    return Boolean.valueOf(true);
+                }
+                return Boolean.valueOf(false);
+            }
+        };
+        return spinnerDisappers;
     }
 
     private static String getPageContentMD5 (JavascriptExecutor js) {
@@ -100,9 +115,8 @@ public class ExpectedConditionsUtils {
             @Nullable
             @Override
             public Boolean apply(@Nullable WebDriver drvr) {
-                JavascriptExecutor jse = getJSExecutor(drvr);
+                JavascriptExecutor jse = WebDriverUtils.getJavaScriptExecutor(drvr);
                 Boolean result = (Boolean)jse.executeAsyncScript(script);
-                System.out.println(result);
                 return result;
             }
         };
@@ -114,9 +128,8 @@ public class ExpectedConditionsUtils {
             @Nullable
             @Override
             public Boolean apply(@Nullable WebDriver drvr) {
-                JavascriptExecutor jse = getJSExecutor(drvr);
+                JavascriptExecutor jse = WebDriverUtils.getJavaScriptExecutor(drvr);
                 Boolean result = (Boolean)jse.executeScript(script);
-                System.out.println(result.booleanValue());
                 return result;
             }
         };
@@ -130,8 +143,6 @@ public class ExpectedConditionsUtils {
             throw new RuntimeException("Unable to sleep.", e);
         }
     }
-
-
 }
 
 

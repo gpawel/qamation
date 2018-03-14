@@ -2,11 +2,8 @@ package org.qamation.webdriver.utils;
 
 import java.util.regex.Matcher;
 
+import org.openqa.selenium.*;
 import org.qamation.utils.RegExpUtils;
-import org.openqa.selenium.By;
-import org.openqa.selenium.Capabilities;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
 import org.openqa.selenium.remote.RemoteWebDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -17,7 +14,17 @@ public class WebDriverUtils {
 
 	protected String browserName;
 
-	public WebDriverUtils(WebDriver driver) {
+
+
+    public static JavascriptExecutor getJavaScriptExecutor(WebDriver driver) {
+        if (driver instanceof JavascriptExecutor) {
+            TimeOutsConfig.setDriverTimeOuts(driver);
+            return (JavascriptExecutor) driver;
+        } else throw new RuntimeException("Cannot turn this driver into JavaScript");
+    }
+
+
+    public WebDriverUtils(WebDriver driver) {
 		this.driver = driver;
 		browserName = getBrowserName(driver);
 	}
@@ -76,16 +83,13 @@ public class WebDriverUtils {
 	
 	public void openPage(String url) {
 		driver.get(url);
-		setNewPageTimeOuts();
 		isPageReady();
-		setCurrentPageTimeOuts();
+
 	}
 
 	public void refresh() {
 	    driver.navigate().refresh();
-	    setNewPageTimeOuts();
 	    isPageReady();
-	    setCurrentPageTimeOuts();
 	}
 
 	public void goBack(String url) {
@@ -113,13 +117,4 @@ public class WebDriverUtils {
 		Capabilities cap = ((RemoteWebDriver)driver).getCapabilities();
 		return cap.getBrowserName();
 	}
-
-
-    public void setNewPageTimeOuts() {
-	    TimeOutsConfig.setNewPageTimeOuts(driver);
-    }
-
-    public void setCurrentPageTimeOuts() {
-	    TimeOutsConfig.setCurrentPageTimeOuts(driver);
-    }
 }

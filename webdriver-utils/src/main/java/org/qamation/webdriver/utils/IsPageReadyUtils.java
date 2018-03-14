@@ -1,9 +1,7 @@
 package org.qamation.webdriver.utils;
 
-import org.openqa.selenium.By;
-import org.openqa.selenium.JavascriptExecutor;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
+import org.junit.rules.ExpectedException;
+import org.openqa.selenium.*;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -23,7 +21,7 @@ public class IsPageReadyUtils {
     private final static String WINDOWS_LAODED_SCRIPT = StringUtils.readFileIntoString("wait_window_load.js");
 
     public static String getDocumentContent(WebDriver driver) {
-        JavascriptExecutor js = getJavaScriptExecutor(driver);
+        JavascriptExecutor js = WebDriverUtils.getJavaScriptExecutor(driver);
         String content = (String) js.executeAsyncScript(GET_DOCUMENT_CONTENT_ASYNC_SCRIPT);
         return content;
     }
@@ -40,7 +38,7 @@ public class IsPageReadyUtils {
     }
 
     public static  Boolean isScriptsLoadingDone(WebDriver driver) {
-        JavascriptExecutor js = getJavaScriptExecutor(driver);
+        JavascriptExecutor js = WebDriverUtils.getJavaScriptExecutor(driver);
         Boolean result = (Boolean) js.executeAsyncScript(SCRIPTS_LOADING_STOPED,
                 TimeOutsConfig.getLoadScriptTimeOutMillis(),
                 TimeOutsConfig.getLoadScriptIntervalMillis());
@@ -48,7 +46,7 @@ public class IsPageReadyUtils {
     }
 
     public static int isPageChangeStopped(WebDriver driver) {
-        JavascriptExecutor js = getJavaScriptExecutor(driver);
+        JavascriptExecutor js = WebDriverUtils.getJavaScriptExecutor(driver);
         Integer result = (Integer) js.executeAsyncScript(PAGE_CHANGES_OBSERVER_ASYNC_SCRIPT,
                 TimeOutsConfig.getPageChangesTimeOutMillis(),
                 TimeOutsConfig.getPageChangesIntervalMillis());
@@ -56,7 +54,7 @@ public class IsPageReadyUtils {
     }
 
     public static Long waitPageWindowLoaded(WebDriver driver) {
-        JavascriptExecutor js = getJavaScriptExecutor(driver);
+        JavascriptExecutor js = WebDriverUtils.getJavaScriptExecutor(driver);
         Long duration = (Long) js.executeAsyncScript(WINDOWS_LAODED_SCRIPT);
         return duration;
     }
@@ -70,10 +68,16 @@ public class IsPageReadyUtils {
     }
 
     public static Boolean waitForSpinnerToDisappear(WebDriver driver, By spinnerLocation) {
-        WebDriverWait wait = new WebDriverWait(driver,
-                TimeOutsConfig.getWaitForSpinnerToDisappearTimeOutMillis()/100,
-                TimeOutsConfig.getWaitForSpinnerToDisappearIntervalMillis());
-        return wait.until(ExpectedConditions.presenceOfElementLocated()
+        long timeOut = TimeOutsConfig.getWaitForSpinnerToDisappearTimeOutMillis() / 1000L;
+        long interval = TimeOutsConfig.getWaitForSpinnerToDisappearIntervalMillis();
+        WebDriverWait waitSpinnerIsGone = new WebDriverWait(driver, timeOut, interval);
+        ExpectedCondition<Boolean> spinnerDisappearsCondition = ExpectedConditionsUtils.getSpinnerDissapearedCondition(spinnerLocation);
+        try  {
+            waitSpinnerIsGone.until(spinnerDisappearsCondition);
+            return Boolean.valueOf(true);
+        }
+        catch (TimeoutException ex) {return Boolean.valueOf(false);}
+
     }
 
 
@@ -81,12 +85,6 @@ public class IsPageReadyUtils {
     private static  Boolean waitDocumentStateReady(WebDriver driver) {
         WebDriverWait wait = new WebDriverWait(driver,120,300);
         return wait.until(ExpectedConditionsUtils.getDocumentReadyCondition());
-    }
-
-    private static JavascriptExecutor getJavaScriptExecutor(WebDriver driver) {
-        if (driver instanceof JavascriptExecutor) {
-            return (JavascriptExecutor) driver;
-        } else throw new RuntimeException("Cannot turn this driver into JavaScript");
     }
 
 
