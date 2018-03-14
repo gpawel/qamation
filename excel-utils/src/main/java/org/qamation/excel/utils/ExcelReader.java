@@ -101,7 +101,7 @@ public class ExcelReader {
     }
 
     public void closeWorkBook() throws IOException {
-        //closeBook();
+        closeBook();
         deleteFile();
         removeShutDownHook(hook);
     }
@@ -124,7 +124,13 @@ public class ExcelReader {
 
     private void deleteFile() {
         if (theFile.exists()) {
-            theFile.delete();
+            try {
+                theFile.delete();
+            }
+            catch (Exception ex) {
+                ex.printStackTrace();
+                throw new RuntimeException("Unable to delete file "+ theFile.getName()+"\n",ex);
+            }
         }
     }
 
