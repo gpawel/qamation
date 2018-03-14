@@ -47,7 +47,7 @@ public class IsPageReadyUtils {
 
     public static int isPageChangeStopped(WebDriver driver) {
         JavascriptExecutor js = WebDriverUtils.getJavaScriptExecutor(driver);
-        Integer result = (Integer) js.executeAsyncScript(PAGE_CHANGES_OBSERVER_ASYNC_SCRIPT,
+        Long result = (Long) js.executeAsyncScript(PAGE_CHANGES_OBSERVER_ASYNC_SCRIPT,
                 TimeOutsConfig.getPageChangesTimeOutMillis(),
                 TimeOutsConfig.getPageChangesIntervalMillis());
         return result.intValue();

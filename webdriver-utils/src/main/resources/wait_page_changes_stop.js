@@ -7,17 +7,18 @@ var changes=0;
 var totalChanges=0;
 var drawStarted = false;
 var startingTime = Date.now();
-var drawingStartMoment=-1;
+var drawingStartMoment= -1;
+
 
 var screenReadyObserver = new MutationObserver(function(mutations) {
   mutations.forEach(function(mutation) {
     changes++;
   });
 });
-//var target = document.querySelector('.grid-ui');
-var target = element;
-var config = { attributes: true, subtree: true, childList: true, characterData: true, attributeOldValue: true, characterDataOldValue: true}
-screenReadyObserver.observe(target, config);
+
+
+var config = { attributes: true, subtree: true, childList: true, characterData: true, attributeOldValue: true, characterDataOldValue: true};
+screenReadyObserver.observe(element, config);
 
 var intervalObserverHandler = function() {
   if (drawStarted) {
@@ -34,16 +35,16 @@ var intervalObserverHandler = function() {
   else {
         //console.log("drawing not started");
         if (changes > 0) {
-           drawingStartMoment =  Date.now() - startingTime;
+           drawingStartMoment = Date.now() - startingTime;
            drawStarted = true;
            totalChanges = totalChanges + changes;
            changes=0;
         }
         else
            if ((Date.now() - startingTime) > timeOut) {
-            stopAndExit(0);
+            stopAndExit(-1);
            }
-        }
+
   }
 }
 
@@ -52,6 +53,6 @@ var stopAndExit = function(message) {
   screenReadyObserver.disconnect();
   console.log("Page loaded. Mutations found: ",totalChanges," Drawing started in ",drawingStartMoment);
   callback(message);
-}
+  }
 
 var screenReadyTimer = setInterval(intervalObserverHandler, pauseTime);
