@@ -19,7 +19,7 @@ import org.openqa.selenium.remote.RemoteWebDriver;
 
 public class KeyboardEmulator implements Keyboard {
 
-	private static final long KEY_PRESS_PAUSE_MIL_SEC = 200;
+	private static final long KEY_PRESS_PAUSE_MIL_SEC = 50;
 	private WebDriver driver;
 	private org.openqa.selenium.interactions.Keyboard keyboard;
 	private List<Field> keyboardKeys;

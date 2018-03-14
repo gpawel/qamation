@@ -51,7 +51,7 @@ var intervalObserverHandler = function() {
 var stopAndExit = function(message) {
   clearInterval(screenReadyTimer);
   screenReadyObserver.disconnect();
-  console.log("Page loaded. Mutations found: ",totalChanges," Drawing started in ",drawingStartMoment);
+  console.log("Ready. Mttns: ",totalChanges," Draw star in ",drawingStartMoment,"Total time: ",Date.now()-startingTime);
   callback(message);
   }
 
