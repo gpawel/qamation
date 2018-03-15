@@ -284,6 +284,7 @@
         <module>navigator</module>
         <module>excel-utils</module>
         <module>data-provider</module>
+        <module>mouse</module>
         <module>jmeter-java-sampler-abstracts</module>
         <module>jmeter-java-sampler-excel</module>
         <module>jmeter-java-sampler-web-extension</module>
