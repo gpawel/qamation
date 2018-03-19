@@ -159,6 +159,6 @@ public class TimeOutsConfig {
     }
 
     private static long getLongProperty(String propName, String defValue) {
-        return Long.parseLong(System.getProperty(propName,"defValue"));
+        return Long.parseLong(System.getProperty(propName,defValue));
     }
 }
