@@ -45,17 +45,12 @@ public class WebDriverUtils {
 		return isDocReady && isScriptsLoaded;
 	}
 
-	public boolean isPageReady(ExpectedCondition condition) {
+	public <T> T isPageReady(ExpectedCondition<T> condition)  throws TimeoutException {
     	long timeout = TimeOutsConfig.getIsPageReadyConditionTimeOutMillis()/1000;
     	long interval = TimeOutsConfig.getIsPateReadyConditionIntervalMillis();
     	WebDriverWait wait = new WebDriverWait(driver,timeout,interval);
-    	try {
-            wait.until(condition);
-            return true;
-        }
-        catch (TimeoutException ex) {
-            return false;
-        }
+        T result = wait.until(condition);
+        return result;
 	}
 
 

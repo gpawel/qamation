@@ -4,5 +4,5 @@ import org.openqa.selenium.support.ui.ExpectedCondition;
 
 public interface IsReady {
 	public boolean isReady();
-	public boolean isReady(ExpectedCondition condition);
+	public <T> T isReady(ExpectedCondition<T> condition);
 }

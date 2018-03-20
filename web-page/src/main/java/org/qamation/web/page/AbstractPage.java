@@ -10,7 +10,7 @@ public class AbstractPage<A extends WebDriverUtils> implements Page {
 		return utils.isPageReady();
 	}
 
-	public boolean isReady(ExpectedCondition condition) {
+	public <T> T isReady(ExpectedCondition <T> condition) {
 		return utils.isPageReady(condition);
 	}
 
