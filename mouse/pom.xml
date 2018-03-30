@@ -10,7 +10,20 @@
     <modelVersion>4.0.0</modelVersion>
     <artifactId>mouse</artifactId>
     <version>${mouse.version}</version>
-
+    <dependencies>
+        <dependency>
+            <groupId>org.qamation</groupId>
+            <artifactId>web-page</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.qamation</groupId>
+            <artifactId>utils</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.qamation</groupId>
+            <artifactId>webdriver-utils</artifactId>
+        </dependency>
+    </dependencies>
 
 
 </project>
