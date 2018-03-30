@@ -1,13 +1,17 @@
 package org.qamation.web.page;
 
+import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.qamation.webdriver.utils.WebDriverUtils;
 
 public class AbstractPage<A extends WebDriverUtils> implements Page {
 	protected  A utils;
 
 	public boolean isReady() {
-		boolean result = utils.isPageReady();
-		return result;
+		return utils.isPageReady();
+	}
+
+	public <T> T isReady(ExpectedCondition <T> condition) {
+		return utils.isPageReady(condition);
 	}
 
 	public void openPage(String url) {

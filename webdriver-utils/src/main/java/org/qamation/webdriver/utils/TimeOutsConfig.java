@@ -25,21 +25,27 @@ public class TimeOutsConfig {
     private final static String WAIT_FOR_SPINNER_TO_DISAPPEAR_TIME_OUT_MILLIS = "WAIT_FOR_SPINNER_TO_DISAPPEAR_TIME_OUT_MILLIS";
     private final static String WAIT_FOR_SPINNER_TO_DISAPPEAR_INTERVAL_MILLIS = "WAIT_FOR_SPINNER_TO_DISAPPEAR_INTERVAL_MILLIS";
 
-    private static long driverImplicitWaitTimeOutMillis = Long.parseLong(System.getProperty(DRIVER_IMPLICIT_WAIT_TIMEOUT_MILLIS,"0"));
+    private final static String IS_PAGE_READY_CONDITION_TIME_OUT_MILLIS = "IS_PAGE_READY_CONDITION_TIME_OUT_MILLIS";
+    private final static String IS_PAGE_READY_CONDITION_INTERVAL_MILLIS = "IS_PAGE_READY_CONDITION_INTERVAL_MILLIS";
 
-    private static long driverScriptExecTimeOutMillis = Long.parseLong(System.getProperty(DRIVER_SCRIPT_EXEC_TIMEOUT_MILLIS,"30000"));
-    private static long driverPageLoadTimeOutMillis = Long.parseLong(System.getProperty(DRIVER_PAGE_LOAD_TIMEOUT_MILLIS,"120000"));
+    private static long driverImplicitWaitTimeOutMillis = getLongProperty(DRIVER_IMPLICIT_WAIT_TIMEOUT_MILLIS,"0");
 
-    private static long loadScriptTimeOutMillis = Long.parseLong(System.getProperty(LOAD_SCRIPTS_TIMEOUT_MILLIS,"1000"));
-    private static long loadScriptIntervalMillis = Long.parseLong(System.getProperty(LOAD_SCRIPTS_INTERVAL_MILLIS,"300"));
-    private static long pageChangesTimeOutMillis = Long.parseLong(System.getProperty(PAGE_CHANGES_TIMEOUT_MILLIS,"600"));
-    private static long pageChangesIntervalMillis = Long.parseLong(System.getProperty(PAGE_CHANGES_INTERVAL_MILLIS,"400"));
+    private static long driverScriptExecTimeOutMillis = getLongProperty(DRIVER_SCRIPT_EXEC_TIMEOUT_MILLIS,"30000");
+    private static long driverPageLoadTimeOutMillis = getLongProperty(DRIVER_PAGE_LOAD_TIMEOUT_MILLIS,"120000");
 
-    private static long waitForSpinnerToAppearTimeOutMillis = Long.parseLong(System.getProperty(WAIT_FOR_SPINNER_TO_APPEAR_TIME_OUT_MILLIS,"1000"));
-    private static long waitForSpinnerToAppearIntervalMillis = Long.parseLong(System.getProperty(WAIT_FOR_SPINNER_TO_APPEAR_INTERVAL_MILLIS,"300"));
+    private static long loadScriptTimeOutMillis = getLongProperty(LOAD_SCRIPTS_TIMEOUT_MILLIS,"1000");
+    private static long loadScriptIntervalMillis = getLongProperty(LOAD_SCRIPTS_INTERVAL_MILLIS,"300");
+    private static long pageChangesTimeOutMillis = getLongProperty(PAGE_CHANGES_TIMEOUT_MILLIS,"600");
+    private static long pageChangesIntervalMillis = getLongProperty(PAGE_CHANGES_INTERVAL_MILLIS,"400");
 
-    private static long waitForSpinnerToDisappearTimeOutMillis = Long.parseLong(System.getProperty(WAIT_FOR_SPINNER_TO_DISAPPEAR_TIME_OUT_MILLIS,"300000"));
-    private static long waitForSpinnerToDisappearIntervalMillis = Long.parseLong(System.getProperty(WAIT_FOR_SPINNER_TO_DISAPPEAR_INTERVAL_MILLIS,"300"));
+    private static long waitForSpinnerToAppearTimeOutMillis = getLongProperty(WAIT_FOR_SPINNER_TO_APPEAR_TIME_OUT_MILLIS,"1000");
+    private static long waitForSpinnerToAppearIntervalMillis = getLongProperty(WAIT_FOR_SPINNER_TO_APPEAR_INTERVAL_MILLIS,"300");
+
+    private static long waitForSpinnerToDisappearTimeOutMillis = getLongProperty(WAIT_FOR_SPINNER_TO_DISAPPEAR_TIME_OUT_MILLIS,"300000");
+    private static long waitForSpinnerToDisappearIntervalMillis = getLongProperty(WAIT_FOR_SPINNER_TO_DISAPPEAR_INTERVAL_MILLIS,"300");
+
+    private static long isPageReadyConditionTimeOutMillis = getLongProperty(IS_PAGE_READY_CONDITION_TIME_OUT_MILLIS,"5000");
+    private static long isPateReadyConditionIntervalMillis = getLongProperty(IS_PAGE_READY_CONDITION_INTERVAL_MILLIS,"200");
 
     public static void setDriverTimeOuts(WebDriver driver) {
         driver.manage().timeouts().pageLoadTimeout(driverPageLoadTimeOutMillis, TimeUnit.MILLISECONDS);
@@ -134,5 +140,25 @@ public class TimeOutsConfig {
 
     public static void setWaitForSpinnerToDisappearIntervalMillis(long waitForSpinnerToDisappearIntervalMillis) {
         TimeOutsConfig.waitForSpinnerToDisappearIntervalMillis = waitForSpinnerToDisappearIntervalMillis;
+    }
+
+    public static long getIsPageReadyConditionTimeOutMillis() {
+        return isPageReadyConditionTimeOutMillis;
+    }
+
+    public static void setIsPageReadyConditionTimeOutMillis(long isPageReadyConditionTimeOutMillis) {
+        TimeOutsConfig.isPageReadyConditionTimeOutMillis = isPageReadyConditionTimeOutMillis;
+    }
+
+    public static long getIsPateReadyConditionIntervalMillis() {
+        return isPateReadyConditionIntervalMillis;
+    }
+
+    public static void setIsPateReadyConditionIntervalMillis(long isPateReadyConditionIntervalMillis) {
+        TimeOutsConfig.isPateReadyConditionIntervalMillis = isPateReadyConditionIntervalMillis;
+    }
+
+    private static long getLongProperty(String propName, String defValue) {
+        return Long.parseLong(System.getProperty(propName,defValue));
     }
 }

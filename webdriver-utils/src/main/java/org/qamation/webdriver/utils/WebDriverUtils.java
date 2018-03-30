@@ -3,6 +3,7 @@ package org.qamation.webdriver.utils;
 import java.util.regex.Matcher;
 
 import org.openqa.selenium.*;
+import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.qamation.utils.RegExpUtils;
 import org.openqa.selenium.remote.RemoteWebDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -13,8 +14,6 @@ public class WebDriverUtils {
 	protected WebDriver driver;
 
 	protected String browserName;
-
-
 
     public static JavascriptExecutor getJavaScriptExecutor(WebDriver driver) {
         if (driver instanceof JavascriptExecutor) {
@@ -44,6 +43,14 @@ public class WebDriverUtils {
 		boolean isDocReady = IsPageReadyUtils.isDocumentStateReady(driver);
 
 		return isDocReady && isScriptsLoaded;
+	}
+
+	public <T> T isPageReady(ExpectedCondition<T> condition)  throws TimeoutException {
+    	long timeout = TimeOutsConfig.getIsPageReadyConditionTimeOutMillis()/1000;
+    	long interval = TimeOutsConfig.getIsPateReadyConditionIntervalMillis();
+    	WebDriverWait wait = new WebDriverWait(driver,timeout,interval);
+        T result = wait.until(condition);
+        return result;
 	}
 
 
