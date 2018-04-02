@@ -1,6 +1,7 @@
 var callback = arguments[arguments.length-1];
 var timeOut = arguments[0];
 var interval = arguments[1];
+console.log("timeOut: ",timeOut," interval: ",interval);
 var totalScriptsLoaded = document.scripts.length;
 var scriptsSofar = document.scripts.length;
 var startTS = Date.now();
@@ -28,7 +29,7 @@ var checkLoadedScripts = function() {
 }
 
 function exit(message) {
-    console.log("total scripts loaded: ",totalScriptsLoaded," load time: ",Date.now()-startTS);
+    console.log("total scripts loaded: ",totalScriptsLoaded," load time: ",Date.now()-startTS, " message: ",message);
     clearInterval(repeat);
     callback(message)
 }

@@ -10,7 +10,7 @@ import org.qamation.webdriver.utils.WebDriverFactory;
 import java.net.URL;
 import java.util.concurrent.TimeUnit;
 
-public class OpenMailDotComAccountTest {
+public class MouseNavigationTests {
 
     WebDriver driver;
     String chromeDriverPath = "../../Selenium/Chrome/chromedriver";
@@ -19,7 +19,7 @@ public class OpenMailDotComAccountTest {
     public void setUp() {
         driver = WebDriverFactory.createChromeWebDriver(chromeDriverPath);
         page = WebPageFactory.createGeneralPageInstance(driver);
-        page.openPage("http://mail.com");
+        page.openPage("http://yahoo.com");
         page.isReady();
     }
 
