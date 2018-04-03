@@ -77,10 +77,7 @@ public class PageNavigator extends AbstractExtentionPage {
 
 	private String[] getNavigationTokens(String navigationSequence, String navigationSequenceDelimeter) {
 		NavigationString ns = new NavigationString(navigationSequence, navigationSequenceDelimeter);
-		String[] tokens = ns.getNavigationSequence();
-		if (shouldNavigate && (tokens.length == 0))
-			tokens = new String[] { navigationSequence };
-		return tokens;
+		return ns.getNavigationSequence();
 	}
 
 }

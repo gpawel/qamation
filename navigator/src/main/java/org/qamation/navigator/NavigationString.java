@@ -20,7 +20,7 @@ public class NavigationString {
 	
 	private String[] generateNavigationSequence() {
 		String[] tokens = navigation.split(splitRegEx);
-		if (tokens.length==1 || tokens[0].isEmpty()) return new String[] {};
+		if (tokens.length==1 && tokens[0].isEmpty()) return new String[] {};
 		for (int i=0; i < tokens.length; i++) {
 			tokens[i] = StringUtils.extractContentFromQuotes(tokens[i]);
 		}

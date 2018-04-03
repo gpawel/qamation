@@ -86,7 +86,7 @@ public class NavigationStringTest {
 		String line = "01";
 		NavigationString ns = new NavigationString(line,"\\.");
 		String[] tokens = ns.getNavigationSequence();
-		Assert.assertEquals(0, tokens.length);
+		Assert.assertEquals(1, tokens.length);
 	}
 	@Test
 	public void parseTwoTokensNavigationLine() {
@@ -101,5 +101,23 @@ public class NavigationStringTest {
 		NavigationString ns = new NavigationString(line,"\\.");
 		String[] tokens = ns.getNavigationSequence();
 		Assert.assertEquals(3, tokens.length);
+	}
+
+	@Test
+	public void parseNavigationWithMouse() {
+	    String line = "01.02.<@!{xpath=\"/*[@id='login']\"}>.bla{SPACE}bla";
+	    NavigationString ns = new NavigationString(line,"\\.");
+	    String[] tokens = ns.getNavigationSequence();
+	    Assert.assertEquals(4,tokens.length);
+	    Assert.assertTrue(tokens[2].equalsIgnoreCase("<@!{xpath=\"/*[@id='login']\"}>"));
+	}
+
+	@Test
+	public void parseNavigationWithOnlyOneMouseNavigation() {
+		String line = "<@!{xpath=\"/*[@id='login']\"}>";
+		NavigationString ns = new NavigationString(line,"\\.");
+		String[] tokens = ns.getNavigationSequence();
+		Assert.assertEquals(1,tokens.length);
+		Assert.assertTrue(tokens[0].equalsIgnoreCase("<@!{xpath=\"/*[@id='login']\"}>"));
 	}
 }
