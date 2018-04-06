@@ -110,6 +110,9 @@ public class NavigationStringTest {
 	    String[] tokens = ns.getNavigationSequence();
 	    Assert.assertEquals(4,tokens.length);
 	    Assert.assertTrue(tokens[2].equalsIgnoreCase("<@!{xpath=\"/*[@id='login']\"}>"));
+	    Assert.assertTrue(tokens[0].equalsIgnoreCase("01"));
+	    Assert.assertEquals("02",tokens[1]);
+	    Assert.assertEquals("bla{SPACE}bla",tokens[3]);
 	}
 
 	@Test
@@ -119,5 +122,10 @@ public class NavigationStringTest {
 		String[] tokens = ns.getNavigationSequence();
 		Assert.assertEquals(1,tokens.length);
 		Assert.assertTrue(tokens[0].equalsIgnoreCase("<@!{xpath=\"/*[@id='login']\"}>"));
+	}
+
+	@Test
+	public void parseNavigationOnlyMouseNavigation() {
+
 	}
 }
