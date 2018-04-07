@@ -126,6 +126,11 @@ public class NavigationStringTest {
 
 	@Test
 	public void parseNavigationOnlyMouseNavigation() {
-
+		String line = "<@!{xpath=\"/*[@id='login']\"}>|<@!{xpath=\"/*[@id='password']\"}>";
+		NavigationString ns = new NavigationString(line,"\\|");
+		String[] tokens = ns.getNavigationSequence();
+		Assert.assertEquals(2,tokens.length);
+		Assert.assertEquals("<@!{xpath=\"/*[@id='login']\"}>",tokens[0]);
+		Assert.assertEquals("<@!{xpath=\"/*[@id='password']\"}>",tokens[1]);
 	}
 }

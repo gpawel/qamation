@@ -10,6 +10,7 @@ import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.ie.InternetExplorerDriver;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.RemoteWebDriver;
+import org.qamation.utils.ResourceUtils;
 
 public class WebDriverFactory {
 
@@ -26,6 +27,26 @@ public class WebDriverFactory {
 		WebDriver driver = new ChromeDriver(dc);
 		return driver;
 	}
+
+	public static WebDriver createChromeWebDriver() {
+		String chromeDriverName;
+
+
+		return createChromeWebDriver(path);
+	}
+
+	private static String getChromeDriverPath(String s) {
+		String defValue = System.getProperty("user.dir")+"/Selenium/ChromeDriver/chromedriver";
+		String path = ResourceUtils.getSystemProperty("webdriver.chrome.driver",defValue);
+		String p = System.getProperty(s);
+
+	}
+
+	private static String getOSName() {
+		return System.getProperty("os.name");
+	}
+
+	private static String get
 
 	public static WebDriver createIEWebDriver(String path) {
 		System.setProperty("webdriver.ie.driver",path);

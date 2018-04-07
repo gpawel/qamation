@@ -10,4 +10,9 @@ public class ResourceUtils {
         ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
         return classLoader.getResource(resourceName);
     }
+    public static String getSystemProperty(String property, String defValue) {
+        String value = System.getProperty(property);
+        if (value == null) return defValue;
+        return value;
+    }
 }
