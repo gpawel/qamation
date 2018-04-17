@@ -1,7 +1,6 @@
 package org.qamation.webdriver.utils;
 
 import java.net.URL;
-import java.util.concurrent.TimeUnit;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -11,8 +10,12 @@ import org.openqa.selenium.ie.InternetExplorerDriver;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.RemoteWebDriver;
 import org.qamation.utils.ResourceUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class WebDriverFactory {
+
+    public static Logger log = LoggerFactory.getLogger(WebDriverFactory.class);
 
 	public static WebDriver createRemoteIEDriver(URL hub) {
 		DesiredCapabilities dc =  setIECapabilities();
@@ -29,24 +32,19 @@ public class WebDriverFactory {
 	}
 
 	public static WebDriver createChromeWebDriver() {
-		String chromeDriverName;
-
-
-		return createChromeWebDriver(path);
+		String chromeDriverPath = getChromeDriverPath();
+		return createChromeWebDriver(chromeDriverPath);
 	}
 
-	private static String getChromeDriverPath(String s) {
+	private static String getChromeDriverPath() {
 		String defValue = System.getProperty("user.dir")+"/Selenium/ChromeDriver/chromedriver";
-		String path = ResourceUtils.getSystemProperty("webdriver.chrome.driver",defValue);
-		String p = System.getProperty(s);
 
+		return ResourceUtils.getSystemProperty("webdriver.chrome.driver",defValue);
 	}
 
 	private static String getOSName() {
 		return System.getProperty("os.name");
 	}
-
-	private static String get
 
 	public static WebDriver createIEWebDriver(String path) {
 		System.setProperty("webdriver.ie.driver",path);
