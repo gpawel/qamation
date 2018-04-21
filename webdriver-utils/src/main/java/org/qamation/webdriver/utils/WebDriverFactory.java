@@ -38,7 +38,6 @@ public class WebDriverFactory {
 
 	private static String getChromeDriverPath() {
 		String defValue = System.getProperty("user.dir")+"/Selenium/ChromeDriver/chromedriver";
-
 		return ResourceUtils.getSystemProperty("webdriver.chrome.driver",defValue);
 	}
 
