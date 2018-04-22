@@ -53,7 +53,7 @@ public class PageNavigator extends AbstractExtentionPage {
 		WebPageNavigator navigator = getWebPageNavigator();
 		String[] tokens = getNavigationTokens(navigationSequence, navigationSequenceDelimeter);
 		long start_ts = System.currentTimeMillis();
-		navigator.processNavigationSequience(tokens);
+		navigator.processNavigationSequience(tokens, page);
 		long end_ts = System.currentTimeMillis();
 		return end_ts - start_ts;
 	}
@@ -72,7 +72,7 @@ public class PageNavigator extends AbstractExtentionPage {
 	}
 
 	private WebPageNavigator getWebPageNavigator() {
-		return new WebPageNavigator(driver, pageImplementationClass);
+		return new WebPageNavigator(driver);
 	}
 
 	private String[] getNavigationTokens(String navigationSequence, String navigationSequenceDelimeter) {

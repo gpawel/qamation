@@ -1,0 +1,20 @@
+<@!> click
+<@!{xpath=}>
+<@!{class=}>
+<@!{css=}>
+<@!{id=}>
+<@!{link=}>
+<@!{name=}>
+<@!{plink=}>
+<@!{tag=}>
+<@!{xpath=}>
+
+<@!{xpath=}>
+<@!!> double click
+<@!!{xpath=}>
+<@?> context click
+<@?{css=}>
+<@^> mouse up
+<@_> mouse down
+<@~> mouse move
+<@~{xpath=}[x,y]>

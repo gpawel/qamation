@@ -2,8 +2,10 @@ package org.qamation.navigator;
 
 import java.util.HashMap;
 import java.util.Set;
+import java.util.function.Predicate;
+
 import org.qamation.keyboard.KeyboardEmulator;
-import org.qamation.web.page.Page;
+import org.qamation.web.page.IsReady;
 import org.qamation.utils.StringUtils;
 import org.qamation.web.page.WebPageFactory;
 import org.openqa.selenium.WebDriver;
@@ -19,32 +21,26 @@ public class WebPageNavigator {
 		SPECIAL_KEY_STARTS_MAP.put("^{","{CONTROL+");
 		SPECIAL_KEY_STARTS_MAP.put("%{","{ALT+");
 	}
-	
-	private Page page;
+
+
 	private KeyboardEmulator keyboard;
 	private WebDriver driver;
-	
-	public WebPageNavigator(WebDriver driver, String pageImplClass) {
+
+	public WebPageNavigator(WebDriver driver) {
 		this.driver = driver;
-		this.page = WebPageFactory.createPageInstance(pageImplClass, this.driver);
 		this.keyboard = new KeyboardEmulator(this.driver);
 	}
 
-	public WebPageNavigator(WebDriver driver, Page page) {
-		this.driver = driver;
-		this.page = page;
-		this.keyboard = new KeyboardEmulator(this.driver);
-	}
-	
-	public void processNavigationSequience(String[] tokens) {
+	public void processNavigationSequience(String[] tokens, IsReady page) {
 		for (String t : tokens) {
-			String[] subTokens= processToken(t);
+			String[] subTokens= processToken(t, page);
 			String lastSubToken = subTokens[subTokens.length-1];
-			pressEnterIfLastSubTokenIsNotSpecialKey(lastSubToken);
+			pressEnterIfLastSubTokenIsNotSpecialKey(lastSubToken,page);
 		}
 	}
-	
-	private void pressEnterIfLastSubTokenIsNotSpecialKey(String lastSubToken) {
+
+
+	private void pressEnterIfLastSubTokenIsNotSpecialKey(String lastSubToken, IsReady page) {
 		if (isSpecialKey(lastSubToken)) return;
 		else {
 			keyboard.sendSpecialKeys("ENTER");
@@ -60,9 +56,9 @@ public class WebPageNavigator {
 		return false;
 	}
 	
-	private String[] processToken(String token) {
+	private String[] processToken(String token, IsReady page) {
 		String[] subTokens = splitTokenBy(SUBTOKENS_DELIMETER, token);
-		processSubTokens(subTokens);
+		processSubTokens(subTokens, page);
 		return subTokens;
 	}
 
@@ -71,17 +67,17 @@ public class WebPageNavigator {
 		return subTokens;
 	}
 	
-	private void processSubTokens(String[] subTokens) {
+	private void processSubTokens(String[] subTokens, IsReady page) {
 		for (String st : subTokens) {
 			if (isSpecialKey(st)) {
-				processSubTokenAsSpecialKey(st);
+				processSubTokenAsSpecialKey(st, page);
 				continue;
 			}
 			keyboard.sendKeys(StringUtils.convertCharSequenceToArray(st));
 		}
 	}
 	
-	private void processSubTokenAsSpecialKey(String specialKey) {
+	private void processSubTokenAsSpecialKey(String specialKey, IsReady page) {
 		String convertedSpecialKey = rewriteSpecialKey(specialKey);
 		String s = StringUtils.extractContentFromCurlyBruckets(convertedSpecialKey);
 		keyboard.sendSpecialKeys(s);
