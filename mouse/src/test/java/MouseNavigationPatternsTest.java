@@ -3,7 +3,7 @@ import org.qamation.utils.RegExpUtils;
 import static org.junit.Assert.*;
 
 public class MouseNavigationPatternsTest {
-    public static final String MOUSE_NAVIGATION_REGEXP = "<@(*)>";
+    public static final String MOUSE_NAVIGATION_REGEXP = "<@([!{1,2},\\?,]*)>|<@(.*)\\{.*>";
     public static final String MOUSE_BYSTRING_REGEXP = "\\{(.*)\\}";
 
     @Test
