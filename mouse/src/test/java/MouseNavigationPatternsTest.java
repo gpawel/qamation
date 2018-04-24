@@ -3,8 +3,8 @@ import org.qamation.utils.RegExpUtils;
 import static org.junit.Assert.*;
 
 public class MouseNavigationPatternsTest {
-    public static final String MOUSE_NAVIGATION_REGEXP = "<@(.*)>";
-    public static final String MOUSE_BYSTRING_REGEXP = "{(.*)}";
+    public static final String MOUSE_NAVIGATION_REGEXP = "<@(*)>";
+    public static final String MOUSE_BYSTRING_REGEXP = "\\{(.*)\\}";
 
     @Test
     public void getMouseNavigationString0() {
@@ -30,8 +30,12 @@ public class MouseNavigationPatternsTest {
     @Test
     public void getMouseNavigationString3() {
         String line = "<@!{xpath=\"/*[@id='login']\"}>";
+        assertTrue(isMouseNavigation(line));
         String[] found=extractMouseNavigation(line);
         assertEquals("!{xpath=\"/*[@id='login']\"}",found[1]);
+        found = extractByString(found[1]);
+        assertEquals("xpath=\"/*[@id='login']\"",found[1]);
+
     }
 
     private String[]  extractMouseNavigation(String navigationString) {
@@ -46,6 +50,19 @@ public class MouseNavigationPatternsTest {
         RegExpUtils utils = new RegExpUtils(input,regExp);
         utils.printAllFindings();
         return utils.getAllFindings();
+    }
+
+    private boolean isMouseNavigation(String input) {
+        return doesMatch(input, MOUSE_NAVIGATION_REGEXP);
+    }
+
+    private boolean isMouseByString(String input) {
+        return doesMatch(input,MOUSE_BYSTRING_REGEXP);
+    }
+
+    private boolean doesMatch(String input, String regExp) {
+        RegExpUtils utils = new RegExpUtils(input,regExp);
+        return utils.isInputMatches();
     }
 
 
