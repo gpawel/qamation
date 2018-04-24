@@ -1,42 +1,56 @@
 import org.junit.Test;
+import org.openqa.selenium.By;
 import org.qamation.utils.RegExpUtils;
+import org.qamation.webdriver.utils.LocatorFactory;
+
 import static org.junit.Assert.*;
 
 public class MouseNavigationPatternsTest {
-    public static final String MOUSE_NAVIGATION_REGEXP = "<@([!{1,2},\\?,]*)>|<@(.*)\\{.*>";
-    public static final String MOUSE_BYSTRING_REGEXP = "\\{(.*)\\}";
+    public static final String MOUSE_NAVIGATION_REGEXP = "<@([!]{1,2}|[\\?_~\\^]).*>";
+    public static final String MOUSE_BYSTRING_REGEXP = "<@.*\\{(.*)\\}>";
 
     @Test
     public void getMouseNavigationString0() {
         String line = "01.02.<@!{xpath=\"/*[@id='login']\"}>.bla{SPACE}bla";
         String[] found=extractMouseNavigation(line);
-        assertEquals("!{xpath=\"/*[@id='login']\"}",found[1]);
+        assertEquals("!",found[1]);
     }
 
     @Test
     public void getMouseNavigaionString1() {
-        String line = "<@!{xpath=\"/*[@id='login']\"}>.bla{SPACE}bla";
+        String line = "<@!!{xpath=\"/*[@id='login']\"}>.bla{SPACE}bla";
         String[] found=extractMouseNavigation(line);
-        assertEquals("!{xpath=\"/*[@id='login']\"}",found[1]);
+        assertEquals("!!",found[1]);
     }
 
     @Test
     public void getMouseNavigationString2() {
-        String line = "01.02.<@!{xpath=\"/*[@id='login']\"}>";
+        String line = "01.02.<@?{xpath=\"/*[@id='login']\"}>";
         String[] found=extractMouseNavigation(line);
-        assertEquals("!{xpath=\"/*[@id='login']\"}",found[1]);
+        assertEquals("?",found[1]);
     }
 
     @Test
     public void getMouseNavigationString3() {
-        String line = "<@!{xpath=\"/*[@id='login']\"}>";
+        String line = "<@^{xpath=\"/*[@id='login']\"}>";
         assertTrue(isMouseNavigation(line));
         String[] found=extractMouseNavigation(line);
-        assertEquals("!{xpath=\"/*[@id='login']\"}",found[1]);
-        found = extractByString(found[1]);
+        assertEquals("^",found[1]);
+        assertTrue(isMouseByString(line));
+        found = extractByString(line);
         assertEquals("xpath=\"/*[@id='login']\"",found[1]);
-
     }
+
+    @Test
+    public void getLocatorFactory() {
+        String line = "01.02.<@!{xpath=\"/*[@id='login']\"}>.bla{SPACE}bla";
+        String[] found = extractByString(line);
+        assertEquals("xpath=\"/*[@id='login']\"",found[1]);
+        By locator = LocatorFactory.getLocator(found[1]);
+        assertEquals("By.xpath: \"/*[@id='login']\"",locator.toString());
+    }
+
+
 
     private String[]  extractMouseNavigation(String navigationString) {
         return getAllFindings(navigationString,MOUSE_NAVIGATION_REGEXP);
