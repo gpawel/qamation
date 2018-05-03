@@ -13,7 +13,7 @@ public class MouseNavigationSuplier {
 
 
 
-    public  Action get(WebDriver driver, String mouseNavigation) {
-        return a->{Actions actions = new Actions(driver); actions.click();};
+    public  Action get(WebDriver driver, String mouseNavigationToken) {
+        return ()->{Actions actions = new Actions(driver); actions.click();};
     }
 }

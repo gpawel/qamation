@@ -14,6 +14,8 @@ public class MouseNavigationPatternsTest {
         String line = "01.02.<@!{xpath=\"/*[@id='login']\"}>.bla{SPACE}bla";
         String[] found=extractMouseNavigation(line);
         assertEquals("!",found[1]);
+        found = extractByString(line);
+        assertEquals("xpath=\"/*[@id='login']\"",found[1]);
     }
 
     @Test
@@ -21,6 +23,8 @@ public class MouseNavigationPatternsTest {
         String line = "<@!!{xpath=\"/*[@id='login']\"}>.bla{SPACE}bla";
         String[] found=extractMouseNavigation(line);
         assertEquals("!!",found[1]);
+        found = extractByString(line);
+        assertEquals("xpath=\"/*[@id='login']\"",found[1]);
     }
 
     @Test
@@ -28,6 +32,8 @@ public class MouseNavigationPatternsTest {
         String line = "01.02.<@?{xpath=\"/*[@id='login']\"}>";
         String[] found=extractMouseNavigation(line);
         assertEquals("?",found[1]);
+        found = extractByString(line);
+        assertEquals("xpath=\"/*[@id='login']\"",found[1]);
     }
 
     @Test
