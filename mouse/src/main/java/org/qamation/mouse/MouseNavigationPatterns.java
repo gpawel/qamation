@@ -11,7 +11,7 @@ import java.util.function.Function;
 import java.util.function.Supplier;
 
 public class MouseNavigationPatterns {
-    public static final String MOUSE_NAVIGATION_REGEXP = "<@([!]{1,2}|[\\?_~\\^]).*>";
+    public static final String MOUSE_NAVIGATION_REGEXP = "<@(([!\\?_~\\^]){1,})+.*>";//"<@([!]{1,2}|[\\?_~\\^]).*>";
     public static final String MOUSE_NAVIGATION_COORDINATES_REGEXP = "<@.*\\[(\\d{1,},\\d{1,})\\]>";
     public static final String MOUSE_BYSTRING_REGEXP = "<@.*\\{(.*)\\}>";
 
