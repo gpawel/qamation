@@ -6,9 +6,6 @@ import org.qamation.webdriver.utils.LocatorFactory;
 import static org.junit.Assert.*;
 
 public class MouseNavigationPatternsTest {
-    public static final String MOUSE_NAVIGATION_REGEXP = "<@([!]{1,2}|[\\?_~\\^]).*>";
-    public static final String MOUSE_NAVIGATION_COORDINATES_REGEXP = "<@.*\\[(\\d{1,},\\d{1,})\\]>";
-    public static final String MOUSE_BYSTRING_REGEXP = "<@.*\\{(.*)\\}>";
 
     @Test
     public void getMouseNavigationString0() {
