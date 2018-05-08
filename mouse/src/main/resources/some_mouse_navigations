@@ -14,7 +14,9 @@
 <@!!{xpath=}>
 <@?> context click
 <@?{css=}>
-<@^> mouse up
+<@^> release
+<@!_> mouse click and hold
 <@_> mouse down
 <@~> mouse move
 <@~{xpath=}[x,y]>
+<@~!> drag and drop
