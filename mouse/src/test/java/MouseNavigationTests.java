@@ -1,6 +1,7 @@
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Action;
@@ -21,12 +22,15 @@ public class MouseNavigationTests {
     WebDriver driver;
     String chromeDriverPath = "../../Selenium/Chrome/chromedriver";
     Page page;
+    String xpath = "xpath=//*[@id='mega-bottombar']/ul/li[2]";
+    By by;//= LocatorFactory.getLocator(xpath);
     @Before
     public void setUp() {
         driver = WebDriverFactory.createChromeWebDriver(chromeDriverPath);
         page = WebPageFactory.createGeneralPageInstance(driver);
         page.openPage("http://yahoo.com");
         page.isReady();
+        by = LocatorFactory.getLocator(xpath);
     }
 
     @After
@@ -36,11 +40,17 @@ public class MouseNavigationTests {
 
     @Test
     public void testClick() {
+        WebElement el = driver.findElement(by);
+
         MouseActionSupplier mouseActions = new MouseActionSupplier(driver);
         Action action = mouseActions.getAction("!");
         action.perform();
+        /*
+        mouseActions = new MouseActionSupplier(driver,el);
         action = mouseActions.getAction("!!");
         action.perform();
+        */
+
     }
     @Test
     public void testClickByDriver() {
