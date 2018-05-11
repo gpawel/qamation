@@ -1,4 +1,5 @@
 import org.junit.After;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.openqa.selenium.By;
@@ -15,14 +16,17 @@ import org.qamation.webdriver.utils.LocatorFactory;
 import org.qamation.webdriver.utils.WebDriverFactory;
 
 import java.net.URL;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.concurrent.TimeUnit;
+import java.util.function.Supplier;
 
 public class MouseNavigationTests {
 
     WebDriver driver;
     String chromeDriverPath = "../../Selenium/Chrome/chromedriver";
     Page page;
-    String xpath = "xpath=//*[@id='mega-bottombar']/ul/li[2]";
+    String xpath = "xpath=//*[@id='mega-bottombar']/ul/li[2]/a";
     By by;//= LocatorFactory.getLocator(xpath);
     @Before
     public void setUp() {
@@ -40,16 +44,35 @@ public class MouseNavigationTests {
 
     @Test
     public void testClick() {
-        WebElement el = driver.findElement(by);
 
-        MouseActionSupplier mouseActions = new MouseActionSupplier(driver);
-        Action action = mouseActions.getAction("!");
-        action.perform();
+        MouseActionSupplier mouseActions = new MouseActionSupplier(driver,768,55);
+        Action a = mouseActions.getAction("~");
+        a.perform();
+        a = mouseActions.getAction("!");
+        a.perform();
+        page.isReady();
+        Assert.assertTrue(driver.getPageSource().contains("Sign in"));
+
+        /*
+        By b = LocatorFactory.getLocator("uh-signin");
+        WebElement el = driver.findElement(b);
+        System.out.println(el.getLocation().x);
+        System.out.println(el.getLocation().y);
+        */
+
         /*
         mouseActions = new MouseActionSupplier(driver,el);
         action = mouseActions.getAction("!!");
         action.perform();
         */
+        /*
+        WebElement el = driver.findElement(by);
+        Map<String,Supplier<Action>> map = new HashMap<>();
+        map.put("!",()->new Actions(driver).click().build());
+        Action act = map.get("!").get();
+        act.perform();
+        */
+
 
     }
     @Test
@@ -61,8 +84,7 @@ public class MouseNavigationTests {
     //'Game of Thrones' star is World's Strongest Man
     @Test
     public void testClickByElement() {
-        String xpath = "xpath=//h2[contains(text(),'The most horrendous')]";
-        WebElement el = driver.findElement(LocatorFactory.getLocator(xpath));
+        WebElement el = driver.findElement(by);
         el.click();
     }
 
