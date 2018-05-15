@@ -3,6 +3,7 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.openqa.selenium.By;
+import org.openqa.selenium.Point;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Action;
@@ -72,20 +73,39 @@ public class MouseNavigationTests {
         Action act = map.get("!").get();
         act.perform();
         */
+    }
+
+    @Test
+    public void testMovingActions() {
+        String moviesLocation = "xpath=(//a[contains(text(),'Movies')])[2]";
+        String newsLocation = "xpath=(//a[contains(text(),'News')])[2]";
+        WebElement moviesElement = findElement(moviesLocation);
+        Point movies = moviesElement.getLocation();
+        Point news = getWebElementLocation(newsLocation);
+        int xoffset = movies.getX() - news.getX();
+        MouseActionSupplier mouseActions = new MouseActionSupplier(driver,moviesElement,-xoffset,0);
+        Action a = mouseActions.getAction("~!");
+        a.perform();
+        a = mouseActions.getAction("^");
+        a.perform();
+        a = mouseActions.getAction("~^");
+        a.perform();
+        mouseActions = new MouseActionSupplier(driver);
+        a = mouseActions.getAction("!");
+        a.perform();
+        page.isReady();
 
 
     }
-    @Test
-    public void testClickByDriver() {
-        Actions actions = new Actions(driver);
-        actions.moveByOffset(5,5).build().perform();
-        actions.click().build().perform();
+
+    private Point getWebElementLocation(String location) {
+        WebElement el = findElement(location);
+        return el.getLocation();
     }
-    //'Game of Thrones' star is World's Strongest Man
-    @Test
-    public void testClickByElement() {
-        WebElement el = driver.findElement(by);
-        el.click();
+
+    private WebElement findElement(String location) {
+        By by = LocatorFactory.getLocator(location);
+        return driver.findElement(by);
     }
 
 }
