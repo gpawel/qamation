@@ -84,18 +84,13 @@ public class MouseNavigationTests {
         Point news = getWebElementLocation(newsLocation);
         int xoffset = movies.getX() - news.getX();
         MouseActionSupplier mouseActions = new MouseActionSupplier(driver,moviesElement,-xoffset,0);
-        Action a = mouseActions.getAction("~!");
+        Action a = mouseActions.getAction("~^");
         a.perform();
-        a = mouseActions.getAction("^");
-        a.perform();
-        a = mouseActions.getAction("~^");
-        a.perform();
-        mouseActions = new MouseActionSupplier(driver);
-        a = mouseActions.getAction("!");
+        a = mouseActions.getAction("_!");
         a.perform();
         page.isReady();
-
-
+        String u = driver.getCurrentUrl();
+        Assert.assertEquals("https://ca.news.yahoo.com/",u);
     }
 
     private Point getWebElementLocation(String location) {

@@ -26,6 +26,7 @@ public class MouseActionSupplier {
     public MouseActionSupplier(WebDriver driver, WebElement el) {
         actionsStorage = new HashMap<>();
         driverActions = getActions(driver);
+        actionsStorage.put("_!",()-> driverActions.click().build());
         actionsStorage.put("!",()-> driverActions.click(el).build());
         actionsStorage.put("!_",()-> driverActions.clickAndHold(el).build());
         actionsStorage.put("?",() -> driverActions.contextClick(el).build());
