@@ -104,6 +104,7 @@ public class KeyboardEmulator implements Keyboard {
 		}
 	}
 
+	/*
 	private boolean processKeyCombination(String s) {
 		if (s.contains("+")) {
 			String[] substrings = s.split("\\+");
@@ -118,7 +119,7 @@ public class KeyboardEmulator implements Keyboard {
 		}
 		return false;
 	}
-
+*/
 	private boolean processKeyChord(String s) {
 		if (s.contains("+")) {
 			String[] substrings = s.split("\\+");
