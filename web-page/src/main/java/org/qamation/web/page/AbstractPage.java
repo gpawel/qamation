@@ -5,6 +5,7 @@ import org.qamation.webdriver.utils.WebDriverUtils;
 
 public class AbstractPage<A extends WebDriverUtils> implements Page {
 	protected  A utils;
+	protected long readyTime;
 
 	public boolean isReady() {
 		return utils.isPageReady();
@@ -37,6 +38,11 @@ public class AbstractPage<A extends WebDriverUtils> implements Page {
 
 	public String getSource() {		
 		return utils.getPageSource();
+	}
+
+	@Override
+	public long getPageReadyTime() {
+		return utils.getPageReadyTime();
 	}
 
 }

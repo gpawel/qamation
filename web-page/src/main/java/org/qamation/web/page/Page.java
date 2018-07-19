@@ -7,4 +7,5 @@ public interface Page extends IsReady {
 	public String readTextFrom(String location);
 	public String readTextFrom(String location, int length);
 	public String getSource();
+	public long getPageReadyTime();
 }

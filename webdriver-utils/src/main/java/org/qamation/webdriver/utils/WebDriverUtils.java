@@ -12,8 +12,9 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class WebDriverUtils {
 	protected WebDriver driver;
-
 	protected String browserName;
+	protected long beforeReady;
+	protected long afterReady;
 
     public static JavascriptExecutor getJavaScriptExecutor(WebDriver driver) {
         if (driver instanceof JavascriptExecutor) {
@@ -35,21 +36,29 @@ public class WebDriverUtils {
 	}
 
 	public boolean isPageReady() {
-		if (browserName.toLowerCase().contains("expl"))
-			return IsPageReadyUtils.isDocumentStateReady(driver);
-
+    	setBeforeReadyTime();
+		if (browserName.toLowerCase().contains("expl")) {
+			boolean result = IsPageReadyUtils.isDocumentStateReady(driver);
+			setAfterReadyTime();
+			return result;
+		}
 		boolean isScriptsLoaded = IsPageReadyUtils.isScriptsLoadingDone(driver);
-
 		boolean isDocReady = IsPageReadyUtils.isDocumentStateReady(driver);
-
+		setAfterReadyTime();
 		return isDocReady && isScriptsLoaded;
 	}
+
+
 
 	public <T> T isPageReady(ExpectedCondition<T> condition)  throws TimeoutException {
     	long timeout = TimeOutsConfig.getIsPageReadyConditionTimeOutMillis()/1000;
     	long interval = TimeOutsConfig.getIsPateReadyConditionIntervalMillis();
     	WebDriverWait wait = new WebDriverWait(driver,timeout,interval);
+
+    	setBeforeReadyTime();
         T result = wait.until(condition);
+        setAfterReadyTime();
+
         return result;
 	}
 
@@ -115,13 +124,31 @@ public class WebDriverUtils {
 		return browserName;
 	}
 
+	public long getPageReadyTime() {
+    	return afterReady - beforeReady;
+	}
+
 	protected void checkWebDriberNotNull() {
 		if (driver == null)
 			throw new RuntimeException("Driver is null");
+	}
+
+	protected void setAfterReadyTime() {
+		setTimeStemp(afterReady);
+	}
+
+	protected void setBeforeReadyTime() {
+		setTimeStemp(beforeReady);
+	}
+
+	private void setTimeStemp(long t) {
+		t=System.currentTimeMillis();
 	}
 
 	private String getBrowserName(WebDriver driver) {
 		Capabilities cap = ((RemoteWebDriver)driver).getCapabilities();
 		return cap.getBrowserName();
 	}
+
+
 }
