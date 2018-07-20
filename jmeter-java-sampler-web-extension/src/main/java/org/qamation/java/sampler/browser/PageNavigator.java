@@ -43,6 +43,7 @@ public class PageNavigator extends AbstractExtentionPage {
 	@Override
 	protected void toDo() {
 		page = getPageInstance();
+		page.resetTimer();
 		if (shouldNavigate) {
 			navigate(navigationSequence, navigationSequenceDelimeter);
 		}

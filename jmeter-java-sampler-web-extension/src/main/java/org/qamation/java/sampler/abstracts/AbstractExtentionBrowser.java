@@ -21,7 +21,7 @@ public abstract class AbstractExtentionBrowser extends AbstractExtention {
 
 	
 	public Arguments getDefaultParameters() {
-        Arguments defaultParameters = super.getDefaultParameters();        
+		Arguments defaultParameters = super.getDefaultParameters();
         defaultParameters.addArgument(BROWSER_VARIABLE,"${BROWSER_NAME}");
         return defaultParameters;
     }

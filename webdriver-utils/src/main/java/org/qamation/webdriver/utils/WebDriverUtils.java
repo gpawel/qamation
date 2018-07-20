@@ -13,8 +13,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 public class WebDriverUtils {
 	protected WebDriver driver;
 	protected String browserName;
-	protected long beforeReady;
-	protected long afterReady;
+	protected long waitTime;
 
     public static JavascriptExecutor getJavaScriptExecutor(WebDriver driver) {
         if (driver instanceof JavascriptExecutor) {
@@ -36,15 +35,17 @@ public class WebDriverUtils {
 	}
 
 	public boolean isPageReady() {
-    	setBeforeReadyTime();
+		PageLoadTimer timer = new PageLoadTimer();
+		timer.start();
 		if (browserName.toLowerCase().contains("expl")) {
 			boolean result = IsPageReadyUtils.isDocumentStateReady(driver);
-			setAfterReadyTime();
+			timer.stop();
+			addPageReadyTime(timer.getDuration());
 			return result;
 		}
 		boolean isScriptsLoaded = IsPageReadyUtils.isScriptsLoadingDone(driver);
 		boolean isDocReady = IsPageReadyUtils.isDocumentStateReady(driver);
-		setAfterReadyTime();
+		timer.stop(); addPageReadyTime(timer.getDuration());
 		return isDocReady && isScriptsLoaded;
 	}
 
@@ -53,12 +54,11 @@ public class WebDriverUtils {
 	public <T> T isPageReady(ExpectedCondition<T> condition)  throws TimeoutException {
     	long timeout = TimeOutsConfig.getIsPageReadyConditionTimeOutMillis()/1000;
     	long interval = TimeOutsConfig.getIsPateReadyConditionIntervalMillis();
+    	PageLoadTimer timer = new PageLoadTimer();
     	WebDriverWait wait = new WebDriverWait(driver,timeout,interval);
-
-    	setBeforeReadyTime();
+		timer.start();
         T result = wait.until(condition);
-        setAfterReadyTime();
-
+		timer.stop();addPageReadyTime(timer.getDuration());
         return result;
 	}
 
@@ -124,31 +124,30 @@ public class WebDriverUtils {
 		return browserName;
 	}
 
-	public long getPageReadyTime() {
-    	return afterReady - beforeReady;
-	}
 
 	protected void checkWebDriberNotNull() {
 		if (driver == null)
 			throw new RuntimeException("Driver is null");
 	}
 
-	protected void setAfterReadyTime() {
-		setTimeStemp(afterReady);
-	}
 
-	protected void setBeforeReadyTime() {
-		setTimeStemp(beforeReady);
-	}
 
-	private void setTimeStemp(long t) {
-		t=System.currentTimeMillis();
-	}
+
 
 	private String getBrowserName(WebDriver driver) {
 		Capabilities cap = ((RemoteWebDriver)driver).getCapabilities();
 		return cap.getBrowserName();
 	}
 
+	public void resetTimer() {
+    	waitTime = 0;
+	}
 
+	public void addPageReadyTime(long duration) {
+    	waitTime+=duration;
+	}
+
+	public long getPageReadyTime() {
+		return waitTime;
+	}
 }

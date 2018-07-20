@@ -3,9 +3,8 @@ package org.qamation.web.page;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.qamation.webdriver.utils.WebDriverUtils;
 
-public class AbstractPage<A extends WebDriverUtils> implements Page {
+public abstract class AbstractPage<A extends WebDriverUtils> implements Page {
 	protected  A utils;
-	protected long readyTime;
 
 	public boolean isReady() {
 		return utils.isPageReady();
@@ -44,5 +43,16 @@ public class AbstractPage<A extends WebDriverUtils> implements Page {
 	public long getPageReadyTime() {
 		return utils.getPageReadyTime();
 	}
+
+    @Override
+    public void resetTimer() {
+        utils.resetTimer();
+    }
+
+	@Override
+	public void addPageReadyTime(long duration) {
+		utils.addPageReadyTime(duration);
+	}
+
 
 }
