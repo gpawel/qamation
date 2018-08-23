@@ -2,12 +2,13 @@ package org.qamation.navigator;
 
 import java.util.HashMap;
 import java.util.Set;
-import java.util.function.Predicate;
 
+import org.openqa.selenium.interactions.Action;
 import org.qamation.keyboard.KeyboardEmulator;
+import org.qamation.mouse.MouseEmulator;
 import org.qamation.web.page.IsReady;
 import org.qamation.utils.StringUtils;
-import org.qamation.web.page.WebPageFactory;
+
 import org.openqa.selenium.WebDriver;
 
 public class WebPageNavigator {
@@ -47,7 +48,11 @@ public class WebPageNavigator {
 			page.isReady();
 		}
 	}
-	
+
+	private boolean isMouseAction(String t) {
+		return t.startsWith("<@");
+	}
+
 	private boolean isSpecialKey(String token) {
 		Set<String> specialKeysSet = SPECIAL_KEY_STARTS_MAP.keySet();
 		for (String s : specialKeysSet ) {
@@ -63,20 +68,30 @@ public class WebPageNavigator {
 	}
 
 	private String[] splitTokenBy(String delimeter, String token) {
-		String[] subTokens = token.split(delimeter);
-		return subTokens;
+		return token.split(delimeter);
 	}
 	
 	private void processSubTokens(String[] subTokens, IsReady page) {
 		for (String st : subTokens) {
-			if (isSpecialKey(st)) {
+			if (isMouseAction(st)) {
+				processMouseAction(st,page);
+				continue;
+			}
+			else if (isSpecialKey(st)) {
 				processSubTokenAsSpecialKey(st, page);
 				continue;
 			}
 			keyboard.sendKeys(StringUtils.convertCharSequenceToArray(st));
 		}
 	}
-	
+
+	private void processMouseAction(String st,IsReady page) {
+		MouseEmulator mouseEmulator = new MouseEmulator(driver);
+		Action action = mouseEmulator.getAction(st);
+		action.perform();
+		page.isReady();
+	}
+
 	private void processSubTokenAsSpecialKey(String specialKey, IsReady page) {
 		String convertedSpecialKey = rewriteSpecialKey(specialKey);
 		String s = StringUtils.extractContentFromCurlyBruckets(convertedSpecialKey);

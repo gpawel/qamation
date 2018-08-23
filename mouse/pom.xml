@@ -23,6 +23,11 @@
             <groupId>org.qamation</groupId>
             <artifactId>webdriver-utils</artifactId>
         </dependency>
+        <dependency>
+            <groupId>org.qamation</groupId>
+            <artifactId>keyboard</artifactId>
+            <scope>test</scope>
+        </dependency>
     </dependencies>
 
 

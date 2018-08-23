@@ -1,3 +1,4 @@
+
 import org.junit.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Point;
@@ -10,40 +11,48 @@ public class MouseActionPatternsTest {
 
     @Test
     public void getMouseNavigationString0() {
-        String line = "01.02.<@!{xpath=\"/*[@id='login']\"}>.bla{SPACE}bla";
+        String line = "01.02.<@!{xpath=/*[@id='login']}>.bla{SPACE}bla";
         String[] found=MouseActionPatterns.extractMouseAction(line);
         assertEquals("!",found[1]);
         found = MouseActionPatterns.extractBYString(line);
-        assertEquals("xpath=\"/*[@id='login']\"",found[1]);
+        assertEquals("xpath=/*[@id='login']",found[1]);
+        By locator = LocatorFactory.getLocator(found[1]);
+        assertEquals("By.xpath: /*[@id='login']",locator.toString());
     }
 
     @Test
     public void getMouseNavigaionString1() {
-        String line = "<@!!{xpath=\"/*[@id='login']\"}>.bla{SPACE}bla";
+        String line = "<@!!{xpath=/*[@id='login']}>.bla{SPACE}bla";
         String[] found=MouseActionPatterns.extractMouseAction(line);
         assertEquals("!!",found[1]);
         found = MouseActionPatterns.extractBYString(line);
-        assertEquals("xpath=\"/*[@id='login']\"",found[1]);
+        assertEquals("xpath=/*[@id='login']",found[1]);
+        By locator = LocatorFactory.getLocator(found[1]);
+        assertEquals("By.xpath: /*[@id='login']",locator.toString());
     }
 
     @Test
     public void getMouseNavigationString2() {
-        String line = "01.02.<@?{xpath=\"/*[@id='login']\"}>";
+        String line = "01.02.<@?{xpath=/*[@id='login']}>";
         String[] found=MouseActionPatterns.extractMouseAction(line);
         assertEquals("?",found[1]);
         found = MouseActionPatterns.extractBYString(line);
-        assertEquals("xpath=\"/*[@id='login']\"",found[1]);
+        assertEquals("xpath=/*[@id='login']",found[1]);
+        By locator = LocatorFactory.getLocator(found[1]);
+        assertEquals("By.xpath: /*[@id='login']",locator.toString());
     }
 
     @Test
     public void getMouseNavigationString3() {
-        String line = "<@^{xpath=\"/*[@id='login']\"}>";
+        String line = "<@^{xpath=/*[@id='login']}>";
         assertTrue(MouseActionPatterns.isMouseNavigation(line));
         String[] found=MouseActionPatterns.extractMouseAction(line);
         assertEquals("^",found[1]);
         assertTrue(MouseActionPatterns.hasMouseBYString(line));
         found = MouseActionPatterns.extractBYString(line);
-        assertEquals("xpath=\"/*[@id='login']\"",found[1]);
+        assertEquals("xpath=/*[@id='login']",found[1]);
+        By locator = LocatorFactory.getLocator(found[1]);
+        assertEquals("By.xpath: /*[@id='login']",locator.toString());
     }
 
     @Test
@@ -60,6 +69,7 @@ public class MouseActionPatternsTest {
         String line = "<@~[10,10]>";
         assertTrue(MouseActionPatterns.isMouseNavigation(line));
         String[] found=MouseActionPatterns.extractMouseAction(line);
+        assertEquals(2,found.length);
         assertEquals("~",found[1]);
         assertFalse(MouseActionPatterns.hasMouseBYString(line));
         assertTrue(MouseActionPatterns.hasMouseCoordinates(line));
@@ -78,11 +88,25 @@ public class MouseActionPatternsTest {
 
     @Test
     public void getLocatorFactory() {
-        String line = "01.02.<@!{xpath=\"/*[@id='login']\"}>.bla{SPACE}bla";
+        String line = "01.02.<@!{xpath=/*[@id='login']}>.bla{SPACE}bla";
         String[] found = MouseActionPatterns.extractBYString(line);
-        assertEquals("xpath=\"/*[@id='login']\"",found[1]);
+        assertEquals(2,found.length);
+        assertEquals("xpath=/*[@id='login']",found[1]);
         By locator = LocatorFactory.getLocator(found[1]);
-        assertEquals("By.xpath: \"/*[@id='login']\"",locator.toString());
+        assertEquals("By.xpath: /*[@id='login']",locator.toString());
+
+    }
+
+    @Test
+    public void getMouseNavigaionString3() {
+        String line = "<@!{xpath=//*[@id='search-form']/fieldset/button}>";
+        String[] found=MouseActionPatterns.extractMouseAction(line);
+        assertEquals(2,found.length);
+        assertEquals("!",found[1]);
+        found = MouseActionPatterns.extractBYString(line);
+        assertEquals("xpath=//*[@id='search-form']/fieldset/button",found[1]);
+        By locator = LocatorFactory.getLocator(found[1]);
+        assertEquals("By.xpath: //*[@id='search-form']/fieldset/button",locator.toString());
     }
 
 

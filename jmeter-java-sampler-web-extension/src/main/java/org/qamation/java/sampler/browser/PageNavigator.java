@@ -17,6 +17,7 @@ public class PageNavigator extends AbstractExtentionPage {
 
 
 	protected boolean shouldNavigate = true;
+	protected long duration;
 
 	public Arguments getDefaultParameters() {
 		Arguments defaultParameters = super.getDefaultParameters();
@@ -45,7 +46,7 @@ public class PageNavigator extends AbstractExtentionPage {
 		page = getPageInstance();
 		page.resetTimer();
 		if (shouldNavigate) {
-			navigate(navigationSequence, navigationSequenceDelimeter);
+			duration = navigate(navigationSequence, navigationSequenceDelimeter);
 		}
 	}
 

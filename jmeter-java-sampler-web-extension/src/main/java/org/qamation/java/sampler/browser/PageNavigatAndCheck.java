@@ -24,7 +24,7 @@ public class PageNavigatAndCheck extends PageNavigator {
 
 	protected String comment="";
 
-	protected long duration;
+
 
 	public Arguments getDefaultParameters() {
 		Arguments defaultParameters = super.getDefaultParameters();
@@ -64,10 +64,7 @@ public class PageNavigatAndCheck extends PageNavigator {
 
 	@Override
 	protected void toDo() {
-		page = getPageInstance();
-		if (shouldNavigate) {
-			duration = navigate(navigationSequence, navigationSequenceDelimeter);
-		}
+		super.toDo();
 		boolean failed = false;
 		if (shouldVerifyText) {
 			readText = readText();

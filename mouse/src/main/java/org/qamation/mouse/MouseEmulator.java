@@ -13,7 +13,8 @@ import java.util.List;
 
 public class MouseEmulator {
     private WebDriver driver;
-    MouseEmulator(WebDriver driver) {
+
+    public MouseEmulator(WebDriver driver) {
         this.driver = driver;
     }
 

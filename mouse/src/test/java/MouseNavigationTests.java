@@ -10,7 +10,9 @@ import org.openqa.selenium.interactions.Action;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.pagefactory.ElementLocatorFactory;
+import org.qamation.keyboard.KeyboardEmulator;
 import org.qamation.mouse.MouseActionSupplier;
+import org.qamation.mouse.MouseEmulator;
 import org.qamation.web.page.Page;
 import org.qamation.web.page.WebPageFactory;
 import org.qamation.webdriver.utils.LocatorFactory;
@@ -45,7 +47,6 @@ public class MouseNavigationTests {
 
     @Test
     public void testClick() {
-
         MouseActionSupplier mouseActions = new MouseActionSupplier(driver,768,55);
         Action a = mouseActions.getAction("~");
         a.perform();
@@ -92,6 +93,8 @@ public class MouseNavigationTests {
         String u = driver.getCurrentUrl();
         Assert.assertEquals("https://ca.news.yahoo.com/",u);
     }
+
+
 
     private Point getWebElementLocation(String location) {
         WebElement el = findElement(location);
