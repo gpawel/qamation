@@ -37,6 +37,7 @@ public class MouseEmulatorTests {
         kem.sendKeys("qa");
         Action act = em.getAction("<@!{xpath=//*[@id='search-form']/fieldset/button}>");
         act.perform();
+        page.isReady();
     }
 
     @Test

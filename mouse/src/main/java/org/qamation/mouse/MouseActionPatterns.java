@@ -7,7 +7,7 @@ import org.openqa.selenium.interactions.Actions;
 import org.qamation.utils.RegExpUtils;
 
 public class MouseActionPatterns {
-    public static final String MOUSE_ACTION_REGEXP = "<@(([!\\?_~\\^]){1,})+.*>";//"<@([!]{1,2}|[\\?_~\\^]).*>";
+    public static final String MOUSE_ACTION_REGEXP = "<@([!\\?_~\\^]{1,})+.*>";//"<@([!]{1,2}|[\\?_~\\^]).*>";
     public static final String MOUSE_ACTION_COORDINATES_REGEXP = "<@.*\\[(\\d{1,},\\d{1,})\\]>";
     public static final String MOUSE_ACTION_BYSTRING_REGEXP = "<@.*\\{(.*)\\}>";
 
