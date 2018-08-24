@@ -38,6 +38,8 @@ public class MouseEmulatorTests {
         Action act = em.getAction("<@!{xpath=//*[@id='search-form']/fieldset/button}>");
         act.perform();
         page.isReady();
+        String header = page.readTextFrom("firstHeading");
+        Assert.assertEquals("QA",header);
     }
 
     @Test

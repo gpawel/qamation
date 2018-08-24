@@ -85,7 +85,7 @@ public class WebPageNavigator {
 		}
 	}
 
-	private void processMouseAction(String st,IsReady page) {
+	private void processMouseAction(String st, IsReady page) {
 		MouseEmulator mouseEmulator = new MouseEmulator(driver);
 		Action action = mouseEmulator.getAction(st);
 		action.perform();
