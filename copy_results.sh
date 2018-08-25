@@ -16,6 +16,7 @@ cp ./utils/target/*.jar ./build
 cp ./webdriver-utils/target/*.jar ./build
 cp ./web-page/target/*.jar ./build
 cp ./wmq-wrapper/target/*.jar ./build
+cp ./mouse/target/*.jar ./build
 
 cp ./build/*.jar $TARGET
 
