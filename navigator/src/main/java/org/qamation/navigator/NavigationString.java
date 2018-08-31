@@ -4,7 +4,11 @@ import org.qamation.utils.StringUtils;
 
 public class NavigationString {
 	// http://stackoverflow.com/questions/1757065/java-splitting-a-comma-separated-string-but-ignoring-commas-in-quotes
-	private final String SPLIT = "(?=([^\"]*\"[^\"]*\")*[^\"]*$)"; //",(?=([^\"]*\"[^\"]*\")*[^\"]*$)";
+	//private final String SPLIT = "(?=([^\"]*\"[^\"]*\")*[^\"]*$)";
+
+	private final String SPLIT_PREFIX = "(?!\\B'[^']*)";
+	private final String SPLIT_SUFFIX = "(?![^']*'\\B)";
+
 	// attampt to cover cases like 4"  private final String SPLIT = "(?=([^\"]*\"[^\"][\"\"]*\")*[^\"]*$)"; //",(?=([^\"]*\"[^\"]*\")*[^\"]*$)";
 	private String delimeter;
 	private String navigation;
@@ -14,7 +18,8 @@ public class NavigationString {
 	public NavigationString (String navSeq, String delim) {
 		this.navigation = navSeq;
 		this.delimeter = delim;
-		this.splitRegEx = delimeter+SPLIT;
+		//this.splitRegEx = delimeter+SPLIT;
+		this.splitRegEx = SPLIT_PREFIX +delimeter+ SPLIT_SUFFIX;
 		this.tokens = generateNavigationSequence();
 	}
 	

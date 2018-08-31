@@ -21,8 +21,8 @@ public class NavigationStringTest {
 		}
 	}
 	
-	private String[] parseLine(String line) {
-		NavigationString ns = new NavigationString(line, ",");
+	private String[] parseLine(String line,String delim) {
+		NavigationString ns = new NavigationString(line, delim);
 		System.out.println("RegExp: "+ns.getRegExp());
 		String[] tokens = ns.getNavigationSequence();
 		printTokens(tokens);
@@ -32,45 +32,55 @@ public class NavigationStringTest {
 	@Test
 	public void parseNavigationTest(){
 		String navigation = "01,01,{F2},+{F3}";
-		String[] tokens = parseLine(navigation);
+		String[] tokens = parseLine(navigation,",");
 		Assert.assertEquals(tokens.length,4);
 		
 	}
 	
 	@Test
 	public void parsNavigationWithDelimTest() {
-		String line = "01,01,\"1717,18\",{F6}";
-		String[] tokens = parseLine(line);
-		Assert.assertEquals(tokens[0],"01");
-		Assert.assertEquals(tokens[3],"{F6}");
+		String line = "01\t01\t\"1717,18\"\t{F6}";
+		String[] tokens = parseLine(line,"\t");
+		Assert.assertEquals("01",tokens[0]);
+		Assert.assertEquals("1717,18",tokens[2]);
+		Assert.assertEquals("{F6}",tokens[3]);
+	}
+
+	@Test
+	public void parsNavigationWithDelimTestsSingleQuote() {
+		String line = "01,01,'1717,18',{F6}";
+		String[] tokens = parseLine(line,",");
+		Assert.assertEquals("01",tokens[0]);
+		Assert.assertEquals("'1717,18'",tokens[2]);
+		Assert.assertEquals("{F6}",tokens[3]);
 	}
 	
 	@Test
 	public void parseNavigationWithDoubleQuoteInside() {
 		String line = "\"this is a 4\" stick\",01,01,Shift+F4";
-		String[] tokens=parseLine(line);
-		Assert.assertEquals(tokens[0],"this is a 4\" stick");
-		line = "01,02,\"this is 5'' stick\",{F15}";
-		tokens=parseLine(line);
-		Assert.assertEquals(tokens[2],"this is 5'' stick");
+		String[] tokens=parseLine(line,",");
+		Assert.assertEquals("this is a 4\" stick",tokens[0]);
+		line = "01\t02\t\"this is 5\" stick\"\t{F15}";
+		tokens=parseLine(line,"\t");
+		Assert.assertEquals("this is 5\" stick",tokens[2]);
 	}
 	
 	@Test
 	public void parseNavigationWithSingleQuotesInside() {
 		String line = "this is a 4' stick,01,01,Shift+F4";
-		String[] tokens = parseLine(line);
-		Assert.assertEquals(tokens[0],"this is a 4' stick");
+		String[] tokens = parseLine(line,",");
+		Assert.assertEquals("this is a 4' stick",tokens[0]);
 	}
 	
 	@Test
 	public void extractFromCurlyBrackets() {
 		String s = "{asfas}";		
 		String result = StringUtils.extractContentFromCurlyBruckets(s);
-		Assert.assertEquals(result,"asfas");
+		Assert.assertEquals("asfas",result);
 		s="blablabla";
 		result = StringUtils.extractContentFromCurlyBruckets(s);
-		Assert.assertEquals(result,"blablabla");
-		Assert.assertEquals(s,"blablabla");
+		Assert.assertEquals("blablabla",result);
+		Assert.assertEquals("blablabla",s);
 	}
 	
 	@Test
@@ -80,6 +90,8 @@ public class NavigationStringTest {
 		String[] tokens = ns.getNavigationSequence();
 		Assert.assertEquals(0, tokens.length);
 	}
+
+
 	
 	@Test
 	public void parseOnlyOneTokenInNavigationLine() {
@@ -127,10 +139,35 @@ public class NavigationStringTest {
 	@Test
 	public void parseNavigationOnlyMouseNavigation() {
 		String line = "<@!{xpath=\"/*[@id='login']\"}>|<@!{xpath=\"/*[@id='password']\"}>";
-		NavigationString ns = new NavigationString(line,"\\|");
-		String[] tokens = ns.getNavigationSequence();
+		String tokens[] = parseLine(line,"\\|");
 		Assert.assertEquals(2,tokens.length);
 		Assert.assertEquals("<@!{xpath=\"/*[@id='login']\"}>",tokens[0]);
 		Assert.assertEquals("<@!{xpath=\"/*[@id='password']\"}>",tokens[1]);
+	}
+
+	@Test
+	public void parseNavigationOnlyMouseNavigation2() {
+		String line = "<@!{xpath=\"/*[@id='login']\"}>.<@!{xpath=\"/*[@id='password']\"}>";
+		String tokens[] = parseLine(line,"\\.");
+		Assert.assertEquals(2,tokens.length);
+		Assert.assertEquals("<@!{xpath=\"/*[@id='login']\"}>",tokens[0]);
+		Assert.assertEquals("<@!{xpath=\"/*[@id='password']\"}>",tokens[1]);
+	}
+
+	@Test
+	public void parseNavigationOnlyMouseNavigation3() {
+		String line = "<@!{xpath=\"/*[@id='login']\"}> <@!{xpath=\"/*[@id='password']\"}>";
+		String tokens[] = parseLine(line,"\\.");
+		Assert.assertEquals(1,tokens.length);
+		Assert.assertEquals("<@!{xpath=\"/*[@id='login']\"}> <@!{xpath=\"/*[@id='password']\"}>",tokens[0]);
+
+	}
+
+
+	@Test
+	public void splitNavigationWithMouseAction1() {
+		String line = "<@!{xpath=/*[contains(text(),'Hi. Sign in')]}>.Jhon {TAB} Smith.{ENTER}";
+		String[] tokens = parseLine(line,"\\.");
+		Assert.assertEquals("<@!{xpath=/*[contains(text(),'Hi. Sign in')]}>",tokens[0]);
 	}
 }
