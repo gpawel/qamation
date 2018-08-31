@@ -6,6 +6,12 @@ public class NavigationString {
 	// http://stackoverflow.com/questions/1757065/java-splitting-a-comma-separated-string-but-ignoring-commas-in-quotes
 	//private final String SPLIT = "(?=([^\"]*\"[^\"]*\")*[^\"]*$)";
 
+	// the following way to split navigation string
+	// developed to consider mouse action
+	// it based on the following article:
+	// https://stackoverflow.com/questions/21105360/regex-find-comma-not-inside-quotes/21106122
+	// changed to accomadate the symbol <.> single quotes used in xpath or css locators inside
+	// mouse action
 	private final String SPLIT_PREFIX = "(?!\\B'[^']*)";
 	private final String SPLIT_SUFFIX = "(?![^']*'\\B)";
 
