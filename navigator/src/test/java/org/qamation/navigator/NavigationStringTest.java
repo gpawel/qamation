@@ -170,4 +170,11 @@ public class NavigationStringTest {
 		String[] tokens = parseLine(line,"\\.");
 		Assert.assertEquals("<@!{xpath=/*[contains(text(),'Hi. Sign in')]}>",tokens[0]);
 	}
+
+	@Test
+	public void splitNavigationWithMouseAction4() {
+		String line = "<@!{xpath=/*[contains(text(),'Hi. Sign in')]}>";
+		String[] tokens = parseLine(line,"\\.");
+		Assert.assertEquals("<@!{xpath=/*[contains(text(),'Hi. Sign in')]}>",tokens[0]);
+	}
 }
