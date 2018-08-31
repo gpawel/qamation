@@ -49,13 +49,13 @@ public abstract class AbstractExtention extends AbstractJavaSamplerClient {
 		try {	
 			readSamplerParameters();
 			toDo();
-			assembleTestResult();
 			result.sampleEnd();
+			assembleTestResult();
 			return result;
 			
 		} catch (Exception e) {
-			assembleTestFailure(e);
 			result.sampleEnd();
+			assembleTestFailure(e);
 			return result;
 		}
 	}
