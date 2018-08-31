@@ -26,8 +26,7 @@ public class WebPageNavigatorTests {
         driver = WebDriverFactory.createChromeWebDriver();
         navigator = new WebPageNavigator(driver);
         page = WebPageFactory.createGeneralPageInstance(driver);
-        page.openPage("http://yahoo.com");
-        page.isReady();
+
     }
 
     /*
@@ -38,13 +37,15 @@ public class WebPageNavigatorTests {
 */
 
     @Test
-    public void openPage() {
+    public void openYahooPage() {
+        page.openPage("http://yahoo.com");
+        page.isReady();
         navigator.processNavigationSequience(new String[]{"moon","{ENTER}"},page);
         assertTrue(driver.getPageSource().contains("<b>Moon </b>- Image Results"));
     }
 
     @Test
-    public void processNavigationString() {
+    public void processNavigationStringWikipedia() {
         page.openPage("http://wikipedia.com");
         page.isReady();
         String[] navigation = new String[] {"qa <@!{xpath=//*[@id='search-form']/fieldset/button}>"};
@@ -56,6 +57,15 @@ public class WebPageNavigatorTests {
         Assert.assertTrue(els.size()==1);
         Assert.assertEquals("QA",els.get(0).getText());
         //NavigationString navigationString = new NavigationString()
+    }
+
+    @Test
+    public void processNavigationStringAmazon() {
+        page.openPage("http://amazon.ca");
+        page.isReady();
+        String[] navigation = new String[] {"<@!!{xpath=//*[contains(text(),'Hello. Sign in')]}>"};
+        WebPageNavigator navigator = new WebPageNavigator(driver);
+        navigator.processNavigationSequience(navigation,page);
     }
 
 

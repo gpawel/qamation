@@ -62,7 +62,14 @@ public class WebPageNavigator {
 	}
 	
 	private String[] processToken(String token, IsReady page) {
-		String[] subTokens = splitTokenBy(SUBTOKENS_DELIMETER, token);
+		String[] subTokens;
+		boolean doNotSplit = isMouseAction(token);
+		if (doNotSplit) {
+			subTokens = new String[] {token};
+		}
+		else {
+			subTokens = splitTokenBy(SUBTOKENS_DELIMETER, token);
+		}
 		processSubTokens(subTokens, page);
 		return subTokens;
 	}
