@@ -655,7 +655,7 @@
                 </elementProp>
                 <elementProp name="ENTER A SYMBOL THAT SEPARATES NAVIGATION STEPS" elementType="Argument">
                   <stringProp name="Argument.name">ENTER A SYMBOL THAT SEPARATES NAVIGATION STEPS</stringProp>
-                  <stringProp name="Argument.value">|</stringProp>
+                  <stringProp name="Argument.value">\|</stringProp>
                   <stringProp name="Argument.metadata">=</stringProp>
                 </elementProp>
                 <elementProp name="ENTER FRONTIER ELEMENT ID. Leave empty to skip verification." elementType="Argument">

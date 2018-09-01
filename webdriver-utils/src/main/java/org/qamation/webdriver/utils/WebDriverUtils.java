@@ -43,10 +43,12 @@ public class WebDriverUtils {
 			addPageReadyTime(timer.getDuration());
 			return result;
 		}
-		boolean isScriptsLoaded = IsPageReadyUtils.isScriptsLoadingDone(driver);
-		boolean isDocReady = IsPageReadyUtils.isDocumentStateReady(driver);
-		timer.stop(); addPageReadyTime(timer.getDuration());
-		return isDocReady && isScriptsLoaded;
+		//boolean isScriptsLoaded = IsPageReadyUtils.isScriptsLoadingDone(driver);
+		//boolean isDocReady = IsPageReadyUtils.isDocumentStateReady(driver);
+		int isMutationStopped = IsPageReadyUtils.isPageChangeStopped(driver);
+		timer.stop();
+		addPageReadyTime(timer.getDuration());
+		return true;//isDocReady && isScriptsLoaded;
 	}
 
 
