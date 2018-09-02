@@ -10,7 +10,7 @@ import org.apache.jmeter.samplers.SampleResult;
 
 public class PageNavigatAndCheck extends PageNavigator {
 
-	private static final String FRONTIER_ELEMENT_ID = "ENTER FRONTIER ELEMENT ID. Leave empty to skip verification.";
+	private static final String ELEMENT_ID = "ENTER ELEMENT ID. Leave empty to skip verification.";
 	private static final String EXPECTED_RESULT = "ENTER EXPECTED RESULT. Leave empty to skip verification.";
 	private static final String BACK_TO_URL = "ENTER URL TO GO BACK. Leave empty to stay at the current page";
 
@@ -28,7 +28,7 @@ public class PageNavigatAndCheck extends PageNavigator {
 
 	public Arguments getDefaultParameters() {
 		Arguments defaultParameters = super.getDefaultParameters();
-		defaultParameters.addArgument(FRONTIER_ELEMENT_ID, "");
+		defaultParameters.addArgument(ELEMENT_ID, "");
 		defaultParameters.addArgument(EXPECTED_RESULT, "");
 		defaultParameters.addArgument(BACK_TO_URL, "");
 		return defaultParameters;
@@ -37,7 +37,7 @@ public class PageNavigatAndCheck extends PageNavigator {
 	@Override
 	protected void readSamplerParameters() {
 		super.readSamplerParameters();
-		elementLocator = getSamplerParameterValue(FRONTIER_ELEMENT_ID);
+		elementLocator = getSamplerParameterValue(ELEMENT_ID);
 		expectedResult = getSamplerParameterValue(EXPECTED_RESULT);
 		expectedResult = URLDecodeString(expectedResult);
 		backToURL = getSamplerParameterValue(BACK_TO_URL);
@@ -66,16 +66,23 @@ public class PageNavigatAndCheck extends PageNavigator {
 	protected void toDo() {
 		super.toDo();
 		boolean failed = false;
-		if (shouldVerifyText) {
-			readText = readText();
-			failed = verifyExpectedResult(readText, expectedResult);
-		}
+		failed = verifyText();
+		goBack();
+		if (failed) throw new StringComparisonException("Read text does not match to expected value");
+	}
 
+	protected void goBack() {
 		if (shouldGoBack) {
 			goToBackURL(backToURL);
 		}
+	}
 
-		if (failed) throw new StringComparisonException("Read text does not match to expected value");
+	protected boolean verifyText() {
+		if (shouldVerifyText) {
+			readText = readText();
+			return verifyExpectedResult(readText, expectedResult);
+		}
+		return false;
 	}
 
 	protected boolean verifyExpectedResult(String actual, String expected) {

@@ -173,7 +173,6 @@ public class ExcelReader {
     }
 
     private String getStringValueFromCell(Cell c) {
-
         switch (c.getCellType()) {
             case Cell.CELL_TYPE_BLANK:
                 return "";

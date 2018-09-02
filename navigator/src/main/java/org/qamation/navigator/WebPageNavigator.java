@@ -43,6 +43,7 @@ public class WebPageNavigator {
 
 	private void pressEnterIfLastSubTokenIsNotSpecialKey(String lastSubToken, IsReady page) {
 		if (isSpecialKey(lastSubToken)) return;
+		if (isMouseAction(lastSubToken)) return;
 		else {
 			keyboard.sendSpecialKeys("ENTER");
 			page.isReady();

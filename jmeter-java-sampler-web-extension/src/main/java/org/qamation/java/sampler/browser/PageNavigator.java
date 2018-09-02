@@ -50,6 +50,8 @@ public class PageNavigator extends AbstractExtentionPage {
 		}
 	}
 
+
+
 	protected long navigate(String navigationSequence, String navigationSequenceDelimeter) {
 		//System.out.println(String.valueOf(this.hashCode())+"-"+String.valueOf(driver.hashCode())+": navigation -> "+navigationSequence);
 		WebPageNavigator navigator = getWebPageNavigator();

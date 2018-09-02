@@ -1,8 +1,7 @@
 package org.qamation.navigator;
 
-import org.junit.After;
-import static org.junit.Assert.*;
 
+import static org.junit.Assert.*;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -13,6 +12,7 @@ import org.qamation.web.page.Page;
 import org.qamation.web.page.WebPageFactory;
 import org.qamation.webdriver.utils.LocatorFactory;
 import org.qamation.webdriver.utils.WebDriverFactory;
+import org.xml.sax.Locator;
 
 import java.util.List;
 
@@ -63,9 +63,18 @@ public class WebPageNavigatorTests {
     public void processNavigationStringAmazon() {
         page.openPage("http://amazon.ca");
         page.isReady();
-        String[] navigation = new String[] {"<@!!{xpath=//*[contains(text(),'Hello. Sign in')]}>"};
         WebPageNavigator navigator = new WebPageNavigator(driver);
-        navigator.processNavigationSequience(navigation,page);
+        navigator.processNavigationSequience(new String[] {"<@!{xpath=//*[contains(text(),'Hello. Sign in')]}>"},page);
+        List<WebElement> els = driver.findElements(LocatorFactory.getLocator("xpath=//h1[contains(text(),'Sign in')]"));
+        Assert.assertEquals(1,els.size());
+        Assert.assertEquals("Sign in",els.get(0).getText());
+        navigator.processNavigationSequience(new String[] {"gpawel17@mail.com","1qazxsw2!"}, page);
+        navigator.processNavigationSequience(new String[] {"<@!{xpath=//div[@class='nav-search-field ']}>"}, page);
+        navigator.processNavigationSequience(new String[] {"hair {SPACE} brash"}, page );
+        els = driver.findElements(LocatorFactory.getLocator("xpath=//*[@id=’didYouMean’]"));
+        Assert.assertEquals(1,els.size());
+        Assert.assertEquals("Showing results for",els.get(0).getText());
+
     }
 
 

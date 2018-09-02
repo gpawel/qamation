@@ -8,22 +8,16 @@ import org.apache.jmeter.samplers.SampleResult;
 
 public class PageProcessor extends PageNavigatAndCheck {
 	
-	private static final String EXTRACT_FROM="ENTER ELEMENT ID TO START VALUE EXTACTION FROM, leave empty for no extraction";
-	private static final String EXTRACT_HOW_MACH="ENTER NUMBER OF SYMBOLS TO EXTRACT, leave empty to extract till end of field";
 	private static final String EXTRACT_TO="ENTER VARIABLE NAME TO STORE EXTACTED DATA";
 	private static final String COMMENT =  "ENTER A COMMENT TO BE INCLUDED INTO A LABEL. Leave empty ";
 	private String comment;
-	private String extractFrom;
-	private String extractLength;
+
 	private String extractTo;
-	
 	private boolean shouldExtract;
 	
 	public Arguments getDefaultParameters() {
         Arguments defaultParameters = super.getDefaultParameters();
         defaultParameters.addArgument(COMMENT,"${COMMENT}");
-        defaultParameters.addArgument(EXTRACT_FROM,"${EXTRACT_FROM}");
-        defaultParameters.addArgument(EXTRACT_HOW_MACH,"${EXTRACT_HOW_MUCH}");
         defaultParameters.addArgument(EXTRACT_TO,"${EXTRACT_TO}");
         return defaultParameters;
     }
@@ -32,40 +26,34 @@ public class PageProcessor extends PageNavigatAndCheck {
 	protected void readSamplerParameters() {
 		comment = getSamplerParameterValue(COMMENT);
 		super.readSamplerParameters();
-		extractFrom = getSamplerParameterValue(EXTRACT_FROM);
-		extractLength = getSamplerParameterValue(EXTRACT_HOW_MACH);
 		extractTo = getSamplerParameterValue(EXTRACT_TO);
 		initProcessorVariablels();
 	}
 	
 	protected void initProcessorVariablels() {
 		shouldExtract = true;
-		if (extractFrom.isEmpty()) shouldExtract = false;
+		if (elementLocator.isEmpty() || extractTo.isEmpty()) shouldExtract = false;
 	}
 
+	@Override
+	protected void toDo() {
+		super.toDo();
+		boolean failed = verifyText();
+		extractValue();
+		goBack();
+		if (failed) throw new StringComparisonException("Read text does not match to expected value");
+	}
 
 	protected void extractValue() {
 		if (shouldExtract) {
-			String value = extractFromPage(extractFrom);
+			String value = extractFromPage(elementLocator);
 			setStringIntoVariables(extractTo, value);
 		}
-		
 	}
 
-	private String extractFromPage(String extractFrom) {
-			int length = parseExtractLength();
-			String value = page.readTextFrom(extractFrom, length);
+	protected String extractFromPage(String extractFrom) {
+			String value = page.readTextFrom(extractFrom);
 			return value;
-			
-	}
-
-	private int parseExtractLength() {		
-		if (extractLength.isEmpty()) {
-			return 0;
-		}
-		else {
-			return Integer.parseInt(extractLength);				 
-		}		
 	}
 	
 	@Override
