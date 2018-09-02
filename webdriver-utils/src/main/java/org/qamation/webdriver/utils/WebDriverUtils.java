@@ -96,7 +96,7 @@ public class WebDriverUtils {
 		By locator = lu.getLocator(location);
 		String readText = readFromLocation(locator);
 		if (length >= readText.length()) return readText;
-		return readText.substring(0, length-1);
+		return readText.substring(0, length);
 	}
 	
 	public void openPage(String url) {
@@ -133,9 +133,6 @@ public class WebDriverUtils {
 	}
 
 
-
-
-
 	private String getBrowserName(WebDriver driver) {
 		Capabilities cap = ((RemoteWebDriver)driver).getCapabilities();
 		return cap.getBrowserName();
@@ -152,4 +149,6 @@ public class WebDriverUtils {
 	public long getPageReadyTime() {
 		return waitTime;
 	}
+
+
 }
