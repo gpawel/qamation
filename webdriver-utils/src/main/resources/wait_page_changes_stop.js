@@ -23,11 +23,11 @@ screenReadyObserver.observe(element, config);
 var intervalObserverHandler = function() {
   if (drawStarted) {
         if (changes == 0) {
-          //console.log("drawing; mutations: ",0," - exiting");
+          console.log("drawing; mutations: ",0," - exiting");
           stopAndExit(totalChanges);
         }
         else {
-          //console.log("drawing; mutations: ",changes);
+          console.log("drawing; mutations: ",changes);
           totalChanges = totalChanges + changes;
           changes = 0;
         }
