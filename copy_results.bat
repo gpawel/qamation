@@ -19,6 +19,7 @@ call copy /y .\utils\target\*.jar build
 call copy /y .\webdriver-utils\target\*.jar build
 call copy /y .\web-page\target\*.jar build
 call copy /y .\wmq-wrapper\target\*.jar build
+call copy /y .\mouse\target\*.jar build
 rem call copy build\*.jar %TARGET%
 call copy build\*.jar %ARCH%
 
