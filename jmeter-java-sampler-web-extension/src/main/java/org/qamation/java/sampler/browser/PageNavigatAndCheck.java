@@ -10,9 +10,9 @@ import org.apache.jmeter.samplers.SampleResult;
 
 public class PageNavigatAndCheck extends PageNavigator {
 
-	private static final String ELEMENT_ID = "ENTER ELEMENT ID. Leave empty to skip verification.";
-	private static final String EXPECTED_RESULT = "ENTER EXPECTED RESULT. Leave empty to skip verification.";
-	private static final String BACK_TO_URL = "ENTER URL TO GO BACK. Leave empty to stay at the current page";
+	private static final String ELEMENT_LOCATOR = "ENTER ELEMENT ID.  Provide empty value to skip verification";
+	private static final String EXPECTED_RESULT = "ENTER EXPECTED RESULT. Provide empty value to skip verification.";
+	private static final String NAVIGATE_TO_URL = "ENTER URL TO GO BACK. Provide empty value to skip.";
 
 	protected String elementLocator;
 	protected String expectedResult;
@@ -28,19 +28,19 @@ public class PageNavigatAndCheck extends PageNavigator {
 
 	public Arguments getDefaultParameters() {
 		Arguments defaultParameters = super.getDefaultParameters();
-		defaultParameters.addArgument(ELEMENT_ID, "");
-		defaultParameters.addArgument(EXPECTED_RESULT, "");
-		defaultParameters.addArgument(BACK_TO_URL, "");
+		defaultParameters.addArgument(ELEMENT_LOCATOR, "${ELEMENT_ID}");
+		defaultParameters.addArgument(EXPECTED_RESULT, "${EXPECTED}");
+		defaultParameters.addArgument(NAVIGATE_TO_URL, "${BACK_URL}");
 		return defaultParameters;
 	}
 
 	@Override
 	protected void readSamplerParameters() {
 		super.readSamplerParameters();
-		elementLocator = getSamplerParameterValue(ELEMENT_ID);
+		elementLocator = getSamplerParameterValue(ELEMENT_LOCATOR);
 		expectedResult = getSamplerParameterValue(EXPECTED_RESULT);
 		expectedResult = URLDecodeString(expectedResult);
-		backToURL = getSamplerParameterValue(BACK_TO_URL);
+		backToURL = getSamplerParameterValue(NAVIGATE_TO_URL);
 		setUpNavigationAndCheck();
 	}
 
@@ -97,7 +97,7 @@ public class PageNavigatAndCheck extends PageNavigator {
 		return page.readTextFrom(elementLocator, expectedResult.length());
 	}
 
-	private String URLDecodeString(String str) {
+	protected String URLDecodeString(String str) {
 		try {
 			String decodedStr = URLDecoder.decode(str, "UTF-8");
 			return decodedStr;

@@ -111,7 +111,8 @@ public abstract class AbstractExtention extends AbstractJavaSamplerClient {
 
 
 	protected String getSamplerParameterValue(String samplerParameterName) {
-		String parameterValue = ctx.getParameter(samplerParameterName);		
+		String parameterValue = ctx.getParameter(samplerParameterName);
+		if (parameterValue == null) throw new RuntimeException(samplerParameterName+" points to a null value");
 		if (parameterValue.isEmpty()) return "";
 		String result = substituteVariables(parameterValue);
 		return result;
