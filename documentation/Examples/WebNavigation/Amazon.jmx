@@ -205,18 +205,18 @@
                   <stringProp name="Argument.value">\|</stringProp>
                   <stringProp name="Argument.metadata">=</stringProp>
                 </elementProp>
-                <elementProp name="ENTER ELEMENT ID. Leave empty to skip verification." elementType="Argument">
-                  <stringProp name="Argument.name">ENTER ELEMENT ID. Leave empty to skip verification.</stringProp>
+                <elementProp name="ENTER ELEMENT ID.  Provide empty value to skip verification" elementType="Argument">
+                  <stringProp name="Argument.name">ENTER ELEMENT ID.  Provide empty value to skip verification</stringProp>
                   <stringProp name="Argument.value">${ELEMENT_LOCATOR}</stringProp>
                   <stringProp name="Argument.metadata">=</stringProp>
                 </elementProp>
-                <elementProp name="ENTER EXPECTED RESULT. Leave empty to skip verification." elementType="Argument">
-                  <stringProp name="Argument.name">ENTER EXPECTED RESULT. Leave empty to skip verification.</stringProp>
+                <elementProp name="ENTER EXPECTED RESULT. Provide empty value to skip verification." elementType="Argument">
+                  <stringProp name="Argument.name">ENTER EXPECTED RESULT. Provide empty value to skip verification.</stringProp>
                   <stringProp name="Argument.value">${EXPECTED}</stringProp>
                   <stringProp name="Argument.metadata">=</stringProp>
                 </elementProp>
-                <elementProp name="ENTER URL TO GO BACK. Leave empty to stay at the current page" elementType="Argument">
-                  <stringProp name="Argument.name">ENTER URL TO GO BACK. Leave empty to stay at the current page</stringProp>
+                <elementProp name="ENTER URL TO GO BACK. Provide empty value to skip." elementType="Argument">
+                  <stringProp name="Argument.name">ENTER URL TO GO BACK. Provide empty value to skip.</stringProp>
                   <stringProp name="Argument.value">${NAVIGATE}</stringProp>
                   <stringProp name="Argument.metadata">=</stringProp>
                 </elementProp>
@@ -234,6 +234,18 @@
             </elementProp>
             <stringProp name="classname">org.qamation.java.sampler.browser.PageProcessor</stringProp>
           </JavaSampler>
+          <hashTree/>
+          <JDBCSampler guiclass="TestBeanGUI" testclass="JDBCSampler" testname="JDBC Request" enabled="true">
+            <stringProp name="dataSource"></stringProp>
+            <stringProp name="query"></stringProp>
+            <stringProp name="queryArguments"></stringProp>
+            <stringProp name="queryArgumentsTypes"></stringProp>
+            <stringProp name="queryTimeout"></stringProp>
+            <stringProp name="queryType">Select Statement</stringProp>
+            <stringProp name="resultSetHandler">Store as String</stringProp>
+            <stringProp name="resultVariable"></stringProp>
+            <stringProp name="variableNames"></stringProp>
+          </JDBCSampler>
           <hashTree/>
         </hashTree>
         <ResultCollector guiclass="ViewResultsFullVisualizer" testclass="ResultCollector" testname="View Results Tree" enabled="true">
@@ -279,7 +291,7 @@
           <stringProp name="script">writeToExcelLog(&quot;excel_log_1.xlsx&quot;);</stringProp>
         </BeanShellListener>
         <hashTree/>
-        <JavaSampler guiclass="JavaTestSamplerGui" testclass="JavaSampler" testname="CLOSE BROWSER" enabled="true">
+        <JavaSampler guiclass="JavaTestSamplerGui" testclass="JavaSampler" testname="CLOSE BROWSER" enabled="false">
           <elementProp name="arguments" elementType="Arguments" guiclass="ArgumentsPanel" testclass="Arguments" enabled="true">
             <collectionProp name="Arguments.arguments">
               <elementProp name="ENTER true OR false TO INDICATE WHETHER TO STOP AFTER FAILURE" elementType="Argument">
@@ -306,8 +318,8 @@
         </elementProp>
         <stringProp name="ThreadGroup.num_threads">1</stringProp>
         <stringProp name="ThreadGroup.ramp_time">1</stringProp>
-        <longProp name="ThreadGroup.start_time">1536024269000</longProp>
-        <longProp name="ThreadGroup.end_time">1536024269000</longProp>
+        <longProp name="ThreadGroup.start_time">1536620076000</longProp>
+        <longProp name="ThreadGroup.end_time">1536620076000</longProp>
         <boolProp name="ThreadGroup.scheduler">false</boolProp>
         <stringProp name="ThreadGroup.duration"></stringProp>
         <stringProp name="ThreadGroup.delay"></stringProp>
