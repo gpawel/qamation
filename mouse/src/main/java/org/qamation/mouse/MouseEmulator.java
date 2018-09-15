@@ -26,7 +26,8 @@ public class MouseEmulator {
     }
 
     public MouseActionSupplier getMouseActionSupplier(String mouseActionString) {
-        if (!MouseActionPatterns.isMouseNavigation(mouseActionString)) {
+        boolean stop = ! MouseActionPatterns.isMouseAction(mouseActionString);
+        if (stop) {
             throw new RuntimeException(mouseActionString+" does not have an Action");
         }
 

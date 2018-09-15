@@ -5,6 +5,7 @@ import java.util.Set;
 
 import org.openqa.selenium.interactions.Action;
 import org.qamation.keyboard.KeyboardEmulator;
+import org.qamation.mouse.MouseActionPatterns;
 import org.qamation.mouse.MouseEmulator;
 import org.qamation.web.page.IsReady;
 import org.qamation.utils.StringUtils;
@@ -51,7 +52,7 @@ public class WebPageNavigator {
 	}
 
 	private boolean isMouseAction(String t) {
-		return t.startsWith("<@");
+		return MouseActionPatterns.isMouseAction(t);
 	}
 
 	private boolean isSpecialKey(String token) {

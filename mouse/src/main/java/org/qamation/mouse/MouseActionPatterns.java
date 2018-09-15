@@ -32,14 +32,16 @@ public class MouseActionPatterns {
         return new Point(x, y);
     }
 
-    private static String[] getAllFindings(String input, String regExp) {
-        RegExpUtils utils = new RegExpUtils(input, regExp);
-        utils.printAllFindings();
-        return utils.getAllFindings();
-    }
-
-    public static boolean isMouseNavigation(String input) {
-        return doesMatch(input, MOUSE_ACTION_REGEXP);
+    public static boolean isMouseAction(String str) {
+        str = str.toLowerCase();
+        if (str.startsWith("<@")) return true;
+        if (
+            str.contains("click")
+            || str.contains("move")
+            || str.contains("drag")
+            || str.contains("release")
+            ) return true;
+        return false;
     }
 
     public static boolean hasMouseBYString(String input) {
@@ -53,5 +55,11 @@ public class MouseActionPatterns {
     private static boolean doesMatch(String input, String regExp) {
         RegExpUtils utils = new RegExpUtils(input, regExp);
         return utils.isInputMatches();
+    }
+
+    private static String[] getAllFindings(String input, String regExp) {
+        RegExpUtils utils = new RegExpUtils(input, regExp);
+        utils.printAllFindings();
+        return utils.getAllFindings();
     }
 }
