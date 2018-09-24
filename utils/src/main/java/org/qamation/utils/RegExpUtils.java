@@ -5,6 +5,8 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class RegExpUtils {
+	public static final String EXTRACT_VARIABLES_REGEX = "(?mi)(?=\\$\\{[^_])\\$\\{(.*?)\\}";
+
 	private String input;
 	private String regExp;
 	private Pattern p;

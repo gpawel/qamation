@@ -123,6 +123,7 @@ public class MouseActionSupplier {
     private Actions getActions(WebDriver driver ) {
         return new Actions(driver);
     }
+
     private void init(WebDriver driver) {
         actionsStorage = new TreeMap<String, Supplier<Action>>(String.CASE_INSENSITIVE_ORDER);
         driverActions = getActions(driver);

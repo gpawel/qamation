@@ -16,7 +16,7 @@ public static final String EXTRACT_FUNCTION_PARAMETERS_REGEX = "(?mi)\\((.*)\\)"
 
 public abstract class AbstractExtention extends AbstractJavaSamplerClient {
 	protected static final String STOP_TEST_AFTER_FAIL = "ENTER true OR false TO INDICATE WHETHER TO STOP AFTER FAILURE";
-	public static final String EXTRACT_VARIABLES_REGEX = "(?mi)(?=\\$\\{[^_])\\$\\{(.*?)\\}";
+	//public static final String EXTRACT_VARIABLES_REGEX = "(?mi)(?=\\$\\{[^_])\\$\\{(.*?)\\}";
 
 
 	protected JavaSamplerContext ctx;
@@ -95,7 +95,7 @@ public abstract class AbstractExtention extends AbstractJavaSamplerClient {
     }
 
 	private String substitureVars(String input) {
-		RegExpUtils ru = new RegExpUtils(input,EXTRACT_VARIABLES_REGEX);
+		RegExpUtils ru = new RegExpUtils(input,RegExpUtils.EXTRACT_VARIABLES_REGEX);
 		String[] rur = ru.getAllFindings();
 		if (rur.length < 2) return input;
 		String result = new String (input);
