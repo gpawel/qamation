@@ -1,6 +1,5 @@
 package org.qamation.utils.tokenizer;
 
-import java.io.IOException;
 import java.io.StreamTokenizer;
 import java.io.StringReader;
 import java.util.ArrayList;
@@ -19,6 +18,11 @@ public class StringLineTokenizer {
 
     public void tokenizeString(String aLine) {
         StreamTokenizer tokenizer = getStreamTokenizer(aLine);
+        processLine(tokenizer,aLine);
+    }
+
+
+    private void processLine(StreamTokenizer tokenizer, String aLine) {
         try {
             while (tokenizer.nextToken() != StreamTokenizer.TT_EOF) {
                 notifyListeners(tokenizer);
@@ -29,6 +33,7 @@ public class StringLineTokenizer {
             ex.printStackTrace();
             throw new RuntimeException("Problem reading from tokenizer.",ex);
         }
+
     }
 
     private void notifyListeners(StreamTokenizer tokenizer) {
@@ -52,7 +57,7 @@ public class StringLineTokenizer {
         }
     }
 
-    public StreamTokenizer getStreamTokenizer(String xpathDescription) {
+    private StreamTokenizer getStreamTokenizer(String xpathDescription) {
         StringReader reader = new StringReader(xpathDescription);
         StreamTokenizer tokenizer = new StreamTokenizer(reader);
         configure(tokenizer);
@@ -62,10 +67,11 @@ public class StringLineTokenizer {
 
     private void configure(StreamTokenizer tokenizer) {
         tokenizer.commentChar('#');
-        tokenizer.quoteChar('"');
+        tokenizer.quoteChar((char)39);
         tokenizer.slashSlashComments(true);
         tokenizer.slashStarComments(true);
         tokenizer.eolIsSignificant(true);
+        tokenizer.wordChars((char)48,(char)57);
 
 
     }

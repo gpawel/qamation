@@ -7,6 +7,10 @@ import org.junit.Test;
 public class RegExpTest {
 
     public String lineWithVarsAndScripts="asdf ${x} a\nd ${__BeanShell(1+1+${var})} s\r\ndfa ${z1} ${__BeanShell(1+${xyz}+1)} \na ${sdf} asa${__time()} sd ${__RandomString(5,abcdefg,myVar)} ";
+	public static final String SPLIT_FUNCT_PARAMS_REGEX = "(?mi)(?<!\\\\),";
+	private static final String WHITE_SPECE_NOT_IN_QUOTE = "\\s+(?=([^']*'[^']*')*[^']*$)";
+	public static final String EXTRACT_VARIABLES_REGEX = "(?mi)(?=\\$\\{[^_])\\$\\{(.*?)\\}";
+
 	@Test
 	public void testRegExp() {
 		String id_1 = "R33C201";
@@ -115,6 +119,13 @@ public class RegExpTest {
 		System.out.println(result);
 	}
 
+	@Test
+	public void replaceWhiteSpaces() {
+		String str =" //* [text()='Sign In'] ";
+		String expected = "//*[text()='Sign In']";
+		str = str.replaceAll(WHITE_SPECE_NOT_IN_QUOTE,"");
+		Assert.assertEquals(expected,str);
+	}
 
 
 
@@ -122,7 +133,8 @@ public class RegExpTest {
 
 
 
-	public static final String EXTRACT_VARIABLES_REGEX = "(?mi)(?=\\$\\{[^_])\\$\\{(.*?)\\}";
+
+
 
 	@Test
 	public void testHasVariables() {
@@ -132,7 +144,7 @@ public class RegExpTest {
 		ru.printAllFindings();
 	}
 
-	public static final String SPLIT_FUNCT_PARAMS_REGEX = "(?mi)(?<!\\\\),";
+
 
 
 
