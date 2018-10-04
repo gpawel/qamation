@@ -10,13 +10,13 @@ import java.util.function.BiFunction;
 import java.util.function.Supplier;
 
 public class XPathDescriptionTags {
-    public static final String ANY ="any element";
-    public static final String ELEMENT="element";
-    public static final String ATTRIBUTE="attribute";
-    public static final String WITH_VALUE_EQUAL="with value";
-    public static final String WITH_VALUE_CONTAINS="with value contains";
-    private static final String VALUE_REGEXP = "with value\\s{1,}'(.*)'.*";
-    private static final String CONTAINS_REGEXP = "contains\\s{1,}'(.*)'.*";
+    public static final String ANY ="(?i)any element";
+    public static final String ELEMENT="(?i)element";
+    public static final String ATTRIBUTE="(?i)attribute";
+    public static final String WITH_VALUE = "(?i)with value";
+    public static final String WITH_VALUE_CONTAINS = "(?i)with value contains";
+    private static final String VALUE_REGEXP = "(?i)with value\\s{1,}'(.*)'.*";
+    private static final String CONTAINS_REGEXP = "(?i)contains\\s{1,}'(.*)'.*";
 
 
     private static Map<String,Supplier<BiFunction>> xpathTags = null;
@@ -38,32 +38,44 @@ public class XPathDescriptionTags {
         xpathTags.put(ELEMENT,"//${elementName}");
         xpathTags.put(ATTRIBUTE,"@${attributeName}");
         xpathTags.put(WITH_VALUE_CONTAINS,"[contains(text(),'${value})]");
-        xpathTags.put(WITH_VALUE_EQUAL,"[text()='${value}']");
+        xpathTags.put(WITH_VALUE,"[text()='${value}']");
         */
     }
 
     private static void addWITH_VALUE_EQUAL() {
         BiFunction<StringBuilder,String,StringBuilder> anyFunc = (sb,desc)->
         {
+            String val  = getElementsValues(desc);
             String s = sb.toString();
-            String val = new RegExpUtils(desc,VALUE_REGEXP).getFindingInFirstGroup(1);
-            s = s.replace("'"+val+"'","");
-            s = s.replace(WITH_VALUE_EQUAL,"[text()='${value}']");
-
-            s = s.replace("${value}",val);
+            s = removeExtraValues(s,val);
+            s = s.replaceAll(WITH_VALUE,"\\[text()='\\$\\{value\\}'\\]");
+            s = substituteValues(s,val);
             return new StringBuilder(s);
         };
-        xpathTags.put(WITH_VALUE_EQUAL,()->anyFunc);
+        xpathTags.put(WITH_VALUE,()->anyFunc);
+    }
+
+    private static String substituteValues(String s, String val) {
+        return s.replace("${value}",val);
     }
 
     private static void addANY() {
         BiFunction<StringBuilder,String,StringBuilder> anyFunc = (sb,desc)->
         {
             String s = sb.toString();
-            s=s.replace(ANY,"//*");
+            s=s.replaceAll(ANY,"//*");
             return new StringBuilder(s);
         };
         xpathTags.put(ANY,()->anyFunc);
+
+    }
+
+    private static String removeExtraValues(String s, String val) {
+        return s.replace("'"+val+"'","");
+    }
+
+    private static String getElementsValues(String desc) {
+        return new RegExpUtils(desc,VALUE_REGEXP).getFindingInFirstGroup(1);
 
     }
 

@@ -127,14 +127,15 @@ public class RegExpTest {
 		Assert.assertEquals(expected,str);
 	}
 
-
-
-
-
-
-
-
-
+	@Test
+	public void replaceWithValue() {
+		String regExp = "(?i)with value";
+		String input = "//* with value ";
+		String replacement = "\\[text()='\\$\\{value\\}'\\]";
+		//String replacement = "uyuyuuu";
+		String result = input.replaceAll(regExp,replacement);
+		Assert.assertEquals("//* "+replacement+" ",result);
+	}
 
 	@Test
 	public void testHasVariables() {
