@@ -17,6 +17,7 @@ public class XPathDescriptionTags {
     public static final String WITH_VALUE_CONTAINS = "(?i)with value contains";
     private static final String VALUE_REGEXP = "(?i)with value\\s{1,}'(.*)'.*";
     private static final String CONTAINS_REGEXP = "(?i)contains\\s{1,}'(.*)'.*";
+    private static final String TEXT_EQUAL_VALUE_TEMPLE = "\\[text()='\\$\\{value!!\\}'\\]";
 
 
     private static Map<String,Supplier<BiFunction>> xpathTags = null;
@@ -33,6 +34,8 @@ public class XPathDescriptionTags {
     private static void mapTagsDescriptionToXPathElements() {
         addANY();
         addWITH_VALUE_EQUAL();
+        addELEMENT();
+
         /*
         xpathTags.put(ANY,"//*");
         xpathTags.put(ELEMENT,"//${elementName}");
@@ -40,23 +43,6 @@ public class XPathDescriptionTags {
         xpathTags.put(WITH_VALUE_CONTAINS,"[contains(text(),'${value})]");
         xpathTags.put(WITH_VALUE,"[text()='${value}']");
         */
-    }
-
-    private static void addWITH_VALUE_EQUAL() {
-        BiFunction<StringBuilder,String,StringBuilder> anyFunc = (sb,desc)->
-        {
-            String val  = getElementsValues(desc);
-            String s = sb.toString();
-            s = removeExtraValues(s,val);
-            s = s.replaceAll(WITH_VALUE,"\\[text()='\\$\\{value\\}'\\]");
-            s = substituteValues(s,val);
-            return new StringBuilder(s);
-        };
-        xpathTags.put(WITH_VALUE,()->anyFunc);
-    }
-
-    private static String substituteValues(String s, String val) {
-        return s.replace("${value}",val);
     }
 
     private static void addANY() {
@@ -70,12 +56,55 @@ public class XPathDescriptionTags {
 
     }
 
-    private static String removeExtraValues(String s, String val) {
-        return s.replace("'"+val+"'","");
+    private static void addELEMENT() {
+        BiFunction<StringBuilder,String,StringBuilder> anyFunc = (sb,desc)-> {
+            String s = sb.toString();
+            // GET ELEMENT NAME HERE. THEN REPLACE:
+            s = s.replaceAll(ELEMENT,)
+        };
     }
 
-    private static String getElementsValues(String desc) {
-        return new RegExpUtils(desc,VALUE_REGEXP).getFindingInFirstGroup(1);
+    private static void addWITH_VALUE_EQUAL() {
+        BiFunction<StringBuilder,String,StringBuilder> anyFunc = (sb,desc)->
+        {
+            String[] val  = getElementsValues(desc);
+            String s = sb.toString();
+            s = eraceValues(s,val);
+            s = insertXpathTemplate(s,WITH_VALUE,TEXT_EQUAL_VALUE_TEMPLE,val.length);
+            //s = s.replaceAll(WITH_VALUE,"\\[text()='\\$\\{value\\}'\\]");
+            s = substituteValues(s,val);
+            return new StringBuilder(s);
+        };
+        xpathTags.put(WITH_VALUE,()->anyFunc);
+    }
+
+    private static String insertXpathTemplate(String result, String target, String textEqualValueTemple, int len) {
+        for (int i = 1; i < len; i++) {
+            String templ = textEqualValueTemple.replace("!!",String.valueOf(i));
+            result = result.replaceFirst(target,templ);
+        }
+        return result;
+    }
+
+    private static String substituteValues(String s, String[] val) {
+        for (int i=0; i < val.length; i++) {
+            s = s.replace("${value"+i+"}",val[i]);
+        }
+        return s;
+    }
+
+
+
+    private static String eraceValues(String s, String[] val) {
+        for (String x: val) {
+            s = s.replace("'"+x+"'","");
+        }
+        return s;
+    }
+
+    private static String [] getElementsValues(String desc) {
+
+        return new RegExpUtils(desc,VALUE_REGEXP).getAllFindings();
 
     }
 
