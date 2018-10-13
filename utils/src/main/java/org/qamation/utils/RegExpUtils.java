@@ -23,7 +23,16 @@ public class RegExpUtils {
 		return m;
 	}
 
-	public String getFindingInFirstGroup(int groupNumber) {
+	public int getMatchersNumbers() {
+		m.reset();
+		int sum = 0;
+		while(m.find()) {
+			sum++;
+		}
+		return sum;
+	}
+
+	public String getFindingInFirstMatch(int groupNumber) {
 		m.reset();
 		m.find();
 		String result = m.group(groupNumber);
@@ -104,7 +113,7 @@ public class RegExpUtils {
 	public static int extarctNumberFromString(String input, String regexp) {
 		RegExpUtils regexputils = new RegExpUtils(input, regexp);
 		Matcher m = regexputils.getMatcher();
-		String str = regexputils.getFindingInFirstGroup(1);
+		String str = regexputils.getFindingInFirstMatch(1);
 		int intNumber = StringUtils.convertStringToInt(str);
 		return intNumber;
 	}

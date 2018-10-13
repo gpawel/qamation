@@ -15,7 +15,8 @@ public class XPathDescriptionTags {
     public static final String ATTRIBUTE="(?i)attribute";
     public static final String WITH_VALUE = "(?i)with value";
     public static final String WITH_VALUE_CONTAINS = "(?i)with value contains";
-    private static final String VALUE_REGEXP = "(?i)with value\\s{1,}'(.*)'.*";
+    private static final String NODE_VALUE_REGEXP = "(?i)with value\\s{1,}'(.*)'.*";
+    private static final String NODE_NAME_REGEXP = "(?ism)((element)|(child)|(descendant)|(parent)) (.+?) ((with value)|(contains))";
     private static final String CONTAINS_REGEXP = "(?i)contains\\s{1,}'(.*)'.*";
     private static final String TEXT_EQUAL_VALUE_TEMPLE = "\\[text()='\\$\\{value!!\\}'\\]";
 
@@ -104,7 +105,7 @@ public class XPathDescriptionTags {
 
     private static String [] getElementsValues(String desc) {
 
-        return new RegExpUtils(desc,VALUE_REGEXP).getAllFindings();
+        return new RegExpUtils(desc, NODE_VALUE_REGEXP).getAllFindings();
 
     }
 
