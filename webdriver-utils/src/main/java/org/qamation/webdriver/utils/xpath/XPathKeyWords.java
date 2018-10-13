@@ -1,4 +1,4 @@
-package org.qamation.webdriver.utils;
+package org.qamation.webdriver.utils.xpath;
 
 
 
@@ -7,10 +7,11 @@ import org.qamation.utils.RegExpUtils;
 import java.util.Map;
 import java.util.TreeMap;
 import java.util.function.BiFunction;
+import java.util.function.Function;
 import java.util.function.Supplier;
 
-public class XPathDescriptionTags {
-    public static final String ANY ="(?i)any element";
+public class XPathKeyWords {
+    public static final String ANY ="(?i)any";
     public static final String ELEMENT="(?i)element";
     public static final String ATTRIBUTE="(?i)attribute";
     public static final String WITH_VALUE = "(?i)with value";
@@ -21,12 +22,12 @@ public class XPathDescriptionTags {
     private static final String TEXT_EQUAL_VALUE_TEMPLE = "\\[text()='\\$\\{value!!\\}'\\]";
 
 
-    private static Map<String,Supplier<BiFunction>> xpathTags = null;
+    private static Map<String,Supplier<Function>> xpathTags = null;
 
 
-    public static Map<String, Supplier<BiFunction>> getXpathTags() {
+    public static Map<String, Supplier<Function>> getXpathTags() {
         if (xpathTags == null) {
-            xpathTags = new TreeMap<String, Supplier<BiFunction>>(String.CASE_INSENSITIVE_ORDER);
+            xpathTags = new TreeMap<String, Supplier<Function>>(String.CASE_INSENSITIVE_ORDER);
             mapTagsDescriptionToXPathElements();
         }
         return xpathTags;
@@ -34,8 +35,8 @@ public class XPathDescriptionTags {
 
     private static void mapTagsDescriptionToXPathElements() {
         addANY();
-        addWITH_VALUE_EQUAL();
-        addELEMENT();
+        //addWITH_VALUE_EQUAL();
+        //addELEMENT();
 
         /*
         xpathTags.put(ANY,"//*");
@@ -47,13 +48,11 @@ public class XPathDescriptionTags {
     }
 
     private static void addANY() {
-        BiFunction<StringBuilder,String,StringBuilder> anyFunc = (sb,desc)->
+        Function<String,String> any= (desc)->
         {
-            String s = sb.toString();
-            s=s.replaceAll(ANY,"//*");
-            return new StringBuilder(s);
+            return "//*";
         };
-        xpathTags.put(ANY,()->anyFunc);
+        xpathTags.put(ANY,()->any);
 
     }
 
@@ -61,13 +60,15 @@ public class XPathDescriptionTags {
         BiFunction<StringBuilder,String,StringBuilder> anyFunc = (sb,desc)-> {
             String s = sb.toString();
             // GET ELEMENT NAME HERE. THEN REPLACE:
-            s = s.replaceAll(ELEMENT,)
+            //s = s.replaceAll(ELEMENT,)
+            return new StringBuilder(s);
         };
     }
-
+/*
     private static void addWITH_VALUE_EQUAL() {
-        BiFunction<StringBuilder,String,StringBuilder> anyFunc = (sb,desc)->
+        Function<String,String> anyFunc = (desc)->
         {
+
             String[] val  = getElementsValues(desc);
             String s = sb.toString();
             s = eraceValues(s,val);
@@ -78,6 +79,7 @@ public class XPathDescriptionTags {
         };
         xpathTags.put(WITH_VALUE,()->anyFunc);
     }
+    */
 
     private static String insertXpathTemplate(String result, String target, String textEqualValueTemple, int len) {
         for (int i = 1; i < len; i++) {

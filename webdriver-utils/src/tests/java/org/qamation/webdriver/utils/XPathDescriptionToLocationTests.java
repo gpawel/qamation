@@ -4,6 +4,7 @@ import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+import org.qamation.webdriver.utils.xpath.XPathDescriptionToLocator;
 
 public class XPathDescriptionToLocationTests {
     @Before

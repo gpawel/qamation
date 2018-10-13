@@ -4,11 +4,15 @@ import java.io.StreamTokenizer;
 import java.io.StringReader;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.function.BiFunction;
+import java.util.function.Supplier;
 
-public class StringLineTokenizer {
+public class LineTokenizer {
     private List<TokenListener> listeners;
 
-    public StringLineTokenizer() {
+
+    public LineTokenizer() {
         listeners = new ArrayList<>();
     }
 
@@ -57,8 +61,8 @@ public class StringLineTokenizer {
         }
     }
 
-    private StreamTokenizer getStreamTokenizer(String xpathDescription) {
-        StringReader reader = new StringReader(xpathDescription);
+    private StreamTokenizer getStreamTokenizer(String aLine) {
+        StringReader reader = new StringReader(aLine);
         StreamTokenizer tokenizer = new StreamTokenizer(reader);
         configure(tokenizer);
         return tokenizer;

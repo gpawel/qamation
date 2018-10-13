@@ -4,9 +4,9 @@ import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import org.qamation.utils.tokenizer.StringLineTokenizer;
+import org.qamation.utils.tokenizer.LineTokenizer;
 
-public class StringLineTokenizerTests {
+public class LineTokenizerTests {
 
     @Before
     public void setUp(){}
@@ -14,7 +14,7 @@ public class StringLineTokenizerTests {
     @Test
     public void testEOL() {
         String line = "bla 2 bla \n 3  bla ";
-        StringLineTokenizer tokenizer = new StringLineTokenizer();
+        LineTokenizer tokenizer = new LineTokenizer();
         ListerTokens listener = new ListerTokens();
         tokenizer.addTokenListener(listener);
         tokenizer.tokenizeString(line);
