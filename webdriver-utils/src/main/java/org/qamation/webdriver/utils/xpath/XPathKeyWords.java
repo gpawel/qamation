@@ -121,7 +121,7 @@ public class XPathKeyWords {
                 if (value == null) throw new RuntimeException("Found something like<with null>; Expected: ...with value 'value'");
                 return "[text()='"+value+"']";
             }
-            throw new RuntimeException("'value' keyword should be followed by actual ");
+            throw new RuntimeException("'value' keyword should be followed by actual value");
         };
         xpathTags.put(VALUE,with_value);
     }
@@ -131,10 +131,10 @@ public class XPathKeyWords {
         {
             if (list.hasNext())  {
                 String value = list.next();
-                if (value == null) throw new RuntimeException("Found something like<with null>; Expected: ...with value 'value'");
-                return "[text()='"+value+"']";
+                if (value == null) throw new RuntimeException("Found <contains null>; Expected: contains 'value'");
+                return "[contains(text(),'"+value+"')]";
             }
-            throw new RuntimeException("'value' keyword should be followed by actual ");
+            throw new RuntimeException("'element contains' keyword should be followed by value ");
         };
         xpathTags.put(CONTAINS,contains);
     }

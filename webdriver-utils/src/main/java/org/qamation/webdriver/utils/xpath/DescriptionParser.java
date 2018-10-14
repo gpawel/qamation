@@ -2,15 +2,10 @@ package org.qamation.webdriver.utils.xpath;
 
 import org.qamation.utils.tokenizer.LineTokenizer;
 import org.qamation.utils.tokenizer.TokenListener;
-import org.sikuli.guide.Run;
-
-import java.io.StreamTokenizer;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.Map;
-import java.util.function.BiFunction;
 import java.util.function.Function;
-import java.util.function.Supplier;
 
 public class DescriptionParser implements TokenListener {
 

@@ -40,6 +40,16 @@ public class XPathDescriptionToLocationTests {
         convertAndAssert(description,expected);
     }
 
+    @Test
+    public void testContains() {
+        //https://connect.ups.com/Tracking/GeekSquad/Default.aspx
+        String description =
+                "element span contains 'TRACK'";
+        String expected = "//span[contains(text(),'TRACK')]";
+        convertAndAssert(description,expected);
+    }
+
+
     // //div[text()[normalize-space()='Wikipedia']]
 
 
