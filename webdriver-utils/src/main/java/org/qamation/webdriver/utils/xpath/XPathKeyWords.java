@@ -4,6 +4,8 @@ package org.qamation.webdriver.utils.xpath;
 
 import org.qamation.utils.RegExpUtils;
 
+import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.Map;
 import java.util.TreeMap;
 import java.util.function.BiFunction;
@@ -11,10 +13,10 @@ import java.util.function.Function;
 import java.util.function.Supplier;
 
 public class XPathKeyWords {
-    public static final String ANY ="(?i)any";
+    public static final String ANY ="any";
     public static final String ELEMENT="(?i)element";
     public static final String ATTRIBUTE="(?i)attribute";
-    public static final String WITH_VALUE = "(?i)with value";
+    public static final String WITH_VALUE = "with";
     public static final String WITH_VALUE_CONTAINS = "(?i)with value contains";
     private static final String NODE_VALUE_REGEXP = "(?i)with value\\s{1,}'(.*)'.*";
     private static final String NODE_NAME_REGEXP = "(?ism)((element)|(child)|(descendant)|(parent)) (.+?) ((with value)|(contains))";
@@ -22,12 +24,12 @@ public class XPathKeyWords {
     private static final String TEXT_EQUAL_VALUE_TEMPLE = "\\[text()='\\$\\{value!!\\}'\\]";
 
 
-    private static Map<String,Supplier<Function>> xpathTags = null;
+    private static Map<String,Function<Iterator<String>,String>> xpathTags = null;
 
 
-    public static Map<String, Supplier<Function>> getXpathTags() {
+    public static Map<String, Function<Iterator<String>,String>> getXpathTags() {
         if (xpathTags == null) {
-            xpathTags = new TreeMap<String, Supplier<Function>>(String.CASE_INSENSITIVE_ORDER);
+            xpathTags = new TreeMap<>(String.CASE_INSENSITIVE_ORDER);
             mapTagsDescriptionToXPathElements();
         }
         return xpathTags;
@@ -35,7 +37,7 @@ public class XPathKeyWords {
 
     private static void mapTagsDescriptionToXPathElements() {
         addANY();
-        //addWITH_VALUE_EQUAL();
+        addWITH_VALUE_EQUAL();
         //addELEMENT();
 
         /*
@@ -48,12 +50,15 @@ public class XPathKeyWords {
     }
 
     private static void addANY() {
-        Function<String,String> any= (desc)->
+        Function<Iterator<String>,String> any= (list)->
         {
-            return "//*";
+            if (list.hasNext())  {
+                String el = list.next();
+                if (el.equalsIgnoreCase("element")) return "//*";
+            }
+            throw new RuntimeException("'element' is expected after 'any' keyword.");
         };
-        xpathTags.put(ANY,()->any);
-
+        xpathTags.put(ANY,any);
     }
 
     private static void addELEMENT() {
@@ -64,29 +69,23 @@ public class XPathKeyWords {
             return new StringBuilder(s);
         };
     }
-/*
+
     private static void addWITH_VALUE_EQUAL() {
-        Function<String,String> anyFunc = (desc)->
+        Function<Iterator<String>,String> with_value= (list)->
         {
-
-            String[] val  = getElementsValues(desc);
-            String s = sb.toString();
-            s = eraceValues(s,val);
-            s = insertXpathTemplate(s,WITH_VALUE,TEXT_EQUAL_VALUE_TEMPLE,val.length);
-            //s = s.replaceAll(WITH_VALUE,"\\[text()='\\$\\{value\\}'\\]");
-            s = substituteValues(s,val);
-            return new StringBuilder(s);
+            if (list.hasNext())  {
+                String el = list.next();
+                if (el == null) throw new RuntimeException("null is found after 'with' keyword");
+                if (el.equalsIgnoreCase("value")) {
+                    String value = list.next();
+                    if (value == null) throw new RuntimeException("Found <with null>; Expected: ...with value 'value'");
+                    return "[text()='"+value+"']";
+                }
+                else throw new RuntimeException("'value' word is expected after 'with' keyword");
+            }
+            throw new RuntimeException("'with' should be followed by 'value' word.");
         };
-        xpathTags.put(WITH_VALUE,()->anyFunc);
-    }
-    */
-
-    private static String insertXpathTemplate(String result, String target, String textEqualValueTemple, int len) {
-        for (int i = 1; i < len; i++) {
-            String templ = textEqualValueTemple.replace("!!",String.valueOf(i));
-            result = result.replaceFirst(target,templ);
-        }
-        return result;
+        xpathTags.put(WITH_VALUE,with_value);
     }
 
     private static String substituteValues(String s, String[] val) {

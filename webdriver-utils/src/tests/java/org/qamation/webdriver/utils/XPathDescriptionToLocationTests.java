@@ -13,7 +13,7 @@ public class XPathDescriptionToLocationTests {
     @Test
     public void convertDescriptionToXpath_1() {
         String description =
-            "any element with value 'Sign In'";
+            "aNy element with value 'Sign In'";
         String expected =
                 "//*[text()='Sign In']";
         convertAndAssert(description,expected);

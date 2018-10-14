@@ -2,8 +2,10 @@ package org.qamation.webdriver.utils.xpath;
 
 import org.qamation.utils.tokenizer.LineTokenizer;
 import org.qamation.utils.tokenizer.TokenListener;
+import org.sikuli.guide.Run;
 
 import java.io.StreamTokenizer;
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.Map;
 import java.util.function.BiFunction;
@@ -12,11 +14,11 @@ import java.util.function.Supplier;
 
 public class DescriptionParser implements TokenListener {
 
-    private Map<String,Supplier<Function>> keywords;
+    private Map<String,Function<Iterator<String>,String>> keywords;
     private LineTokenizer tokenizer;
     private LinkedList<String> convertedDescription;
 
-    public DescriptionParser (Map<String, Supplier<Function>> keywords) {
+    public DescriptionParser (Map<String,Function<Iterator<String>,String>> keywords) {
         this.tokenizer = new LineTokenizer();
         this.tokenizer.addTokenListener(this);
         this.keywords = keywords;
@@ -29,22 +31,24 @@ public class DescriptionParser implements TokenListener {
 
     private String buildString(LinkedList<String> convertedDescription) {
         StringBuilder sb = new StringBuilder();
-        for (String s : convertedDescription) {
-            sb = sb.append(s);
+        Iterator<String> iterator = convertedDescription.iterator();
+        while (iterator.hasNext()) {
+            String key = iterator.next();
+            Function<Iterator<String>,String> f = keywords.get(key);
+            if (f == null) throw new RuntimeException("<"+key+"> is not valid keyword");
+            sb.append(f.apply(iterator));
         }
         return sb.toString();
     }
 
     @Override
     public void gotStringValue(String val) {
-        Supplier s = keywords.get(val);
-        s.get.
-
-    }
+        convertedDescription.add(val);
+    };
 
     @Override
     public void gotNumberValue(double d) {
-
+        convertedDescription.add(String.valueOf(d));
     }
 
     @Override
