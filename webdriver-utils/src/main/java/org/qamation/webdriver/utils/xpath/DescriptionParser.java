@@ -31,6 +31,7 @@ public class DescriptionParser implements TokenListener {
 
     private String buildString(LinkedList<String> convertedDescription) {
         StringBuilder sb = new StringBuilder();
+        sb.append("/");
         Iterator<String> iterator = convertedDescription.iterator();
         while (iterator.hasNext()) {
             String key = iterator.next();

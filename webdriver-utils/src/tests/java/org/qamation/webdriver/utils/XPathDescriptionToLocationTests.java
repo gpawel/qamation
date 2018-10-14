@@ -34,7 +34,7 @@ public class XPathDescriptionToLocationTests {
     public void descriptionWithTwoElementsAndValues() {
         // Wikipedia; search QA
         String description =
-                "element li with value ', an International Baccalaureate school in Doha, Qatar' and child with value 'Qatar Academy'";
+                "element 'li' with value ', an International Baccalaureate school in Doha, Qatar' and child 'a' with value 'Qatar Academy'";
         String expected =
                 "//li[text()=', an International Baccalaureate school in Doha, Qatar']/a[text()='Qatar Academy']";
         convertAndAssert(description,expected);

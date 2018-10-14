@@ -5,18 +5,20 @@ package org.qamation.webdriver.utils.xpath;
 import org.qamation.utils.RegExpUtils;
 
 import java.util.Iterator;
-import java.util.LinkedList;
 import java.util.Map;
 import java.util.TreeMap;
-import java.util.function.BiFunction;
 import java.util.function.Function;
-import java.util.function.Supplier;
 
 public class XPathKeyWords {
     public static final String ANY ="any";
-    public static final String ELEMENT="(?i)element";
-    public static final String ATTRIBUTE="(?i)attribute";
-    public static final String WITH_VALUE = "with";
+    public static final String ELEMENT="element";
+    public static final String ATTRIBUTE="attribute";
+    public static final String WITH = "with";
+    public static final String VALUE = "value";
+    public static final String AND = "and";
+    public static final String CHILD = "child";
+    public static final String CONTAINS = "contains";
+
     public static final String WITH_VALUE_CONTAINS = "(?i)with value contains";
     private static final String NODE_VALUE_REGEXP = "(?i)with value\\s{1,}'(.*)'.*";
     private static final String NODE_NAME_REGEXP = "(?ism)((element)|(child)|(descendant)|(parent)) (.+?) ((with value)|(contains))";
@@ -37,15 +39,19 @@ public class XPathKeyWords {
 
     private static void mapTagsDescriptionToXPathElements() {
         addANY();
-        addWITH_VALUE_EQUAL();
-        //addELEMENT();
+        addWITH();
+        addVALUE();
+        addELEMENT();
+        addAND();
+        addCHILD();
+        addELEMENT_CONTAINS();
 
         /*
         xpathTags.put(ANY,"//*");
         xpathTags.put(ELEMENT,"//${elementName}");
         xpathTags.put(ATTRIBUTE,"@${attributeName}");
         xpathTags.put(WITH_VALUE_CONTAINS,"[contains(text(),'${value})]");
-        xpathTags.put(WITH_VALUE,"[text()='${value}']");
+        xpathTags.put(WITH,"[text()='${value}']");
         */
     }
 
@@ -54,7 +60,7 @@ public class XPathKeyWords {
         {
             if (list.hasNext())  {
                 String el = list.next();
-                if (el.equalsIgnoreCase("element")) return "//*";
+                if (el.equalsIgnoreCase("element")) return "/*";
             }
             throw new RuntimeException("'element' is expected after 'any' keyword.");
         };
@@ -62,30 +68,75 @@ public class XPathKeyWords {
     }
 
     private static void addELEMENT() {
-        BiFunction<StringBuilder,String,StringBuilder> anyFunc = (sb,desc)-> {
-            String s = sb.toString();
-            // GET ELEMENT NAME HERE. THEN REPLACE:
-            //s = s.replaceAll(ELEMENT,)
-            return new StringBuilder(s);
+        Function<Iterator<String>,String> element = (list)->
+        {
+            if (list.hasNext())  {
+                String elName = list.next();
+                if (elName == null) throw new RuntimeException("Element's name is expected after 'element' keyword");
+                return "/"+elName;
+            }
+            throw new RuntimeException("'element' keyword should be followed by its name");
         };
+        xpathTags.put(ELEMENT,element);
     }
 
-    private static void addWITH_VALUE_EQUAL() {
+    private static void addCHILD() {
+        Function<Iterator<String>,String> child = (list)->
+        {
+            if (list.hasNext())  {
+                String childName = list.next();
+                if (childName == null) throw new RuntimeException("Child's name is expected after 'child' keyword");
+                return "/"+childName;
+            }
+            throw new RuntimeException("'child' keyword should be followed by its name");
+        };
+        xpathTags.put(CHILD,child);
+    }
+
+    private static void addWITH() {
+        Function<Iterator<String>,String> with =  (list)->
+        {
+            // this is 'connector' word
+            // without proper AST will skip for now.
+            return "";
+        };
+        xpathTags.put(WITH,with);
+    }
+
+    private static void addAND() {
+        Function<Iterator<String>,String> and= (list)->
+        {
+            // this is 'connector' word
+            // without proper AST will skip for now.
+            return "";
+        };
+        xpathTags.put(AND,and);
+    }
+
+    private static void addVALUE() {
         Function<Iterator<String>,String> with_value= (list)->
         {
             if (list.hasNext())  {
-                String el = list.next();
-                if (el == null) throw new RuntimeException("null is found after 'with' keyword");
-                if (el.equalsIgnoreCase("value")) {
-                    String value = list.next();
-                    if (value == null) throw new RuntimeException("Found <with null>; Expected: ...with value 'value'");
-                    return "[text()='"+value+"']";
-                }
-                else throw new RuntimeException("'value' word is expected after 'with' keyword");
+                String value = list.next();
+                if (value == null) throw new RuntimeException("Found something like<with null>; Expected: ...with value 'value'");
+                return "[text()='"+value+"']";
             }
-            throw new RuntimeException("'with' should be followed by 'value' word.");
+            throw new RuntimeException("'value' keyword should be followed by actual ");
         };
-        xpathTags.put(WITH_VALUE,with_value);
+        xpathTags.put(VALUE,with_value);
+    }
+
+    private static void addELEMENT_CONTAINS() {
+        Function<Iterator<String>,String> contains= (list)->
+        {
+            if (list.hasNext())  {
+                String value = list.next();
+                if (value == null) throw new RuntimeException("Found something like<with null>; Expected: ...with value 'value'");
+                return "[text()='"+value+"']";
+            }
+            throw new RuntimeException("'value' keyword should be followed by actual ");
+        };
+        xpathTags.put(CONTAINS,contains);
     }
 
     private static String substituteValues(String s, String[] val) {
