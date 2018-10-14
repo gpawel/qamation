@@ -63,6 +63,44 @@ public class XPathDescriptionToLocationTests {
     @After
     public void tearDown() {}
 
+    /*
+    NEED TO CREATE TESTS FOR EACH OF THE XPATH BELOW.
+
+    <@!{xpath=//*[contains(text(),'Hello. Sign in')]}>
+xpath=//h1[contains(text(),'Sign in')]
+
+xpath=//*[@id='nav-link-yourAccount']/span[1]
+<@!{xpath=//*[@id='twotabsearchtextbox']}>|hair {SPACE} brash
+didYouMean
+
+xpath=//*[@id='atfResults']//li[1]//h2
+<@!{xpath=//*[@id='atfResults']//li[1]//h2}>
+productTitle
+<@!{add-to-cart-button}>
+xpath=//*[@id='huc-v2-order-row-confirm-text']/h1
+
+xpath=//*[@id='huc-v2-order-row-confirm-text']/h1
+<@~{nav-link-yourAccount}>
+
+<@!{nav-item-signout-sa}>
+xpath=//h1[contains(text(),'Sign in')]
+<@!{xpath=//*[contains(text(),'Hello. Sign in')]}>
+xpath=//h1[contains(text(),'Sign in')]
+gpawel17@mail.com|1qazxsw2!
+xpath=//*[@id='nav-link-yourAccount']/span[1]
+<@!{nav-cart}>
+sc-active-cart
+
+xpath=//*[@id='activeCartViewForm']//li[1]
+<@!{xpath=//input[@value='Delete']}>
+xpath=//*[@id='sc-active-cart']//h1
+<@~{nav-link-yourAccount}>
+
+<@!{nav-item-signout-sa}>
+xpath=//h1[contains(text(),'Sign in')]
+
+     */
+
 
 
 }
