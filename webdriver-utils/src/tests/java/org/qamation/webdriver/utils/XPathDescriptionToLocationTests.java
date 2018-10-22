@@ -49,6 +49,16 @@ public class XPathDescriptionToLocationTests {
         convertAndAssert(description,expected);
     }
 
+    @Test
+    public void testChildAndIndex() {
+        //*[@id='nav-link-yourAccount']/span[1]
+        String description =
+                "any element with attribute 'id' with value equal 'nav-link-yourAccount' and child 'span' at position 1";
+        String expected = "//*[@id='nav-link-yourAccount']/span[1]";
+        convertAndAssert(description,expected);
+    }
+
+
 
     // //div[text()[normalize-space()='Wikipedia']]
 

@@ -26,18 +26,29 @@ public class XPathKeyWords {
     private static final String TEXT_EQUAL_VALUE_TEMPLE = "\\[text()='\\$\\{value!!\\}'\\]";
 
 
-    private static Map<String,Function<Iterator<String>,String>> xpathTags = null;
 
+    private static XPathKeyWords xPathKeyWords = null;
 
-    public static Map<String, Function<Iterator<String>,String>> getXpathTags() {
+    private Map<String,Function<Iterator<String>,String>> xpathTags = null;
+    private CurrentNode currentNode;
+    private CurrentPlace currentPlace;
+
+    private XPathKeyWords () {
         if (xpathTags == null) {
             xpathTags = new TreeMap<>(String.CASE_INSENSITIVE_ORDER);
             mapTagsDescriptionToXPathElements();
         }
-        return xpathTags;
     }
 
-    private static void mapTagsDescriptionToXPathElements() {
+    public static Map<String, Function<Iterator<String>,String>> getXpathTags() {
+        if (xPathKeyWords == null) {
+            xPathKeyWords = new XPathKeyWords();
+        }
+        return xPathKeyWords.xpathTags;
+    }
+
+
+    private void mapTagsDescriptionToXPathElements() {
         addANY();
         addWITH();
         addVALUE();
@@ -45,6 +56,8 @@ public class XPathKeyWords {
         addAND();
         addCHILD();
         addELEMENT_CONTAINS();
+        addATTRIBUTE();
+        //currentPlace.InCondition;
 
         /*
         xpathTags.put(ANY,"//*");
@@ -55,24 +68,44 @@ public class XPathKeyWords {
         */
     }
 
-    private static void addANY() {
+    private void addATTRIBUTE() {
+        Function<Iterator<String>,String> attribute = (list)->
+        {
+            setNode(CurrentNode.Attribute);
+            if (list.hasNext())  {
+                String attrName = list.next();
+                if (attrName == null) throw new RuntimeException("attribute name is expected after 'attribute' keyword.");
+                //String attr
+
+            }
+
+        };
+        xpathTags.put(ATTRIBUTE,attribute);
+    }
+
+    private void addANY() {
         Function<Iterator<String>,String> any= (list)->
         {
             if (list.hasNext())  {
                 String el = list.next();
-                if (el.equalsIgnoreCase("element")) return "/*";
+                if (el.equalsIgnoreCase("element")) {
+                    setNode(CurrentNode.Element);
+                    setPlace(CurrentPlace.InPath);
+                    return "/*";
+                }
+                throw new RuntimeException("'element' is expected after 'any' keyword.");
             }
-            throw new RuntimeException("'element' is expected after 'any' keyword.");
         };
         xpathTags.put(ANY,any);
     }
 
-    private static void addELEMENT() {
+    private void addELEMENT() {
         Function<Iterator<String>,String> element = (list)->
         {
             if (list.hasNext())  {
                 String elName = list.next();
                 if (elName == null) throw new RuntimeException("Element's name is expected after 'element' keyword");
+
                 return "/"+elName;
             }
             throw new RuntimeException("'element' keyword should be followed by its name");
@@ -80,7 +113,7 @@ public class XPathKeyWords {
         xpathTags.put(ELEMENT,element);
     }
 
-    private static void addCHILD() {
+    private void addCHILD() {
         Function<Iterator<String>,String> child = (list)->
         {
             if (list.hasNext())  {
@@ -93,19 +126,32 @@ public class XPathKeyWords {
         xpathTags.put(CHILD,child);
     }
 
-    private static void addWITH() {
+    private void addWITH() {
         Function<Iterator<String>,String> with =  (list)->
         {
             // this is 'connector' word
             // without proper AST will skip for now.
-            return "";
+            return "[";
         };
         xpathTags.put(WITH,with);
     }
 
-    private static void addAND() {
+    private void addAND() {
         Function<Iterator<String>,String> and= (list)->
         {
+            if (list.hasNext()) {
+                String next = list.next();
+                String result = "";
+                if (next.equalsIgnoreCase("child")) {
+                    result = xpathTags.get("child").apply(list);
+                }
+                else if (next.equalsIgnoreCase("descendant")) {
+                    result = xpathTags.get("descendant").apply(list);
+                }
+                else if (next.equalsIgnoreCase("parent")) {
+                    result = xpathTags.get("parent").apply(list);
+                }
+            }
             // this is 'connector' word
             // without proper AST will skip for now.
             return "";
@@ -113,20 +159,20 @@ public class XPathKeyWords {
         xpathTags.put(AND,and);
     }
 
-    private static void addVALUE() {
+    private void addVALUE() {
         Function<Iterator<String>,String> with_value= (list)->
         {
             if (list.hasNext())  {
                 String value = list.next();
                 if (value == null) throw new RuntimeException("Found something like<with null>; Expected: ...with value 'value'");
-                return "[text()='"+value+"']";
+                return "text()="+value+"";
             }
             throw new RuntimeException("'value' keyword should be followed by actual value");
         };
         xpathTags.put(VALUE,with_value);
     }
 
-    private static void addELEMENT_CONTAINS() {
+    private void addELEMENT_CONTAINS() {
         Function<Iterator<String>,String> contains= (list)->
         {
             if (list.hasNext())  {
@@ -139,7 +185,7 @@ public class XPathKeyWords {
         xpathTags.put(CONTAINS,contains);
     }
 
-    private static String substituteValues(String s, String[] val) {
+    private String substituteValues(String s, String[] val) {
         for (int i=0; i < val.length; i++) {
             s = s.replace("${value"+i+"}",val[i]);
         }
@@ -148,17 +194,25 @@ public class XPathKeyWords {
 
 
 
-    private static String eraceValues(String s, String[] val) {
+    private String eraceValues(String s, String[] val) {
         for (String x: val) {
             s = s.replace("'"+x+"'","");
         }
         return s;
     }
 
-    private static String [] getElementsValues(String desc) {
+    private String [] getElementsValues(String desc) {
 
         return new RegExpUtils(desc, NODE_VALUE_REGEXP).getAllFindings();
 
+    }
+
+    private void setPlace(CurrentPlace place) {
+        currentPlace = place;
+    }
+
+    private void setNode(CurrentNode node) {
+        currentNode = node;
     }
 
 
