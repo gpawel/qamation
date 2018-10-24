@@ -4,12 +4,12 @@ package org.qamation.webdriver.utils.xpath;
 
 import org.qamation.utils.RegExpUtils;
 
-import java.util.Iterator;
 import java.util.Map;
 import java.util.TreeMap;
 import java.util.function.Function;
 
-public class XPathKeyWords {
+public class KeyWords {
+
     public static final String ANY ="any";
     public static final String ELEMENT="element";
     public static final String ATTRIBUTE="attribute";
@@ -18,6 +18,9 @@ public class XPathKeyWords {
     public static final String AND = "and";
     public static final String CHILD = "child";
     public static final String CONTAINS = "contains";
+    public static final String PARENT = "parent";
+    public static final String DESCENDANT = "descendant";
+
 
     public static final String WITH_VALUE_CONTAINS = "(?i)with value contains";
     private static final String NODE_VALUE_REGEXP = "(?i)with value\\s{1,}'(.*)'.*";
@@ -27,22 +30,22 @@ public class XPathKeyWords {
 
 
 
-    private static XPathKeyWords xPathKeyWords = null;
+    private static KeyWords xPathKeyWords = null;
 
-    private Map<String,Function<Iterator<String>,String>> xpathTags = null;
+    private Map<String,Function<Tokens,String>> xpathTags = null;
     private CurrentNode currentNode;
     private CurrentPlace currentPlace;
 
-    private XPathKeyWords () {
+    private KeyWords() {
         if (xpathTags == null) {
             xpathTags = new TreeMap<>(String.CASE_INSENSITIVE_ORDER);
             mapTagsDescriptionToXPathElements();
         }
     }
 
-    public static Map<String, Function<Iterator<String>,String>> getXpathTags() {
+    public static Map<String, Function<Tokens,String>> getTranslationRules() {
         if (xPathKeyWords == null) {
-            xPathKeyWords = new XPathKeyWords();
+            xPathKeyWords = new KeyWords();
         }
         return xPathKeyWords.xpathTags;
     }
@@ -69,7 +72,7 @@ public class XPathKeyWords {
     }
 
     private void addATTRIBUTE() {
-        Function<Iterator<String>,String> attribute = (list)->
+        Function<Tokens,String> attribute = (list)->
         {
             setNode(CurrentNode.Attribute);
             if (list.hasNext())  {
@@ -84,7 +87,7 @@ public class XPathKeyWords {
     }
 
     private void addANY() {
-        Function<Iterator<String>,String> any= (list)->
+        Function<Tokens,String> any= (list)->
         {
             if (list.hasNext())  {
                 String el = list.next();
@@ -100,7 +103,7 @@ public class XPathKeyWords {
     }
 
     private void addELEMENT() {
-        Function<Iterator<String>,String> element = (list)->
+        Function<Tokens,String> element = (list)->
         {
             if (list.hasNext())  {
                 String elName = list.next();
@@ -114,7 +117,7 @@ public class XPathKeyWords {
     }
 
     private void addCHILD() {
-        Function<Iterator<String>,String> child = (list)->
+        Function<Tokens,String> child = (list)->
         {
             if (list.hasNext())  {
                 String childName = list.next();
@@ -127,9 +130,17 @@ public class XPathKeyWords {
     }
 
     private void addWITH() {
-        Function<Iterator<String>,String> with =  (list)->
+        Function<Tokens,String> with =  (list)->
         {
-            // this is 'connector' word
+            if (list.hasNext()) {
+                String value = list.next();
+                if (value.equalsIgnoreCase("value")) {
+                    if (value == null) throw new RuntimeException("Found something like<with null>; Expected: ...with value 'value'");
+                    return "text()="+value+"";
+                }
+                if (value.equalsIgnoreCase("attribute"))
+            }
+                    // this is 'connector' word
             // without proper AST will skip for now.
             return "[";
         };
@@ -137,35 +148,35 @@ public class XPathKeyWords {
     }
 
     private void addAND() {
-        Function<Iterator<String>,String> and= (list)->
+        Function<Tokens,String> and= (list)->
         {
-            if (list.hasNext()) {
-                String next = list.next();
-                String result = "";
-                if (next.equalsIgnoreCase("child")) {
-                    result = xpathTags.get("child").apply(list);
+            String result="";
+
+
+                if (currentPlace == CurrentPlace.InPath)
+                    return "/";
+                else {
+
                 }
-                else if (next.equalsIgnoreCase("descendant")) {
-                    result = xpathTags.get("descendant").apply(list);
-                }
-                else if (next.equalsIgnoreCase("parent")) {
-                    result = xpathTags.get("parent").apply(list);
-                }
+
             }
             // this is 'connector' word
             // without proper AST will skip for now.
-            return "";
+            return result;
         };
         xpathTags.put(AND,and);
     }
 
     private void addVALUE() {
-        Function<Iterator<String>,String> with_value= (list)->
+        Function<Tokens,String> with_value= (list)->
         {
             if (list.hasNext())  {
                 String value = list.next();
                 if (value == null) throw new RuntimeException("Found something like<with null>; Expected: ...with value 'value'");
-                return "text()="+value+"";
+                    if (currentNode = CurrentNode.Element) {
+                        return "text()=" + value + "";
+                    }
+                    else return "="+value;
             }
             throw new RuntimeException("'value' keyword should be followed by actual value");
         };
@@ -173,7 +184,7 @@ public class XPathKeyWords {
     }
 
     private void addELEMENT_CONTAINS() {
-        Function<Iterator<String>,String> contains= (list)->
+        Function<Tokens,String> contains= (list)->
         {
             if (list.hasNext())  {
                 String value = list.next();
@@ -215,5 +226,46 @@ public class XPathKeyWords {
         currentNode = node;
     }
 
+    private String openBracket() {
+        currentPlace = CurrentPlace.InCondition;
+        return "[";
+    }
 
+    private String closeBracket() {
+        currentPlace = CurrentPlace.InPath;
+        return "]";
+    }
+
+    /*
+    private String processNodes(String next, Iterator<String> list) {
+        Function<Iterator<String>,String> func = xpathTags.get(next);
+        if (func == null) throw new RuntimeException(next+" not found in a list of key words.");
+        else return func.apply(list);
+    }
+*/
+    private boolean isNode(String next) {
+        if (next.equalsIgnoreCase(CHILD)) {
+            return true;
+        }
+        else if (next.equalsIgnoreCase(DESCENDANT)) {
+            return true
+        }
+        else if (next.equalsIgnoreCase(PARENT)) {
+            return true;
+        }
+        else if (next.equalsIgnoreCase(ELEMENT)) {
+            return true;
+        }
+        else return false;
+    }
+
+    private boolean isAttribute(String next) {
+        if (next.equalsIgnoreCase("attribute")) return true;
+        else return false;
+    }
+
+    private boolean isValue(String next) {
+        if (next.equalsIgnoreCase("value"))  return true;
+        else return true;
+    }
 }

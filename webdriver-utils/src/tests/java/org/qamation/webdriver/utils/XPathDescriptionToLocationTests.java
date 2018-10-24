@@ -4,7 +4,7 @@ import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import org.qamation.webdriver.utils.xpath.XPathDescriptionToLocator;
+import org.qamation.webdriver.utils.xpath.Translator;
 
 public class XPathDescriptionToLocationTests {
     @Before
@@ -64,8 +64,8 @@ public class XPathDescriptionToLocationTests {
 
 
     private void convertAndAssert(String description, String expected) {
-        XPathDescriptionToLocator converter = new XPathDescriptionToLocator();
-        String xpathStr = converter.getLocatorAsString(description);
+        Translator translator = new Translator();
+        String xpathStr = translator.translateDescriptionToXpath(description);
         Assert.assertEquals(expected,xpathStr);
     }
 
