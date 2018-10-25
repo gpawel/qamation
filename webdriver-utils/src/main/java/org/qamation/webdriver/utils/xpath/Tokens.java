@@ -25,10 +25,16 @@ public class Tokens extends ArrayList<String> {
 
     public String getNextToken() {
         if (hasNext()) {
-            currentIndex++;
-            return tokens.get(currentIndex);
+            return tokens.get(currentIndex+1);
         }
-        else throw new IndexOutOfBoundsException ("Already at the last token");
+        else throw new IndexOutOfBoundsException ("Cannot get next token: already at the last token");
+    }
+
+    public String getPreviousToken() {
+        if (currentIndex>0) {
+            return tokens.get(currentIndex-1);
+        }
+        else throw new IndexOutOfBoundsException("Cannot get previous token: currently at the firs token");
     }
 
     public String getCurrentToken() {

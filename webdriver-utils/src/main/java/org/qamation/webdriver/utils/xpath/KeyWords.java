@@ -36,12 +36,6 @@ public class KeyWords {
     private CurrentNode currentNode;
     private CurrentPlace currentPlace;
 
-    private KeyWords() {
-        if (xpathTags == null) {
-            xpathTags = new TreeMap<>(String.CASE_INSENSITIVE_ORDER);
-            mapTagsDescriptionToXPathElements();
-        }
-    }
 
     public static Map<String, Function<Tokens,String>> getTranslationRules() {
         if (xPathKeyWords == null) {
@@ -51,46 +45,47 @@ public class KeyWords {
     }
 
 
-    private void mapTagsDescriptionToXPathElements() {
-        addANY();
-        addWITH();
-        addVALUE();
-        addELEMENT();
-        addAND();
-        addCHILD();
-        addELEMENT_CONTAINS();
-        addATTRIBUTE();
-        //currentPlace.InCondition;
-
-        /*
-        xpathTags.put(ANY,"//*");
-        xpathTags.put(ELEMENT,"//${elementName}");
-        xpathTags.put(ATTRIBUTE,"@${attributeName}");
-        xpathTags.put(WITH_VALUE_CONTAINS,"[contains(text(),'${value})]");
-        xpathTags.put(WITH,"[text()='${value}']");
-        */
+    private KeyWords() {
+        if (xpathTags == null) {
+            xpathTags = new TreeMap<>(String.CASE_INSENSITIVE_ORDER);
+            xpathTags = mapTagsDescriptionToXPathElements();
+        }
     }
 
-    private void addATTRIBUTE() {
+    private Map<String,Function<Tokens,String>> mapTagsDescriptionToXPathElements() {
+        Map<String,Function<Tokens,String>> map;
+
+        map.put(WITH,getWithFunction());
+        map.put(VALUE, getValueFunction());
+        map.put(ELEMENT,getElementFunction());
+        map.put(AND, getAndFunction());
+        map.put(CHILD, getChildFunction());
+        map.put(CONTAINS,getElementContainsFunction());;
+        map.put(ATTRIBUTE, getAttriuteFunction();
+        map.put(ANY,getAnyFunction());
+        return map;
+
+    }
+
+    private Function<Tokens,String> getAttriuteFunction() {
         Function<Tokens,String> attribute = (list)->
         {
             setNode(CurrentNode.Attribute);
             if (list.hasNext())  {
-                String attrName = list.next();
+                String attrName = list.getNextToken();
                 if (attrName == null) throw new RuntimeException("attribute name is expected after 'attribute' keyword.");
                 //String attr
 
             }
-
         };
-        xpathTags.put(ATTRIBUTE,attribute);
+        return attribute;
     }
 
-    private void addANY() {
+    private Function<Tokens,String> getAnyFunction() {
         Function<Tokens,String> any= (list)->
         {
             if (list.hasNext())  {
-                String el = list.next();
+                String el = list.getNextToken();
                 if (el.equalsIgnoreCase("element")) {
                     setNode(CurrentNode.Element);
                     setPlace(CurrentPlace.InPath);
@@ -99,10 +94,10 @@ public class KeyWords {
                 throw new RuntimeException("'element' is expected after 'any' keyword.");
             }
         };
-        xpathTags.put(ANY,any);
+        return any;
     }
 
-    private void addELEMENT() {
+    private Function<Tokens,String> getElementFunction() {
         Function<Tokens,String> element = (list)->
         {
             if (list.hasNext())  {
@@ -113,10 +108,11 @@ public class KeyWords {
             }
             throw new RuntimeException("'element' keyword should be followed by its name");
         };
-        xpathTags.put(ELEMENT,element);
+        return element;
+
     }
 
-    private void addCHILD() {
+    private Function<Tokens,String> getChildFunction() {
         Function<Tokens,String> child = (list)->
         {
             if (list.hasNext())  {
@@ -126,10 +122,10 @@ public class KeyWords {
             }
             throw new RuntimeException("'child' keyword should be followed by its name");
         };
-        xpathTags.put(CHILD,child);
+        return child;
     }
 
-    private void addWITH() {
+    private Function<Tokens,String> getWithFunction() {
         Function<Tokens,String> with =  (list)->
         {
             if (list.hasNext()) {
@@ -144,10 +140,11 @@ public class KeyWords {
             // without proper AST will skip for now.
             return "[";
         };
-        xpathTags.put(WITH,with);
+        return with;
+
     }
 
-    private void addAND() {
+    private Function<Tokens,String> getAndFunction() {
         Function<Tokens,String> and= (list)->
         {
             String result="";
@@ -159,16 +156,16 @@ public class KeyWords {
 
                 }
 
-            }
             // this is 'connector' word
             // without proper AST will skip for now.
-            return result;
+
         };
-        xpathTags.put(AND,and);
+        return and;
+
     }
 
-    private void addVALUE() {
-        Function<Tokens,String> with_value= (list)->
+    private Function<Tokens,String> getValueFunction() {
+        Function<Tokens,String> with_value = (list)->
         {
             if (list.hasNext())  {
                 String value = list.next();
@@ -180,11 +177,11 @@ public class KeyWords {
             }
             throw new RuntimeException("'value' keyword should be followed by actual value");
         };
-        xpathTags.put(VALUE,with_value);
+        return with_value;
     }
 
-    private void addELEMENT_CONTAINS() {
-        Function<Tokens,String> contains= (list)->
+    private Function<Tokens,String> getElementContainsFunction() {
+        Function<Tokens,String> element_contains= (list)->
         {
             if (list.hasNext())  {
                 String value = list.next();
@@ -193,7 +190,8 @@ public class KeyWords {
             }
             throw new RuntimeException("'element contains' keyword should be followed by value ");
         };
-        xpathTags.put(CONTAINS,contains);
+        return element_contains;
+
     }
 
     private String substituteValues(String s, String[] val) {
