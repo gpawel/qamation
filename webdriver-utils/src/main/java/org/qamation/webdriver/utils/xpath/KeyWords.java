@@ -4,6 +4,7 @@ package org.qamation.webdriver.utils.xpath;
 
 import org.qamation.utils.RegExpUtils;
 
+import java.util.HashMap;
 import java.util.Map;
 import java.util.TreeMap;
 import java.util.function.Function;
@@ -37,7 +38,7 @@ public class KeyWords {
     private CurrentPlace currentPlace;
 
 
-    public static Map<String, Function<Tokens,String>> getTranslationRules() {
+    public static Map<String, Function<Tokens,String>> getKeyWordsTags() {
         if (xPathKeyWords == null) {
             xPathKeyWords = new KeyWords();
         }
@@ -48,20 +49,19 @@ public class KeyWords {
     private KeyWords() {
         if (xpathTags == null) {
             xpathTags = new TreeMap<>(String.CASE_INSENSITIVE_ORDER);
-            xpathTags = mapTagsDescriptionToXPathElements();
+            xpathTags = mapTags();
         }
     }
 
-    private Map<String,Function<Tokens,String>> mapTagsDescriptionToXPathElements() {
-        Map<String,Function<Tokens,String>> map;
-
+    private Map<String,Function<Tokens,String>> mapTags() {
+        Map<String,Function<Tokens,String>> map = new HashMap<>();
         map.put(WITH,getWithFunction());
         map.put(VALUE, getValueFunction());
         map.put(ELEMENT,getElementFunction());
         map.put(AND, getAndFunction());
         map.put(CHILD, getChildFunction());
-        map.put(CONTAINS,getElementContainsFunction());;
-        map.put(ATTRIBUTE, getAttriuteFunction();
+        map.put(CONTAINS,getElementContainsFunction());
+        map.put(ATTRIBUTE, getAttriuteFunction());
         map.put(ANY,getAnyFunction());
         return map;
 
@@ -74,9 +74,9 @@ public class KeyWords {
             if (list.hasNext())  {
                 String attrName = list.getNextToken();
                 if (attrName == null) throw new RuntimeException("attribute name is expected after 'attribute' keyword.");
-                //String attr
-
+                return "@"+attrName;
             }
+            else throw new RuntimeException("nothing found after 'attribute' keyword");
         };
         return attribute;
     }
@@ -91,8 +91,9 @@ public class KeyWords {
                     setPlace(CurrentPlace.InPath);
                     return "/*";
                 }
-                throw new RuntimeException("'element' is expected after 'any' keyword.");
+                throw new RuntimeException("'any' keyword should be followed by 'element'");
             }
+            else throw new RuntimeException("nothing found after 'any' keyword");
         };
         return any;
     }
@@ -101,12 +102,12 @@ public class KeyWords {
         Function<Tokens,String> element = (list)->
         {
             if (list.hasNext())  {
-                String elName = list.next();
+                String elName = list.getNextToken();
                 if (elName == null) throw new RuntimeException("Element's name is expected after 'element' keyword");
 
                 return "/"+elName;
             }
-            throw new RuntimeException("'element' keyword should be followed by its name");
+            else throw new RuntimeException("'element' keyword should be followed by its name");
         };
         return element;
 
@@ -116,11 +117,11 @@ public class KeyWords {
         Function<Tokens,String> child = (list)->
         {
             if (list.hasNext())  {
-                String childName = list.next();
+                String childName = list.getNextToken();
                 if (childName == null) throw new RuntimeException("Child's name is expected after 'child' keyword");
                 return "/"+childName;
             }
-            throw new RuntimeException("'child' keyword should be followed by its name");
+            else throw new RuntimeException("'child' keyword should be followed by its name");
         };
         return child;
     }
@@ -129,16 +130,11 @@ public class KeyWords {
         Function<Tokens,String> with =  (list)->
         {
             if (list.hasNext()) {
-                String value = list.next();
-                if (value.equalsIgnoreCase("value")) {
-                    if (value == null) throw new RuntimeException("Found something like<with null>; Expected: ...with value 'value'");
-                    return "text()="+value+"";
-                }
-                if (value.equalsIgnoreCase("attribute"))
+                setPlace(CurrentPlace.InCondition);
+                return openBracket();
             }
-                    // this is 'connector' word
-            // without proper AST will skip for now.
-            return "[";
+            else throw new RuntimeException("xpath description cannot end at 'with' keyword");
+
         };
         return with;
 
@@ -152,7 +148,7 @@ public class KeyWords {
 
                 if (currentPlace == CurrentPlace.InPath)
                     return "/";
-                else {
+                else if {
 
                 }
 
@@ -168,9 +164,9 @@ public class KeyWords {
         Function<Tokens,String> with_value = (list)->
         {
             if (list.hasNext())  {
-                String value = list.next();
+                String value = list.getNextToken();
                 if (value == null) throw new RuntimeException("Found something like<with null>; Expected: ...with value 'value'");
-                    if (currentNode = CurrentNode.Element) {
+                    if (currentNode == CurrentNode.Element) {
                         return "text()=" + value + "";
                     }
                     else return "="+value;
@@ -184,7 +180,7 @@ public class KeyWords {
         Function<Tokens,String> element_contains= (list)->
         {
             if (list.hasNext())  {
-                String value = list.next();
+                String value = list.getNextToken();
                 if (value == null) throw new RuntimeException("Found <contains null>; Expected: contains 'value'");
                 return "[contains(text(),'"+value+"')]";
             }
@@ -234,13 +230,8 @@ public class KeyWords {
         return "]";
     }
 
-    /*
-    private String processNodes(String next, Iterator<String> list) {
-        Function<Iterator<String>,String> func = xpathTags.get(next);
-        if (func == null) throw new RuntimeException(next+" not found in a list of key words.");
-        else return func.apply(list);
-    }
-*/
+
+
     private boolean isNode(String next) {
         if (next.equalsIgnoreCase(CHILD)) {
             return true;
