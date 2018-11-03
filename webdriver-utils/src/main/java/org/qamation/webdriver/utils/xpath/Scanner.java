@@ -36,12 +36,13 @@ public class Scanner implements TokenListener {
 
     @Override
     public void eolReached() {
+        tokens.addEOL();
 
     }
 
     @Override
     public void eofReached() {
-
+        tokens.addEOF();
     }
 
 

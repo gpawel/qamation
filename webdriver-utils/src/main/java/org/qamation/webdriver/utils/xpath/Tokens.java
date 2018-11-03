@@ -2,16 +2,23 @@ package org.qamation.webdriver.utils.xpath;
 
 import java.util.ArrayList;
 
-public class Tokens extends ArrayList<String> {
+public class  Tokens  {
+
     private ArrayList<String> tokens;
     private int currentIndex;
-    public Tokens() {
-        super();
+
+    public Tokens () {
+        tokens = new ArrayList<>();
         currentIndex=0;
     }
 
+    public void add(String text) {
+        tokens.add(text);
+    }
+
     public void moveForward() {
-        currentIndex++;
+        if (hasNext()) currentIndex++;
+        else throw new IndexOutOfBoundsException("Last token is in use");
     }
 
     public void moveBack() {
@@ -24,15 +31,14 @@ public class Tokens extends ArrayList<String> {
     }
 
     public String getNextToken() {
-        if (hasNext()) {
-            return tokens.get(currentIndex+1);
-        }
-        else throw new IndexOutOfBoundsException ("Cannot get next token: already at the last token");
+        moveForward();
+        return tokens.get(currentIndex);
     }
 
     public String getPreviousToken() {
         if (currentIndex>0) {
-            return tokens.get(currentIndex-1);
+            moveBack();
+            return tokens.get(currentIndex);
         }
         else throw new IndexOutOfBoundsException("Cannot get previous token: currently at the firs token");
     }
@@ -43,6 +49,14 @@ public class Tokens extends ArrayList<String> {
 
     public void resetCurrentPosition() {
         currentIndex=0;
+    }
+
+    public void addEOL() {
+        tokens.add(KeyWords.EOL);
+    }
+
+    public void addEOF() {
+        tokens.add(KeyWords.EOF);
     }
 
 }

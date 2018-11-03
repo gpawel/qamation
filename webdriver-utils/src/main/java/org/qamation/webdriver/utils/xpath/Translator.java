@@ -21,24 +21,18 @@ public class Translator {
     public String translateDescriptionToXpath(String xpathDescription) {
         Scanner scaner = new Scanner();
         Tokens tokens = scaner.getTokens(xpathDescription);
-        Map<String,Function<Tokens,String>> keys = KeyWords.getTranslationRules();
+        Map<String,Function<Tokens,String>> keys = KeyWords.getKeyWordsTags();
         StringBuilder sb = new StringBuilder();
         sb.append("/");
-        for (tokens.hasNext()) {
+        while (tokens.hasNext()) {
+            String token = tokens.getCurrentToken();
+            Function<Tokens,String> f = keys.get(token);
+            String xpathPortion = f.apply(tokens);
+            sb.append(xpathPortion);
+            tokens.moveForward();
+        }
+        return sb.toString();
 
-        }
-        return xpath;
-        /*
-        StringBuilder sb = new StringBuilder(xpathDescription);
-        Map<String,Supplier<BiFunction>> tags = KeyWords.getKeyworkToFunctionMap();
-        for (String key: tags.keySet()) {
-            BiFunction<StringBuilder,String,StringBuilder> f = tags.get(key).get();
-            sb = f.apply(sb,xpathDescription);
-        }
-        String res = sb.toString();
-        res = res.replaceAll(WHITE_SPECE_NOT_IN_QUOTE,"");
-        return res;
-        */
     }
 
 

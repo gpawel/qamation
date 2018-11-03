@@ -21,6 +21,8 @@ public class KeyWords {
     public static final String CONTAINS = "contains";
     public static final String PARENT = "parent";
     public static final String DESCENDANT = "descendant";
+    public static final String EOF="eof";
+    public static final String EOL="eol";
 
 
     public static final String WITH_VALUE_CONTAINS = "(?i)with value contains";
@@ -34,6 +36,7 @@ public class KeyWords {
     private static KeyWords xPathKeyWords = null;
 
     private Map<String,Function<Tokens,String>> xpathTags = null;
+    private boolean bracketOpened;
     private CurrentNode currentNode;
     private CurrentPlace currentPlace;
 
@@ -42,19 +45,19 @@ public class KeyWords {
         if (xPathKeyWords == null) {
             xPathKeyWords = new KeyWords();
         }
-        return xPathKeyWords.xpathTags;
+        return xPathKeyWords.getXpathTags();
     }
 
 
     private KeyWords() {
         if (xpathTags == null) {
-            xpathTags = new TreeMap<>(String.CASE_INSENSITIVE_ORDER);
             xpathTags = mapTags();
         }
+        bracketOpened = false;
     }
 
     private Map<String,Function<Tokens,String>> mapTags() {
-        Map<String,Function<Tokens,String>> map = new HashMap<>();
+        Map<String,Function<Tokens,String>> map = new TreeMap<>(String.CASE_INSENSITIVE_ORDER);
         map.put(WITH,getWithFunction());
         map.put(VALUE, getValueFunction());
         map.put(ELEMENT,getElementFunction());
@@ -63,8 +66,20 @@ public class KeyWords {
         map.put(CONTAINS,getElementContainsFunction());
         map.put(ATTRIBUTE, getAttriuteFunction());
         map.put(ANY,getAnyFunction());
+        map.put(EOL,getEOLFunction());
+        map.put(EOF,getEOFFunction());
         return map;
 
+    }
+
+    private Function<Tokens,String> getEOFFunction() {
+    }
+
+    private Function<Tokens,String> getEOLFunction() {
+        Function<Tokens,String> eol = (list) -> {
+            
+        };
+        return eol;
     }
 
     private Function<Tokens,String> getAttriuteFunction() {
@@ -140,20 +155,12 @@ public class KeyWords {
 
     }
 
-    private Function<Tokens,String> getAndFunction() {
-        Function<Tokens,String> and= (list)->
+    private Function<Tokens, String> getAndFunction() {
+        Function<Tokens, String> and = (list) ->
         {
-            String result="";
-
-
-                if (currentPlace == CurrentPlace.InPath)
-                    return "/";
-                else if {
-
-                }
-
-            // this is 'connector' word
-            // without proper AST will skip for now.
+            if (currentPlace == CurrentPlace.InPath)
+                return "/";
+            else return " and ";
 
         };
         return and;
@@ -167,7 +174,7 @@ public class KeyWords {
                 String value = list.getNextToken();
                 if (value == null) throw new RuntimeException("Found something like<with null>; Expected: ...with value 'value'");
                     if (currentNode == CurrentNode.Element) {
-                        return "text()=" + value + "";
+                        return "text()='" + value + "'";
                     }
                     else return "="+value;
             }
@@ -237,7 +244,7 @@ public class KeyWords {
             return true;
         }
         else if (next.equalsIgnoreCase(DESCENDANT)) {
-            return true
+            return true;
         }
         else if (next.equalsIgnoreCase(PARENT)) {
             return true;
@@ -256,5 +263,9 @@ public class KeyWords {
     private boolean isValue(String next) {
         if (next.equalsIgnoreCase("value"))  return true;
         else return true;
+    }
+
+    public Map<String, Function<Tokens, String>> getXpathTags() {
+        return xpathTags;
     }
 }
