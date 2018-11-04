@@ -27,6 +27,7 @@ public class Translator {
         while (tokens.hasNext()) {
             String token = tokens.getCurrentToken();
             Function<Tokens,String> f = keys.get(token);
+            if (f==null) throw new RuntimeException("Unknown token: <"+token+">");
             String xpathPortion = f.apply(tokens);
             sb.append(xpathPortion);
             tokens.moveForward();

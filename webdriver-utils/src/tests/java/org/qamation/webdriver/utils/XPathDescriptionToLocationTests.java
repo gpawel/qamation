@@ -53,7 +53,7 @@ public class XPathDescriptionToLocationTests {
     public void testChildAndIndex() {
         //*[@id='nav-link-yourAccount']/span[1]
         String description =
-                "any element with attribute 'id' with value equal 'nav-link-yourAccount' and child 'span' at position 1";
+                "any element with attribute 'id' with value 'nav-link-yourAccount' and child 'span' at position 1";
         String expected = "//*[@id='nav-link-yourAccount']/span[1]";
         convertAndAssert(description,expected);
     }

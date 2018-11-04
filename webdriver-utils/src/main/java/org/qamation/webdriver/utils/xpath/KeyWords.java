@@ -4,7 +4,6 @@ package org.qamation.webdriver.utils.xpath;
 
 import org.qamation.utils.RegExpUtils;
 
-import java.util.HashMap;
 import java.util.Map;
 import java.util.TreeMap;
 import java.util.function.Function;
@@ -36,7 +35,7 @@ public class KeyWords {
     private static KeyWords xPathKeyWords = null;
 
     private Map<String,Function<Tokens,String>> xpathTags = null;
-    private boolean bracketOpened;
+    private boolean isBracketOpened;
     private CurrentNode currentNode;
     private CurrentPlace currentPlace;
 
@@ -53,7 +52,11 @@ public class KeyWords {
         if (xpathTags == null) {
             xpathTags = mapTags();
         }
-        bracketOpened = false;
+        isBracketOpened = false;
+    }
+
+    public Map<String, Function<Tokens, String>> getXpathTags() {
+        return xpathTags;
     }
 
     private Map<String,Function<Tokens,String>> mapTags() {
@@ -63,7 +66,7 @@ public class KeyWords {
         map.put(ELEMENT,getElementFunction());
         map.put(AND, getAndFunction());
         map.put(CHILD, getChildFunction());
-        map.put(CONTAINS,getElementContainsFunction());
+        map.put(CONTAINS, getContainsFunction());
         map.put(ATTRIBUTE, getAttriuteFunction());
         map.put(ANY,getAnyFunction());
         map.put(EOL,getEOLFunction());
@@ -72,20 +75,12 @@ public class KeyWords {
 
     }
 
-    private Function<Tokens,String> getEOFFunction() {
-    }
 
-    private Function<Tokens,String> getEOLFunction() {
-        Function<Tokens,String> eol = (list) -> {
-            
-        };
-        return eol;
-    }
 
     private Function<Tokens,String> getAttriuteFunction() {
         Function<Tokens,String> attribute = (list)->
         {
-            setNode(CurrentNode.Attribute);
+            currentNode = CurrentNode.Attribute;
             if (list.hasNext())  {
                 String attrName = list.getNextToken();
                 if (attrName == null) throw new RuntimeException("attribute name is expected after 'attribute' keyword.");
@@ -116,6 +111,7 @@ public class KeyWords {
     private Function<Tokens,String> getElementFunction() {
         Function<Tokens,String> element = (list)->
         {
+            currentNode = CurrentNode.Element;
             if (list.hasNext())  {
                 String elName = list.getNextToken();
                 if (elName == null) throw new RuntimeException("Element's name is expected after 'element' keyword");
@@ -131,6 +127,7 @@ public class KeyWords {
     private Function<Tokens,String> getChildFunction() {
         Function<Tokens,String> child = (list)->
         {
+            currentNode=CurrentNode.Element;
             if (list.hasNext())  {
                 String childName = list.getNextToken();
                 if (childName == null) throw new RuntimeException("Child's name is expected after 'child' keyword");
@@ -145,8 +142,15 @@ public class KeyWords {
         Function<Tokens,String> with =  (list)->
         {
             if (list.hasNext()) {
-                setPlace(CurrentPlace.InCondition);
-                return openBracket();
+                String nt = list.getNextToken();
+                list.moveBack();
+                if (isNode(nt)) {
+                    return "";
+                }
+                else {
+                    return openBracket();
+                }
+
             }
             else throw new RuntimeException("xpath description cannot end at 'with' keyword");
 
@@ -158,9 +162,15 @@ public class KeyWords {
     private Function<Tokens, String> getAndFunction() {
         Function<Tokens, String> and = (list) ->
         {
-            if (currentPlace == CurrentPlace.InPath)
-                return "/";
-            else return " and ";
+            if (isBracketOpened) {
+                String nt = list.getNextToken();
+                if (isNode(nt))  {
+                    list.moveBack();
+                    return closeBracket();
+                }
+                return " and ";
+            }
+            return "";
 
         };
         return and;
@@ -183,18 +193,44 @@ public class KeyWords {
         return with_value;
     }
 
-    private Function<Tokens,String> getElementContainsFunction() {
+    private Function<Tokens,String> getContainsFunction() {
         Function<Tokens,String> element_contains= (list)->
         {
+            StringBuilder sb = new StringBuilder();
+            if (isBracketOpened) {}
+            else sb.append(openBracket());
+
             if (list.hasNext())  {
                 String value = list.getNextToken();
                 if (value == null) throw new RuntimeException("Found <contains null>; Expected: contains 'value'");
-                return "[contains(text(),'"+value+"')]";
+                if (currentNode == CurrentNode.Attribute) {
+                    String attName = list.getPreviousToken();
+                    list.moveForward();
+                    sb.append("contains(@"+attName+","+value+")");
+                }
+                else {
+                    sb.append("contains(text(),'" + value + "')");
+                }
+                return sb.toString();
             }
             throw new RuntimeException("'element contains' keyword should be followed by value ");
         };
         return element_contains;
 
+    }
+
+    private Function<Tokens,String> getEOFFunction() {
+        return getEOLFunction();
+    }
+
+    private Function<Tokens,String> getEOLFunction() {
+        Function<Tokens,String> eol = (list) -> {
+            if (isBracketOpened) {
+                return closeBracket();
+            }
+            return "";
+        };
+        return eol;
     }
 
     private String substituteValues(String s, String[] val) {
@@ -229,11 +265,13 @@ public class KeyWords {
 
     private String openBracket() {
         currentPlace = CurrentPlace.InCondition;
+        isBracketOpened =true;
         return "[";
     }
 
     private String closeBracket() {
         currentPlace = CurrentPlace.InPath;
+        isBracketOpened =false;
         return "]";
     }
 
@@ -265,7 +303,5 @@ public class KeyWords {
         else return true;
     }
 
-    public Map<String, Function<Tokens, String>> getXpathTags() {
-        return xpathTags;
-    }
+
 }
