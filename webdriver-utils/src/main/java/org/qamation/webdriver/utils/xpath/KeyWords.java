@@ -4,6 +4,8 @@ package org.qamation.webdriver.utils.xpath;
 
 import org.qamation.utils.RegExpUtils;
 
+import java.text.DecimalFormat;
+import java.util.Formatter;
 import java.util.Map;
 import java.util.TreeMap;
 import java.util.function.Function;
@@ -20,6 +22,8 @@ public class KeyWords {
     public static final String CONTAINS = "contains";
     public static final String PARENT = "parent";
     public static final String DESCENDANT = "descendant";
+    public static final String AT="at";
+    public static final String POSITION = "position";
     public static final String EOF="eof";
     public static final String EOL="eol";
 
@@ -64,17 +68,35 @@ public class KeyWords {
         map.put(WITH,getWithFunction());
         map.put(VALUE, getValueFunction());
         map.put(ELEMENT,getElementFunction());
+        map.put(CHILD,getElementFunction());
+        map.put(AT,getAtFunction());
         map.put(AND, getAndFunction());
-        map.put(CHILD, getChildFunction());
         map.put(CONTAINS, getContainsFunction());
         map.put(ATTRIBUTE, getAttriuteFunction());
         map.put(ANY,getAnyFunction());
+        map.put(POSITION,getPositionFunction());
         map.put(EOL,getEOLFunction());
         map.put(EOF,getEOFFunction());
         return map;
 
     }
 
+    private Function<Tokens,String> getPositionFunction() {
+        Function<Tokens,String> position = (list)->
+        {
+            if (list.hasNext()) {
+                String sv = list.getNextToken();
+                double value = Double.parseDouble(sv);
+                //DecimalFormat formater = new DecimalFormat("##");
+                //sv = "["+formater.format(value)+"]";
+                sv = String.format("[%.0f]",value);
+
+                return sv;
+            }
+            else throw new RuntimeException("Value is expected after 'position' keyword, like '...position [1]'");
+        };
+        return position;
+    }
 
 
     private Function<Tokens,String> getAttriuteFunction() {
@@ -83,7 +105,6 @@ public class KeyWords {
             currentNode = CurrentNode.Attribute;
             if (list.hasNext())  {
                 String attrName = list.getNextToken();
-                if (attrName == null) throw new RuntimeException("attribute name is expected after 'attribute' keyword.");
                 return "@"+attrName;
             }
             else throw new RuntimeException("nothing found after 'attribute' keyword");
@@ -114,28 +135,12 @@ public class KeyWords {
             currentNode = CurrentNode.Element;
             if (list.hasNext())  {
                 String elName = list.getNextToken();
-                if (elName == null) throw new RuntimeException("Element's name is expected after 'element' keyword");
-
                 return "/"+elName;
             }
             else throw new RuntimeException("'element' keyword should be followed by its name");
         };
         return element;
 
-    }
-
-    private Function<Tokens,String> getChildFunction() {
-        Function<Tokens,String> child = (list)->
-        {
-            currentNode=CurrentNode.Element;
-            if (list.hasNext())  {
-                String childName = list.getNextToken();
-                if (childName == null) throw new RuntimeException("Child's name is expected after 'child' keyword");
-                return "/"+childName;
-            }
-            else throw new RuntimeException("'child' keyword should be followed by its name");
-        };
-        return child;
     }
 
     private Function<Tokens,String> getWithFunction() {
@@ -182,7 +187,7 @@ public class KeyWords {
         {
             if (list.hasNext())  {
                 String value = list.getNextToken();
-                if (value == null) throw new RuntimeException("Found something like<with null>; Expected: ...with value 'value'");
+
                     if (currentNode == CurrentNode.Element) {
                         return "text()='" + value + "'";
                     }
@@ -199,10 +204,8 @@ public class KeyWords {
             StringBuilder sb = new StringBuilder();
             if (isBracketOpened) {}
             else sb.append(openBracket());
-
             if (list.hasNext())  {
                 String value = list.getNextToken();
-                if (value == null) throw new RuntimeException("Found <contains null>; Expected: contains 'value'");
                 if (currentNode == CurrentNode.Attribute) {
                     String attName = list.getPreviousToken();
                     list.moveForward();
@@ -217,6 +220,14 @@ public class KeyWords {
         };
         return element_contains;
 
+    }
+
+    private Function<Tokens,String> getAtFunction() {
+        Function<Tokens,String> at = (list)->
+        {
+            return "";
+        };
+        return at;
     }
 
     private Function<Tokens,String> getEOFFunction() {
