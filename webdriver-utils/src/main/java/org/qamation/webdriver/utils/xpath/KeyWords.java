@@ -4,8 +4,6 @@ package org.qamation.webdriver.utils.xpath;
 
 import org.qamation.utils.RegExpUtils;
 
-import java.text.DecimalFormat;
-import java.util.Formatter;
 import java.util.Map;
 import java.util.TreeMap;
 import java.util.function.Function;
@@ -75,10 +73,24 @@ public class KeyWords {
         map.put(ATTRIBUTE, getAttriuteFunction());
         map.put(ANY,getAnyFunction());
         map.put(POSITION,getPositionFunction());
+        map.put(DESCENDANT, getDescendantFunction());
         map.put(EOL,getEOLFunction());
         map.put(EOF,getEOFFunction());
         return map;
 
+    }
+
+    private Function<Tokens,String> getDescendantFunction() {
+        Function<Tokens,String> descendant = (list)->
+        {
+            currentNode = CurrentNode.Element;
+            if (list.hasNext())  {
+                String elName = list.getNextToken();
+                return "//"+elName;
+            }
+            else throw new RuntimeException("'element' keyword should be followed by its name");
+        };
+        return descendant;
     }
 
     private Function<Tokens,String> getPositionFunction() {
@@ -153,12 +165,11 @@ public class KeyWords {
                     return "";
                 }
                 else {
+                    if (isBracketOpened) return "";
                     return openBracket();
                 }
-
             }
             else throw new RuntimeException("xpath description cannot end at 'with' keyword");
-
         };
         return with;
 
@@ -191,7 +202,7 @@ public class KeyWords {
                     if (currentNode == CurrentNode.Element) {
                         return "text()='" + value + "'";
                     }
-                    else return "="+value;
+                    else return "='"+value+"'";
             }
             throw new RuntimeException("'value' keyword should be followed by actual value");
         };

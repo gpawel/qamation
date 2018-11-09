@@ -58,9 +58,26 @@ public class XPathDescriptionToLocationTests {
         convertAndAssert(description,expected);
     }
 
+    @Test
+    public void testTwoChilds() {
+        //xpath=//*[@id='atfResults']/li[1]/h2
+        String description =
+                "any element with attribute id with value 'atfResults' and child 'li' at position 1 and child h2";
+        String expected = "//*[@id='atfResults']/li[1]/h2";
+        convertAndAssert(description,expected);
+
+    }
+    @Test
+    public void testTwoDescendant() {
+        //xpath=//*[@id='atfResults']//li[1]//h2
+        String description =
+                "any element with attribute id with value 'atfResults' and descendant 'li' at position 1 and descendant h2";
+        String expected = "//*[@id='atfResults']//li[1]//h2";
+        convertAndAssert(description,expected);
+
+    }
 
 
-    // //div[text()[normalize-space()='Wikipedia']]
 
 
     private void convertAndAssert(String description, String expected) {
@@ -83,7 +100,7 @@ xpath=//*[@id='nav-link-yourAccount']/span[1]
 <@!{xpath=//*[@id='twotabsearchtextbox']}>|hair {SPACE} brash
 didYouMean
 
-xpath=//*[@id='atfResults']//li[1]//h2
+
 <@!{xpath=//*[@id='atfResults']//li[1]//h2}>
 productTitle
 <@!{add-to-cart-button}>
