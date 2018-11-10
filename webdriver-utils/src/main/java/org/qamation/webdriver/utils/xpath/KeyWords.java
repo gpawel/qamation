@@ -22,6 +22,7 @@ public class KeyWords {
     public static final String DESCENDANT = "descendant";
     public static final String AT="at";
     public static final String POSITION = "position";
+    public static final String WHICH = "which";
     public static final String EOF="eof";
     public static final String EOL="eol";
 
@@ -76,8 +77,17 @@ public class KeyWords {
         map.put(DESCENDANT, getDescendantFunction());
         map.put(EOL,getEOLFunction());
         map.put(EOF,getEOFFunction());
+        map.put(WHICH,getWichFunction());
         return map;
 
+    }
+
+    private Function<Tokens,String> getWichFunction() {
+        Function<Tokens,String> which = (list)->
+        {
+            return "";
+        };
+        return which;
     }
 
     private Function<Tokens,String> getDescendantFunction() {

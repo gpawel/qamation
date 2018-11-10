@@ -41,11 +41,20 @@ public class XPathDescriptionToLocationTests {
     }
 
     @Test
-    public void testContains() {
+    public void testElementContains() {
         //https://connect.ups.com/Tracking/GeekSquad/Default.aspx
         String description =
                 "element span contains 'TRACK'";
         String expected = "//span[contains(text(),'TRACK')]";
+        convertAndAssert(description,expected);
+    }
+
+    @Test
+    public void testAttributeContains() {
+        //https://connect.ups.com/Tracking/GeekSquad/Default.aspx
+        String description =
+                "element span with attribute id which contains 'TRACK'";
+        String expected = "//span[contains(@id,'TRACK')]";
         convertAndAssert(description,expected);
     }
 
