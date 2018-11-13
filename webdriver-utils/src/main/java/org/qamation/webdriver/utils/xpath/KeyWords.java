@@ -282,21 +282,6 @@ public class KeyWords {
         return s;
     }
 
-
-
-    private String eraceValues(String s, String[] val) {
-        for (String x: val) {
-            s = s.replace("'"+x+"'","");
-        }
-        return s;
-    }
-
-    private String [] getElementsValues(String desc) {
-
-        return new RegExpUtils(desc, NODE_VALUE_REGEXP).getAllFindings();
-
-    }
-
     private void setPlace(CurrentPlace place) {
         currentPlace = place;
     }
@@ -317,8 +302,6 @@ public class KeyWords {
         return "]";
     }
 
-
-
     private boolean isNode(String next) {
         if (next.equalsIgnoreCase(CHILD)) {
             return true;
@@ -335,15 +318,7 @@ public class KeyWords {
         else return false;
     }
 
-    private boolean isAttribute(String next) {
-        if (next.equalsIgnoreCase("attribute")) return true;
-        else return false;
-    }
 
-    private boolean isValue(String next) {
-        if (next.equalsIgnoreCase("value"))  return true;
-        else return true;
-    }
 
 
 }
