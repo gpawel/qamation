@@ -124,10 +124,20 @@ public class KeyWords {
     private Function<Tokens,String> getAttriuteFunction() {
         Function<Tokens,String> attribute = (list)->
         {
+
             currentNode = CurrentNode.Attribute;
             if (list.hasNext())  {
                 String attrName = list.getNextToken();
-                return "@"+attrName;
+                String joinWord = list.getNextToken();
+                if (joinWord.equalsIgnoreCase("with")) {
+                    return "@" + attrName;
+                }
+                String contains = list.getNextToken();
+                if (contains.equalsIgnoreCase("contains")) {
+                    String value = list.getNextToken();
+                    return "contains(@"+attrName+",'"+value+"')";
+                }
+                else throw new RuntimeException("Keyword 'contains' expected after '"+joinWord+"'");
             }
             else throw new RuntimeException("nothing found after 'attribute' keyword");
         };
