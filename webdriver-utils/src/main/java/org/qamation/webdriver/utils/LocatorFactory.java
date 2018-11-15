@@ -3,6 +3,7 @@ package org.qamation.webdriver.utils;
 import java.lang.reflect.Method;
 
 import org.openqa.selenium.By;
+import org.qamation.webdriver.utils.xpath.Translator;
 
 public class LocatorFactory {
 
@@ -15,8 +16,37 @@ public class LocatorFactory {
 		,"name"
 		,"partialLinkText"
 		,"tagName"
-	}; 
-	
+	};
+
+	public static By getLocator(String location) {
+		if (location.contains("=")) {
+			return generateLocator(location);
+		} else {
+			String loc = Translator.getXpath(location);
+			return getLocator(loc);
+		}
+	}
+
+	public static String[] splitElementLocation(String elementLocation) {
+		if (elementLocation.contains("=")) {
+			int elementLocationLength = elementLocation.length();
+			for (String method: METHODS) {
+				if (elementLocation.startsWith(method)) {
+					int methodLength = method.length()+1;
+					String value = elementLocation.substring(methodLength, elementLocationLength);
+					return new String[] {method,value};
+				}
+			}
+			throw new RuntimeException(
+					"location " + elementLocation + " is expected to have format <method>=<locaton description>");
+		}
+		else {
+			String seleniumByMethod = "id";
+			return new String[] {seleniumByMethod,elementLocation};
+		}
+	}
+
+
 	private static By executeMethod(Method method, String... param ) {
 		try {
 			return (By) method.invoke(null,param);
@@ -46,32 +76,7 @@ public class LocatorFactory {
 	}
 	
 
-	public static By getLocator(String location) {
-		if (location.contains("=")) {
-			return generateLocator(location);
-		} else
-			return By.id(location);
-	}
-	
-	public static String[] splitElementLocation(String elementLocation) {
-		if (elementLocation.contains("=")) {
-			int elementLocationLength = elementLocation.length();
-			for (String method: METHODS) {
-				if (elementLocation.startsWith(method)) {
-					int methodLength = method.length()+1;
-					String value = elementLocation.substring(methodLength, elementLocationLength);
-					return new String[] {method,value};					
-				}
-			}
-			throw new RuntimeException(
-					"location " + elementLocation + " is expected to have format <method>=<locaton description>");
-		}
-		else {
-			String seleniumByMethod = "id";			
-			return new String[] {seleniumByMethod,elementLocation};
-		}
-	}
-	
+
 }
 
 

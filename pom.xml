@@ -35,7 +35,7 @@
         <excel-utils.version>4.0.0</excel-utils.version>
         <keyboard.version>4.0.0</keyboard.version>
         <navigator.version>4.0.0</navigator.version>
-        <mouse.version>1.0.0</mouse.version>
+        <mouse.version>4.1.0</mouse.version>
         <jmeter-java-sampler-abstracts.version>4.0.0</jmeter-java-sampler-abstracts.version>
         <jmeter-java-sampler-web-extension.version>4.0.0</jmeter-java-sampler-web-extension.version>
         <jmeter-java-sampler-keyboard.version>4.0.0</jmeter-java-sampler-keyboard.version>

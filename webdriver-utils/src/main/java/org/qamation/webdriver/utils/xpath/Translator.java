@@ -10,20 +10,18 @@ import java.util.function.Function;
 public class Translator {
     private static final String WHITE_SPECE_NOT_IN_QUOTE = "\\s+(?=([^']*'[^']*')*[^']*$)";
 
-    public By getLocator(String xpathDescription) {
-        if (xpathDescription.startsWith("xpath="))return LocatorFactory.getLocator(xpathDescription);
-        else {
-            String xpath = translateDescriptionToXpath(xpathDescription);
-            return LocatorFactory.getLocator(xpath);
-        }
+    public static String getXpath(String xpathDescription) {
+            return translateDescriptionToXpath(xpathDescription);
+
     }
 
-    public String translateDescriptionToXpath(String xpathDescription) {
+    public static String translateDescriptionToXpath(String xpathDescription) {
         Scanner scaner = new Scanner();
         Tokens tokens = scaner.getTokens(xpathDescription);
         Map<String,Function<Tokens,String>> keys = KeyWords.getKeyWordsTags();
         StringBuilder sb = new StringBuilder();
         sb.append("/");
+        if (tokens.size() == 1) return "xpath="+tokens.getNextToken();
         while (tokens.hasNext()) {
             String token = tokens.getCurrentToken();
             Function<Tokens,String> f = keys.get(token);
@@ -32,7 +30,7 @@ public class Translator {
             sb.append(xpathPortion);
             tokens.moveForward();
         }
-        return sb.toString();
+        return "xpath="+sb.toString();
 
     }
 

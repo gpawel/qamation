@@ -45,7 +45,8 @@ public class MouseActionPatternsTest {
     @Test
     public void getMouseNavigationString3() {
         String line = "<@^{xpath=/*[@id='login']}>";
-        assertTrue(MouseActionPatterns.isMouseNavigation(line));
+        assertTrue(MouseActionPatterns.isMouseAction(line));
+
         String[] found=MouseActionPatterns.extractMouseAction(line);
         assertEquals("^",found[1]);
         assertTrue(MouseActionPatterns.hasMouseBYString(line));
@@ -58,7 +59,7 @@ public class MouseActionPatternsTest {
     @Test
     public void getMouseNavigationString4() {
         String line = "<@_>";
-        assertTrue(MouseActionPatterns.isMouseNavigation(line));
+        assertTrue(MouseActionPatterns.isMouseAction(line));
         String[] found=MouseActionPatterns.extractMouseAction(line);
         assertEquals("_",found[1]);
         assertFalse(MouseActionPatterns.hasMouseBYString(line));
@@ -67,7 +68,7 @@ public class MouseActionPatternsTest {
     @Test
     public void getMouseMoveToCoordinates() {
         String line = "<@~[10,10]>";
-        assertTrue(MouseActionPatterns.isMouseNavigation(line));
+        assertTrue(MouseActionPatterns.isMouseAction(line));
         String[] found=MouseActionPatterns.extractMouseAction(line);
         assertEquals(2,found.length);
         assertEquals("~",found[1]);

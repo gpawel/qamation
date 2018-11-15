@@ -59,4 +59,6 @@ public class  Tokens  {
         tokens.add(KeyWords.EOF);
     }
 
+    public int size() {return tokens.size();}
+
 }
