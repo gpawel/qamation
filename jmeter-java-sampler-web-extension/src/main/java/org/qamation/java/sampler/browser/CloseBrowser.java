@@ -9,7 +9,7 @@ public class CloseBrowser extends AbstractExtentionBrowser {
 	@Override
 	protected void toDo() {
 		if (driver != null) {
-			driver.close();
+			driver.quit();
 		}
 		else throw new RuntimeException("Browser is NULL in variable "+browserVariableName);
 		
