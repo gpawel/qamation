@@ -149,6 +149,22 @@
           <stringProp name="classname">org.qamation.java.sampler.browser.OpenWebPage</stringProp>
         </JavaSampler>
         <hashTree/>
+        <DebugSampler guiclass="TestBeanGUI" testclass="DebugSampler" testname="Debug Sampler" enabled="true">
+          <boolProp name="displayJMeterProperties">true</boolProp>
+          <boolProp name="displayJMeterVariables">true</boolProp>
+          <boolProp name="displaySystemProperties">true</boolProp>
+        </DebugSampler>
+        <hashTree/>
+        <Arguments guiclass="ArgumentsPanel" testclass="Arguments" testname="SET LOG FILE FUFFIX" enabled="true">
+          <collectionProp name="Arguments.arguments">
+            <elementProp name="LOG_FILE_NAME" elementType="Argument">
+              <stringProp name="Argument.name">LOG_FILE_NAME</stringProp>
+              <stringProp name="Argument.value">AMAZON_TEST_${__time()}.xlsx</stringProp>
+              <stringProp name="Argument.metadata">=</stringProp>
+            </elementProp>
+          </collectionProp>
+        </Arguments>
+        <hashTree/>
         <org.qamation.jmeter.data.provider.controller.ExcelDataController guiclass="TestBeanGUI" testclass="org.qamation.jmeter.data.provider.controller.ExcelDataController" testname="Excel Data Controller" enabled="true">
           <stringProp name="filename">${BASE_DIR}/amazon.xlsx</stringProp>
           <stringProp name="dataProviderImplClassName">org.qamation.data.provider.DataProviderExcelAdapter</stringProp>
@@ -158,6 +174,12 @@
           <boolProp name="resetAtEOF">false</boolProp>
         </org.qamation.jmeter.data.provider.controller.ExcelDataController>
         <hashTree>
+          <DebugSampler guiclass="TestBeanGUI" testclass="DebugSampler" testname="Debug Sampler" enabled="true">
+            <boolProp name="displayJMeterProperties">true</boolProp>
+            <boolProp name="displayJMeterVariables">true</boolProp>
+            <boolProp name="displaySystemProperties">true</boolProp>
+          </DebugSampler>
+          <hashTree/>
           <IfController guiclass="IfControllerPanel" testclass="IfController" testname="IF RUN" enabled="true">
             <stringProp name="IfController.condition">&quot;${RUN}&quot;==&quot;Y&quot; || &quot;${RUN}&quot;==&quot;y&quot;</stringProp>
             <boolProp name="IfController.evaluateAll">false</boolProp>
@@ -272,11 +294,11 @@
           <stringProp name="filename"></stringProp>
         </ResultCollector>
         <hashTree/>
-        <BeanShellListener guiclass="TestBeanGUI" testclass="BeanShellListener" testname="BeanShell Listener" enabled="true">
+        <BeanShellListener guiclass="TestBeanGUI" testclass="BeanShellListener" testname="WRITE LOGS" enabled="true">
           <stringProp name="filename"></stringProp>
           <stringProp name="parameters"></stringProp>
           <boolProp name="resetInterpreter">false</boolProp>
-          <stringProp name="script">writeToExcelLog(&quot;excel_log_1.xlsx&quot;);</stringProp>
+          <stringProp name="script">writeToExcelLog(&quot;${LOG_FILE_NAME}&quot;);</stringProp>
         </BeanShellListener>
         <hashTree/>
         <JavaSampler guiclass="JavaTestSamplerGui" testclass="JavaSampler" testname="CLOSE BROWSER" enabled="false">
@@ -316,14 +338,15 @@
         <SystemSampler guiclass="SystemSamplerGui" testclass="SystemSampler" testname="OS Process Sampler" enabled="true">
           <boolProp name="SystemSampler.checkReturnCode">false</boolProp>
           <stringProp name="SystemSampler.expectedReturnCode">0</stringProp>
-          <stringProp name="SystemSampler.command">ps -ef | grep &apos;chromedriver&apos; | grep -v grep | awk &apos;{print $2}&apos; | xargs -r kill -9 </stringProp>
+          <stringProp name="SystemSampler.command">ps -ef | grep &apos;chromedriver&apos; | grep -v grep | awk &apos;{print $2}&apos; | xargs -r kill -9</stringProp>
           <elementProp name="SystemSampler.arguments" elementType="Arguments" guiclass="ArgumentsPanel" testclass="Arguments" testname="User Defined Variables" enabled="true">
             <collectionProp name="Arguments.arguments"/>
           </elementProp>
           <elementProp name="SystemSampler.environment" elementType="Arguments" guiclass="ArgumentsPanel" testclass="Arguments" testname="User Defined Variables" enabled="true">
             <collectionProp name="Arguments.arguments"/>
           </elementProp>
-          <stringProp name="SystemSampler.directory"></stringProp>
+          <stringProp name="SystemSampler.directory">${__P(user.dir)}</stringProp>
+          <stringProp name="TestPlan.comments">ps -ef | grep &apos;chromedriver&apos; | grep -v grep | awk &apos;{print $2}&apos; | xargs -r kill -9  pkill -9 chromedriver</stringProp>
         </SystemSampler>
         <hashTree/>
       </hashTree>
