@@ -2,9 +2,12 @@ package org.qamation.utils;
 
 
 import java.io.File;
+import java.io.FileReader;
+import java.io.Reader;
 import java.nio.file.*;
 import java.security.SecureRandom;
 import java.util.ArrayList;
+import java.util.Properties;
 
 /**
  * Created by Pavel on 2017-03-25.
@@ -67,6 +70,20 @@ public class FileUtils {
             throw new RuntimeException("There is no file of dirrectory at: "+root);
         }
         return list.toArray(new String[]{});
+    }
+
+    public static Properties loadPropertiesFile(String path) {
+        try {
+            Reader reader = new FileReader(path);
+            Properties props = new Properties();
+            props.load(reader);
+            return props;
+
+        }
+        catch (Exception ex) {
+            ex.printStackTrace();
+            throw new RuntimeException("Unable to load properties file.",ex);
+        }
     }
 
     private static void processFile(String startPath, File file, ArrayList<String> list) {
