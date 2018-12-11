@@ -2,35 +2,40 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-    <parent>
-        <artifactId>qamation</artifactId>
-        <groupId>org.qamation</groupId>
-        <version>4.0.0</version>
-    </parent>
+    <properties>
+        <maven.compiler.source>1.8</maven.compiler.source>
+        <maven.compiler.target>1.8</maven.compiler.target>
+    </properties>
+
     <modelVersion>4.0.0</modelVersion>
     <groupId>org.qamation.jmeter</groupId>
     <artifactId>jmeter-java-sampler-web-extension</artifactId>
-    <version>${jmeter-java-sampler-web-extension.version}</version>
+    <version>4.0.0</version>
     <dependencies>
         <dependency>
             <groupId>org.qamation.jmeter</groupId>
             <artifactId>jmeter-java-sampler-abstracts</artifactId>
+            <version>4.0.0</version>
         </dependency>
         <dependency>
             <groupId>org.qamation</groupId>
             <artifactId>web-page</artifactId>
+            <version>4.0.0</version>
         </dependency>
         <dependency>
             <groupId>org.qamation</groupId>
             <artifactId>keyboard</artifactId>
+            <version>4.0.0</version>
         </dependency>
         <dependency>
             <groupId>org.qamation</groupId>
             <artifactId>navigator</artifactId>
+            <version>4.0.0</version>
         </dependency>
         <dependency>
             <groupId>org.qamation</groupId>
             <artifactId>utils</artifactId>
+            <version>4.0.0</version>
         </dependency>
     </dependencies>
 

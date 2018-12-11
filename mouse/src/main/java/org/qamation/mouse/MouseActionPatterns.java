@@ -1,9 +1,6 @@
 package org.qamation.mouse;
 
 import org.openqa.selenium.Point;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.interactions.Action;
-import org.openqa.selenium.interactions.Actions;
 import org.qamation.utils.RegExpUtils;
 
 public class MouseActionPatterns {

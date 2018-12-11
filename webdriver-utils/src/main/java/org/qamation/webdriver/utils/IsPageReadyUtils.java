@@ -1,6 +1,5 @@
 package org.qamation.webdriver.utils;
 
-import org.junit.rules.ExpectedException;
 import org.openqa.selenium.*;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.ExpectedConditions;

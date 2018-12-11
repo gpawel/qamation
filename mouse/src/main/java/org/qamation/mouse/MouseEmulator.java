@@ -6,8 +6,6 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Action;
 import org.qamation.webdriver.utils.LocatorFactory;
-import org.sikuli.guide.Run;
-
 import java.util.ArrayList;
 import java.util.List;
 
