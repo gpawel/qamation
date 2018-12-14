@@ -1,3 +1,3 @@
 #! /bin/sh
 mvn clean install -DskipTests
-./copy_results.sh
+#./copy_results.sh

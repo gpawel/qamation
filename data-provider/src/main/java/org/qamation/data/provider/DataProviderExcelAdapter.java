@@ -52,7 +52,28 @@ public class DataProviderExcelAdapter implements DataProvider {
 
     @Override
     public String[] getLine(int lineIndex) {
-        return new String[0];
+        return new String[lineIndex];
+    }
+
+    @Override
+    public Object[][] getDataAsArray() {
+        return excelReader.getData();
+    }
+
+    @Override
+    public Iterator<Object[]> getDataAsIterator() {
+        Iterator<String[]> et = excelReader.getIterator();
+        return new Iterator<Object[]>() {
+            @Override
+            public boolean hasNext() {
+                return et.hasNext();
+            }
+
+            @Override
+            public Object[] next() {
+                return et.next();
+            }
+        };
     }
 
     @Override
