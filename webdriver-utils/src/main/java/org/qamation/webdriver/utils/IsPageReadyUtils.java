@@ -7,6 +7,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import org.qamation.utils.StringUtils;
 
 import javax.annotation.Nullable;
+import java.util.function.Function;
 
 /**
  * Created by Pavel.Gouchtchine on 12/30/2016.
@@ -62,7 +63,9 @@ public class IsPageReadyUtils {
         WebDriverWait wait = new WebDriverWait(driver,
                 TimeOutsConfig.getWaitForSpinnerToAppearTimeOutMillis()/1000,
                 TimeOutsConfig.getWaitForSpinnerToAppearIntervalMillis());
-        WebElement el = wait.until(ExpectedConditions.presenceOfElementLocated(spinnerLocator));
+
+        Function<WebDriver,WebElement> f = ExpectedConditions.presenceOfElementLocated(spinnerLocator);
+        WebElement el = wait.until(f);
         return el != null;
     }
 
@@ -70,9 +73,13 @@ public class IsPageReadyUtils {
         long timeOut = TimeOutsConfig.getWaitForSpinnerToDisappearTimeOutMillis() / 1000L;
         long interval = TimeOutsConfig.getWaitForSpinnerToDisappearIntervalMillis();
         WebDriverWait waitSpinnerIsGone = new WebDriverWait(driver, timeOut, interval);
-        ExpectedCondition<Boolean> spinnerDisappearsCondition = ExpectedConditionsUtils.getSpinnerDissapearedCondition(spinnerLocation);
+
+        //ExpectedCondition<Boolean> spinnerDisappearsCondition = ExpectedConditionsUtils.getSpinnerDissapearedCondition(spinnerLocation);
+
+        Function <WebDriver,Boolean> f = ExpectedConditionsUtils.getSpinnerDissapearedCondition(spinnerLocation);
         try  {
-            waitSpinnerIsGone.until(spinnerDisappearsCondition);
+            //waitSpinnerIsGone.until(spinnerDisappearsCondition);
+            waitSpinnerIsGone.until(f);
             return Boolean.valueOf(true);
         }
         catch (TimeoutException ex) {return Boolean.valueOf(false);}

@@ -11,6 +11,7 @@ import org.openqa.selenium.support.ui.ExpectedCondition;
 import javax.annotation.Nullable;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
+import com.google.common.base.Function;
 
 
 /**
@@ -78,11 +79,10 @@ public class ExpectedConditionsUtils {
 
 
 
-    public static ExpectedCondition<Boolean> getDocumentReadyCondition() {
-        ExpectedCondition<Boolean> condition = new ExpectedCondition<Boolean>() {
-            @Nullable
+    public static Function<WebDriver,Boolean> getDocumentReadyCondition() {
+        Function<WebDriver,Boolean> condition = new Function<WebDriver, Boolean>() {
             @Override
-            public Boolean apply(@Nullable WebDriver drvr) {
+            public Boolean apply(WebDriver drvr) {
                 JavascriptExecutor jse = WebDriverUtils.getJavaScriptExecutor(drvr);
                 Boolean result = (Boolean)jse.executeAsyncScript(DOCUMENT_READY_ASYNC_SCRIPT);
                 return result;
@@ -91,6 +91,7 @@ public class ExpectedConditionsUtils {
         return condition;
     }
 
+    /*
     public static ExpectedCondition<Boolean> getSpinnerDissapearedCondition(final By spinnerLocation) {
         ExpectedCondition<Boolean> spinnerDisappers = new ExpectedCondition<Boolean>(){
             public Boolean apply(final WebDriver drvr) {
@@ -102,6 +103,20 @@ public class ExpectedConditionsUtils {
             }
         };
         return spinnerDisappers;
+    }
+*/
+    public static Function<WebDriver,Boolean> getSpinnerDissapearedCondition(final By spinnerLocation) {
+        Function<WebDriver, Boolean> f = new Function<WebDriver, Boolean>() {
+            @Override
+            public Boolean apply(final WebDriver drvr) {
+                List<WebElement> spinners = drvr.findElements(spinnerLocation);
+                if (spinners.isEmpty()) {
+                    return Boolean.valueOf(true);
+                }
+                return Boolean.valueOf(false);
+            }
+        };
+        return f;
     }
 
     private static String getPageContentMD5 (JavascriptExecutor js) {
