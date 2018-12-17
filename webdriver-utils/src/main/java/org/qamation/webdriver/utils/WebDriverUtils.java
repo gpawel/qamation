@@ -2,8 +2,8 @@ package org.qamation.webdriver.utils;
 
 import java.util.regex.Matcher;
 
+import com.google.common.base.Function;
 import org.openqa.selenium.*;
-import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.qamation.utils.RegExpUtils;
 import org.openqa.selenium.remote.RemoteWebDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -53,7 +53,7 @@ public class WebDriverUtils {
 
 
 
-	public <T> T isPageReady(ExpectedCondition<T> condition)  throws TimeoutException {
+	public <T> T isPageReady(Function<WebDriver,T> condition)  throws TimeoutException {
     	long timeout = TimeOutsConfig.getIsPageReadyConditionTimeOutMillis()/1000;
     	long interval = TimeOutsConfig.getIsPateReadyConditionIntervalMillis();
     	PageLoadTimer timer = new PageLoadTimer();
@@ -67,8 +67,10 @@ public class WebDriverUtils {
 
 	public WebElement getWebElementIfPresents(By locator) {
 		WebDriverWait wait = new WebDriverWait(driver, TimeOutsConfig.getDriverImplicitWaitTimeOutMillis());
-		wait.until(ExpectedConditions.presenceOfElementLocated(locator));
-		wait.until(ExpectedConditions.visibilityOfElementLocated(locator));
+		Function<WebDriver,WebElement> elementPresent = ExpectedConditions.presenceOfElementLocated(locator);
+		wait.until(elementPresent);
+		Function<WebDriver,WebElement> visibilityOfElement = ExpectedConditions.visibilityOfElementLocated(locator);
+		wait.until(visibilityOfElement);
 		WebElement el = driver.findElement(locator);
 		return el;
 	}

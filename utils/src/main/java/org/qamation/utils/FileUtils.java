@@ -77,6 +77,7 @@ public class FileUtils {
             Reader reader = new FileReader(path);
             Properties props = new Properties();
             props.load(reader);
+            System.setProperties(props);
             return props;
 
         }
