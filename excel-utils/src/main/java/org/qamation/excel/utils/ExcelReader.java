@@ -219,7 +219,9 @@ public class ExcelReader {
             this.hook = new ShutDownHook(this);
             addShutDownHook(hook);
         } catch (Exception ex) {
-            throw new RuntimeException("Unable to create a workbook from " + fileName + "\n" + StringUtils.getStackTrace(ex));
+            ex.printStackTrace();
+            log.error(ex.getMessage());
+            throw new RuntimeException("Unable to create a workbook from " + fileName,ex);
         }
     }
 

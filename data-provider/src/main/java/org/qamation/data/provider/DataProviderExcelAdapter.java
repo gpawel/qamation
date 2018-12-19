@@ -25,6 +25,7 @@ public class DataProviderExcelAdapter implements DataProvider {
         this.fileName = fileName;
         this.sheetIndex = sheetIndx;
         this.excelReader = new ExcelReader(fileName, sheetIndx);
+
         // we assume the excel has header
     }
 
@@ -99,7 +100,8 @@ public class DataProviderExcelAdapter implements DataProvider {
             iterator = null;
 
         } catch (Exception e) {
-            String message = "Unable to close DataProvider for "+excelReader.getFileName()+" with original file name " + excelReader.getOriginalFileName() + " failed.";
+            e.printStackTrace();
+            String message = "Unable to close DataProvider for " + excelReader.getFileName() + " with original file name " + excelReader.getOriginalFileName() + " failed.";
             log.error(message);
             throw new RuntimeException(message, e);
         }

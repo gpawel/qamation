@@ -36,7 +36,8 @@ public class ExcelUtils {
             rowSize = getHeaderLineSize();
             evaluator = workBook.getCreationHelper().createFormulaEvaluator();
         } catch (Exception ex) {
-            throw new RuntimeException("Unable to create a workbook from " + fileName+"\n"+ StringUtils.getStackTrace(ex));
+            ex.printStackTrace();
+            throw new RuntimeException("Unable to create a workbook from " + fileName,ex);
         }
     }
     public static Workbook createNewXLSXWorkBook() {

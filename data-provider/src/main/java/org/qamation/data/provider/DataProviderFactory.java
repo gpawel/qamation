@@ -46,6 +46,7 @@ public class DataProviderFactory  {
             return obj;
         }
         catch (Exception e) {
+            e.printStackTrace();
             throw new RuntimeException("Cannot create ExcelDataProvider instance for class "+className,e);
         }
     }
@@ -58,6 +59,7 @@ public class DataProviderFactory  {
             return obj;
         }
         catch (Exception e) {
+            e.printStackTrace();
             throw new RuntimeException("Cannot create ExcelDataProvider instance for class "+className,e);
         }
     }
