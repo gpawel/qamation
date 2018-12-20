@@ -47,7 +47,7 @@ public class DataProviderFactory  {
         }
         catch (Exception e) {
             e.printStackTrace();
-            throw new RuntimeException("Cannot create ExcelDataProvider instance for class "+className,e);
+            throw new RuntimeException("Cannot create ExcelDataProvider instance for file "+fileName+" using class: "+className,e);
         }
     }
 
@@ -60,7 +60,7 @@ public class DataProviderFactory  {
         }
         catch (Exception e) {
             e.printStackTrace();
-            throw new RuntimeException("Cannot create ExcelDataProvider instance for class "+className,e);
+            throw new RuntimeException("Cannot create ExcelDataProvider instance for file "+fileName+" using class: "+className,e);
         }
     }
 
