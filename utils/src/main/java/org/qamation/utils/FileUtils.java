@@ -17,7 +17,7 @@ public class FileUtils {
 
     public static Path copyFileToSameFolder(String sourceFilePath, String newfileName) {
         File f = new File(sourceFilePath);
-        if (f.isDirectory()) throw new RuntimeException("Given path should lead to a file.");
+        if (f.isDirectory()) throw new RuntimeException("Given path: "+sourceFilePath+" should lead to a file.");
         String fileName = getFileName(f.getAbsolutePath());
         String fileExt = getFileNameExtention(fileName);
         String filePath = getPathToFile(f.getAbsolutePath());
@@ -78,12 +78,13 @@ public class FileUtils {
             Properties props = new Properties();
             props.load(reader);
             System.setProperties(props);
+            reader.close();
             return props;
 
         }
         catch (Exception ex) {
             ex.printStackTrace();
-            throw new RuntimeException("Unable to load properties file.",ex);
+            throw new RuntimeException("Unable to load properties file: "+path,ex);
         }
     }
 
