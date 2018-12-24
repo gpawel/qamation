@@ -8,6 +8,7 @@ import java.nio.file.*;
 import java.security.SecureRandom;
 import java.util.ArrayList;
 import java.util.Properties;
+import java.util.Set;
 
 /**
  * Created by Pavel on 2017-03-25.
@@ -77,7 +78,11 @@ public class FileUtils {
             Reader reader = new FileReader(path);
             Properties props = new Properties();
             props.load(reader);
-            System.setProperties(props);
+            Set<String> keys = props.stringPropertyNames();
+            for(String k:keys) {
+                String value = props.getProperty(k);
+                System.setProperty(k,value);
+            }
             reader.close();
             return props;
 

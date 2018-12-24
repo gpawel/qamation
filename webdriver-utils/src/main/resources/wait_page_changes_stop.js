@@ -23,29 +23,34 @@ screenReadyObserver.observe(element, config);
 var intervalObserverHandler = function() {
   if (drawStarted) {
         if (changes == 0) {
-          //console.log("drawing; mutations: ",0," - exiting");
+          console.log("drawing; mutations: ",0," - exiting");
           stopAndExit(totalChanges);
         }
         else {
-          //console.log("drawing; mutations: ",changes);
+          console.log("drawing; mutations: ",changes);
           totalChanges = totalChanges + changes;
           changes = 0;
+          checkTimeOut();
         }
   }
   else {
-        //console.log("drawing not started");
         if (changes > 0) {
            drawingStartMoment = Date.now() - startingTime;
            drawStarted = true;
            totalChanges = totalChanges + changes;
            changes=0;
+           console.log("drawing started");
         }
         else
-           if ((Date.now() - startingTime) > timeOut) {
-            stopAndExit(-1);
-           }
-
+           console.log("drawing not started");
+           checkTimeOut();
   }
+}
+
+var checkTimeOut = function() {
+ if ((Date.now() - startingTime) > timeOut) {
+      stopAndExit(-1);
+ }
 }
 
 var stopAndExit = function(message) {

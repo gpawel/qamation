@@ -1,8 +1,10 @@
 package org.qamation.java.sampler.browser;
 
+import com.google.common.base.Function;
 import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.ExpectedCondition;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.qamation.java.sampler.exceptions.StringComparisonException;
 import org.qamation.utils.StringUtils;
 import org.apache.jmeter.config.Arguments;
@@ -124,8 +126,8 @@ public class PageProcessor extends PageNavigatAndCheck {
         return result;
     }
 
-    protected ExpectedCondition <String> getExpectedTextIsReadyCondition(final String location, final String expectedString) {
-        ExpectedCondition condition = new ExpectedCondition<String>() {
+    protected ExpectedCondition<String> getExpectedTextIsReadyCondition(final String location, final String expectedString) {
+        ExpectedCondition<String> condition = new ExpectedCondition<String>() {
             @Override
             public String apply(WebDriver webDriver) {
                 String read = page.readTextFrom(location,expectedString.length());

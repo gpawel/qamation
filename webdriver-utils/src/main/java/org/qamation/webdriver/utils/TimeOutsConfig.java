@@ -35,6 +35,7 @@ public class TimeOutsConfig {
 
     private static long loadScriptTimeOutMillis = getLongProperty(LOAD_SCRIPTS_TIMEOUT_MILLIS,"1000");
     private static long loadScriptIntervalMillis = getLongProperty(LOAD_SCRIPTS_INTERVAL_MILLIS,"300");
+
     private static long pageChangesTimeOutMillis = getLongProperty(PAGE_CHANGES_TIMEOUT_MILLIS,"600");
     private static long pageChangesIntervalMillis = getLongProperty(PAGE_CHANGES_INTERVAL_MILLIS,"400");
 

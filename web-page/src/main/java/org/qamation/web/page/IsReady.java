@@ -1,9 +1,8 @@
 package org.qamation.web.page;
 
-import com.google.common.base.Function;
-import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.support.ui.ExpectedCondition;
 
 public interface IsReady {
 	public boolean isReady();
-	public <T> T isReady(Function<WebDriver,T> condition);
+	public <T> T isReady(ExpectedCondition<T> condition);
 }

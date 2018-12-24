@@ -1,7 +1,7 @@
 package org.qamation.web.page;
 
-import com.google.common.base.Function;
-import org.openqa.selenium.WebDriver;
+
+import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.qamation.webdriver.utils.WebDriverUtils;
 
 public abstract class AbstractPage<A extends WebDriverUtils> implements Page {
@@ -11,7 +11,7 @@ public abstract class AbstractPage<A extends WebDriverUtils> implements Page {
 		return utils.isPageReady();
 	}
 
-	public <T> T isReady(Function<WebDriver,T> condition) {
+	public <T> T isReady(ExpectedCondition<T> condition) {
 		return utils.isPageReady(condition);
 	}
 
