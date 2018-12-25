@@ -61,4 +61,12 @@ public class  Tokens  {
 
     public int size() {return tokens.size();}
 
+    public ArrayList<String> getTokens() {
+        ArrayList<String> arr = new ArrayList<String>();
+        for (String s:tokens) {
+            arr.add(s);
+        }
+        return arr;
+    }
+
 }
