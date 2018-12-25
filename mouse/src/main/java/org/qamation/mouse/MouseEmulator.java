@@ -54,7 +54,8 @@ public class MouseEmulator {
         for (int i=1; i<locations.length; i+=2) {
             By by = LocatorFactory.getLocator(locations[i]);
             List<WebElement> elements = driver.findElements(by);
-            if (elements.size()!=1) throw new RuntimeException(locations[i]+" must point to only one web element");
+                     if (elements.size() == 0) throw new RuntimeException("Nothing is found by location: "+locations[i]);
+                     if (elements.size()!=1) throw new RuntimeException(locations[i]+" must point to only one web element");
             els.addAll(elements);
         }
         if (els.size()>2) throw new RuntimeException(mouseActionString+" must points to max two web elements");
