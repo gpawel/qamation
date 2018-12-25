@@ -181,10 +181,68 @@
           </DebugSampler>
           <hashTree/>
           <IfController guiclass="IfControllerPanel" testclass="IfController" testname="IF RUN" enabled="true">
-            <stringProp name="IfController.condition">&quot;${RUN}&quot;==&quot;Y&quot; || &quot;${RUN}&quot;==&quot;y&quot;</stringProp>
+            <stringProp name="IfController.condition">${__groovy( String run = vars.get(&quot;RUN&quot;);log.info(&quot;\nrun: &quot;+run); return run.equalsIgnoreCase(&quot;Y&quot;); )}</stringProp>
             <boolProp name="IfController.evaluateAll">false</boolProp>
           </IfController>
           <hashTree>
+            <JavaSampler guiclass="JavaTestSamplerGui" testclass="JavaSampler" testname="PAGE PROCESSOR" enabled="true">
+              <elementProp name="arguments" elementType="Arguments" guiclass="ArgumentsPanel" testclass="Arguments" enabled="true">
+                <collectionProp name="Arguments.arguments">
+                  <elementProp name="ENTER true OR false TO INDICATE WHETHER TO STOP AFTER FAILURE" elementType="Argument">
+                    <stringProp name="Argument.name">ENTER true OR false TO INDICATE WHETHER TO STOP AFTER FAILURE</stringProp>
+                    <stringProp name="Argument.value">${STOP_INDICATOR}</stringProp>
+                    <stringProp name="Argument.metadata">=</stringProp>
+                  </elementProp>
+                  <elementProp name="ENTER VARIABLE NAME WHERE BROWSER IS STORED" elementType="Argument">
+                    <stringProp name="Argument.name">ENTER VARIABLE NAME WHERE BROWSER IS STORED</stringProp>
+                    <stringProp name="Argument.value">${BROWSER_NAME}</stringProp>
+                    <stringProp name="Argument.metadata">=</stringProp>
+                  </elementProp>
+                  <elementProp name="ENTER PAGE IMPLEMENTATION CLASS" elementType="Argument">
+                    <stringProp name="Argument.name">ENTER PAGE IMPLEMENTATION CLASS</stringProp>
+                    <stringProp name="Argument.value">${PAGE_IMPLEMENTATION_CLASS}</stringProp>
+                    <stringProp name="Argument.metadata">=</stringProp>
+                  </elementProp>
+                  <elementProp name="ENTER NAVAGATION SCTRING" elementType="Argument">
+                    <stringProp name="Argument.name">ENTER NAVAGATION SCTRING</stringProp>
+                    <stringProp name="Argument.value">${NAVIGATION}</stringProp>
+                    <stringProp name="Argument.metadata">=</stringProp>
+                  </elementProp>
+                  <elementProp name="ENTER A SYMBOL THAT SEPARATES NAVIGATION STEPS" elementType="Argument">
+                    <stringProp name="Argument.name">ENTER A SYMBOL THAT SEPARATES NAVIGATION STEPS</stringProp>
+                    <stringProp name="Argument.value">\|</stringProp>
+                    <stringProp name="Argument.metadata">=</stringProp>
+                  </elementProp>
+                  <elementProp name="ENTER ELEMENT ID.  Provide empty value to skip verification" elementType="Argument">
+                    <stringProp name="Argument.name">ENTER ELEMENT ID.  Provide empty value to skip verification</stringProp>
+                    <stringProp name="Argument.value">${ELEMENT_LOCATOR}</stringProp>
+                    <stringProp name="Argument.metadata">=</stringProp>
+                  </elementProp>
+                  <elementProp name="ENTER EXPECTED RESULT. Provide empty value to skip verification." elementType="Argument">
+                    <stringProp name="Argument.name">ENTER EXPECTED RESULT. Provide empty value to skip verification.</stringProp>
+                    <stringProp name="Argument.value">${EXPECTED}</stringProp>
+                    <stringProp name="Argument.metadata">=</stringProp>
+                  </elementProp>
+                  <elementProp name="ENTER URL TO GO BACK. Provide empty value to skip." elementType="Argument">
+                    <stringProp name="Argument.name">ENTER URL TO GO BACK. Provide empty value to skip.</stringProp>
+                    <stringProp name="Argument.value">${NAVIGATE}</stringProp>
+                    <stringProp name="Argument.metadata">=</stringProp>
+                  </elementProp>
+                  <elementProp name="ENTER A COMMENT TO BE INCLUDED INTO A LABEL. Leave empty " elementType="Argument">
+                    <stringProp name="Argument.name">ENTER A COMMENT TO BE INCLUDED INTO A LABEL. Leave empty </stringProp>
+                    <stringProp name="Argument.value">${COMMENT}</stringProp>
+                    <stringProp name="Argument.metadata">=</stringProp>
+                  </elementProp>
+                  <elementProp name="ENTER VARIABLE NAME TO STORE EXTACTED DATA" elementType="Argument">
+                    <stringProp name="Argument.name">ENTER VARIABLE NAME TO STORE EXTACTED DATA</stringProp>
+                    <stringProp name="Argument.value">${EXTRACT_TO}</stringProp>
+                    <stringProp name="Argument.metadata">=</stringProp>
+                  </elementProp>
+                </collectionProp>
+              </elementProp>
+              <stringProp name="classname">org.qamation.java.sampler.browser.PageProcessor</stringProp>
+            </JavaSampler>
+            <hashTree/>
             <IfController guiclass="IfControllerPanel" testclass="IfController" testname="IF SCRIPT" enabled="true">
               <stringProp name="IfController.condition">${__groovy(if(vars.get(&quot;SCRIPT&quot;)==null) return false; return vars.get(&quot;SCRIPT&quot;).length()&gt;0 )}</stringProp>
               <boolProp name="IfController.evaluateAll">false</boolProp>
@@ -199,64 +257,6 @@
               <hashTree/>
             </hashTree>
           </hashTree>
-          <JavaSampler guiclass="JavaTestSamplerGui" testclass="JavaSampler" testname="PAGE PROCESSOR" enabled="true">
-            <elementProp name="arguments" elementType="Arguments" guiclass="ArgumentsPanel" testclass="Arguments" enabled="true">
-              <collectionProp name="Arguments.arguments">
-                <elementProp name="ENTER true OR false TO INDICATE WHETHER TO STOP AFTER FAILURE" elementType="Argument">
-                  <stringProp name="Argument.name">ENTER true OR false TO INDICATE WHETHER TO STOP AFTER FAILURE</stringProp>
-                  <stringProp name="Argument.value">${STOP_INDICATOR}</stringProp>
-                  <stringProp name="Argument.metadata">=</stringProp>
-                </elementProp>
-                <elementProp name="ENTER VARIABLE NAME WHERE BROWSER IS STORED" elementType="Argument">
-                  <stringProp name="Argument.name">ENTER VARIABLE NAME WHERE BROWSER IS STORED</stringProp>
-                  <stringProp name="Argument.value">${BROWSER_NAME}</stringProp>
-                  <stringProp name="Argument.metadata">=</stringProp>
-                </elementProp>
-                <elementProp name="ENTER PAGE IMPLEMENTATION CLASS" elementType="Argument">
-                  <stringProp name="Argument.name">ENTER PAGE IMPLEMENTATION CLASS</stringProp>
-                  <stringProp name="Argument.value">${PAGE_IMPLEMENTATION_CLASS}</stringProp>
-                  <stringProp name="Argument.metadata">=</stringProp>
-                </elementProp>
-                <elementProp name="ENTER NAVAGATION SCTRING" elementType="Argument">
-                  <stringProp name="Argument.name">ENTER NAVAGATION SCTRING</stringProp>
-                  <stringProp name="Argument.value">${NAVIGATION}</stringProp>
-                  <stringProp name="Argument.metadata">=</stringProp>
-                </elementProp>
-                <elementProp name="ENTER A SYMBOL THAT SEPARATES NAVIGATION STEPS" elementType="Argument">
-                  <stringProp name="Argument.name">ENTER A SYMBOL THAT SEPARATES NAVIGATION STEPS</stringProp>
-                  <stringProp name="Argument.value">\|</stringProp>
-                  <stringProp name="Argument.metadata">=</stringProp>
-                </elementProp>
-                <elementProp name="ENTER ELEMENT ID.  Provide empty value to skip verification" elementType="Argument">
-                  <stringProp name="Argument.name">ENTER ELEMENT ID.  Provide empty value to skip verification</stringProp>
-                  <stringProp name="Argument.value">${ELEMENT_LOCATOR}</stringProp>
-                  <stringProp name="Argument.metadata">=</stringProp>
-                </elementProp>
-                <elementProp name="ENTER EXPECTED RESULT. Provide empty value to skip verification." elementType="Argument">
-                  <stringProp name="Argument.name">ENTER EXPECTED RESULT. Provide empty value to skip verification.</stringProp>
-                  <stringProp name="Argument.value">${EXPECTED}</stringProp>
-                  <stringProp name="Argument.metadata">=</stringProp>
-                </elementProp>
-                <elementProp name="ENTER URL TO GO BACK. Provide empty value to skip." elementType="Argument">
-                  <stringProp name="Argument.name">ENTER URL TO GO BACK. Provide empty value to skip.</stringProp>
-                  <stringProp name="Argument.value">${NAVIGATE}</stringProp>
-                  <stringProp name="Argument.metadata">=</stringProp>
-                </elementProp>
-                <elementProp name="ENTER A COMMENT TO BE INCLUDED INTO A LABEL. Leave empty " elementType="Argument">
-                  <stringProp name="Argument.name">ENTER A COMMENT TO BE INCLUDED INTO A LABEL. Leave empty </stringProp>
-                  <stringProp name="Argument.value">${COMMENT}</stringProp>
-                  <stringProp name="Argument.metadata">=</stringProp>
-                </elementProp>
-                <elementProp name="ENTER VARIABLE NAME TO STORE EXTACTED DATA" elementType="Argument">
-                  <stringProp name="Argument.name">ENTER VARIABLE NAME TO STORE EXTACTED DATA</stringProp>
-                  <stringProp name="Argument.value">${EXTRACT_TO}</stringProp>
-                  <stringProp name="Argument.metadata">=</stringProp>
-                </elementProp>
-              </collectionProp>
-            </elementProp>
-            <stringProp name="classname">org.qamation.java.sampler.browser.PageProcessor</stringProp>
-          </JavaSampler>
-          <hashTree/>
         </hashTree>
         <ResultCollector guiclass="ViewResultsFullVisualizer" testclass="ResultCollector" testname="View Results Tree" enabled="true">
           <boolProp name="ResultCollector.error_logging">false</boolProp>
