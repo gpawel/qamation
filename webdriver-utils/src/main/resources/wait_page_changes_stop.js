@@ -1,6 +1,7 @@
 var callback = arguments[arguments.length - 1];
-var timeOut = arguments[0];
-var pauseTime = arguments[1];
+var notStartedtimeOut = arguments[0];
+var watchTimeOut = arguments[1];
+var pauseTime = arguments[2];
 var element = document.documentElement;//arguments[2];
 console.log("Waiting for page changes to stop: timeout: ",timeOut," pause: ",pauseTime);
 var changes=0;
@@ -30,7 +31,7 @@ var intervalObserverHandler = function() {
           console.log("drawing; mutations: ",changes);
           totalChanges = totalChanges + changes;
           changes = 0;
-          checkTimeOut();
+          checkTimeOut(watchTimeOut);
         }
   }
   else {
@@ -43,15 +44,17 @@ var intervalObserverHandler = function() {
         }
         else
            console.log("drawing not started");
-           checkTimeOut();
+           checkTimeOut(notStartedtimeOut);
   }
 }
 
-var checkTimeOut = function() {
- if ((Date.now() - startingTime) > timeOut) {
-      stopAndExit(-1);
+var checkTimeOut = function(duration) {
+ if ((Date.now() - startingTime) > duration) {
+      stopAndExit(totalChanges);
  }
 }
+
+
 
 var stopAndExit = function(message) {
   clearInterval(screenReadyTimer);

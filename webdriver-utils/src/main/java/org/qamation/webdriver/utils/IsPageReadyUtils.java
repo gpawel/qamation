@@ -49,6 +49,7 @@ public class IsPageReadyUtils {
         JavascriptExecutor js = WebDriverUtils.getJavaScriptExecutor(driver);
         Long result = (Long) js.executeAsyncScript(PAGE_CHANGES_OBSERVER_ASYNC_SCRIPT,
                 TimeOutsConfig.getPageChangesTimeOutMillis(),
+                TimeOutsConfig.getPageChangesWatchForMaxMillis(),
                 TimeOutsConfig.getPageChangesIntervalMillis());
         return result.intValue();
     }

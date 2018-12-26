@@ -18,6 +18,7 @@ public class TimeOutsConfig {
     private final static String LOAD_SCRIPTS_INTERVAL_MILLIS = "LOAD_SCRIPTS_INTERVAL_MILLIS";
 
     private final static String PAGE_CHANGES_TIMEOUT_MILLIS = "PAGE_CHANGES_TIMEOUT_MILLIS";
+    private final static String PAGE_CHANGES_WATCH_FOR_MAX_MILLIS = "PAGE_CHANGES_WATCH_FOR_MAX_MILLIS";
     private final static String PAGE_CHANGES_INTERVAL_MILLIS = "PAGE_CHANGES_INTERVAL_MILLIS";
 
     private final static String WAIT_FOR_SPINNER_TO_APPEAR_TIME_OUT_MILLIS = "WAIT_FOR_SPINNER_TO_APPEAR_TIME_OUT_MILLIS";
@@ -37,6 +38,7 @@ public class TimeOutsConfig {
     private static long loadScriptIntervalMillis = getLongProperty(LOAD_SCRIPTS_INTERVAL_MILLIS,"300");
 
     private static long pageChangesTimeOutMillis = getLongProperty(PAGE_CHANGES_TIMEOUT_MILLIS,"600");
+    private static long pageChangesWatchForMaxMillis = getLongProperty(PAGE_CHANGES_WATCH_FOR_MAX_MILLIS,"5000");
     private static long pageChangesIntervalMillis = getLongProperty(PAGE_CHANGES_INTERVAL_MILLIS,"400");
 
     private static long waitForSpinnerToAppearTimeOutMillis = getLongProperty(WAIT_FOR_SPINNER_TO_APPEAR_TIME_OUT_MILLIS,"1000");
@@ -108,6 +110,13 @@ public class TimeOutsConfig {
 
     public static void setPageChangesIntervalMillis(long pageChangesIntervalMillis) {
         TimeOutsConfig.pageChangesIntervalMillis = pageChangesIntervalMillis;
+    }
+
+
+    public static long getPageChangesWatchForMaxMillis() {return pageChangesWatchForMaxMillis;}
+
+    public static void setPageChangesWatchForMaxMillis (long pageChangesWatchForMaxMillis) {
+        TimeOutsConfig.pageChangesWatchForMaxMillis = pageChangesWatchForMaxMillis;
     }
 
     public static long getWaitForSpinnerToAppearTimeOutMillis() {
