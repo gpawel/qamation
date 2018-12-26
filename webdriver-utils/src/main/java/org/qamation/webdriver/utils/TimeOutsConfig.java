@@ -30,10 +30,12 @@ public class TimeOutsConfig {
 
 
 
-
+    private final static String INCLUDE_WAIT_FOR_SPINNER_TO_DISAPPEAR = "INCLUDE_WAIT_FOR_SPINNER_TO_DISAPPEAR";
     private final static String WAIT_FOR_SPINNER_TO_DISAPPEAR_TIME_OUT_MILLIS = "WAIT_FOR_SPINNER_TO_DISAPPEAR_TIME_OUT_MILLIS";
     private final static String WAIT_FOR_SPINNER_TO_DISAPPEAR_INTERVAL_MILLIS = "WAIT_FOR_SPINNER_TO_DISAPPEAR_INTERVAL_MILLIS";
 
+
+    private final static String INCLUDE_IS_PAGE_READY_CONDITION="INCLUDE_IS_PAGE_READY_CONDITION";
     private final static String IS_PAGE_READY_CONDITION_TIME_OUT_MILLIS = "IS_PAGE_READY_CONDITION_TIME_OUT_MILLIS";
     private final static String IS_PAGE_READY_CONDITION_INTERVAL_MILLIS = "IS_PAGE_READY_CONDITION_INTERVAL_MILLIS";
 
@@ -55,19 +57,19 @@ public class TimeOutsConfig {
     private static long pageChangesIntervalMillis = getLongProperty(PAGE_CHANGES_INTERVAL_MILLIS,"400");
 
 
-
-
-
     private static boolean includeWaitForSpinnerToAppear = getBooleanProperty(INCLUDE_WAIT_FOR_SPINNER_TO_APPEAR,"false");
     private static long waitForSpinnerToAppearTimeOutMillis = getLongProperty(WAIT_FOR_SPINNER_TO_APPEAR_TIME_OUT_MILLIS,"1000");
     private static long waitForSpinnerToAppearIntervalMillis = getLongProperty(WAIT_FOR_SPINNER_TO_APPEAR_INTERVAL_MILLIS,"300");
 
 
+    private static boolean includeWaitForSpinnerToDisappear = getBooleanProperty(INCLUDE_WAIT_FOR_SPINNER_TO_DISAPPEAR,"false");
     private static long waitForSpinnerToDisappearTimeOutMillis = getLongProperty(WAIT_FOR_SPINNER_TO_DISAPPEAR_TIME_OUT_MILLIS,"300000");
     private static long waitForSpinnerToDisappearIntervalMillis = getLongProperty(WAIT_FOR_SPINNER_TO_DISAPPEAR_INTERVAL_MILLIS,"300");
 
+
+    private static boolean includeIsPageReadyCondition = getBooleanProperty(INCLUDE_IS_PAGE_READY_CONDITION,"false");
     private static long isPageReadyConditionTimeOutMillis = getLongProperty(IS_PAGE_READY_CONDITION_TIME_OUT_MILLIS,"5000");
-    private static long isPateReadyConditionIntervalMillis = getLongProperty(IS_PAGE_READY_CONDITION_INTERVAL_MILLIS,"200");
+    private static long isPageReadyConditionIntervalMillis = getLongProperty(IS_PAGE_READY_CONDITION_INTERVAL_MILLIS,"200");
 
     public static void setDriverTimeOuts(WebDriver driver) {
         driver.manage().timeouts().pageLoadTimeout(driverPageLoadTimeOutMillis, TimeUnit.MILLISECONDS);
@@ -145,6 +147,12 @@ public class TimeOutsConfig {
 
 
 
+    public static boolean getIncludeWaitForSpinnerToAppear() {
+        return includeWaitForSpinnerToAppear;
+    }
+    public static void setIncludeWaitForSpinnerToAppear(boolean includeWaitForSpinnerToAppear) {
+        TimeOutsConfig.includeWaitForSpinnerToAppear = includeWaitForSpinnerToAppear;
+    }
 
     public static long getWaitForSpinnerToAppearTimeOutMillis() {return waitForSpinnerToAppearTimeOutMillis;}
     public static void setWaitForSpinnerToAppearTimeOutMillis(long waitForSpinnerToAppearTimeOutMillis) {
@@ -163,7 +171,13 @@ public class TimeOutsConfig {
 
 
 
+    public static boolean getIncludeWaitForSpinnerToDisappear() {
+        return includeWaitForSpinnerToDisappear;
+    }
 
+    public static void setIncludeWaitForSpinnerToDisappear(boolean includeWaitForSpinnerToDisappear) {
+        TimeOutsConfig.includeWaitForSpinnerToDisappear = includeWaitForSpinnerToDisappear;
+    }
 
     public static long getWaitForSpinnerToDisappearTimeOutMillis() {
         return waitForSpinnerToDisappearTimeOutMillis;
@@ -181,6 +195,21 @@ public class TimeOutsConfig {
         TimeOutsConfig.waitForSpinnerToDisappearIntervalMillis = waitForSpinnerToDisappearIntervalMillis;
     }
 
+
+
+
+
+
+
+
+    public static boolean getIncludeIsPageReadyCondition() {
+        return includeIsPageReadyCondition;
+    }
+
+    public static void setIncludeIsPageReadyCondition(boolean includeIsPageReadyCondition) {
+        TimeOutsConfig.includeIsPageReadyCondition = includeIsPageReadyCondition;
+    }
+
     public static long getIsPageReadyConditionTimeOutMillis() {
         return isPageReadyConditionTimeOutMillis;
     }
@@ -189,13 +218,18 @@ public class TimeOutsConfig {
         TimeOutsConfig.isPageReadyConditionTimeOutMillis = isPageReadyConditionTimeOutMillis;
     }
 
-    public static long getIsPateReadyConditionIntervalMillis() {
-        return isPateReadyConditionIntervalMillis;
+    public static long getIsPageReadyConditionIntervalMillis() {
+        return isPageReadyConditionIntervalMillis;
     }
 
-    public static void setIsPateReadyConditionIntervalMillis(long isPateReadyConditionIntervalMillis) {
-        TimeOutsConfig.isPateReadyConditionIntervalMillis = isPateReadyConditionIntervalMillis;
+    public static void setIsPageReadyConditionIntervalMillis(long isPageReadyConditionIntervalMillis) {
+        TimeOutsConfig.isPageReadyConditionIntervalMillis = isPageReadyConditionIntervalMillis;
     }
+
+
+
+
+
 
     private static long getLongProperty(String propName, String defValue) {
         return Long.parseLong(System.getProperty(propName,defValue));

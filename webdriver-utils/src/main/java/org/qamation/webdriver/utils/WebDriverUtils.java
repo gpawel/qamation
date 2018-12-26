@@ -8,9 +8,12 @@ import org.qamation.utils.RegExpUtils;
 import org.openqa.selenium.remote.RemoteWebDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 
 public class WebDriverUtils {
+	private static Logger log = LoggerFactory.getLogger(WebDriverUtils.class);
 	protected WebDriver driver;
 	protected String browserName;
 	protected long waitTime;
@@ -43,19 +46,48 @@ public class WebDriverUtils {
 			addPageReadyTime(timer.getDuration());
 			return result;
 		}
-		//boolean isScriptsLoaded = IsPageReadyUtils.isScriptsLoadingDone(driver);
-		//boolean isDocReady = IsPageReadyUtils.isDocumentStateReady(driver);
-		int isMutationStopped = IsPageReadyUtils.isPageChangeStopped(driver);
+
+		int mutations = 0;
+		if (TimeOutsConfig.getIncludePageChanges()) {
+			mutations = IsPageReadyUtils.isPageChangeStopped(driver);
+		}
+		if (TimeOutsConfig.getIncludeWaitForSpinnerToAppear()) {
+			waitForSpinnerToAppear();
+		}
+		if (TimeOutsConfig.getIncludeWaitForSpinnerToDisappear()) {
+			waitForSpinnerToDisapper();
+		}
 		timer.stop();
 		addPageReadyTime(timer.getDuration());
 		return true;//isDocReady && isScriptsLoaded;
 	}
 
+	private void waitForSpinnerToDisapper() {
+		String spinnerXpath = System.getProperty("SPINNER_DISAPPEAR_XPATH");
+		if (spinnerXpath == null) {
+			log.warn("SPINNER XPATH IS NOT PROVIDED. SKIPPING WAITING FOR SPINNER TO DISAPPEAR");
+		}
+		else {
+			By by = LocatorFactory.getLocator(spinnerXpath);
+			IsPageReadyUtils.waitForSpinnerToDisappear(this.driver,by);
+		}
+	}
+
+	private void waitForSpinnerToAppear() {
+		String spinnerXpath = System.getProperty("SPINNER_APPEAR_XPATH");
+		if (spinnerXpath == null) {
+			log.warn("SPINNER XPATH IS NOT PROVIDED. SKIPPING WAITING FOR SPINNER TO APPEAR");
+		}
+		else {
+			By by = LocatorFactory.getLocator(spinnerXpath);
+			IsPageReadyUtils.waitForSpinnerToAppear(this.driver,by);
+		}
+	}
 
 
 	public <T> T isPageReady(Function<WebDriver,T> condition)  throws TimeoutException {
     	long timeout = TimeOutsConfig.getIsPageReadyConditionTimeOutMillis()/1000;
-    	long interval = TimeOutsConfig.getIsPateReadyConditionIntervalMillis();
+    	long interval = TimeOutsConfig.getIsPageReadyConditionIntervalMillis();
     	PageLoadTimer timer = new PageLoadTimer();
     	WebDriverWait wait = new WebDriverWait(driver,timeout,interval);
 		timer.start();
