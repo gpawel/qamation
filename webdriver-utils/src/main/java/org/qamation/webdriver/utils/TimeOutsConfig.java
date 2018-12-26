@@ -17,12 +17,20 @@ public class TimeOutsConfig {
     private final static String LOAD_SCRIPTS_TIMEOUT_MILLIS = "LOAD_SCRIPTS_TIMEOUT_MILLIS";
     private final static String LOAD_SCRIPTS_INTERVAL_MILLIS = "LOAD_SCRIPTS_INTERVAL_MILLIS";
 
+    private final static String INCLUDE_WAIT_FOR_PAGE_CHANGES = "INCLUDE_WAIT_FOR_PAGE_CHANGES";
     private final static String PAGE_CHANGES_TIMEOUT_MILLIS = "PAGE_CHANGES_TIMEOUT_MILLIS";
     private final static String PAGE_CHANGES_WATCH_FOR_MAX_MILLIS = "PAGE_CHANGES_WATCH_FOR_MAX_MILLIS";
     private final static String PAGE_CHANGES_INTERVAL_MILLIS = "PAGE_CHANGES_INTERVAL_MILLIS";
 
+
+
+    private final static String INCLUDE_WAIT_FOR_SPINNER_TO_APPEAR = "INCLUDE_WAIT_FOR_SPINNER_TO_APPEAR";
     private final static String WAIT_FOR_SPINNER_TO_APPEAR_TIME_OUT_MILLIS = "WAIT_FOR_SPINNER_TO_APPEAR_TIME_OUT_MILLIS";
     private final static String WAIT_FOR_SPINNER_TO_APPEAR_INTERVAL_MILLIS = "WAIT_FOR_SPINNER_TO_APPEAR_INTERVAL_MILLIS";
+
+
+
+
     private final static String WAIT_FOR_SPINNER_TO_DISAPPEAR_TIME_OUT_MILLIS = "WAIT_FOR_SPINNER_TO_DISAPPEAR_TIME_OUT_MILLIS";
     private final static String WAIT_FOR_SPINNER_TO_DISAPPEAR_INTERVAL_MILLIS = "WAIT_FOR_SPINNER_TO_DISAPPEAR_INTERVAL_MILLIS";
 
@@ -37,12 +45,23 @@ public class TimeOutsConfig {
     private static long loadScriptTimeOutMillis = getLongProperty(LOAD_SCRIPTS_TIMEOUT_MILLIS,"1000");
     private static long loadScriptIntervalMillis = getLongProperty(LOAD_SCRIPTS_INTERVAL_MILLIS,"300");
 
+
+
+
+
+    private static boolean includePageChanges = getBooleanProperty(INCLUDE_WAIT_FOR_PAGE_CHANGES,"true");
     private static long pageChangesTimeOutMillis = getLongProperty(PAGE_CHANGES_TIMEOUT_MILLIS,"600");
     private static long pageChangesWatchForMaxMillis = getLongProperty(PAGE_CHANGES_WATCH_FOR_MAX_MILLIS,"5000");
     private static long pageChangesIntervalMillis = getLongProperty(PAGE_CHANGES_INTERVAL_MILLIS,"400");
 
+
+
+
+
+    private static boolean includeWaitForSpinnerToAppear = getBooleanProperty(INCLUDE_WAIT_FOR_SPINNER_TO_APPEAR,"false");
     private static long waitForSpinnerToAppearTimeOutMillis = getLongProperty(WAIT_FOR_SPINNER_TO_APPEAR_TIME_OUT_MILLIS,"1000");
     private static long waitForSpinnerToAppearIntervalMillis = getLongProperty(WAIT_FOR_SPINNER_TO_APPEAR_INTERVAL_MILLIS,"300");
+
 
     private static long waitForSpinnerToDisappearTimeOutMillis = getLongProperty(WAIT_FOR_SPINNER_TO_DISAPPEAR_TIME_OUT_MILLIS,"300000");
     private static long waitForSpinnerToDisappearIntervalMillis = getLongProperty(WAIT_FOR_SPINNER_TO_DISAPPEAR_INTERVAL_MILLIS,"300");
@@ -96,44 +115,54 @@ public class TimeOutsConfig {
         TimeOutsConfig.loadScriptIntervalMillis = loadScriptIntervalMillis;
     }
 
-    public static long getPageChangesTimeOutMillis() {
-        return pageChangesTimeOutMillis;
-    }
 
+
+
+
+    public static boolean getIncludePageChanges(){return includePageChanges;}
+    public static void setIncludeWaitForPageChanges(boolean includePageChanges) {
+        TimeOutsConfig.includePageChanges = includePageChanges;
+    }
+    public static long getPageChangesTimeOutMillis() {return pageChangesTimeOutMillis;}
     public static void setPageChangesTimeOutMillis(long pageChangesTimeOutMillis) {
         TimeOutsConfig.pageChangesTimeOutMillis = pageChangesTimeOutMillis;
     }
-
     public static long getPageChangesIntervalMillis() {
         return pageChangesIntervalMillis;
     }
-
     public static void setPageChangesIntervalMillis(long pageChangesIntervalMillis) {
         TimeOutsConfig.pageChangesIntervalMillis = pageChangesIntervalMillis;
     }
-
-
     public static long getPageChangesWatchForMaxMillis() {return pageChangesWatchForMaxMillis;}
-
     public static void setPageChangesWatchForMaxMillis (long pageChangesWatchForMaxMillis) {
         TimeOutsConfig.pageChangesWatchForMaxMillis = pageChangesWatchForMaxMillis;
     }
 
-    public static long getWaitForSpinnerToAppearTimeOutMillis() {
-        return waitForSpinnerToAppearTimeOutMillis;
-    }
 
+
+
+
+
+
+
+
+    public static long getWaitForSpinnerToAppearTimeOutMillis() {return waitForSpinnerToAppearTimeOutMillis;}
     public static void setWaitForSpinnerToAppearTimeOutMillis(long waitForSpinnerToAppearTimeOutMillis) {
         TimeOutsConfig.waitForSpinnerToAppearTimeOutMillis = waitForSpinnerToAppearTimeOutMillis;
     }
-
     public static void setWaitForSpinnerToAppearIntervalMillis(long waitForSpinnerToAppearIntervalMillis) {
         TimeOutsConfig.waitForSpinnerToAppearIntervalMillis = waitForSpinnerToAppearIntervalMillis;
     }
+    public static long getWaitForSpinnerToAppearIntervalMillis() {return waitForSpinnerToAppearIntervalMillis;}
 
-    public static long getWaitForSpinnerToAppearIntervalMillis() {
-        return waitForSpinnerToAppearIntervalMillis;
-    }
+
+
+
+
+
+
+
+
 
 
     public static long getWaitForSpinnerToDisappearTimeOutMillis() {
@@ -170,5 +199,9 @@ public class TimeOutsConfig {
 
     private static long getLongProperty(String propName, String defValue) {
         return Long.parseLong(System.getProperty(propName,defValue));
+    }
+
+    private static boolean getBooleanProperty(String propName, String defValue) {
+        return Boolean.parseBoolean(System.getProperty(propName,defValue) );
     }
 }

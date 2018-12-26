@@ -107,6 +107,7 @@ public class WebPageNavigator {
 		keyboard.sendSpecialKeys(s);
 		if (specialKey.equalsIgnoreCase("{TAB}")
 				|| specialKey.equalsIgnoreCase("{DELETE}")
+				|| specialKey.equalsIgnoreCase("{SPACE}")
 				) return;
 		page.isReady();
 	}

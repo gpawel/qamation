@@ -3,7 +3,7 @@ var notStartedtimeOut = arguments[0];
 var watchTimeOut = arguments[1];
 var pauseTime = arguments[2];
 var element = document.documentElement;//arguments[2];
-console.log("Waiting for page changes to stop: timeout: ",timeOut," pause: ",pauseTime);
+console.log("Waiting for page changes to stop. timeout if drawing not starting: ",timeOut," watch drawing timeout",watchTimeOut," pause: ",pauseTime);
 var changes=0;
 var totalChanges=0;
 var drawStarted = false;
@@ -24,11 +24,11 @@ screenReadyObserver.observe(element, config);
 var intervalObserverHandler = function() {
   if (drawStarted) {
         if (changes == 0) {
-          console.log("drawing; mutations: ",0," - exiting");
+          //console.log("drawing; mutations: ",0," - exiting");
           stopAndExit(totalChanges);
         }
         else {
-          console.log("drawing; mutations: ",changes);
+          //console.log("drawing; mutations: ",changes);
           totalChanges = totalChanges + changes;
           changes = 0;
           checkTimeOut(watchTimeOut);
@@ -40,10 +40,10 @@ var intervalObserverHandler = function() {
            drawStarted = true;
            totalChanges = totalChanges + changes;
            changes=0;
-           console.log("drawing started");
+           //console.log("drawing started");
         }
         else
-           console.log("drawing not started");
+           //console.log("drawing not started");
            checkTimeOut(notStartedtimeOut);
   }
 }
