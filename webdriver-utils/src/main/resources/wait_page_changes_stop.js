@@ -3,7 +3,7 @@ var notStartedtimeOut = arguments[0];
 var watchTimeOut = arguments[1];
 var pauseTime = arguments[2];
 var element = document.documentElement;//arguments[2];
-console.log("Waiting for page changes to stop. timeout if drawing not starting: ",timeOut," watch drawing timeout",watchTimeOut," pause: ",pauseTime);
+console.log("Waiting for page changes to stop. timeout if drawing not starting: ",notStartedtimeOut," watch drawing timeout",watchTimeOut," pause: ",pauseTime);
 var changes=0;
 var totalChanges=0;
 var drawStarted = false;
