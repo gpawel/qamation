@@ -58,19 +58,42 @@ public class FileUtils {
         return p.toString();
     }
 
-
-
     public static String[] listFilesInFolder(String root) {
         File file = new File(root);
-        root = file.getPath(); // to convert c:/tmp/mq into c:\tmp\mq if needed.
-        ArrayList<String> list = new ArrayList<String>();
         if (file.exists()) {
-                processFile(root, file, list);
+            if (file.isDirectory()) {
+                String rootPath = file.getPath(); // to convert c:/tmp/mq into c:\tmp\mq if needed.
+                ArrayList<String> list = new ArrayList<String>();
+                processFile(rootPath, file, list);
+
+                return list.toArray(new String[]{});
+            }
+            else return new String[]{root};
         }
         else {
-            throw new RuntimeException("There is no file of dirrectory at: "+root);
+            throw new RuntimeException("There is no file of dirrectory at: " + root);
         }
-        return list.toArray(new String[]{});
+    }
+
+
+
+    private static void processFile(String startPath, File file, ArrayList<String> list) {
+        if (file.isDirectory()) {
+            for (String fileName : file.list()) {
+                String path = startPath + FILE_SEPARATOR + fileName;
+                processFile(path, new File(path), list);
+            }
+        }
+        else {
+            list.add(file.getPath());
+        }
+    }
+
+
+    private static String generateFileNamePrefix() {
+        SecureRandom sr = new SecureRandom();
+        long l = sr.nextLong();
+        return String.valueOf(l);
     }
 
     public static Properties loadPropertiesFile(String path) {
@@ -92,28 +115,6 @@ public class FileUtils {
             throw new RuntimeException("Unable to load properties file: "+path,ex);
         }
     }
-
-    private static void processFile(String startPath, File file, ArrayList<String> list) {
-        if (file.isDirectory()) {
-            for (String fileName : file.list()) {
-                String path = startPath + FILE_SEPARATOR + fileName;
-                processFile(path, new File(path), list);
-            }
-        }
-        else {
-            list.add(file.getPath());
-        }
-
-
-    }
-
-
-    private static String generateFileNamePrefix() {
-        SecureRandom sr = new SecureRandom();
-        long l = sr.nextLong();
-        return String.valueOf(l);
-    }
-
 
 
 

@@ -3,6 +3,7 @@ package org.qamation.utils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.io.File;
 import java.net.URL;
 
 /**
@@ -10,6 +11,7 @@ import java.net.URL;
  */
 public class ResourceUtils {
     public static Logger log = LoggerFactory.getLogger(ResourceUtils.class);
+
     public static URL getURLForResouce(String resourceName) {
         ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
         return classLoader.getResource(resourceName);
@@ -22,4 +24,27 @@ public class ResourceUtils {
         };
         return value;
     }
+
+    public static void loadProperties(String path) {
+        loadAllProperties(path);
+    }
+
+    public static void loadProperties() {
+        loadAllProperties(System.getProperty("user.dir")+"/resources");
+    }
+
+    private static void loadAllProperties(String propertiesPath) {
+        String[] paths = FileUtils.listFilesInFolder(propertiesPath);
+        for (String p: paths) {
+            FileUtils.loadPropertiesFile(p);
+        }
+    }
+
+
+
+
+
+
+
+
 }
