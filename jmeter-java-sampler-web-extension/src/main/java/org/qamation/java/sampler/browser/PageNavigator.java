@@ -65,7 +65,7 @@ public class PageNavigator extends AbstractExtentionPage {
 		WebPageNavigator navigator = getWebPageNavigator();
 		String[] tokens = getNavigationTokens(navigationSequence, navigationSequenceDelimeter);
 		long start_ts = System.currentTimeMillis();
-		navigator.processNavigationSequience(tokens, page);
+		navigator.processNavigationSequence(tokens, page);
 		long end_ts = System.currentTimeMillis();
 		return end_ts - start_ts;
 	}

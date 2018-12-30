@@ -33,11 +33,11 @@ public class WebPageNavigator {
 		this.keyboard = new KeyboardEmulator(this.driver);
 	}
 
-	public void processNavigationSequience(String[] tokens, IsReady page) {
+	public void processNavigationSequence(String[] tokens, IsReady page) {
 		for (String t : tokens) {
 			String[] subTokens= processToken(t, page);
-			String lastSubToken = subTokens[subTokens.length-1];
-			pressEnterIfLastSubTokenIsNotSpecialKey(lastSubToken,page);
+			//String lastSubToken = subTokens[subTokens.length-1];
+			//pressEnterIfLastSubTokenIsNotSpecialKey(lastSubToken,page);
 		}
 	}
 
