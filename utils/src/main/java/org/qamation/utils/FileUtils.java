@@ -64,24 +64,23 @@ public class FileUtils {
             if (file.isDirectory()) {
                 String rootPath = file.getPath(); // to convert c:/tmp/mq into c:\tmp\mq if needed.
                 ArrayList<String> list = new ArrayList<String>();
-                processFile(rootPath, file, list);
-
+                processDirectory(rootPath, file, list);
                 return list.toArray(new String[]{});
             }
-            else return new String[]{root};
+            else return new String[]{file.getPath()};
         }
         else {
-            throw new RuntimeException("There is no file of dirrectory at: " + root);
+            throw new RuntimeException("There is no file or directory at: " + root);
         }
     }
 
 
 
-    private static void processFile(String startPath, File file, ArrayList<String> list) {
+    private static void processDirectory(String startPath, File file, ArrayList<String> list) {
         if (file.isDirectory()) {
             for (String fileName : file.list()) {
                 String path = startPath + FILE_SEPARATOR + fileName;
-                processFile(path, new File(path), list);
+                processDirectory(path, new File(path), list);
             }
         }
         else {

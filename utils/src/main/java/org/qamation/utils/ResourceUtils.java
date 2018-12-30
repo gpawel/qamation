@@ -30,13 +30,13 @@ public class ResourceUtils {
     }
 
     public static void loadProperties() {
-        loadAllProperties(System.getProperty("user.dir")+"/resources");
+        loadAllProperties(System.getProperty("user.dir"));
     }
 
     private static void loadAllProperties(String propertiesPath) {
         String[] paths = FileUtils.listFilesInFolder(propertiesPath);
         for (String p: paths) {
-            FileUtils.loadPropertiesFile(p);
+            if (p.endsWith(".properties")) FileUtils.loadPropertiesFile(p);
         }
     }
 
