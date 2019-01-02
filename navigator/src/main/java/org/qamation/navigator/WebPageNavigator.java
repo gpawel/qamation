@@ -27,11 +27,19 @@ public class WebPageNavigator {
 
 	private KeyboardEmulator keyboard;
 	private WebDriver driver;
+	private String delimeter=null;
+	private IsReady isReady=null;
 
 	public WebPageNavigator(WebDriver driver) {
 		this.driver = driver;
 		this.keyboard = new KeyboardEmulator(this.driver);
 	}
+
+	public WebPageNavigator(WebDriver driver,String delim, IsReady isReady) {
+        this(driver);
+	    this.delimeter = delim;
+	    this.isReady = isReady;
+    }
 
 	public void processNavigationSequence(String[] tokens, IsReady page) {
 		for (String t : tokens) {
@@ -40,6 +48,18 @@ public class WebPageNavigator {
 			//pressEnterIfLastSubTokenIsNotSpecialKey(lastSubToken,page);
 		}
 	}
+
+	public void processNavigationString(String navigation, String delim, IsReady page) {
+		NavigationString navStr = new NavigationString(navigation,delim);
+		String[] seq = navStr.getNavigationSequence();
+		processNavigationSequence(seq,page);
+	}
+
+	public void processNavigationString(String navigation) {
+	    if (delimeter == null) throw new RuntimeException("Delimeter was not set for this instance of WebPageNavigator.\nUse processNavigationString(String navigation, String delim, IsReady page)\nor constructor WebPageNavigator(WebDriver driver,String delim, IsReady isReady)");
+	    if (isReady == null) throw new RuntimeException("isReady was not set for this instance of WebPageNavigator.\nUse processNavigationString(String navigation, String delim, IsReady page)\nor constructor WebPageNavigator(WebDriver driver,String delim, IsReady isReady)");
+	    processNavigationString(navigation,this.delimeter,this.isReady);
+    }
 
 
 	private void pressEnterIfLastSubTokenIsNotSpecialKey(String lastSubToken, IsReady page) {
