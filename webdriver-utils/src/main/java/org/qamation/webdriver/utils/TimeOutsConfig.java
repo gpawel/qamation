@@ -39,6 +39,9 @@ public class TimeOutsConfig {
     private final static String IS_PAGE_READY_CONDITION_TIME_OUT_MILLIS = "IS_PAGE_READY_CONDITION_TIME_OUT_MILLIS";
     private final static String IS_PAGE_READY_CONDITION_INTERVAL_MILLIS = "IS_PAGE_READY_CONDITION_INTERVAL_MILLIS";
 
+    private final static String INCLUDE_EXPLICIT_PAUSE="INCLUDE_EXPLICIT_PAUSE";
+    private final static String EXPLICIT_PAUSE_MILLIS="EXPLICIT_PAUSE_MILLIS";
+
     private static long driverImplicitWaitTimeOutMillis = getLongProperty(DRIVER_IMPLICIT_WAIT_TIMEOUT_MILLIS,"0");
 
     private static long driverScriptExecTimeOutMillis = getLongProperty(DRIVER_SCRIPT_EXEC_TIMEOUT_MILLIS,"30000");
@@ -70,6 +73,9 @@ public class TimeOutsConfig {
     private static boolean includeIsPageReadyCondition = getBooleanProperty(INCLUDE_IS_PAGE_READY_CONDITION,"false");
     private static long isPageReadyConditionTimeOutMillis = getLongProperty(IS_PAGE_READY_CONDITION_TIME_OUT_MILLIS,"5000");
     private static long isPageReadyConditionIntervalMillis = getLongProperty(IS_PAGE_READY_CONDITION_INTERVAL_MILLIS,"200");
+
+    private static boolean includeExplicitPause = getBooleanProperty(INCLUDE_EXPLICIT_PAUSE,"false");
+    private static long explicitPause = getLongProperty(EXPLICIT_PAUSE_MILLIS,"0");
 
     public static void setDriverTimeOuts(WebDriver driver) {
         driver.manage().timeouts().pageLoadTimeout(driverPageLoadTimeOutMillis, TimeUnit.MILLISECONDS);
@@ -201,7 +207,7 @@ public class TimeOutsConfig {
 
 
 
-
+    // ============================================================================================================
     public static boolean getIncludeIsPageReadyCondition() {
         return includeIsPageReadyCondition;
     }
@@ -225,17 +231,29 @@ public class TimeOutsConfig {
     public static void setIsPageReadyConditionIntervalMillis(long isPageReadyConditionIntervalMillis) {
         TimeOutsConfig.isPageReadyConditionIntervalMillis = isPageReadyConditionIntervalMillis;
     }
-
-
-
-
-
-
+    // ============================================================================================================
     private static long getLongProperty(String propName, String defValue) {
         return Long.parseLong(System.getProperty(propName,defValue));
     }
 
     private static boolean getBooleanProperty(String propName, String defValue) {
         return Boolean.parseBoolean(System.getProperty(propName,defValue) );
+    }
+    // ============================================================================================================
+
+    public static boolean getIncludeExplicitPause() {
+        return includeExplicitPause;
+    }
+
+    public static void setIncludeExplicitPause(boolean includeExplicitPause) {
+        TimeOutsConfig.includeExplicitPause = includeExplicitPause;
+    }
+
+    public static long getExplicitPause() {
+        return explicitPause;
+    }
+
+    public static void setExplicitPause(long explicitPause) {
+        TimeOutsConfig.explicitPause = explicitPause;
     }
 }

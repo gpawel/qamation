@@ -57,6 +57,10 @@ public class WebDriverUtils {
 		if (TimeOutsConfig.getIncludeWaitForSpinnerToDisappear()) {
 			waitForSpinnerToDisapper();
 		}
+		if(TimeOutsConfig.getIncludeExplicitPause()) {
+			pause(TimeOutsConfig.getExplicitPause());
+		}
+
 		timer.stop();
 		addPageReadyTime(timer.getDuration());
 		return true;//isDocReady && isScriptsLoaded;
