@@ -5,6 +5,7 @@ import java.io.InputStream;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.security.MessageDigest;
+import java.util.concurrent.ThreadLocalRandom;
 
 public class StringUtils {
 	static public int convertStringToInt(String str) {
@@ -108,7 +109,18 @@ public class StringUtils {
 		catch (Exception ex) {
 			throw new RuntimeException("Unable to get MD5 from input string", ex);
 		}
+	}
 
+	public static String getRandomString(int length, String usingThisChars) {
+		StringBuilder builder = new StringBuilder();
+		String[] useChars = convertStringToArray(usingThisChars);
+		int max = useChars.length;
+		ThreadLocalRandom random = ThreadLocalRandom.current();
+		for (int i=0; i<length; i++) {
+			int index = random.nextInt(0,max);
+			builder.append(useChars[index]);
+		}
+		return builder.toString();
 	}
 	
 	//static public String format(String input, String format)
