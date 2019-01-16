@@ -11,12 +11,13 @@ public class DBUtils {
     private String userName;
     private String passWord;
 
-    private Connection connection;
-
+    private Connection connection = null;
+    private Statement statement = null;
     public DBUtils (String url, String name, String pass) {
         dbUrl = url;
         userName = name;
         passWord = pass;
+
         try {
             connection = DriverManager.getConnection(dbUrl,userName,passWord);
         } catch (SQLException e) {
@@ -25,22 +26,20 @@ public class DBUtils {
             e.printStackTrace();
             throw new RuntimeException(message);
         }
-    }
-
-    public ResultSet select(String selectQuery) {
-        Statement stmnt;
         try {
-            stmnt = connection.createStatement();
-
+            statement = connection.createStatement();
         } catch (SQLException e) {
             String message = "Unable to create a statement.";
             log.error(message);
             e.printStackTrace();
             throw new RuntimeException(message,e);
         }
+    }
 
+    public ResultSet select(String selectQuery) {
+        if (statement == null) throw new RuntimeException("Statement object for this connection is null");
         try {
-            ResultSet result = stmnt.executeQuery(selectQuery);
+            ResultSet result = statement.executeQuery(selectQuery);
             return result;
         } catch (SQLException e) {
             String message = "Unable to execute selectQuery\n"+selectQuery;
@@ -49,6 +48,33 @@ public class DBUtils {
             throw new RuntimeException(message,e);
         }
     }
+
+    public void close() {
+        try {
+            if (statement != null) statement.close();
+            if (connection != null) connection.close();
+        } catch (SQLException e) {
+            log.error("Could not close db connection to "+dbUrl);
+            e.printStackTrace();
+        }
+    }
+
+    private final class ShutDownHook extends Thread {
+        private DBUtils dbUtils;
+
+        ShutDownHook(DBUtils db) {
+            this.dbUtils = db;
+        }
+
+        @Override
+        public void run() {
+            dbUtils.close();
+        }
+    }
+
+
+
+
 
 
 }
