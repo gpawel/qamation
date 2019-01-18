@@ -11,6 +11,7 @@ import java.net.URL;
  */
 public class ResourceUtils {
     public static Logger log = LoggerFactory.getLogger(ResourceUtils.class);
+    public static String PROPERTIES_FILE_SUFFIX = ".properties";
 
     public static URL getURLForResouce(String resourceName) {
         ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
@@ -34,9 +35,10 @@ public class ResourceUtils {
     }
 
     private static void loadAllProperties(String propertiesPath) {
+
         String[] paths = FileUtils.listFilesInFolder(propertiesPath);
         for (String p: paths) {
-            if (p.endsWith(".properties")) FileUtils.loadPropertiesFile(p);
+            if (p.endsWith(".properties") || p.endsWith("PROPERTIES") ) FileUtils.loadPropertiesFile(p);
         }
     }
 
