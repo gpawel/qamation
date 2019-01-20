@@ -114,10 +114,10 @@ public class StringUtils {
 	public static String getRandomString(int length, String usingThisChars) {
 		StringBuilder builder = new StringBuilder();
 		String[] useChars = convertStringToArray(usingThisChars);
-		int max = useChars.length;
+		int max = useChars.length-1;
 		ThreadLocalRandom random = ThreadLocalRandom.current();
 		for (int i=0; i<length; i++) {
-			int index = NumberUtils.getRandomInteger(0,max-1);//random.nextInt(0,max);
+			int index = NumberUtils.getRandomInteger(0,max);//random.nextInt(0,max);
 			builder.append(useChars[index]);
 		}
 		return builder.toString();
