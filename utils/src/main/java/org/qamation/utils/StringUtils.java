@@ -117,7 +117,7 @@ public class StringUtils {
 		int max = useChars.length;
 		ThreadLocalRandom random = ThreadLocalRandom.current();
 		for (int i=0; i<length; i++) {
-			int index = random.nextInt(0,max);
+			int index = NumberUtils.getRandomInteger(0,max-1);//random.nextInt(0,max);
 			builder.append(useChars[index]);
 		}
 		return builder.toString();
