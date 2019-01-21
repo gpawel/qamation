@@ -7,14 +7,15 @@ import java.util.Calendar;
 
 public class DateUtils {
     public static String changeDate(String currentDate, String currentFormat, int shift, int calendarField, String newFormat) {
-        SimpleDateFormat sdf = new SimpleDateFormat(currentFormat);
+        SimpleDateFormat curForm = new SimpleDateFormat(currentFormat);
+        SimpleDateFormat newForm = new SimpleDateFormat(newFormat);
         ParsePosition pos = new ParsePosition(0);
         FieldPosition f_pos = new FieldPosition(0);
         Calendar c = Calendar.getInstance();
-        c.setTime(sdf.parse(currentDate,pos));
+        c.setTime(curForm.parse(currentDate,pos));
         c.add(calendarField,shift);
         StringBuffer buff = new StringBuffer();
-        buff = sdf.format(c.getTime(),buff,f_pos);
+        buff = newForm.format(c.getTime(),buff,f_pos);
         return buff.toString();
     }
 }
