@@ -1,9 +1,7 @@
 package org.qamation.utils;
 
 
-import java.io.File;
-import java.io.FileReader;
-import java.io.Reader;
+import java.io.*;
 import java.nio.file.*;
 import java.security.SecureRandom;
 import java.util.ArrayList;
@@ -113,6 +111,17 @@ public class FileUtils {
             ex.printStackTrace();
             throw new RuntimeException("Unable to load properties file: "+path,ex);
         }
+    }
+
+    public static PrintStream createFilePrintStream(String path) throws IOException {
+        File outFile = new File(path);
+        outFile.createNewFile();
+        return new PrintStream(outFile);
+    }
+
+    public static FileWriter createFileWriter (String fileName, boolean append) throws IOException {
+        File outFile = new File(fileName);
+        return new FileWriter(outFile,append);
     }
 
 
