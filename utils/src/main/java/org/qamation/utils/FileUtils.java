@@ -113,18 +113,16 @@ public class FileUtils {
         }
     }
 
-    public static PrintStream createFilePrintStream(String filePath) throws IOException {
-            File outFile = new File(filePath);
-            outFile.createNewFile();
-            return new PrintStream(outFile);
+    public static PrintStream createFilePrintStream(String path) throws IOException {
+        File outFile = new File(path);
+        outFile.createNewFile();
+        return new PrintStream(outFile);
     }
 
-    public static FileWriter createFileWriter(String filePath, boolean append) throws IOException {
-        File outFile = new File(filePath);
+    public static FileWriter createFileWriter (String fileName, boolean append) throws IOException {
+        File outFile = new File(fileName);
         return new FileWriter(outFile,append);
     }
-
-
 
 
 

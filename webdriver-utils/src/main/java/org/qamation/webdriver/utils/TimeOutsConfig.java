@@ -201,12 +201,6 @@ public class TimeOutsConfig {
         TimeOutsConfig.waitForSpinnerToDisappearIntervalMillis = waitForSpinnerToDisappearIntervalMillis;
     }
 
-
-
-
-
-
-
     // ============================================================================================================
     public static boolean getIncludeIsPageReadyCondition() {
         return includeIsPageReadyCondition;
