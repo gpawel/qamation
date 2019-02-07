@@ -37,8 +37,13 @@ public class DBUtils {
     }
 
     public ResultSet select(String selectQuery) {
+        return selectQuery(selectQuery,100);
+    }
+
+    public ResultSet select(String selectQuery, int fetch) {
         if (statement == null) throw new RuntimeException("Statement object for this connection is null");
         try {
+            statement.setFetch(fetch);
             ResultSet result = statement.executeQuery(selectQuery);
             return result;
         } catch (SQLException e) {
