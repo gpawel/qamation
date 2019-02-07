@@ -37,7 +37,7 @@ public class DBUtils {
     }
 
     public ResultSet select(String selectQuery) {
-        return selectQuery(selectQuery,100);
+        return select(selectQuery,100);
     }
 
     public ResultSet select(String selectQuery, int fetch) {
