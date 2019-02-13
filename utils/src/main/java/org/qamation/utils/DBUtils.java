@@ -2,7 +2,6 @@ package org.qamation.utils;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
 import java.sql.*;
 
 public class DBUtils {
@@ -10,14 +9,12 @@ public class DBUtils {
     private String dbUrl;
     private String userName;
     private String passWord;
-
     private Connection connection = null;
-    private Statement statement = null;
+
     public DBUtils (String url, String name, String pass) {
         dbUrl = url;
         userName = name;
         passWord = pass;
-
         try {
             connection = DriverManager.getConnection(dbUrl,userName,passWord);
         } catch (SQLException e) {
@@ -26,6 +23,18 @@ public class DBUtils {
             e.printStackTrace();
             throw new RuntimeException(message);
         }
+    }
+
+    public Connection getConnection() {
+        return connection;
+    }
+
+    public ResultSet select(String selectQuery) {
+        return select(selectQuery,100);
+    }
+
+    public ResultSet select(String selectQuery, int fetch) {
+        Statement statement = null;
         try {
             statement = connection.createStatement();
         } catch (SQLException e) {
@@ -34,29 +43,33 @@ public class DBUtils {
             e.printStackTrace();
             throw new RuntimeException(message,e);
         }
-    }
-
-    public ResultSet select(String selectQuery) {
-        return select(selectQuery,100);
-    }
-
-    public ResultSet select(String selectQuery, int fetch) {
         if (statement == null) throw new RuntimeException("Statement object for this connection is null");
         try {
             statement.setFetchSize(fetch);
             ResultSet result = statement.executeQuery(selectQuery);
+            statement.close();
             return result;
         } catch (SQLException e) {
-            String message = "Unable to execute selectQuery\n"+selectQuery;
+            String message = "Unable to execute selectQuery or close connection.";
             log.error(message);
             e.printStackTrace();
             throw new RuntimeException(message,e);
         }
     }
 
+    public ResultSet select(PreparedStatement preparedStatement) {
+        try {
+            return preparedStatement.executeQuery();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            String message = "Unable to execute prepared Statement";
+            log.error(message);
+            throw new RuntimeException(message,e);
+        }
+    }
+
     public void close() {
         try {
-            if (statement != null) statement.close();
             if (connection != null) connection.close();
         } catch (SQLException e) {
             log.error("Could not close db connection to "+dbUrl);
