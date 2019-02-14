@@ -22,7 +22,8 @@ public class DateUtils {
         return buff.toString();
     }
 
-    public static String formatTime (Timestamp time, String format) {
+    public static String formatTime (long timestamp, String format) {
+        Timestamp time = new Timestamp(timestamp);
         LocalDateTime ldt = time.toLocalDateTime();
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern(format);
         return ldt.format(dtf);
