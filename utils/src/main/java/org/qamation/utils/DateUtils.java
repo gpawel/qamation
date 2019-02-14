@@ -1,8 +1,11 @@
 package org.qamation.utils;
 
+import java.sql.Timestamp;
 import java.text.FieldPosition;
 import java.text.ParsePosition;
 import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Calendar;
 
 public class DateUtils {
@@ -17,5 +20,11 @@ public class DateUtils {
         StringBuffer buff = new StringBuffer();
         buff = newForm.format(c.getTime(),buff,f_pos);
         return buff.toString();
+    }
+
+    public static String formatTime (Timestamp time, String format) {
+        LocalDateTime ldt = time.toLocalDateTime();
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern(format);
+        return ldt.format(dtf);
     }
 }
