@@ -30,7 +30,7 @@ public class DBUtils {
     }
 
     public ResultSet select(String selectQuery) {
-        return select(selectQuery,100);
+        return select(selectQuery,10);
     }
 
     public ResultSet select(String selectQuery, int fetch) {
@@ -47,7 +47,6 @@ public class DBUtils {
         try {
             statement.setFetchSize(fetch);
             ResultSet result = statement.executeQuery(selectQuery);
-            statement.close();
             return result;
         } catch (SQLException e) {
             String message = "Unable to execute selectQuery or close connection.";
