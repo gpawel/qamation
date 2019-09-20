@@ -1,0 +1,22 @@
+<@!> click
+<@!{xpath=}>
+<@!{class=}>
+<@!{css=}>
+<@!{id=}>
+<@!{link=}>
+<@!{name=}>
+<@!{plink=}>
+<@!{tag=}>
+<@!{xpath=}>
+
+<@!{xpath=}>
+<@!!> double click
+<@!!{xpath=}>
+<@?> context click
+<@?{css=}>
+<@^> release
+<@!_> mouse click and hold
+<@_> mouse down
+<@~> mouse move
+<@~{xpath=}[x,y]>
+<@~!> drag and drop
