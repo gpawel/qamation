@@ -56,7 +56,7 @@ public class MouseActionPatterns {
 
     private static String[] getAllFindings(String input, String regExp) {
         RegExpUtils utils = new RegExpUtils(input, regExp);
-        utils.printAllFindings();
+        //utils.printAllFindings();
         return utils.getAllFindings();
     }
 }
