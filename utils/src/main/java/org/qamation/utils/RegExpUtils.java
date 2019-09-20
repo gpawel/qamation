@@ -81,14 +81,14 @@ public class RegExpUtils {
 
 
 	public void printAllFindings() {
-		System.out.println("Input: "+input+"\nRegExp: "+regExp);
+		//System.out.println("Input: "+input+"\nRegExp: "+regExp);
 		String[] res = getAllFindings();
 		if (res.length>0) {
 			for (int i = 0; i < res.length; i++) {
 				System.out.println("result["+i+"] = "+res[i]);
 			}
 		}
-		else System.out.println("Nothing is found");
+		else {}//System.out.println("Nothing is found");
 	}
 
 	private void printGroups() {
@@ -98,13 +98,15 @@ public class RegExpUtils {
 		}
 	}
 
+	/*
 	public void printFinds() {
 		m.reset();
-		System.out.println("printing finds");
+		//System.out.println("printing finds");
 		while (m.find()) {
 			printGroups();
 		}
 	}
+	*/
 	
 	public boolean isInputMatches() {
 		return m.matches();

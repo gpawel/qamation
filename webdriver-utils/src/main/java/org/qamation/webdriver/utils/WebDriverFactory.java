@@ -92,6 +92,9 @@ public class WebDriverFactory {
 		dc.setCapability(org.openqa.selenium.remote.CapabilityType.SUPPORTS_FINDING_BY_CSS, true);
 	}
 
+
+
+
 	private static DesiredCapabilities setIECapabilities() {
 		DesiredCapabilities dc = DesiredCapabilities.internetExplorer();
 		dc.setCapability(InternetExplorerDriver.REQUIRE_WINDOW_FOCUS,true);
