@@ -21,12 +21,13 @@ public class KeyboardEmulator implements Keyboard {
 
 	private static final long KEY_PRESS_PAUSE_MIL_SEC = 20;
 	private WebDriver driver;
-	private org.openqa.selenium.interactions.Keyboard keyboard;
+	//private org.openqa.selenium.interactions.Keyboard keyboard;
+	private org.openqa.selenium.interactions.Actions actions;
 	private List<Field> keyboardKeys;
 	
 	public KeyboardEmulator(WebDriver driver) {
 		this.driver = driver;
-		this.keyboard = getKeyboardFromWebDriver();
+		this.actions = new Actions(driver);//getKeyboardFromWebDriver();
 		populateKeyboardKeys();
 	}
 
@@ -41,19 +42,24 @@ public class KeyboardEmulator implements Keyboard {
 	}
 
 	public void pressKey(CharSequence key) {
-		keyboard.pressKey(key);
+		actions.keyDown(key);
+
 	}
 
 	public void releaseKey(CharSequence key) {
-		keyboard.releaseKey(key);
+		actions.keyUp(key);
+
 	}
 
 	public void sendKeys(CharSequence... keys) {
+		actions.sendKeys(keys).perform();
+		/*
 		String[] sequence = StringUtils.convertCharSequenceToArray(keys);
 		for (int i=0; i < sequence.length; i++) {
-			keyboard.sendKeys(sequence[i]);
+			actions.sendKeys(sequence[i]);
 			pause(KEY_PRESS_PAUSE_MIL_SEC);
 		}
+		 */
 	}
 	
 	public void sendKeysAt(String location, CharSequence... keys) {
@@ -63,11 +69,14 @@ public class KeyboardEmulator implements Keyboard {
 	}
 
 	private void typeKeysAt(WebElement el, CharSequence[] keys) {
+		actions.sendKeys(el, keys).perform();
+		/*
 		String[] sequence = StringUtils.convertCharSequenceToArray(keys);
 		for (int i=0; i < sequence.length; i++) {
 			el.sendKeys(sequence[i]);
 			pause(KEY_PRESS_PAUSE_MIL_SEC);
 		}
+		 */
 	}
 
 	private By createLocator(String location) {
@@ -97,11 +106,10 @@ public class KeyboardEmulator implements Keyboard {
 			//if (processKeyCombination(s)) continue;
 			if (processKeyChord(s)) continue;
 			Keys key = convertToKeys(s);
-			Actions action = new Actions(driver);
-			action.sendKeys(key);			
-			action.build().perform();
+			actions.sendKeys(key);
 			//pause(KEY_PRESS_PAUSE_MIL_SEC);
 		}
+		actions.perform();
 	}
 
 	/*
@@ -126,14 +134,13 @@ public class KeyboardEmulator implements Keyboard {
 			if (substrings.length < 2) return false; // like SHIFT+
 			//String keysToSend=Keys.chord(convertToKeys(substrings[0]),convertToCharSeq(substrings[1]));
 			driver.switchTo().activeElement();
-			Actions action = new Actions(driver);
 			Keys modifier = convertToKeys(substrings[0]);
 			Keys key = convertToKeys(substrings[1]);
 			//action.sendKeys(Keys.chord(convertToKeys(substrings[0]),convertToCharSeq(substrings[1])));
 			//action.build();
-			keyboard.pressKey(modifier);
-			keyboard.sendKeys(key);
-			keyboard.releaseKey(modifier);
+			pressKey(modifier);
+			this.actions.sendKeys(key);
+			releaseKey(modifier);
 			//action.keyDown(modifier).sendKeys(key).keyUp(modifier).perform();
 			return true;
 		}
@@ -144,23 +151,6 @@ public class KeyboardEmulator implements Keyboard {
 		int lastElement = substrings.length-1;
 		CharSequence chars = convertToCharSeq(substrings[lastElement]);
 		action.sendKeys(chars);
-		return action;
-	}
-
-	private Actions releaseModifiers(String[] substrings, Actions action) {
-		for (int i=substrings.length-2; i>=0; i--) {
-			Keys chars = convertToKeys(substrings[i]);
-			action.keyUp(chars);			
-		}
-		return action;
-	}
-
-	private Actions pressModifiers(String[] substrings, Actions action) {
-		for (int i=0; i < substrings.length-1; i++) {
-			Keys chars = convertToKeys(substrings[i]);			
-			action.keyDown(chars);
-			//keyboard.pressKey(chars);
-		}
 		return action;
 	}
 
@@ -191,6 +181,7 @@ public class KeyboardEmulator implements Keyboard {
 	}
 
 	public org.openqa.selenium.interactions.Keyboard getKeyboardFromWebDriver() {
+		//return new Actions(driver);
 		if (driver instanceof ChromeDriver) {
 			return ((ChromeDriver)driver).getKeyboard();
 		}

@@ -58,9 +58,9 @@ public class ChromeDriverFactory {
     public static void main(String[] args) throws Throwable {
         WebDriver driver = WebDriverFactory.createChromeWebDriver("C:\\workspace\\FRONTIER-TESTS\\resources\\driver\\chromedriver.exe");
         driver.get("https://google.com");
-        WebPageNavigator navigator = new WebPageNavigator(driver);
         GeneralPage page = new GeneralPage(driver);
-        navigator.processNavigationString("qa automation"," ",page);
+        WebPageNavigator navigator = new WebPageNavigator(driver," ",page);
+        navigator.processNavigationString("qa automation");
         navigator.processNavigationString("{ENTER}");
         /*Actions action = new Actions(driver);
         action.sendKeys("qa automation").build().perform();
