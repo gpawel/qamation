@@ -1,14 +1,14 @@
 package org.qamation.webdriver.utils;
 
-import org.openqa.selenium.Keys;
 import org.openqa.selenium.MutableCapabilities;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
-import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.RemoteWebDriver;
+import org.qamation.navigator.WebPageNavigator;
 import org.qamation.utils.ResourceUtils;
+import org.qamation.web.page.GeneralPage;
 
 import java.net.URL;
 
@@ -58,11 +58,15 @@ public class ChromeDriverFactory {
     public static void main(String[] args) throws Throwable {
         WebDriver driver = WebDriverFactory.createChromeWebDriver("C:\\workspace\\FRONTIER-TESTS\\resources\\driver\\chromedriver.exe");
         driver.get("https://google.com");
-        Actions action = new Actions(driver);
+        WebPageNavigator navigator = new WebPageNavigator(driver);
+        GeneralPage page = new GeneralPage(driver);
+        navigator.processNavigationString("qa automation"," ",page);
+        navigator.processNavigationString("{ENTER}");
+        /*Actions action = new Actions(driver);
         action.sendKeys("qa automation").build().perform();
         action.pause(1000);
         action.sendKeys(Keys.ENTER).build().perform();
-        action.pause(1000);
+        action.pause(1000);*/
 
     }
 }
