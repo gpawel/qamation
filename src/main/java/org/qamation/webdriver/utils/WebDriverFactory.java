@@ -24,6 +24,10 @@ public class WebDriverFactory {
 		return driver;
 	}
 
+	public static WebDriver createRemoteChromeDriver(URL hub) {
+		return ChromeDriverFactory.createRemoteChromeDriver(hub);
+	}
+
 	public static WebDriver createChromeWebDriver(String path) {
 		WebDriver driver = ChromeDriverFactory.createChromeDriver(path);
 		return driver;
