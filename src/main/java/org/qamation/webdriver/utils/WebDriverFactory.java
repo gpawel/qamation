@@ -2,6 +2,7 @@ package org.qamation.webdriver.utils;
 
 import java.net.URL;
 
+import org.openqa.selenium.MutableCapabilities;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
@@ -24,21 +25,24 @@ public class WebDriverFactory {
 	}
 
 	public static WebDriver createChromeWebDriver(String path) {
-		System.setProperty("webdriver.chrome.driver",path);
-		DesiredCapabilities dc = setChromeCapabilities();
-		addDefaultCapabilitiesTo(dc);
-		WebDriver driver = new ChromeDriver(dc);
+		WebDriver driver = ChromeDriverFactory.createChromeDriver(path);
 		return driver;
 	}
 
 	public static WebDriver createChromeWebDriver() {
-		String chromeDriverPath = getChromeDriverPath();
-		return createChromeWebDriver(chromeDriverPath);
+		return ChromeDriverFactory.createChromeDriver();
 	}
 
-	private static String getChromeDriverPath() {
-		String defValue = System.getProperty("user.dir")+"/Selenium/ChromeDriver/chromedriver";
-		return ResourceUtils.getSystemProperty("webdriver.chrome.driver",defValue);
+	public static MutableCapabilities getDefaultMutualCapabilities() {
+		MutableCapabilities mc = new MutableCapabilities();
+		mc.setCapability(org.openqa.selenium.remote.CapabilityType.ACCEPT_SSL_CERTS, true);
+		mc.setCapability(org.openqa.selenium.remote.CapabilityType.SUPPORTS_JAVASCRIPT,true);
+		mc.setCapability(org.openqa.selenium.remote.CapabilityType.SUPPORTS_FINDING_BY_CSS, true);
+		return mc;
+	}
+
+	private static void addDefaultCapabilitiesTo(DesiredCapabilities dc) {
+		dc.merge(getDefaultMutualCapabilities());
 	}
 
 	private static String getOSName() {
@@ -60,13 +64,6 @@ public class WebDriverFactory {
 		WebDriver driver = new FirefoxDriver(dc);
 		return driver;
 	}
-	
-	public static WebDriver createRemoteChromeDriver(URL hub) {
-		DesiredCapabilities dc = setChromeCapabilities();
-		RemoteWebDriver driver = createRemoteWebdriver(hub, dc);
-		return driver;
-	}
-
 
     public static WebDriver createRemoteFFWebDriver(URL hub) {
 		DesiredCapabilities dc = setFFCapabilities();
@@ -74,26 +71,16 @@ public class WebDriverFactory {
 		return driver;
     }
 
-	private static DesiredCapabilities setFFCapabilities() {
-		DesiredCapabilities dc = DesiredCapabilities.firefox();
-		return dc;
-	}
-
-	private static RemoteWebDriver createRemoteWebdriver(URL hub, DesiredCapabilities capabilities) {
+	public static RemoteWebDriver createRemoteWebdriver(URL hub, DesiredCapabilities capabilities) {
 		addDefaultCapabilitiesTo(capabilities);
 		RemoteWebDriver driver = 	new RemoteWebDriver(hub, capabilities);
 		return driver;
 	}
 
-
-	private static void addDefaultCapabilitiesTo(DesiredCapabilities dc) {
-		dc.setCapability(org.openqa.selenium.remote.CapabilityType.ACCEPT_SSL_CERTS, true);
-		dc.setCapability(org.openqa.selenium.remote.CapabilityType.SUPPORTS_JAVASCRIPT,true);
-		dc.setCapability(org.openqa.selenium.remote.CapabilityType.SUPPORTS_FINDING_BY_CSS, true);
+	private static DesiredCapabilities setFFCapabilities() {
+		DesiredCapabilities dc = DesiredCapabilities.firefox();
+		return dc;
 	}
-
-
-
 
 	private static DesiredCapabilities setIECapabilities() {
 		DesiredCapabilities dc = DesiredCapabilities.internetExplorer();
@@ -116,13 +103,15 @@ public class WebDriverFactory {
 		return dc;
 	}
 
-	private static DesiredCapabilities setChromeCapabilities() {
-		DesiredCapabilities dc = DesiredCapabilities.chrome();
-		ChromeOptions options = new ChromeOptions();
-		options = options.addArguments("--disable-extensions");
-		dc.setCapability(ChromeOptions.CAPABILITY, options);
-		return dc;
-	}
+
+
+
+
+
+
+
+
+
 
 
 }
