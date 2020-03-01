@@ -79,7 +79,7 @@ public class RegExpUtils {
 	}
 
 
-/*
+
 	public void printAllFindings() {
 		//System.out.println("Input: "+input+"\nRegExp: "+regExp);
 		String[] res = getAllFindings();
@@ -90,16 +90,16 @@ public class RegExpUtils {
 		}
 		else {}//System.out.println("Nothing is found");
 	}
- */
 
-	private void printGroups() {
+
+	public void printGroups() {
 		for (int i = 0; i <= m.groupCount(); i++) {
 			String s = m.group(i);
 			System.out.println("Group " + i + " returns: " + s);
 		}
 	}
 
-	/*
+
 	public void printFinds() {
 		m.reset();
 		//System.out.println("printing finds");
@@ -107,7 +107,7 @@ public class RegExpUtils {
 			printGroups();
 		}
 	}
-	*/
+
 	
 	public boolean isInputMatches() {
 		return m.matches();
