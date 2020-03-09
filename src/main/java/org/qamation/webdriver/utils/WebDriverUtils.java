@@ -1,7 +1,7 @@
 package org.qamation.webdriver.utils;
 
-import java.util.regex.Matcher;
 
+import java.util.regex.Matcher;
 import com.google.common.base.Function;
 import org.openqa.selenium.*;
 import org.qamation.utils.RegExpUtils;

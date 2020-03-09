@@ -13,15 +13,26 @@ import org.qamation.web.page.GeneralPage;
 import java.net.URL;
 
 public class ChromeDriverFactory {
+
     public static ChromeDriver createChromeDriver(String pathToExec) {
         System.setProperty("webdriver.chrome.driver",pathToExec);
         ChromeOptions chromeOptions = getChromeOptions();
         return new ChromeDriver(chromeOptions);
     }
 
+    public static ChromeDriver createChromeDriver(String pathToExec, ChromeOptions chromeOptions) {
+        System.setProperty("webdriver.chrome.driver",pathToExec);
+        return new ChromeDriver(chromeOptions);
+    }
+
     public static ChromeDriver createChromeDriver() {
         String pathToExec = getChromeDriverPath();
         return createChromeDriver(pathToExec);
+    }
+
+    public static WebDriver createRemoteChromeDriver(URL hub, ChromeOptions chromeOptions) {
+        RemoteWebDriver driver = WebDriverFactory.createRemoteWebdriver(hub, new DesiredCapabilities(chromeOptions));
+        return driver;
     }
 
     public static WebDriver createRemoteChromeDriver(URL hub) {
