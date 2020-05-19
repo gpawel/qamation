@@ -55,6 +55,7 @@ public class ChromeDriverFactory {
         ChromeOptions chromeOptions = new ChromeOptions();
         chromeOptions.merge(mc);
         chromeOptions = chromeOptions.addArguments("--disable-extensions");
+        chromeOptions.setExperimentalOption("useAutomationExtension", false);
         return chromeOptions;
     }
 
